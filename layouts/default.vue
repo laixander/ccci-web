@@ -1,5 +1,5 @@
 <template>
-  <CLayout full name="UI Development" :links="links">
+  <CLayout mode="full" name="UI Development" :links="links">
       <slot />
   </CLayout>
 </template>
@@ -13,8 +13,13 @@ const links = [
     to: '/dashboard'
   },
   {
+    label: 'Wizard',
+    icon: 'i-lucide-wand',
+    to: '/wizard'
+  },
+  {
     label: 'Grid',
-    icon: 'i-lucide-circle-user-round',
+    icon: 'i-lucide-grid',
     to: '/grid'
   },
   {

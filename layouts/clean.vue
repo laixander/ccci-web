@@ -1,5 +1,5 @@
 <template>
-    <CLayout clean>
+    <CLayout mode="clean">
         <slot />
     </CLayout>
 </template>

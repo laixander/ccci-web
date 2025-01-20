@@ -1,5 +1,6 @@
 <template>
-  <CPageList title="Settings" sub-title="Application Setting Configuration" :list="list"></CPageList>
+  <CPageList title="Settings" sub-title="Application Setting Configuration" :list="list">
+  </CPageList>
 </template>
 
 <script setup lang="ts">

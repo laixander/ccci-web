@@ -1,5 +1,5 @@
 <template>
-    <CLogin></CLogin>
+    <CLogin simple></CLogin>
 </template>
 
 <!-- <script setup lang="ts">
@@ -11,8 +11,8 @@ definePageMeta({
 })
 </script> -->
 
-<!-- <script setup lang="ts">
+<script setup lang="ts">
 definePageMeta({
   layout: 'clean',
 })
-</script> -->
+</script>
