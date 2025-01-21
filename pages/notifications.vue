@@ -1,10 +1,11 @@
 <template>
-    <CPageNotification title="Notifications" :notifications="notifications" @update-notifications="updateNotifications" />
+    <CPageNotification title="Notifications"  :items="notifications" />
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+
 interface Notification {
-  id: number;
   title: string;
   description: string;
   date: string;
@@ -12,12 +13,8 @@ interface Notification {
 }
 
 const notifications = ref<Notification[]>([
-  { id: 1, title: 'New Message', description: 'You have received a new message.', date: 'Jan 20', isRead: false },
-  { id: 2, title: 'System Update', description: 'Your system will be updated soon.', date: 'Jan 20', isRead: false },
-  { id: 3, title: 'Meeting Reminder', description: 'You have a meeting in 1 hour.', date: 'Jan 20', isRead: true }
+  { title: 'New Assignment', description: 'You have a new assignment in Math.', date: '2025-01-19', isRead: false },
+  { title: 'Exam Schedule', description: 'Check your updated exam schedule.', date: '2025-01-18', isRead: false },
+  { title: 'Holiday Notice', description: 'School is closed on Friday.', date: '2025-01-17', isRead: false },
 ]);
-
-const updateNotifications = (updatedNotifications: Notification[]) => {
-  notifications.value = updatedNotifications;
-};
 </script>
