@@ -1,10 +1,6 @@
 <template>
-    <!-- <CGrid col-1>
-        hey
-    </CGrid> -->
-
-    <CPageList2 title="Grid" description="Something" :entries="entries">
-    </CPageList2>
+      <CPageList title="Grid" description="Something" :entries="entries">
+      </CPageList>
 </template>
 
 <script setup lang="ts">

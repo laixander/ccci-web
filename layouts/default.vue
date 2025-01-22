@@ -13,14 +13,19 @@ const links = [
     to: '/dashboard'
   },
   {
+    label: 'Profile',
+    icon: 'i-lucide-circle-user-round',
+    to: '/profile'
+  },
+  {
     label: 'Wizard',
     icon: 'i-lucide-wand',
     to: '/wizard'
   },
   {
-    label: 'Grid',
+    label: 'List',
     icon: 'i-lucide-grid',
-    to: '/grid'
+    to: '/list'
   },
   {
     label: 'Notifications',

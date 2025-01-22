@@ -1,5 +1,5 @@
 <template>
-    <CLogin simple></CLogin>
+    <CLogin split></CLogin>
 </template>
 
 <!-- <script setup lang="ts">

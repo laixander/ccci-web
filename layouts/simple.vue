@@ -1,10 +1,11 @@
 <template>
-    <CLayout simple name="UI Development" :links="links">
+    <CLayout mode="simple" name="UI Development" :links="links">
         <slot />
     </CLayout>
 </template>
 
 <script setup lang="ts">
+
 const links = [
   {
     label: 'Dashboard',
@@ -12,9 +13,19 @@ const links = [
     to: '/dashboard'
   },
   {
-    label: 'Grid',
+    label: 'Profile',
     icon: 'i-lucide-circle-user-round',
-    to: '/grid'
+    to: '/profile'
+  },
+  {
+    label: 'Wizard',
+    icon: 'i-lucide-wand',
+    to: '/wizard'
+  },
+  {
+    label: 'List',
+    icon: 'i-lucide-grid',
+    to: '/list'
   },
   {
     label: 'Notifications',
