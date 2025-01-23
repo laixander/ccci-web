@@ -28,6 +28,16 @@ const links = [
     to: '/list'
   },
   {
+    label: 'Cards',
+    icon: 'i-lucide-lab-card-credit',
+    to: '/Cards'
+  },
+  {
+    label: 'Kanban',
+    icon: 'i-lucide-square-kanban',
+    to: '/kanban'
+  },
+  {
     label: 'Notifications',
     icon: 'i-lucide-bell',
     to: '/notifications'

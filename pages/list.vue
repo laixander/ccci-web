@@ -1,6 +1,5 @@
 <template>
-      <CPageList title="Grid" description="Something" :entries="entries">
-      </CPageList>
+      <CPageList title="List" :entries="entries" />
 </template>
 
 <script setup lang="ts">

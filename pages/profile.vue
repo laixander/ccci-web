@@ -1,7 +1,24 @@
 <template>
-    <CPageProfile title="Profile" avatarUrl="" 
+    <CPageProfile 
+        title="Profile" 
+        avatarUrl="" 
         name="John Doe"
         :details="profileDetails">
+
+        <template #team>
+            <h2>Team Members</h2>
+            <p>Details about the team...</p>
+        </template>
+
+        <template #projects>
+            <h2>Projects</h2>
+            <p>Ongoing and completed projects...</p>
+        </template>
+
+        <template #overview>
+            <h2>Overview</h2>
+            <p>A quick overview of all activities...</p>
+        </template>
     </CPageProfile>
 </template>
 
