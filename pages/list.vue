@@ -1,5 +1,5 @@
 <template>
-      <CPageList title="List" :entries="entries" />
+      <CPageList title="List" :entries="entries" :columns="5" />
 </template>
 
 <script setup lang="ts">

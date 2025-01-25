@@ -1,5 +1,5 @@
 <template>
-    <CLayout mode="simple" name="UI Development" :links="links">
+    <CLayout mode="simple" logo="logo.png" name="UI Development" :links="links">
         <slot />
     </CLayout>
 </template>

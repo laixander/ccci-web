@@ -3,7 +3,8 @@
         title="Profile" 
         avatarUrl="" 
         name="John Doe"
-        :details="profileDetails">
+        :details="profileDetails"
+        :tabItems="tabItems">
 
         <template #team>
             <h2>Team Members</h2>
@@ -33,5 +34,10 @@ const profileDetails = [
     { icon: 'i-lucide-mail', label: '', value: 'john.doe@example.com' },
     { icon: 'i-lucide-smartphone', label: '', value: '+123 456 7890' },
     { icon: 'i-lucide-map-pin', label: '', value: 'New York, USA' },
+];
+const tabItems = [
+    { key: 'team', label: 'Team' },
+    { key: 'projects', label: 'Projects' },
+    { key: 'overview', label: 'Overview' },
 ];
 </script>

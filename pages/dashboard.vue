@@ -1,14 +1,11 @@
 <template>
-    <CBanner user-name="Jane Copper"></CBanner>
-    <CPage title="Dashboard" description="This is the Home Page" :breadcrumbs="breadcrumbs">
+    <CPage title="Dashboard" description="This is the Home Page" :banner="true" userName="Jane Copper" :breadcrumbs="breadcrumbs">
         <div class="flex flex-wrap gap-4 justify-center">
-            <CWidget class="grow" description="Total number of users" count="3,000.00" icon="lucide:user-round">
-            </CWidget>
-            <CWidget class="grow" description="Total number of users" count="4,000.00" icon="lucide:user-round">
-            </CWidget>
-            <CWidget class="grow" description="Total number of users" count="3" icon="lucide:user-round"></CWidget>
-            <CWidget class="grow" description="Total number of users" count="3" icon="lucide:user-round"></CWidget>
-            <CWidget class="grow" description="Total number of users" count="3" icon="lucide:user-round"></CWidget>
+            <CWidget description="Total number of users" count="3,000.00" icon="lucide:user-round" bgColor="bg-amber-500"></CWidget>
+            <CWidget description="Total number of users" count="4,000.00" icon="lucide:user-round" bgColor="bg-teal-500"></CWidget>
+            <CWidget description="Total number of users" count="3,000.00" icon="lucide:user-round"></CWidget>
+            <CWidget description="Total number of users" count="4,000.00" icon="lucide:user-round" bgColor="bg-rose-500"></CWidget>
+            <CWidget description="Total number of users" count="3,000.00" icon="lucide:user-round" bgColor="bg-violet-500"></CWidget>
         </div>
     </CPage>
 </template>
@@ -27,4 +24,7 @@ const breadcrumbs = [
         icon: 'i-heroicons-link'
     }
 ]
+// definePageMeta({
+//   layout: 'simple',
+// })
 </script>
