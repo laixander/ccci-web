@@ -41,8 +41,8 @@
 const profileDetails = [
     { 
         icon: 'i-lucide-mail', 
-        label: '', value: 
-        'john.doe@example.com' 
+        label: '', 
+        value: 'john.doe@example.com' 
     },
     //...
 ];

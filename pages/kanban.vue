@@ -28,8 +28,8 @@ const kanbanData: KanbanColumn[] = [
         description: 'Learn about new features in Nuxt 3', 
         label: 'Sample',
         avatars: [
-          { src: 'https://avatars.githubusercontent.com/u/739984?v=4', alt: 'benjamincanac' },
-          { src: 'https://avatars.githubusercontent.com/u/904724?v=4', alt: 'Atinux' },
+          { src: 'https://avatar.iran.liara.run/public/43', alt: 'benjamincanac' },
+          { src: 'https://avatar.iran.liara.run/public/51', alt: 'Atinux' },
         ],
       },
       { 
@@ -37,7 +37,7 @@ const kanbanData: KanbanColumn[] = [
         description: 'Set up TailwindCSS with Nuxt', 
         label: 'Sample',
         avatars: [
-          { src: 'https://avatars.githubusercontent.com/u/7547335?v=4', alt: 'smarroufin' }
+          { src: 'https://avatar.iran.liara.run/public/86', alt: 'smarroufin' }
         ],
       },
     ],
@@ -50,7 +50,7 @@ const kanbanData: KanbanColumn[] = [
         description: 'Create a dynamic Kanban UI', 
         label: 'Sample',
         avatars: [
-          { src: 'https://avatars.githubusercontent.com/u/7547335?v=4', alt: 'smarroufin' }
+          { src: 'https://avatar.iran.liara.run/public/13', alt: 'smarroufin' }
         ],
       },
     ],
@@ -63,8 +63,8 @@ const kanbanData: KanbanColumn[] = [
         description: 'Initialize Nuxt 3 application', 
         label: 'Sample',
         avatars: [
-          { src: 'https://avatars.githubusercontent.com/u/739984?v=4', alt: 'benjamincanac' },
-          { src: 'https://avatars.githubusercontent.com/u/904724?v=4', alt: 'Atinux' },
+          { src: 'https://avatar.iran.liara.run/public/67', alt: 'benjamincanac' },
+          { src: 'https://avatar.iran.liara.run/public/7', alt: 'Atinux' },
         ],
       },
     ],

@@ -1,7 +1,7 @@
 <template>
     <CPageProfile 
         title="Profile" 
-        avatarUrl="" 
+        avatarUrl="https://avatar.iran.liara.run/public/43" 
         name="John Doe"
         :details="profileDetails"
         :tabItems="tabItems">

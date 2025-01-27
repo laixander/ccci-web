@@ -30,18 +30,18 @@ const links = [
   {
     label: 'Cards',
     icon: 'i-lucide-lab-card-credit',
-    to: '/Cards'
+    to: '/cards'
   },
   {
     label: 'Kanban',
     icon: 'i-lucide-square-kanban',
     to: '/kanban'
   },
-  {
-    label: 'Notifications',
-    icon: 'i-lucide-bell',
-    to: '/notifications'
-  },
+  // {
+  //   label: 'Notifications',
+  //   icon: 'i-lucide-bell',
+  //   to: '/notifications'
+  // },
   {
     label: 'Settings',
     icon: 'i-lucide-settings',
