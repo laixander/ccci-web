@@ -1,7 +1,5 @@
 <template>
-    <div class="flex h-screen bg-gray-100 dark:bg-gray-900">
-        <!-- sidebar -->
-        <CSidebarNarrow :items="menu" title="UI Development" :hasModeButton="false" />
+    <div class="flex h-screen">
         <aside class="w-80 bg-white border-r dark:border-gray-800 dark:bg-gray-950 shadow-md flex flex-col">
             <header
                 class="flex justify-between items-center p-4 text-md font-semibold text-gray-700 dark:text-gray-200 border-b dark:border-gray-800">
@@ -110,17 +108,17 @@
                 </template>
             </UTabs>
         </aside>
-
         <main class="flex-1 flex flex-col">
-            <CHeader class="py-3 bg-white" :hasChat="false" :hasLogo="false" 
-            :hasMenu="false" :hasMenuToggle="false" :hasSearchInput="true" :isSticky="true"></CHeader>
-            
-            <!-- <header class="flex justify-between items-center p-4 border-b dark:border-gray-800 bg-white">
-                <UInput icon="i-lucide-search" size="sm" color="white" :trailing="false" placeholder="Search..." />
-            </header> -->
+            <CHeader class="py-3 bg-white" 
+                :hasChat="false" 
+                :hasLogo="false" 
+                :hasMenu="false" 
+                :hasMenuToggle="false" 
+                :hasSearchInput="true" 
+                :isSticky="false">
+            </CHeader>
 
-            <!-- chatbox -->
-            <div class="flex-1 flex">
+            <div class="flex-1 flex overflow-y-hidden">
                 <div class="flex-1 flex flex-col bg-gray-50 dark:bg-gray-950 border-r dark:border-gray-800">
                     <div class="flex-1 p-4">
                         <!-- <h2 class="text-lg font-bold text-gray-800 dark:text-gray-100">Chat with Jane</h2> -->
@@ -150,48 +148,55 @@
                         <h2 class="font-bold">Jane Smith</h2>
                         <p class="text-xs text-gray-400 dark:text-gray-600">Last seen 2 hrs ago</p>
                     </header>
-                    <div class="flex-1 overflow-y-auto">
-                        <UAccordion :items="details" :ui="{ wrapper: 'divide-y dark:divide-gray-800', default: { color: 'gray', variant: 'soft', class: 'bg-white p-4 rounded-none' } }">
+                        <UAccordion :items="details" :ui="{ wrapper: 'divide-y dark:divide-gray-800', item: { base: '' }, default: { color: 'gray', variant: 'soft', class: 'bg-white p-4 rounded-none' } }">
                             <template #user-details>
                                 <div class="p-4">
                                     <CListDefinition :items="detialsList" />
                                 </div>
                             </template>
                             <template #files>
-                                <div class="p-4 space-y-2.5">
+                                <div class="p-4 space-y-2.5 flex-1 flex-grow overflow-y-auto">
                                     <CCardFile :items="files" />
                                 </div>
                             </template>
                         </UAccordion>
-                    </div>
                 </div>
 
             </div>
+
         </main>
-
-        <UModal v-model="isOpen" :ui="{ container: 'sm:items-start' }">
-            <UCard>
-                <template #header>
-                    <div class="flex items-center justify-between"> 
-                        <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
-                            New Chat
-                        </h3>
-                        <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
-                            @click="closeModal()" />
-                    </div>
-                </template>
-
-            </UCard>
-        </UModal>
     </div>
+
+    <UModal v-model="isOpen" :ui="{ container: 'sm:items-start' }">
+        <UCard>
+            <template #header>
+                <div class="flex items-center justify-between"> 
+                    <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+                        New Chat
+                    </h3>
+                    <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
+                        @click="closeModal()" />
+                </div>
+            </template>
+
+        </UCard>
+    </UModal>
 </template>
 
 <script setup lang="ts">
 definePageMeta({
-    layout: 'clean',
+    layout: 'narrow',
+    hasHeader: false,
+    hasFooter: false,
 })
 
-// sidebar logic
+// modal
+const isOpen = ref(false);
+function closeModal() {
+    isOpen.value = false;
+}
+
+// sidebar dataset
 const users = [
     { id: 1, name: 'John Doe', avatar: 'https://avatar.iran.liara.run/public/24', lastMessage: 'Hey, how are you?', newMessage: true, online: true },
     { id: 2, name: 'Jane Smith', avatar: 'https://avatar.iran.liara.run/public/100', lastMessage: 'Can you send the file?', newMessage: true },
@@ -236,33 +241,14 @@ const items = [{
     icon: 'i-lucide-library-big',
 }]
 
-// chatbox logic
+// chatbox dataset
 const messages = [
     { id: 1, from: 'me', text: 'Hi, Jane!' },
     { id: 2, from: 'Jane', text: 'Hey! How are you?' },
     { id: 3, from: 'me', text: 'I\'m good, you?' },
 ];
 
-// menu logic
-type MenuItem = {
-    icon: string,
-    title: string,
-    path?: string
-};
-const menu = [
-    { icon: 'i-lucide-message-square', title: 'Chat', path: '/chat' },
-    { icon: 'i-lucide-user-round', title: 'Contacts', path: '/contact' },
-    { icon: 'i-lucide-paperclip', title: 'Attachments', path: '/attachments' },
-    { icon: 'i-lucide-settings', title: 'Settings', path: '/settings' },
-]
-
-// modal logic
-const isOpen = ref(false);
-function closeModal() {
-    isOpen.value = false;
-}
-
-// accordion logic
+// accordion
 const details = [{
   label: 'User Details',
   icon: 'i-lucide-info',
@@ -275,7 +261,7 @@ const details = [{
   slot: 'files'
 }]
 
-// details list
+// details dataset
 const detialsList = [
     {
         item: 'Role',
@@ -288,7 +274,6 @@ const detialsList = [
         value: '2nd Year'
     }
 ]
-
 const files = [ 
     { file: 'Document.docx', name: 'Project Proposal', description: 'Shared by Alice on Jan 28, 2025' },
     { file: 'Spreadsheet.xlsx', name: 'Budget Report', description: 'Shared by Bob on Jan 27, 2025' },
