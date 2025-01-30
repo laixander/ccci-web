@@ -108,7 +108,7 @@
                 </template>
             </UTabs>
         </aside>
-        <main class="flex-1 flex flex-col">
+        <main class="flex-grow flex flex-col">
             <CHeader class="py-3 bg-white" 
                 :hasChat="false" 
                 :hasLogo="false" 
@@ -118,10 +118,10 @@
                 :isSticky="false">
             </CHeader>
 
-            <div class="flex-1 flex overflow-y-hidden">
-                <div class="flex-1 flex flex-col bg-gray-50 dark:bg-gray-950 border-r dark:border-gray-800">
-                    <div class="flex-1 p-4">
-                        <!-- <h2 class="text-lg font-bold text-gray-800 dark:text-gray-100">Chat with Jane</h2> -->
+            <div class="flex-grow flex overflow-y-hidden">
+                <div class="flex-grow flex flex-col bg-gray-50 dark:bg-gray-950 border-r dark:border-gray-800">
+                    <div class="flex-grow p-4">
+                        <h2 class="text-lg font-bold text-gray-800 dark:text-gray-100">Chat with Jane</h2>
                         <ul class="space-y-4 mt-4">
                             <li v-for="message in messages" :key="message.id"
                                 :class="{ 'text-right': message.from === 'me' }" class="text-sm">
@@ -142,8 +142,8 @@
                     </div>
                 </div>
 
-                <div class="w-80 bg-white dark:bg-gray-950">
-                    <header class="text-gray-700 dark:text-gray-200 text-center p-4 border-b dark:border-gray-800">
+                <div class="w-80 bg-white dark:bg-gray-950 overflow-y-auto">
+                    <header class="text-gray-700 dark:text-gray-200 text-center p-4 border-b dark:border-gray-800 sticky top-0 z-50 bg-white dark:bg-gray-950">
                         <UAvatar size="3xl" src="https://avatar.iran.liara.run/public/100" alt="Jane Smith" />
                         <h2 class="font-bold">Jane Smith</h2>
                         <p class="text-xs text-gray-400 dark:text-gray-600">Last seen 2 hrs ago</p>

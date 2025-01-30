@@ -1,16 +1,22 @@
-<template>
+<!-- <template>
     <CLayout mode="full" logo="/logo.png" name="UI Development" :links="links">
         <slot />
     </CLayout>
+  </template> -->
+
+  <template>
+    <CLayoutFull logo="/logo.png" name="UI Development" :links="links">
+      <slot />
+    </CLayoutFull>
   </template>
   
   <script setup lang="ts">
   
   const links = [
     {
-      label: 'Layout Mode',
+      label: 'Layouts',
       icon: 'i-lucide-file-code-2',
-      to: '/docs/layout-mode'
+      to: '/docs/'
     },
     {
       label: 'Page',

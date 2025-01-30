@@ -4,8 +4,8 @@
             <p>
                 <UBadge color="gray" size="md">&lt;CPageProfile /&gt;</UBadge> is a block level component
             </p>
-            <h4 class="dark:text-gray-300">Usage</h4>
-            <p>CPageProfile has the following props:</p>
+            <!-- <h4 class="dark:text-gray-300">Usage</h4> -->
+            <h4 class="dark:text-gray-300 mb-4">This page has the following props:</h4>
             <!-- <p>Pass an array to the <UBadge color="gray">:details</UBadge> and <UBadge color="gray">:tabItems</UBadge> prop of the CPageProfile component. Each prop can have the following:</p> -->
             <p><UBadge color="gray">avatarUrl</UBadge> is the avatar of the profile.</p>
             <p><UBadge color="gray">name</UBadge> is the name of the profile.</p>

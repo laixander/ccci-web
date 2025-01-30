@@ -1,7 +1,13 @@
-<template>
+<!-- <template>
   <CLayout mode="full" logo="logo.png" name="UI Development" :links="links" :help="true">
       <slot />
   </CLayout>
+</template> -->
+
+<template>
+  <CLayoutFull logo="logo.png" name="UI Development" :links="links" :help="true">
+    <slot />
+  </CLayoutFull>
 </template>
 
 <script setup lang="ts">

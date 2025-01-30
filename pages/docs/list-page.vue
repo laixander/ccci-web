@@ -5,9 +5,10 @@
                 <UBadge color="gray" size="md">&lt;CPageList /&gt;</UBadge> is a block level component
             </p>
 
-            <h4 class="dark:text-gray-300">Usage</h4>
+            <!-- <h4 class="dark:text-gray-300">Usage</h4> -->
 
-            <p>CPageList has the following props:</p>
+            <h4 class="dark:text-gray-300 mb-4">This page has the following props:</h4>
+
             <p><UBadge color="gray">:entries</UBadge> is the array of the entries.</p>
             <ul>
                 <li><UBadge color="gray">title</UBadge> &ndash; The title of the entry.</li>
