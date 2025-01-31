@@ -156,8 +156,8 @@
                         class="p-4 border-t bg-white dark:bg-gray-950 border-gray-200 dark:border-gray-800 flex items-center gap-2">
                         <UTextarea v-model="messageText" :rows="1" autoresize placeholder="Type a message..." size="md" class="w-full" @keydown.enter.prevent="sendMessage" />
                         <!-- File Preview -->
-                        <div v-if="selectedFile" class="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 p-2 rounded-lg">
-                            <p class="text-sm text-gray-700 dark:text-gray-300 truncate w-48">{{ selectedFile.name }}</p>
+                        <div v-if="selectedFile" class="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 ps-4 pe-2 h-full rounded-lg">
+                            <p class="text-xs text-gray-700 dark:text-gray-300 truncate">{{ selectedFile.name }}</p>
                             <UButton icon="i-lucide-x" variant="ghost" size="xs" square @click="removeFile" />
                         </div>
                         
@@ -245,6 +245,9 @@
                 </div>
             </template>
             <CListUser />
+            <template #footer>
+                <UButton label="Message" />
+            </template>
         </UCard>
     </UModal>
 </template>
