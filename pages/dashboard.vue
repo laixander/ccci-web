@@ -1,11 +1,7 @@
 <template>
     <CPage title="Dashboard" description="This is the Home Page" :banner="true" userName="Jane Copper" :breadcrumbs="breadcrumbs">
         <div class="flex flex-wrap gap-4 justify-center">
-            <CWidget description="Total number of users" count="3,000.00" icon="i-lucide-chart-no-axes-combined" bgColor="bg-amber-500"></CWidget>
-            <CWidget description="Total number of users" count="4,000.00" icon="i-lucide-chart-no-axes-combined" bgColor="bg-teal-500"></CWidget>
-            <CWidget description="Total number of users" count="3,000.00" icon="i-lucide-chart-no-axes-combined"></CWidget>
-            <CWidget description="Total number of users" count="4,000.00" icon="i-lucide-chart-no-axes-combined" bgColor="bg-rose-500"></CWidget>
-            <CWidget description="Total number of users" count="3,000.00" icon="i-lucide-chart-no-axes-combined" bgColor="bg-violet-500"></CWidget>
+            <CCardWidget :widgets="stats" />
         </div>
     </CPage>
 </template>
@@ -27,4 +23,11 @@ const breadcrumbs = [
 // definePageMeta({
 //   layout: 'simple',
 // })
+
+const stats =[
+    { count: 120, description: "Active Students", icon: "i-lucide-users", bgColor: "bg-blue-500" },
+    { count: 45, description: "New Enrollments", icon: "i-lucide-graduation-cap", bgColor: "bg-green-500" },
+    { count: 12, description: "Pending Requests", icon: "i-lucide-clock", bgColor: "bg-yellow-500" },
+    { count: 8, description: "Faculty Members", icon: "i-lucide-user", bgColor: "bg-purple-500" }
+]
 </script>
