@@ -1,32 +1,21 @@
 <template>
     <CPage title="Kanban">
-      <CKanban :initialData="kanbanData" :showAddButtons="true" />
+      <CKanban :initialData="kanbanData" showAddButtons />
     </CPage>
 </template>
 
 
 <script setup lang="ts">
 
-interface KanbanCard {
-  title: string;
-  description: string;
-  label: string;
-  avatars?: { src: string; alt: string }[];
-}
-
-interface KanbanColumn {
-  title: string;
-  cards: KanbanCard[];
-}
-
-const kanbanData: KanbanColumn[] = [
+const kanbanData = [
   {
     title: 'Backlog',
     cards: [
       { 
         title: 'Research Nuxt 3', 
         description: 'Learn about new features in Nuxt 3', 
-        label: 'Sample',
+        label: 'Research',
+        color: 'teal',
         avatars: [
           { src: 'https://avatar.iran.liara.run/public/43', alt: 'benjamincanac' },
           { src: 'https://avatar.iran.liara.run/public/51', alt: 'Atinux' },
@@ -35,7 +24,8 @@ const kanbanData: KanbanColumn[] = [
       { 
         title: 'Install TailwindCSS', 
         description: 'Set up TailwindCSS with Nuxt', 
-        label: 'Sample',
+        label: 'QA',
+        color: 'rose',
         avatars: [
           { src: 'https://avatar.iran.liara.run/public/86', alt: 'smarroufin' }
         ],
@@ -48,7 +38,8 @@ const kanbanData: KanbanColumn[] = [
       { 
         title: 'Build Kanban Component', 
         description: 'Create a dynamic Kanban UI', 
-        label: 'Sample',
+        label: 'Dev',
+        color: 'violet',
         avatars: [
           { src: 'https://avatar.iran.liara.run/public/13', alt: 'smarroufin' }
         ],
@@ -61,7 +52,8 @@ const kanbanData: KanbanColumn[] = [
       { 
         title: 'Setup Nuxt Project', 
         description: 'Initialize Nuxt 3 application', 
-        label: 'Sample',
+        label: 'Admin',
+        color: 'amber',
         avatars: [
           { src: 'https://avatar.iran.liara.run/public/67', alt: 'benjamincanac' },
           { src: 'https://avatar.iran.liara.run/public/7', alt: 'Atinux' },

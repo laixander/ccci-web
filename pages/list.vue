@@ -1,24 +1,43 @@
 <template>
-      <CPageList title="List" :definitionList="entries" :columns="5" />
+  <CPageList
+      title="List"
+      :columns="5"
+      :details="details"
+      :dropdownItems="dropdownItems"
+  />
 </template>
 
 <script setup lang="ts">
-const entries = [
-{
-    title: "Card 1",
-    image: "https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b",
-    list: [
-      { item: "Status", value: "Online" },
-      { item: "Health", value: "Good" },
-    ],
-  },
+const details = [
   {
-    title: "Card 2",
-    image: "https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b",
-    list: [
-      { item: "Status", value: "Offline" },
-      { item: "Health", value: "Critical" },
-    ],
-  },
+    name: 'James Gunn',
+    avatar: 'https://avatar.iran.liara.run/public/20',
+    itemDetail: [
+      { item: 'Age', value: '29' },
+      { item: 'Location', value: 'Philippines' },
+      { item: 'Role', value: 'Software Developer' }
+    ]
+  }
+];
+
+// Dropdown action items
+const dropdownItems = [
+  [{
+      label: 'Download',
+      icon: 'i-lucide-cloud-download',
+      click: () => console.log('Download'),
+  }, {
+      label: 'Share',
+      icon: 'i-lucide-share-2',
+      click: () => console.log('Share'),
+  }, {
+      label: 'View Details',
+      icon: 'i-lucide-info',
+      click: () => console.log('View'),
+  }], [{
+      label: 'Delete',
+      icon: 'i-lucide-trash-2',
+      click: () => console.log('Delete'),
+  }]
 ];
 </script>

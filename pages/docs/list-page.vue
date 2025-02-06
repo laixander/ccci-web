@@ -9,41 +9,53 @@
 
             <h4 class="dark:text-gray-300 mb-4">This page has the following props:</h4>
 
-            <p><UBadge color="gray">:entries</UBadge> is the array of the entries.</p>
+            <p><UBadge color="gray">:details</UBadge> is the array of the details.</p>
             <ul>
-                <li><UBadge color="gray">title</UBadge> &ndash; The title of the entry.</li>
-                <li><UBadge color="gray">image</UBadge> &ndash; The image of the entry.</li>
+                <li><UBadge color="gray">name</UBadge> &ndash; The name of the entry.</li>
+                <li><UBadge color="gray">avatar</UBadge> &ndash; The image of the entry.</li>
                 <li>
-                    <UBadge color="gray">list</UBadge> &ndash; The details of the entry.
+                    <UBadge color="gray">itemDetail</UBadge> &ndash; The details of the entry.
                     <ul>
                         <li><UBadge color="gray">item</UBadge> &ndash; The name of the item.</li>
                         <li><UBadge color="gray">value</UBadge> &ndash; The value of the item.</li>
                     </ul>
                 </li>
             </ul>
+            <p><UBadge color="gray">:dropdownItems</UBadge> is the actions.</p>
             <p><UBadge color="gray">:columns</UBadge> is the columns of the list.</p>
             <div class="relative">
 <pre ref="codeRef" class="language-html prose-pre">
 <code class="text-sm">&lt;!-- page/list.vue --&gt;
 &lt;template&gt;
     &lt;CPageList 
-        title="List" 
-        :entries="entries" 
-        :columns="4" 
+        title="List"
+        :columns="5"
+        :details="details"
+        :dropdownItems="dropdownItems"
     /&gt;
 &lt;/template&gt;
 
 &lt;script setup lang="ts"&gt;
-const entries = [
+const details = [
     {
-        title: "Item Title",
-        image: "image.jpg",
-        list: [
-            { item: "Name", value: "Value" },
-            //...
-        ],
+        name: 'James Gunn',
+        avatar: 'https://avatar.iran.liara.run/public/20',
+        itemDetail: [
+            { item: 'Age', value: '29' },
+            { item: 'Location', value: 'Philippines' },
+            { item: 'Role', value: 'Software Developer' }
+        ]
     },
     //...
+];
+
+const dropdownItems = [
+    {
+        label: 'Download',
+        icon: 'i-lucide-cloud-download',
+        click: () => console.log('Download'),
+    },
+    //..
 ];
 &lt;/script&gt;</code>
 </pre>
