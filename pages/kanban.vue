@@ -1,6 +1,6 @@
 <template>
     <CPage title="Kanban">
-      <CKanban :initialData="kanbanData" showAddButtons />
+      <CKanban :initialData="kanbanData" showAddButtons :assignee-options="assigneeOptions" />
     </CPage>
 </template>
 
@@ -16,9 +16,9 @@ const kanbanData = [
         description: 'Learn about new features in Nuxt 3', 
         label: 'Research',
         color: 'teal',
-        avatars: [
-          { src: 'https://avatar.iran.liara.run/public/43', alt: 'benjamincanac' },
-          { src: 'https://avatar.iran.liara.run/public/51', alt: 'Atinux' },
+        assignees: [
+          { src: 'https://avatar.iran.liara.run/public/43', alt: 'benjamincanac', label: "", value: "" },
+          { src: 'https://avatar.iran.liara.run/public/51', alt: 'Atinux', label: "", value: "" },
         ],
       },
       { 
@@ -26,8 +26,8 @@ const kanbanData = [
         description: 'Set up TailwindCSS with Nuxt', 
         label: 'QA',
         color: 'rose',
-        avatars: [
-          { src: 'https://avatar.iran.liara.run/public/86', alt: 'smarroufin' }
+        assignees: [
+          { src: 'https://avatar.iran.liara.run/public/86', alt: 'smarroufin', label: "", value: "" }
         ],
       },
     ],
@@ -40,8 +40,8 @@ const kanbanData = [
         description: 'Create a dynamic Kanban UI', 
         label: 'Dev',
         color: 'violet',
-        avatars: [
-          { src: 'https://avatar.iran.liara.run/public/13', alt: 'smarroufin' }
+        assignees: [
+          { src: 'https://avatar.iran.liara.run/public/13', alt: 'smarroufin', label: "", value: "" }
         ],
       },
     ],
@@ -54,12 +54,18 @@ const kanbanData = [
         description: 'Initialize Nuxt 3 application', 
         label: 'Admin',
         color: 'amber',
-        avatars: [
-          { src: 'https://avatar.iran.liara.run/public/67', alt: 'benjamincanac' },
-          { src: 'https://avatar.iran.liara.run/public/7', alt: 'Atinux' },
+        assignees: [
+          { src: 'https://avatar.iran.liara.run/public/67', alt: 'benjamincanac', label: "", value: "" },
+          { src: 'https://avatar.iran.liara.run/public/7', alt: 'Atinux', label: "", value: "" },
         ],
       },
     ],
   },
+];
+
+const assigneeOptions = [
+    { label: 'Benjamin Canac', value: 'benjamincanac', src: 'https://avatar.iran.liara.run/public/43', alt: 'Benjamin Canac' },
+    { label: 'Atinux', value: 'atinux', src: 'https://avatar.iran.liara.run/public/51', alt: 'Atinux' },
+    { label: 'Smarroufin', value: 'smarroufin', src: 'https://avatar.iran.liara.run/public/86', alt: 'Smarroufin' }
 ];
 </script>

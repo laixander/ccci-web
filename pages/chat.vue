@@ -177,7 +177,7 @@
                         :ui="{ wrapper: 'divide-y dark:divide-gray-800', item: { base: '' }, default: { color: 'gray', variant: 'soft', class: 'p-4 rounded-none' } }">
                         <template #user-details>
                             <div class="p-4">
-                                <CListDefinition :items="[
+                                <CListDefinition :definitionList="[
                                     { item: 'Role', value: selectedUser.role },
                                     { item: 'Course', value: selectedUser.course },
                                     { item: 'Year', value: selectedUser.year }
