@@ -1,7 +1,5 @@
 <template>
-    <CPage title="Kanban">
-      <CKanban :initialData="kanbanData" showAddButtons :assignee-options="assigneeOptions" />
-    </CPage>
+    <CPageKanban title="Kanban" :initialData="kanbanData" showAddButtons :assignee-options="assigneeOptions" />
 </template>
 
 
