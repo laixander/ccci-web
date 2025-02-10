@@ -1,25 +1,16 @@
 <template>
-    <CLoginSplit
+    <CLoginSimple
         :logo="'/logo.png'"
         title="Welcome Back!"
         subtitle="Please login to continue"
-        :bgImage="'https://images.unsplash.com/photo-1483366774565-c783b9f70e2c'"
         :loading="isLoading"
         :enableOAuth="true"
         v-model="credentials"
         @login="handleLogin"
         @recover="handleRecover"
+        :showBg="false"
     />
 </template>
-
-<!-- <script setup lang="ts">
-definePageMeta({
-    layout: 'layout',
-    hasHeader: true,
-    hasSidebar: true,
-    hasFooter: true,
-})
-</script> -->
 
 <script setup lang="ts">
 import { ref } from 'vue'
