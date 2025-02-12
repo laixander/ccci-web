@@ -1,5 +1,5 @@
 <template>
-    <CLayoutNarrow :menu="menu" title="Chat">
+    <CLayoutNarrow :menu="menu">
         <slot />
     </CLayoutNarrow>
 </template>

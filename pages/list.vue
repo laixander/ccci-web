@@ -13,9 +13,9 @@ const details = [
     name: 'James Gunn',
     avatar: 'https://avatar.iran.liara.run/public/20',
     itemDetail: [
-      { item: 'Age', value: '29' },
-      { item: 'Location', value: 'Philippines' },
-      { item: 'Role', value: 'Software Developer' }
+      { label: 'Age', value: '29' },
+      { label: 'Location', value: 'Philippines' },
+      { label: 'Role', value: 'Software Developer' }
     ]
   }
 ];

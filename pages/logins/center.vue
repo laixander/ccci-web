@@ -1,5 +1,5 @@
 <template>
-    <CLoginSimple
+    <CLoginCenter
         :logo="'/logo.png'"
         title="Welcome Back!"
         subtitle="Please login to continue"
@@ -8,7 +8,7 @@
         v-model="credentials"
         @login="handleLogin"
         @recover="handleRecover"
-        :showBg="false"
+        :bgImage="'https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b'"
     />
 </template>
 
