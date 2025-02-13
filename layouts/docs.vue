@@ -38,5 +38,10 @@
       icon: 'i-lucide-file-code-2',
       to: '/docs/profile-page'
     },
+    {
+      label: 'Cards',
+      icon: 'i-lucide-file-code-2',
+      to: '/docs/cards'
+    },
   ]
   </script>

@@ -1,37 +1,59 @@
 <template>
-    <CPagePortal :apps="apps" :actions="actions" />
+    <CPagePortal :apps="apps" :actions="actions" @signUp="handleSignUp" @logIn="handleLogin" />
 </template>
 
 <script setup lang="ts">
 definePageMeta({
-  layout: 'simple'
+    layout: 'landing'
 })
 
-const apps = [
+const apps = ref([
     {
-        name: "Human Resource Information System",
-        description: "It's a software program that helps businesses manage employee data and HR processes.",
-        logo: "",
-        headerBgColor: "bg-blue-500"
+        name: "HRIS",
+        description: "Human Resource Information System",
+        headerBgColor: "bg-purple-500",
     },
     {
-        name: "Campus Management System",
-        description: "a software platform designed to automate and streamline various administrative and academic tasks within an educational institution like a school, college, or university",
-        logo: "",
-        headerBgColor: "bg-green-500"
-    }
-];
+        name: "LMS",
+        description: "Learning Management System",
+        headerBgColor: "bg-green-500",
+    },
+    {
+        name: "DMS",
+        description: "Document Management System",
+        headerBgColor: "bg-cyan-500",
+    },
+    {
+        name: "AMS",
+        description: "Asset Management System",
+        headerBgColor: "bg-rose-500",
+    },
+]);
 
-const actions = [
+const actions = ref([
     {
         label: "Open",
-        icon: "i-lucide-folder-open",
-        click: (app: any) => console.log(`Opening ${app.name}`)
+        icon: "lucide:external-link",
+        click: (app: any) => {
+            console.log(`Opening ${app.name}`);
+            alert(`Opening ${app.name}`);
+        },
     },
     {
-        label: "Delete",
-        icon: "i-lucide-trash-2",
-        click: (app: any) => console.log(`Deleting ${app.name}`)
-    }
-];
+        label: "Settings",
+        icon: "lucide:settings",
+        click: (app: any) => {
+            console.log(`Opening settings for ${app.name}`);
+            alert(`Opening settings for ${app.name}`);
+        },
+    },
+]);
+
+const handleSignUp = () => {
+  console.log("Sign Up button clicked");
+};
+
+const handleLogin = () => {
+  console.log("Log In button clicked");
+};
 </script>
