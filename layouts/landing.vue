@@ -8,33 +8,28 @@
   
   const links = [
     {
-      label: 'Dashboard',
-      icon: 'i-lucide-house',
-      to: '/dashboard'
+      label: 'Hero',
+      // icon: 'i-lucide-id-card',
+      to: '/hero'
     },
     {
-      label: 'Profile',
-      icon: 'i-lucide-circle-user-round',
-      to: '/profile'
+      label: 'Feature',
+      to: '/feature'
     },
     {
-      label: 'Wizard',
-      icon: 'i-lucide-wand',
-      to: '/wizard'
+      label: 'Stats',
+      to: '/stats'
     },
     {
       label: 'List',
-      icon: 'i-lucide-grid',
       to: '/list'
     },
     {
       label: 'Notifications',
-      icon: 'i-lucide-bell',
       to: '/notifications'
     },
     {
       label: 'Settings',
-      icon: 'i-lucide-settings',
       to: '/settings'
     }
   ]
