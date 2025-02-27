@@ -34,6 +34,7 @@ const actions = ref([
     {
         label: "Open",
         icon: "lucide:external-link",
+        to: "dashboard",
         click: (app: any) => {
             console.log(`Opening ${app.name}`);
             alert(`Opening ${app.name}`);

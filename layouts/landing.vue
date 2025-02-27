@@ -7,6 +7,11 @@
   <script setup lang="ts">
   
   const links = [
+  {
+      label: 'Home',
+      // icon: 'i-lucide-id-card',
+      to: '/portal'
+    },
     {
       label: 'Hero',
       // icon: 'i-lucide-id-card',
@@ -21,8 +26,8 @@
       to: '/stats'
     },
     {
-      label: 'List',
-      to: '/list'
+      label: 'Footer',
+      to: '/footer'
     },
     {
       label: 'Notifications',
