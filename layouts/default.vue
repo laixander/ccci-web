@@ -4,10 +4,16 @@
   </CLayout>
 </template> -->
 
-<template>
+<!-- <template>
   <CLayoutFull logo="logo.png" name="UI Development" :links="links" :help="true">
     <slot />
   </CLayoutFull>
+</template> -->
+
+<template>
+  <CLayoutFull2 logo="logo.png" name="UI Development" :links="links">
+    <slot />
+  </CLayoutFull2>
 </template>
 
 <script setup lang="ts">
