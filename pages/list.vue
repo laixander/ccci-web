@@ -17,6 +17,51 @@ const details = [
       { label: 'Location', value: 'Philippines' },
       { label: 'Role', value: 'Software Developer' }
     ]
+  },
+  {
+    name: 'James Gunn',
+    avatar: 'https://avatar.iran.liara.run/public/20',
+    itemDetail: [
+      { label: 'Age', value: '29' },
+      { label: 'Location', value: 'Philippines' },
+      { label: 'Role', value: 'Software Developer' }
+    ]
+  },
+  {
+    name: 'James Gunn',
+    avatar: 'https://avatar.iran.liara.run/public/20',
+    itemDetail: [
+      { label: 'Age', value: '29' },
+      { label: 'Location', value: 'Philippines' },
+      { label: 'Role', value: 'Software Developer' }
+    ]
+  },
+  {
+    name: 'James Gunn',
+    avatar: 'https://avatar.iran.liara.run/public/20',
+    itemDetail: [
+      { label: 'Age', value: '29' },
+      { label: 'Location', value: 'Philippines' },
+      { label: 'Role', value: 'Software Developer' }
+    ]
+  },
+  {
+    name: 'James Gunn',
+    avatar: 'https://avatar.iran.liara.run/public/20',
+    itemDetail: [
+      { label: 'Age', value: '29' },
+      { label: 'Location', value: 'Philippines' },
+      { label: 'Role', value: 'Software Developer' }
+    ]
+  },
+  {
+    name: 'James Gunn',
+    avatar: 'https://avatar.iran.liara.run/public/20',
+    itemDetail: [
+      { label: 'Age', value: '29' },
+      { label: 'Location', value: 'Philippines' },
+      { label: 'Role', value: 'Software Developer' }
+    ]
   }
 ];
 
