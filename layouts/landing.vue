@@ -1,5 +1,5 @@
 <template>
-    <CLayoutLanding logo="logo.png" name="UI Development" :links="links">
+    <CLayoutLanding logo="logo.png" name="UI Development" :links="links" :is-logged-in="false">
       <slot />
     </CLayoutLanding>
   </template>

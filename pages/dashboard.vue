@@ -1,25 +1,22 @@
 <template>
-    <CPage title="Dashboard" description="This is the Home Page" :banner="true" userName="Jane Copper" :breadcrumbs="breadcrumbs">
+    <CPage title="Dashboard" description="This is the Home Page" :banner="true" userName="Jane Copper">
         <div class="flex flex-wrap gap-4 justify-center">
             <CCardWidget :widgets="stats" />
         </div>
     </CPage>
 </template>
 <script setup lang="ts">
-const breadcrumbs = [
-    {
-        label: 'Home',
-        to: '/'
-    }, {
-        label: 'Navigation',
-        to: '/'
-    }, {
-        label: 'Breadcrumb',
-    }
-]
-// definePageMeta({
-//   layout: 'simple',
-// })
+// const breadcrumbs = [
+//     {
+//         label: 'Home',
+//         to: '/'
+//     }, {
+//         label: 'Navigation',
+//         to: '/'
+//     }, {
+//         label: 'Breadcrumb',
+//     }
+// ]
 
 const stats =[
     { count: 120, description: "Active Students", icon: "i-lucide-users", bgColor: "bg-blue-500" },

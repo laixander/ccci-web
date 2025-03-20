@@ -11,9 +11,9 @@
 </template> -->
 
 <template>
-  <CLayoutFull2 logo="logo.png" name="UI Development" :links="links">
+  <CLayoutFull logo="logo.png" name="UI Development" :links="links" :is-logged-in="true">
     <slot />
-  </CLayoutFull2>
+  </CLayoutFull>
 </template>
 
 <script setup lang="ts">
