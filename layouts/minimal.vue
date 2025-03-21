@@ -1,7 +1,7 @@
 <template>
-    <CLayoutLanding logo="logo.png" name="UI Development" :links="links" :is-logged-in="true">
+    <CLayoutMinimal logo="logo.png" name="UI Development" :links="links" :is-logged-in="false">
       <slot />
-    </CLayoutLanding>
+    </CLayoutMinimal>
   </template>
   
   <script setup lang="ts">
@@ -29,13 +29,5 @@
       label: 'Footer',
       to: '/footer'
     },
-    {
-      label: 'Notifications',
-      to: '/notifications'
-    },
-    {
-      label: 'Settings',
-      to: '/settings'
-    }
   ]
   </script>

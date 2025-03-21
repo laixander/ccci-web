@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 definePageMeta({
-    layout: 'landing'
+    layout: 'minimal'
 })
 
 const apps = ref([

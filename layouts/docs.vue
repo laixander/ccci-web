@@ -5,9 +5,9 @@
   </template> -->
 
   <template>
-    <CLayoutFull logo="/logo.png" name="UI Development" :links="links">
+    <CLayoutDashboard logo="/logo.png" name="UI Development" :links="links">
       <slot />
-    </CLayoutFull>
+    </CLayoutDashboard>
   </template>
   
   <script setup lang="ts">

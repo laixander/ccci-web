@@ -1,5 +1,5 @@
 <template>
-  <CLoginSide
+  <CLoginSplit
       :logo="'/logo.png'"
       title="Welcome Back!"
       subtitle="Please login to continue"
@@ -43,6 +43,6 @@ const handleRecover = () => {
 }
 
 definePageMeta({
-  layout: 'clean'
+  layout: 'centered'
 })
 </script>

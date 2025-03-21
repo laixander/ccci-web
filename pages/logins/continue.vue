@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 definePageMeta({
-    layout: 'clean'
+    layout: 'centered'
 })
 
 import { ref } from 'vue'
