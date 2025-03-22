@@ -1,7 +1,7 @@
 <template>
   <CPageList
       title="List"
-      :columns="5"
+      :columns="4"
       :details="details"
       :dropdownItems="dropdownItems"
   />
