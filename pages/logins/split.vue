@@ -10,7 +10,7 @@
       @login="handleLogin"
       @recover="handleRecover"
       position="right"
-      styleType="diagonal"
+      styleType="straight"
   />
 </template>
 
