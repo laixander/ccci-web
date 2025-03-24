@@ -8,6 +8,10 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  title: 'List'
+});
+
 const details = [
   {
     name: 'James Gunn',

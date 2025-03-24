@@ -30,6 +30,10 @@ definePageMeta({
 </script> -->
 
 <script setup lang="ts">
+definePageMeta({
+  title: 'Profile'
+});
+
 const profileDetails = [
     { icon: 'i-lucide-mail', label: '', value: 'john.doe@example.com' },
     { icon: 'i-lucide-smartphone', label: '', value: '+123 456 7890' },

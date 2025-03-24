@@ -5,12 +5,6 @@
 </template>
 
 <script setup lang="ts">
-
-type MenuItem = {
-    icon: string,
-    title: string,
-    path?: string
-};
 const menu = [
     { icon: 'i-lucide-message-square', title: 'Chat', path: '/chat' },
     { icon: 'i-lucide-user-round', title: 'Contacts', path: '/contact' },

@@ -6,17 +6,9 @@
     </CPage>
 </template>
 <script setup lang="ts">
-// const breadcrumbs = [
-//     {
-//         label: 'Home',
-//         to: '/'
-//     }, {
-//         label: 'Navigation',
-//         to: '/'
-//     }, {
-//         label: 'Breadcrumb',
-//     }
-// ]
+definePageMeta({
+  title: 'Dashboard'
+});
 
 const stats =[
     { count: 120, description: "Active Students", icon: "i-lucide-users", bgColor: "bg-blue-500" },

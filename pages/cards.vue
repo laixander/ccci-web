@@ -25,6 +25,9 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  title: 'Cards'
+});
 
 const itemDetail = [
   { label: 'Name', value: 'James Gunn' },
