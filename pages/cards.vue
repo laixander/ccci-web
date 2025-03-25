@@ -29,16 +29,14 @@ definePageMeta({
   title: 'Cards'
 });
 
-const itemDetail = [
-  { label: 'Name', value: 'James Gunn' },
-  { label: 'Age', value: '29' },
-  { label: 'Location', value: 'Philippines' },
-  { label: 'Role', value: 'Software Developer' },
+const details = [
+    { title: 'James Gunn', subtitle: 'Front-end Developer', avatar: 'https://avatar.iran.liara.run/public/20' }
 ];
 
-const details = [
-        { name: 'James Gunn', avatar: 'https://avatar.iran.liara.run/public/20' }
-]
+const itemDetail = [
+  { label: 'Email', value: 'james.gunn@example.com' },
+  { label: 'Role', value: 'Member' },
+];
 
 const avatars = [
     { src: 'https://avatar.iran.liara.run/public/47', alt: 'Alex Luthor' },
@@ -49,12 +47,12 @@ const avatars = [
 
 const stats = [
     { count: 45, description: "New Enrollments", icon: "i-lucide-graduation-cap", bgColor: "bg-green-500" },
-]
+];
 
 const files = [
     { file: 'Presentation.pptx', name: 'Project Proposal', description: 'Shared by Alice on Jan 28, 2025' },
     { avatar: 'https://avatar.iran.liara.run/public/54', name: 'Jane Smith', description: 'Faculty' },
-]
+];
 
 // Dropdown actions
 const dropdownItems = [
@@ -79,18 +77,18 @@ const dropdownItems = [
 
 const profiles = [
     { name: 'Jane Smith', description: 'Business Analysis Manager', photo: 'https://avatar.iran.liara.run/public/94' }
-]
+];
 
 const actions = [
     { label: 'Call', icon: 'i-lucide-smartphone', click: () => console.log('View Clicked')  },
     { label: 'Email', icon: 'i-lucide-mail', click: () => console.log('Email Clicked')  },
-]
+];
 
 const tasks = [
     { title: 'UI Development', description: 'Lorem ipsum dolor sit amet', label: 'Development', color: 'cyan', progress: '70' }
-]
+];
 
 const posts = [
     { name: 'Jane Smith', avatar: 'https://avatar.iran.liara.run/public/49', timestamp: 'Feb 5, 2025 11:29 AM', content: 'Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet', figure: 'https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b', caption: 'Figure caption goes here' }
-]
+];
 </script>

@@ -1,14 +1,10 @@
 <template>
-    <CWrapper>
-        <template #banner>
-            <CBannerSystem userName="Jane Doe" />
-        </template>
-        <CGrid :columns="4">
+    <CPage title="Dashboard" description="This is the Home Page" :banner="true" userName="Jane Copper">
+        <div class="flex flex-wrap gap-4 justify-center">
             <CCardWidget :widgets="stats" />
-        </CGrid>
-    </CWrapper>
+        </div>
+    </CPage>
 </template>
-
 <script setup lang="ts">
 definePageMeta({
   title: 'Dashboard'

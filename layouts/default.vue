@@ -37,11 +37,11 @@ const links = [
     icon: 'i-lucide-square-kanban',
     to: '/kanban'
   },
-  // {
-  //   label: 'Notifications',
-  //   icon: 'i-lucide-bell',
-  //   to: '/notifications'
-  // },
+  {
+    label: 'Tabs',
+    icon: 'i-lucide-toggle-left',
+    to: '/tabs'
+  },
   {
     label: 'Settings',
     icon: 'i-lucide-settings',
