@@ -6,6 +6,7 @@
                 <div class="font-bold text-lg text-gray-800 dark:text-gray-100">
                     Basic Usage
                 </div>
+                <UBadge color="white" variant="solid" label="<CTabs />" />
                 <div class="font-light text-sm text-gray-500 dark:text-gray-100">
                     Set up the  <UBadge color="white" variant="solid" label="tabs" />
                 </div>

@@ -5,7 +5,7 @@
             name="John Doe"
             :details="profileDetails"
         />
-        <CTabs full :tabs="profileTabs" variant="segmented">
+        <CTabs full :tabs="profileTabs">
             <template #profile>
                 <UCard>
                     Profile Content

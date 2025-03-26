@@ -13,7 +13,7 @@
                 <CGrid :columns="4">
                     <CCardDetail :details="employee" :dropdownItems="dropdownItems(employee[0])" v-for="n in 7">
                         <template #detailType>
-                            <CListDefinition :definitionList="employeeDetails" />
+                            <CListItem :itemList="employeeDetails" />
                         </template>
                     </CCardDetail>
                 </CGrid>

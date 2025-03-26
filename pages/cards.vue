@@ -15,7 +15,7 @@
 
             <CCardDetail :details="details" :actions="actions" :dropdownItems="dropdownItems">
                 <template #detailType>
-                    <CListDefinition :definitionList="itemDetail" />
+                    <CListItem :itemList="itemDetail" />
                 </template>
             </CCardDetail>
 
