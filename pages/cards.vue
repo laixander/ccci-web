@@ -1,27 +1,24 @@
 <template>
-    <CPage title="Cards">
-        <CGrid :columns="4">
-            <CCardPost :posts="posts" :actions="actions" :dropdownItems="dropdownItems" />
+    <CWrapper>
+        <CCardPost :posts="posts" :actions="actions" :dropdownItems="dropdownItems" />
 
-            <div class="space-y-4">
-                <CCardWidget :widgets="stats" />
-                <CCardFile :files="files" :dropdownItems="dropdownItems" />
-            </div>
+        <CCardWidget :widgets="stats" />
+        
+        <CCardFile :files="files" :dropdownItems="dropdownItems" />
 
-            <div class="space-y-4">
-                <CCardProfile :profiles="profiles" layoutType="vertical" :actions="actions" />
-                <CCardProfile :profiles="profiles" layoutType="horizontal" />
-            </div>
+        <div class="space-y-4">
+            <CCardProfile :profiles="profiles" layoutType="vertical" :actions="actions" />
+            <CCardProfile :profiles="profiles" layoutType="horizontal" />
+        </div>
 
-            <CCardDetail :details="details" :actions="actions" :dropdownItems="dropdownItems">
-                <template #detailType>
-                    <CListItem :itemList="itemDetail" />
-                </template>
-            </CCardDetail>
+        <CCardDetail :details="details" :actions="actions" :dropdownItems="dropdownItems">
+            <template #detailType>
+                <CListItem :itemList="itemDetail" />
+            </template>
+        </CCardDetail>
 
-            <CCardTask :tasks="tasks" :actions="actions" :dropdownItems="dropdownItems" :avatars="avatars" />
-        </CGrid>
-    </CPage>
+        <CCardTask :tasks="tasks" :actions="actions" :dropdownItems="dropdownItems" :avatars="avatars" />
+    </CWrapper>
 </template>
 
 <script setup lang="ts">

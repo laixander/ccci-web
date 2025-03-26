@@ -54,6 +54,11 @@ const links = [
       label: 'Items',
       icon: 'i-lucide-layout-list',
       to: '/items'
+    },
+    {
+      label: 'Testing',
+      icon: 'i-lucide-wand-sparkles',
+      to: '/testing'
     }
   ]
 ]
