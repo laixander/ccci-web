@@ -16,11 +16,11 @@
 
             <UCard>
                 <CListItem :itemList="employeeDetails">
-                    <template #value-3>
-                        <UButton label="lindsay.walton@example.com" variant="link" :padded="false" icon="i-lucide-external-link" trailing :ui="{ font: 'font-normal' }" />
+                    <template #value-3="{ list }">
+                        <UButton :label="list.value.email" variant="link" :padded="false" icon="i-lucide-external-link" trailing :ui="{ font: 'font-normal' }" />
                     </template>
-                    <template #value-5>
-                        <UBadge label="Online" color="lime" :ui="{ rounded: 'rounded-full' }" />
+                    <template #value-5="{ list }">
+                        <UBadge :label="list.value.label" :color="list.value.color" :ui="{ rounded: 'rounded-full' }" />
                     </template>
                 </CListItem>
             </UCard>
@@ -63,9 +63,9 @@ const uiCardConfig = { body: { padding: 'p-0 sm:p-0' } }
 const employeeDetails = [
     { label: 'Name', value: 'Lindsay Walton' },
     { label: 'Title', value: 'Front-end Developer' },
-    { label: 'Email', value: '' },
+    { label: 'Email', value: { email: 'lindsay.walton@example.com' } },
     { label: 'Role', value: 'Member' },
-    { label: 'Status', value: '' },
+    { label: 'Status', value: { label: 'Online', color: 'lime' } },
 ];
 
 const profiles = [

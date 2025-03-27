@@ -117,7 +117,7 @@ const columns = [{
     key: 'actions'
 }]
 
-const dropdownItems = row => [
+const dropdownItems = (row: any) => [
     [{
         label: 'Edit',
         icon: 'i-heroicons-pencil-square-20-solid',
