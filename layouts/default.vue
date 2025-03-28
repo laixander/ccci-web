@@ -51,9 +51,9 @@ const links = [
       to: '/tabs'
     },
     {
-      label: 'Items',
+      label: 'Item',
       icon: 'i-lucide-layout-list',
-      to: '/items'
+      to: '/item'
     },
     {
       label: 'Testing',

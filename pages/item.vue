@@ -3,21 +3,33 @@
         <div class="space-y-8">
             <div class="space-y-2">
                 <div class="font-bold text-lg text-gray-800 dark:text-gray-100">
-                    Item List
+                    List of Item
                 </div>
                 <UBadge color="white" variant="solid" label="<CListItem />" />
                 <div class="font-light text-sm text-gray-500 dark:text-gray-100">
                     Set up the <UBadge color="white" variant="solid" label="itemList" /> prop
                 </div>
                 <div class="font-light text-sm text-gray-500 dark:text-gray-100">
-                    Use the <UBadge color="white" variant="solid" label="label" /> and <UBadge color="white" variant="solid" label="value" /> to add item
+                    Use the <UBadge color="white" variant="solid" label="label" /> and <UBadge color="white" variant="solid" label="value" /> to add basic items
                 </div>
             </div>
 
             <UCard>
-                <CListItem :itemList="employeeDetails">
+                <CListItem :itemList="employeeDetails" />
+            </UCard>
+
+            <div class="font-light text-sm text-gray-500 dark:text-gray-100">
+                Use the <UBadge color="white" variant="solid" label="slot" /> for custom <UBadge color="white" variant="solid" label="value" />
+            </div>
+
+            <UCard>
+                <CListItem :itemList="employeeDetails2">
                     <template #value-3="{ list }">
-                        <UButton :label="list.value.email" variant="link" :padded="false" icon="i-lucide-external-link" trailing :ui="{ font: 'font-normal' }" />
+                        <UButton :label="list.value.email" variant="link" :padded="false" trailing :ui="{ font: 'font-normal' }">
+                            <template #trailing>
+                                <UIcon name="i-lucide-external-link" class="w-4 h-4" />
+                            </template>
+                        </UButton>
                     </template>
                     <template #value-5="{ list }">
                         <UBadge :label="list.value.label" :color="list.value.color" :ui="{ rounded: 'rounded-full' }" />
@@ -27,7 +39,7 @@
 
             <div class="space-y-2">
                 <div class="font-bold text-lg text-gray-800 dark:text-gray-100">
-                    Profile List
+                    List of Profile
                 </div>
                 <UBadge color="white" variant="solid" label="<CListProfile />" />
                 <div class="font-light text-sm text-gray-500 dark:text-gray-100">
@@ -50,17 +62,46 @@
                 <CListProfile :profiles="profiles" :checkbox="true" />
             </UCard>
         </div>
+
+        <div class="relative overflow-hidden">
+<pre ref="codeRef" class="language-html prose-pre !my-0">
+<code class="text-sm">&lt;!-- pages/index.vue --&gt;
+&lt;template&gt;
+    &lt;CListItem 
+        :itemList="employeeDetails"
+    /&gt;
+&lt;/template&gt;
+
+&lt;script setup lang="ts"&gt;
+const employeeDetails = [
+    { label: 'Name', value: 'Lindsay Walton' },
+    { label: 'Title', value: 'Front-end Developer' },
+    { label: 'Role', value: 'Member' },
+    //...
+];
+&lt;/script&gt;</code>
+</pre>
+            <CopyToClipboard :pre-ref="codeRef" />
+            </div>
     </CWrapper>
 </template>
 
 <script setup lang="ts">
 definePageMeta({
-  title: 'Items'
+  title: 'Item'
 });
+
+const codeRef = ref<HTMLPreElement | null>(null); // Reference for the <pre> element
 
 const uiCardConfig = { body: { padding: 'p-0 sm:p-0' } }
 
 const employeeDetails = [
+    { label: 'Name', value: 'Lindsay Walton' },
+    { label: 'Title', value: 'Front-end Developer' },
+    { label: 'Role', value: 'Member' },
+];
+
+const employeeDetails2 = [
     { label: 'Name', value: 'Lindsay Walton' },
     { label: 'Title', value: 'Front-end Developer' },
     { label: 'Email', value: { email: 'lindsay.walton@example.com' } },

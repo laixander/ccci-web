@@ -181,15 +181,15 @@
             </div>
             <UCard>
                 <CTabs title="Segmented with Search Input" :tabs="tabs" variant="segmented">
-                    <UInput
-                        icon="i-heroicons-magnifying-glass-20-solid"
-                        size="sm"
-                        color="white"
-                        :trailing="false"
-                        placeholder="Search..."
-                        :ui="{ base: 'w-2/5' }"
-                    />
-
+                    <div class="grid grid-cols-1 w-2/3">
+                        <UInput
+                            icon="i-heroicons-magnifying-glass-20-solid"
+                            size="sm"
+                            color="white"
+                            :trailing="false"
+                            placeholder="Search..."
+                        />
+                    </div>
                     <template #tab1>
                         <UAlert color="primary" variant="soft" description="Tab 1 content" />
                     </template>

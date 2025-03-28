@@ -20,7 +20,11 @@
                     <div class="text-sm text-gray-500 dark:text-gray-400">{{ cardDetail.description }}</div>
                     <CListItem :itemList="cardDetail.itemList">
                         <template #value-1="{ list }">
-                            <UButton :label="list.value.email" variant="link" :padded="false" icon="i-lucide-external-link" trailing :ui="{ font: 'font-normal' }" />
+                            <UButton :label="list.value.email" variant="link" :padded="false" trailing :ui="{ font: 'font-normal' }">
+                                <template #trailing>
+                                    <UIcon name="i-lucide-external-link" class="w-4 h-4" />
+                                </template>
+                            </UButton>
                         </template>
                         <template #value-3="{ list }">
                             <UBadge :label="list.value.label" :color="list.value.color" :ui="{ rounded: 'rounded-full' }" />
