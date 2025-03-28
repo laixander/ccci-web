@@ -19,6 +19,9 @@
                 <template #mainContent="{ cardDetail }">
                     <div class="text-sm text-gray-500 dark:text-gray-400">{{ cardDetail.description }}</div>
                     <CListItem :itemList="cardDetail.itemList">
+                        <template #value-1="{ list }">
+                            <UButton :label="list.value.email" variant="link" :padded="false" icon="i-lucide-external-link" trailing :ui="{ font: 'font-normal' }" />
+                        </template>
                         <template #value-3="{ list }">
                             <UBadge :label="list.value.label" :color="list.value.color" :ui="{ rounded: 'rounded-full' }" />
                         </template>
@@ -40,7 +43,7 @@ const card1 = [
         subtitle: 'Frontend Developer',
         description: 'Lorem ipsum dolor sit amet consectetur.',
         itemList: [
-            { label: 'Email', value: 'jsmith@example.com' },
+            { label: 'Email', value: { email: 'james.smith@example.com' } },
             { label: 'Role', value: 'Member' },
             { label: 'Status', value: { label: 'Online', color: 'lime' } }
         ]
@@ -51,7 +54,7 @@ const card1 = [
         subtitle: 'Quality Assurance',
         description: 'Aspernatur explicabo recusandae atque.',
         itemList: [
-            { label: 'Email', value: 'jnsmith@example.com' },
+            { label: 'Email', value: { email: 'jane.smith@example.com' } },
             { label: 'Role', value: 'Admin' },
             { label: 'Status', value: { label: 'Offline', color: 'rose' } }
         ]

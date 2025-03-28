@@ -187,7 +187,7 @@
                         color="white"
                         :trailing="false"
                         placeholder="Search..."
-                        :ui="{ base: 'w-80' }"
+                        :ui="{ base: 'w-2/5' }"
                     />
 
                     <template #tab1>
