@@ -25,7 +25,7 @@
             <UCard>
                 <CListItem :itemList="employeeDetails2">
                     <template #value-3="{ list }">
-                        <UButton :label="list.value.email" variant="link" :padded="false" trailing :ui="{ font: 'font-normal' }">
+                        <UButton :label="list.value.email" variant="link" :padded="false" :ui="{ font: 'font-normal' }">
                             <template #trailing>
                                 <UIcon name="i-lucide-external-link" class="w-4 h-4" />
                             </template>
@@ -63,9 +63,10 @@
             </UCard>
         </div>
 
-        <div class="relative overflow-hidden">
-<pre ref="codeRef" class="language-html prose-pre !my-0">
-<code class="text-sm">&lt;!-- pages/index.vue --&gt;
+        <div class="relative">
+<pre ref="codeRef" class="language-html prose-pre !my-0 overflow-hidden">
+<code class="text-sm">&lt;!-- basic items --&gt;
+&lt;!-- pages/index.vue --&gt;
 &lt;template&gt;
     &lt;CListItem 
         :itemList="employeeDetails"
@@ -83,6 +84,46 @@ const employeeDetails = [
 </pre>
             <CopyToClipboard :pre-ref="codeRef" />
             </div>
+
+            <div class="relative">
+<pre ref="codeRef" class="language-html prose-pre !my-0 overflow-hidden">
+<code class="text-sm">&lt;!-- custom values --&gt;
+&lt;!-- pages/index.vue --&gt;
+&lt;template&gt;
+    &lt;CListItem :itemList="employeeDetails"&gt;
+        &lt;template #value-3="{ list }"&gt;
+            &lt;UButton 
+                :label="list.value.email" variant="link" 
+                :padded="false" :ui="{ font: 'font-normal' }"
+            &gt;
+                &lt;template #trailing&gt;
+                    &lt;UIcon name="i-lucide-external-link" class="w-4 h-4" /&gt;
+                &lt;/template&gt;
+            &lt;/UButton&gt;
+        &lt;/template&gt;
+        &lt;template #value-5="{ list }"&gt;
+            &lt;UBadge 
+                :label="list.value.label" :color="list.value.color" 
+                :ui="{ rounded: 'rounded-full' }" 
+            /&gt;
+        &lt;/template&gt;
+    &lt;/CListItem&gt;
+&lt;/template&gt;
+
+&lt;script setup lang="ts"&gt;
+const employeeDetails = [
+    { label: 'Name', value: 'Lindsay Walton' },
+    { label: 'Title', value: 'Front-end Developer' },
+    { label: 'Email', value: { email: 'lindsay.walton@example.com' } },
+    { label: 'Role', value: 'Member' },
+    { label: 'Status', value: { label: 'Online', color: 'lime' } },
+    //...
+];
+&lt;/script&gt;</code>
+</pre>
+            <CopyToClipboard :pre-ref="codeRef" />
+            </div>
+
     </CWrapper>
 </template>
 

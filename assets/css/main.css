@@ -1,90 +1,90 @@
 /* Base styles for the <pre> block */
 pre[class*="language-"] {
-  background: #24283b; /* Storm background: Deep blue-gray */
-  color: #c0caf5; /* Soft light text color */
-  border: 1px solid #414868; /* Slightly darker border */
-  padding: 16px; /* Comfortable spacing */
-  border-radius: 8px; /* Smooth corners */
-  overflow: auto; /* Scrollbars for long code */
-  font-family: 'Fira Code', 'Courier New', monospace; /* Monospaced font */
-  font-size: 0.95rem; /* Balanced font size */
-  line-height: 1.6; /* Better spacing for readability */
-}
-
-/* Styling for <code> inside <pre> */
-pre[class*="language-"] code {
-  color: #c0caf5; /* Default light gray for code text */
-}
-
-/* Comments and documentation */
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
-  color: #565f89; /* Muted stormy blue-gray for comments */
-  font-style: italic;
-}
-
-/* Punctuation */
-.token.punctuation {
-  color: #a9b1d6; /* Neutral light blue-gray for punctuation */
-}
-
-/* Keywords (e.g., if, else, const) */
-.token.keyword {
-  color: #7aa2f7; /* Brighter blue for keywords */
-  font-weight: bold;
-}
-
-/* Strings, attributes, and template literals */
-.token.string,
-.token.attr-value {
-  color: #9ece6a; /* Vibrant green for strings and attributes */
-}
-
-/* Numbers and booleans */
-.token.number,
-.token.boolean {
-  color: #ff9e64; /* Warm orange for numbers and booleans */
-}
-
-/* Functions and class names */
-.token.function {
-  color: #2ac3de; /* Aqua blue for functions */
-  font-weight: bold;
-}
-.token.class-name {
-  color: #bb9af7; /* Soft purple for class names */
-  font-weight: bold;
-}
-
-/* Tags (e.g., HTML/XML tags) */
-.token.tag,
-.token.selector {
-  color: #f7768e; /* Red-pink for tags */
-}
-.token.attr-name {
-  color: #e0af68; /* Amber for attributes */
-}
-
-/* Variables and properties */
-.token.variable,
-.token.property {
-  color: #2ac3de; /* Aqua blue for variables and properties */
-}
-
-/* Important and bolded content */
-.token.important {
-  color: #f7768e; /* Red-pink for important text */
-  font-weight: bold;
-}
-
-/* Regular expressions */
-.token.regex {
-  color: #ff9e64; /* Warm orange for regex */
-}
-
-/* Highlighted lines (for line highlighting plugins) */
-pre[class*="language-"] .line-highlight {
-  background-color: rgba(255, 255, 255, 0.1); /* Subtle white overlay */
-}
+    background: #24283b; /* Storm background: Deep blue-gray */
+    color: #c0caf5; /* Soft light text color */
+    border: 1px solid #414868; /* Slightly darker border */
+    padding: 16px; /* Comfortable spacing */
+    border-radius: 8px; /* Smooth corners */
+    overflow: auto; /* Scrollbars for long code */
+    font-family: 'Fira Code', 'Courier New', monospace; /* Monospaced font */
+    font-size: 0.95rem; /* Balanced font size */
+    line-height: 1.6; /* Better spacing for readability */
+  }
+  
+  /* Styling for <code> inside <pre> */
+  pre[class*="language-"] code {
+    color: #c0caf5; /* Default light gray for code text */
+  }
+  
+  /* Comments and documentation */
+  .token.comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    color: #565f89; /* Muted stormy blue-gray for comments */
+    font-style: italic;
+  }
+  
+  /* Punctuation */
+  .token.punctuation {
+    color: #a9b1d6; /* Neutral light blue-gray for punctuation */
+  }
+  
+  /* Keywords (e.g., if, else, const) */
+  .token.keyword {
+    color: #7aa2f7; /* Brighter blue for keywords */
+    font-weight: bold;
+  }
+  
+  /* Strings, attributes, and template literals */
+  .token.string,
+  .token.attr-value {
+    color: #9ece6a; /* Vibrant green for strings and attributes */
+  }
+  
+  /* Numbers and booleans */
+  .token.number,
+  .token.boolean {
+    color: #ff9e64; /* Warm orange for numbers and booleans */
+  }
+  
+  /* Functions and class names */
+  .token.function {
+    color: #2ac3de; /* Aqua blue for functions */
+    font-weight: bold;
+  }
+  .token.class-name {
+    color: #bb9af7; /* Soft purple for class names */
+    font-weight: bold;
+  }
+  
+  /* Tags (e.g., HTML/XML tags) */
+  .token.tag,
+  .token.selector {
+    color: #f7768e; /* Red-pink for tags */
+  }
+  .token.attr-name {
+    color: #e0af68; /* Amber for attributes */
+  }
+  
+  /* Variables and properties */
+  .token.variable,
+  .token.property {
+    color: #2ac3de; /* Aqua blue for variables and properties */
+  }
+  
+  /* Important and bolded content */
+  .token.important {
+    color: #f7768e; /* Red-pink for important text */
+    font-weight: bold;
+  }
+  
+  /* Regular expressions */
+  .token.regex {
+    color: #ff9e64; /* Warm orange for regex */
+  }
+  
+  /* Highlighted lines (for line highlighting plugins) */
+  pre[class*="language-"] .line-highlight {
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle white overlay */
+  }
