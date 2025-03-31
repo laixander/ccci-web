@@ -41,9 +41,9 @@ const links = [
   ],
   [
     {
-      label: 'Cards',
+      label: 'Card',
       icon: 'i-lucide-lab-card-credit',
-      to: '/cards'
+      to: '/card'
     },
     {
       label: 'Tabs',

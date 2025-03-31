@@ -13,6 +13,7 @@
     "@ccci/ui-layer": "^0.0.1",
     "@nuxt/ui": "^2.20.0",
     "nuxt": "^3.6.0",
+    "prismjs": "^1.30.0",
     "vue": "latest",
     "vue-router": "latest"
   },

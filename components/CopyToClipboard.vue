@@ -10,7 +10,7 @@
     />
     <div 
       v-if="isCopied"
-      class="absolute inset-0 bg-slate-700/50 dark:bg-slate-900/50 text-gray-100 dark:text-gray-200 flex flex-col justify-center items-center gap-4 font-light text-lg transition-opacity duration-1000 opacity-0 rounded-lg backdrop-blur-sm" 
+      class="absolute inset-0 bg-black/50 dark:bg-black/50 text-gray-100 dark:text-gray-200 flex flex-col justify-center items-center gap-4 font-light text-lg transition-opacity duration-1000 opacity-0 rounded-lg backdrop-blur-sm" 
       :class="{'opacity-100': isCopied}"
     >
       <UIcon name="i-lucide-clipboard-check" class="w-12 h-12 text-green-500" />

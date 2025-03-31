@@ -18,6 +18,26 @@
                 <CListItem :itemList="employeeDetails" />
             </UCard>
 
+            <div class="relative">
+<pre ref="codeRef" class="language-html prose-pre !my-0 overflow-hidden">
+<code class="text-sm">&lt;template&gt;
+    &lt;CListItem 
+        :itemList="employeeDetails"
+    /&gt;
+&lt;/template&gt;
+
+&lt;script setup lang="ts"&gt;
+const employeeDetails = [
+    { label: 'Name', value: 'Lindsay Walton' },
+    { label: 'Title', value: 'Front-end Developer' },
+    { label: 'Role', value: 'Member' },
+    //...
+];
+&lt;/script&gt;</code>
+</pre>
+            <CopyToClipboard :pre-ref="codeRef" />
+        </div>
+
             <div class="font-light text-sm text-gray-500 dark:text-gray-100">
                 Use the <UBadge color="white" variant="solid" label="slot" /> for custom <UBadge color="white" variant="solid" label="value" />
             </div>
@@ -37,59 +57,9 @@
                 </CListItem>
             </UCard>
 
-            <div class="space-y-2">
-                <div class="font-bold text-lg text-gray-800 dark:text-gray-100">
-                    List of Profile
-                </div>
-                <UBadge color="white" variant="solid" label="<CListProfile />" />
-                <div class="font-light text-sm text-gray-500 dark:text-gray-100">
-                    Set up the <UBadge color="white" variant="solid" label="profiles" /> prop
-                </div>
-                <div class="font-light text-sm text-gray-500 dark:text-gray-100">
-                    Use the <UBadge color="white" variant="solid" label="name" /> <UBadge color="white" variant="solid" label="role" /> and <UBadge color="white" variant="solid" label="avatar" /> to add profile
-                </div>
-            </div>
-
-            <UCard :ui="uiCardConfig">
-                <CListProfile :profiles="profiles" />
-            </UCard>
-
-            <div class="font-light text-sm text-gray-500 dark:text-gray-100">
-                Set the <UBadge color="white" variant="solid" label="checkbox" /> prop to true to add checkbox in each profile
-            </div>
-
-            <UCard :ui="uiCardConfig">
-                <CListProfile :profiles="profiles" :checkbox="true" />
-            </UCard>
-        </div>
-
-        <div class="relative">
-<pre ref="codeRef" class="language-html prose-pre !my-0 overflow-hidden">
-<code class="text-sm">&lt;!-- basic items --&gt;
-&lt;!-- pages/index.vue --&gt;
-&lt;template&gt;
-    &lt;CListItem 
-        :itemList="employeeDetails"
-    /&gt;
-&lt;/template&gt;
-
-&lt;script setup lang="ts"&gt;
-const employeeDetails = [
-    { label: 'Name', value: 'Lindsay Walton' },
-    { label: 'Title', value: 'Front-end Developer' },
-    { label: 'Role', value: 'Member' },
-    //...
-];
-&lt;/script&gt;</code>
-</pre>
-            <CopyToClipboard :pre-ref="codeRef" />
-            </div>
-
             <div class="relative">
 <pre ref="codeRef" class="language-html prose-pre !my-0 overflow-hidden">
-<code class="text-sm">&lt;!-- custom values --&gt;
-&lt;!-- pages/index.vue --&gt;
-&lt;template&gt;
+<code class="text-sm">&lt;template&gt;
     &lt;CListItem :itemList="employeeDetails"&gt;
         &lt;template #value-3="{ list }"&gt;
             &lt;UButton 
@@ -124,10 +94,79 @@ const employeeDetails = [
             <CopyToClipboard :pre-ref="codeRef" />
             </div>
 
+            <div class="space-y-2">
+                <div class="font-bold text-lg text-gray-800 dark:text-gray-100">
+                    List of Profile
+                </div>
+                <UBadge color="white" variant="solid" label="<CListProfile />" />
+                <div class="font-light text-sm text-gray-500 dark:text-gray-100">
+                    Set up the <UBadge color="white" variant="solid" label="profiles" /> prop
+                </div>
+                <div class="font-light text-sm text-gray-500 dark:text-gray-100">
+                    Use the <UBadge color="white" variant="solid" label="name" /> <UBadge color="white" variant="solid" label="role" /> and <UBadge color="white" variant="solid" label="avatar" /> to add profile
+                </div>
+            </div>
+
+            <UCard :ui="uiCardConfig">
+                <CListProfile :profiles="profiles" />
+            </UCard>
+
+            <div class="relative">
+<pre ref="codeRef" class="language-html prose-pre !my-0 overflow-hidden">
+<code class="text-sm">&lt;template&gt;
+    &lt;CListProfile :profiles="profiles" /&gt;
+&lt;/template&gt;
+
+&lt;script setup lang="ts"&gt;
+const profiles = [
+    { id: 1, name: 'Tony Stark', role: 'Student', avatar: '/photo.jpg' },
+    { id: 2, name: 'Jane Copper', role: 'Faculty', avatar: '/photo.jpg' },
+    { id: 3, name: 'Curt Baker', role: 'Student', avatar: '/photo.jpg' },
+    //...
+];
+&lt;/script&gt;</code>
+</pre>
+            <CopyToClipboard :pre-ref="codeRef" />
+            </div>
+
+            <div class="font-light text-sm text-gray-500 dark:text-gray-100">
+                Set the <UBadge color="white" variant="solid" label="checkbox" /> prop to true to add checkbox in each profile
+            </div>
+
+            <UCard :ui="uiCardConfig">
+                <CListProfile :profiles="profiles" :checkbox="true" />
+            </UCard>
+
+            <div class="relative">
+<pre ref="codeRef" class="language-html prose-pre !my-0 overflow-hidden">
+<code class="text-sm">&lt;template&gt;
+    &lt;CListProfile :profiles="profiles" :checkbox="true" /&gt;
+&lt;/template&gt;
+
+&lt;script setup lang="ts"&gt;
+const profiles = [
+    { id: 1, name: 'Tony Stark', role: 'Student', avatar: '/photo.jpg' },
+    { id: 2, name: 'Jane Copper', role: 'Faculty', avatar: '/photo.jpg' },
+    { id: 3, name: 'Curt Baker', role: 'Student', avatar: '/photo.jpg' },
+    //...
+];
+&lt;/script&gt;</code>
+</pre>
+            <CopyToClipboard :pre-ref="codeRef" />
+            </div>
+
+        </div>
     </CWrapper>
 </template>
 
 <script setup lang="ts">
+import { onMounted } from "vue";
+const { $prism } = useNuxtApp();
+
+onMounted(() => {
+  $prism.highlightAll(); // Highlight code on mount
+});
+
 definePageMeta({
   title: 'Item'
 });
