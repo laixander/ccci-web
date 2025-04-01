@@ -36,47 +36,17 @@
                     </template>
                 </CCard>
             </CGrid>
+  
+            <UAccordion :items="items" color="gray" variant="soft">
+                <template #code-block>
+                    <CodeBlock :code="codeSnippets.card01" language="html" />
+                </template>
+            </UAccordion>
 
-            <div class="relative">
-<pre ref="codeRef" class="language-html prose-pre !my-0 overflow-hidden">
-<code class="text-sm">&lt;CCard :cardDetails="employee"&gt;
-    &lt;template #mainContent="&lcub; cardDetail &rcub;"&gt; &lt;!-- mainContent slot --&gt;
-        &lt;div class="text-sm text-gray-500 dark:text-gray-400"&gt;&lcub;&lcub; cardDetail.description &rcub;&rcub;&lt;/div&gt;
-        &lt;CListItem :itemList="cardDetail.itemList"&gt;
-            &lt;template #value-1="&lcub; list &rcub;"&gt;
-                &lt;UButton :label="list.value.email" variant="link" :padded="false" trailing :ui="&lcub; font: 'font-normal' &rcub;"&gt;
-                    &lt;template #trailing&gt;
-                        &lt;UIcon name="i-lucide-external-link" class="w-4 h-4" /&gt;
-                    &lt;/template&gt;
-                &lt;/UButton&gt;
-            &lt;/template&gt;
-            &lt;template #value-3="&lcub; list &rcub;"&gt;
-                &lt;UBadge :label="list.value.label" :color="list.value.color" :ui="&lcub; rounded: 'rounded-full' &rcub;" /&gt;
-            &lt;/template&gt;
-        &lt;/CListItem&gt;
-    &lt;/template&gt;
-&lt;/CCard&gt;
 
-&lt;script setup lang="ts"&gt;
-const employee = [
-    {
-        avatar: 'path/to/photo.jpg',
-        title: 'James Smith',
-        subtitle: 'Frontend Developer',
-        description: 'Lorem ipsum dolor sit amet consectetur.',
-        itemList: [
-            { label: 'Email', value: { email: 'james.smith@example.com' } },
-            { label: 'Role', value: 'Member' },
-            { label: 'Status', value: { label: 'Online', color: 'lime' } }
-        ]
-    },
-    //...
-]
-&lt;/script&gt;</code>
-</pre>
-                <CopyToClipboard :pre-ref="codeRef" />
-            </div>
+            <UDivider />
 
+            
             <div class="space-y-2">
                 <div class="font-light text-sm text-gray-500 dark:text-gray-100">
                     Use the <UBadge color="white" variant="solid" label="headerImg" /> <UBadge color="white" variant="solid" label="headerLogo" /> or <UBadge color="white" variant="solid" label="headerBgColor" /> to add cover photo. 
@@ -94,42 +64,15 @@ const employee = [
                 </CCard>
             </CGrid>
 
-            <div class="relative">
-<pre ref="codeRef" class="language-html prose-pre !my-0 overflow-hidden">
-<code class="text-sm">&lt;CCard :cardDetails="user" @like="handleLike" @share="handleShare" @edit="handleEdit" @delete="handleDelete"&gt;
-    &lt;template #mainContent="&lcub; cardDetail &rcub;"&gt;
-        &lt;div class="text-sm text-gray-500 dark:text-gray-400"&gt;&lcub;&lcub; cardDetail.description &rcub;&rcub;&lt;/div&gt;
-    &lt;/template&gt;
-&lt;/CCard&gt;
+            <UAccordion :items="items" color="gray" variant="soft">
+                <template #code-block>
+                    <CodeBlock :code="codeSnippets.card02" language="html" />
+                </template>
+            </UAccordion>
 
-&lt;script setup lang="ts"&gt;
-const user = [
-    {
-        headerLogo: '/logo.png',
-        headerBgColor: 'bg-blue-100 dark:bg-blue-950',
-        avatar: 'path/to/photo.jpg',
-        title: 'James Smith',
-        subtitle: 'Posted March 31, 2025',
-        description: 'Lorem ipsum dolor sit amet consectetur.',
-        footerButtons: [
-            { label: 'Like', icon: 'i-lucide-thumbs-up', event: 'like' },
-            { label: 'Share', icon: 'i-lucide-share', event: 'share' }
-        ]
-    },
-    //...
-]
 
-// Event Handlers
-const handleShare = (cardDetail: any) => {
-    //...
-}
-const handleLike = (cardDetail: any) => {
-    //...
-}
-&lt;/script&gt;</code>
-</pre>
-                <CopyToClipboard :pre-ref="codeRef" />
-            </div>
+            <UDivider />
+            
 
             <div class="space-y-2">
                 <div class="font-light text-sm text-gray-500 dark:text-gray-100">
@@ -141,6 +84,16 @@ const handleLike = (cardDetail: any) => {
                 <CCard :cardDetails="card3" @edit="handleEdit" @download="handleDownload" @delete="handleDelete" />
             </CGrid>
 
+            <UAccordion :items="items" color="gray" variant="soft">
+                <template #code-block>
+                    <CodeBlock :code="codeSnippets.card03" language="html" />
+                </template>
+            </UAccordion>
+
+
+            <UDivider />
+
+            
             <div class="relative">
 <pre ref="codeRef" class="language-html prose-pre !my-0 overflow-hidden">
 <code class="text-sm">&lt;CCard :cardDetails="file" @edit="handleEdit" @download="handleDownload" @delete="handleDelete" /&gt;
@@ -227,6 +180,7 @@ const handleEdit = (cardDetail: any) => {
     </CWrapper>
 </template>
 <script setup lang="ts">
+import codeSnippets from "@/data/codeSnippets.js";
 import { onMounted } from "vue";
 
 definePageMeta({
@@ -240,6 +194,12 @@ onMounted(() => {
 });
 
 const codeRef = ref<HTMLPreElement | null>(null); // Reference for the <pre> element
+
+const items = [{
+  label: 'Code',
+  icon: 'i-lucide-code-xml',
+  slot: 'code-block'
+},]
 
 const card1 = [
     {
