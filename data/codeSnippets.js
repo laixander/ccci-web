@@ -1,5 +1,5 @@
 export default {
-    card01: `<template>
+    card01:`<template>
     <CCard :cardDetails="employee">
         <template #mainContent="{ cardDetail }">
             <div class="text-sm text-gray-500 dark:text-gray-400">
@@ -47,7 +47,7 @@ const employee = [
     //...
 ]
 </script>`,
-    card02: `<template>
+    card02:`<template>
     <CCard :cardDetails="user" 
         @like="handleLike" 
         @share="handleShare" 
@@ -87,7 +87,7 @@ const handleLike = (cardDetail: any) => {
     //...
 }
 </script>`,
-    card03: `<template>
+    card03:`<template>
     <CCard :cardDetails="file" 
         @edit="handleEdit" 
         @download="handleDownload" 
@@ -101,6 +101,47 @@ const file = [
         icon: 'i-lucide-file-spreadsheet',
         title: 'List of Employee',
         subtitle: 'Uploaded at March 31, 2025',
+        popoverButtons: [
+            { label: 'Edit', icon: 'i-lucide-edit', event: 'edit' },
+            //...
+        ]
+    },
+    //...
+]
+
+// Event Handlers
+const handleEdit = (cardDetail: any) => {
+    //...
+}
+</script>`,
+    card04:`<template>
+    <CCard :cardDetails="task" 
+        @like="handleLike" 
+        @share="handleShare" 
+        @edit="handleEdit" 
+        @delete="handleDelete"
+    >
+        <template #mainContent="{ cardDetail }">
+            <CAvatarGroup :counts="cardDetail.avatars" />
+            <CProgressBar v-if="cardDetail.progressBar"  :value="cardDetail.progressBar.value" />
+        </template>
+    </CCard>
+</template>
+
+<script setup lang="ts">
+const task = [
+    {
+        badgeLabel: 'Design',
+        badgeColor: 'teal',
+        title: 'UI development',
+        subtitle: 'Lorem ipsum dolor sit amet',
+        progressBar: {
+            value: 75,
+        },
+        avatars: [
+            { src: "path/to/photo.jpg", name: "Alice" },
+            //...
+        ],
         popoverButtons: [
             { label: 'Edit', icon: 'i-lucide-edit', event: 'edit' },
             //...

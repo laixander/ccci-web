@@ -93,33 +93,6 @@
 
             <UDivider />
 
-            
-            <div class="relative">
-<pre ref="codeRef" class="language-html prose-pre !my-0 overflow-hidden">
-<code class="text-sm">&lt;CCard :cardDetails="file" @edit="handleEdit" @download="handleDownload" @delete="handleDelete" /&gt;
-
-&lt;script setup lang="ts"&gt;
-const file = [
-    {
-        icon: 'i-lucide-file-spreadsheet',
-        title: 'List of Employee',
-        subtitle: 'Uploaded at March 31, 2025',
-        popoverButtons: [
-            { label: 'Edit', icon: 'i-lucide-edit', event: 'edit' },
-            //...
-        ]
-    },
-    //...
-]
-
-// Event Handlers
-const handleEdit = (cardDetail: any) => {
-    //...
-}
-&lt;/script&gt;</code>
-</pre>
-                <CopyToClipboard :pre-ref="codeRef" />
-            </div>
 
             <div class="space-y-2">
                 <div class="font-light text-sm text-gray-500 dark:text-gray-100">
@@ -136,45 +109,11 @@ const handleEdit = (cardDetail: any) => {
                 </CCard>
             </CGrid>
 
-            <div class="relative">
-<pre ref="codeRef" class="language-html prose-pre !my-0 overflow-hidden">
-<code class="text-sm">&lt;CCard :cardDetails="task" @like="handleLike" @share="handleShare" @edit="handleEdit" @delete="handleDelete"&gt;
-    &lt;template #mainContent="&lcub; cardDetail &rcub;"&gt;
-        &lt;CAvatarGroup :counts="cardDetail.avatars" /&gt;
-        &lt;CProgressBar v-if="cardDetail.progressBar"  :value="cardDetail.progressBar.value" /&gt;
-    &lt;/template&gt;
-&lt;/CCard&gt;
-
-&lt;script setup lang="ts"&gt;
-const task = [
-    {
-        badgeLabel: 'Design',
-        badgeColor: 'teal',
-        title: 'UI development',
-        subtitle: 'Lorem ipsum dolor sit amet',
-        progressBar: {
-            value: 75,
-        },
-        avatars: [
-            { src: "path/to/photo.jpg", name: "Alice" },
-            //...
-        ],
-        popoverButtons: [
-            { label: 'Edit', icon: 'i-lucide-edit', event: 'edit' },
-            //...
-        ]
-    },
-    //...
-]
-
-// Event Handlers
-const handleEdit = (cardDetail: any) => {
-    //...
-}
-&lt;/script&gt;</code>
-</pre>
-                <CopyToClipboard :pre-ref="codeRef" />
-            </div>
+            <UAccordion :items="items" color="gray" variant="soft">
+                <template #code-block>
+                    <CodeBlock :code="codeSnippets.card04" language="html" />
+                </template>
+            </UAccordion>
 
         </div>
     </CWrapper>
