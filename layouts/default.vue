@@ -41,19 +41,24 @@ const links = [
   ],
   [
     {
+      label: 'Grid',
+      icon: 'i-lucide-layout-dashboard',
+      to: '/grid'
+    },
+    {
       label: 'Card',
       icon: 'i-lucide-lab-card-credit',
       to: '/card'
     },
     {
+      label: 'List',
+      icon: 'i-lucide-layout-list',
+      to: '/item'
+    },
+    {
       label: 'Tabs',
       icon: 'i-lucide-toggle-left',
       to: '/tabs'
-    },
-    {
-      label: 'Item',
-      icon: 'i-lucide-layout-list',
-      to: '/item'
     },
     {
       label: 'Testing',

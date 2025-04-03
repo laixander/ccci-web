@@ -1,144 +1,121 @@
 <template>
     <CWrapper>
-        <div class="space-y-8">
+        <div class="divide-y *:pt-8 *:pb-6">
+            <div class="space-y-8 first:pt-0">
+                <div class="space-y-2">
+                    <div class="font-bold text-lg text-gray-800 dark:text-gray-100">
+                        Card
+                    </div>
+                    <UBadge color="white" variant="solid" label="<CCard />" />
+                    <div class="font-light text-sm text-gray-500 dark:text-gray-100">
+                        Set up the
+                        <UBadge color="white" variant="solid" label="cardDetails" /> prop.
+                    </div>
+                    <div class="font-light text-sm text-gray-500 dark:text-gray-100">
+                        Use the
+                        <UBadge color="white" variant="solid" label="avatar" /> <UBadge color="white" variant="solid" label="title" /> <UBadge color="white" variant="solid" label="subtitle" /> and <UBadge color="white" variant="solid" label="mainContent" /> slot to add basic items.
+                    </div>
+                </div>
+
+                <CGrid :columns="4">
+                    <CCard :cardDetails="card1">
+                        <template #mainContent="{ cardDetail }">
+                            <div class="text-sm text-gray-500 dark:text-gray-400">{{ cardDetail.description }}</div>
+                            <CListItem :itemList="cardDetail.itemList">
+                                <template #value-1="{ list }">
+                                    <UButton :label="list.value.email" variant="link" :padded="false" trailing :ui="{ font: 'font-normal' }">
+                                        <template #trailing>
+                                            <UIcon name="i-lucide-external-link" class="w-4 h-4" />
+                                        </template>
+                                    </UButton>
+                                </template>
+                                <template #value-3="{ list }">
+                                    <UBadge :label="list.value.label" :color="list.value.color" :ui="{ rounded: 'rounded-full' }" />
+                                </template>
+                            </CListItem>
+                        </template>
+                    </CCard>
+                </CGrid>
+    
+                <CodeBlock :code="codes.card01" language="html" />
+            </div>
             
-            <div class="space-y-2">
-                <div class="font-bold text-lg text-gray-800 dark:text-gray-100">
-                    Card
+            <div class="space-y-8">
+                <div class="space-y-2">
+                    <div class="font-bold text-lg text-gray-800 dark:text-gray-100">
+                        Icon, Image and Footer Buttons
+                    </div>
+                    <div class="font-light text-sm text-gray-500 dark:text-gray-100">
+                        Use the <UBadge color="white" variant="solid" label="headerImg" /> <UBadge color="white" variant="solid" label="headerLogo" /> or <UBadge color="white" variant="solid" label="headerBgColor" /> to add cover photo. 
+                    </div>
+                    <div class="font-light text-sm text-gray-500 dark:text-gray-100">
+                        Use the <UBadge color="white" variant="solid" label="label" /> <UBadge color="white" variant="solid" label="icon" /> and <UBadge color="white" variant="solid" label="event" /> for <UBadge color="white" variant="solid" label="footerButtons" />
+                    </div>
                 </div>
-                <UBadge color="white" variant="solid" label="<CCard />" />
-                <div class="font-light text-sm text-gray-500 dark:text-gray-100">
-                    Set up the
-                    <UBadge color="white" variant="solid" label="cardDetails" /> prop.
-                </div>
-                <div class="font-light text-sm text-gray-500 dark:text-gray-100">
-                    Use the
-                    <UBadge color="white" variant="solid" label="avatar" /> <UBadge color="white" variant="solid" label="title" /> <UBadge color="white" variant="solid" label="subtitle" /> and <UBadge color="white" variant="solid" label="mainContent" /> slot to add basic items.
-                </div>
+
+                <CGrid :columns="4">
+                    <CCard :cardDetails="card2" @like="handleLike" @share="handleShare" @edit="handleEdit" @delete="handleDelete">
+                        <template #mainContent="{ cardDetail }">
+                            <div class="text-sm text-gray-500 dark:text-gray-400">{{ cardDetail.description }}</div>
+                        </template>
+                    </CCard>
+                </CGrid>
+
+                <CodeBlock :code="codes.card02" language="html" />
             </div>
-
-            <CGrid :columns="4">
-                <CCard :cardDetails="card1">
-                    <template #mainContent="{ cardDetail }">
-                        <div class="text-sm text-gray-500 dark:text-gray-400">{{ cardDetail.description }}</div>
-                        <CListItem :itemList="cardDetail.itemList">
-                            <template #value-1="{ list }">
-                                <UButton :label="list.value.email" variant="link" :padded="false" trailing :ui="{ font: 'font-normal' }">
-                                    <template #trailing>
-                                        <UIcon name="i-lucide-external-link" class="w-4 h-4" />
-                                    </template>
-                                </UButton>
-                            </template>
-                            <template #value-3="{ list }">
-                                <UBadge :label="list.value.label" :color="list.value.color" :ui="{ rounded: 'rounded-full' }" />
-                            </template>
-                        </CListItem>
-                    </template>
-                </CCard>
-            </CGrid>
-  
-            <UAccordion :items="items" color="gray" variant="soft">
-                <template #code-block>
-                    <CodeBlock :code="codeSnippets.card01" language="html" />
-                </template>
-            </UAccordion>
-
-
-            <UDivider />
-
             
-            <div class="space-y-2">
-                <div class="font-light text-sm text-gray-500 dark:text-gray-100">
-                    Use the <UBadge color="white" variant="solid" label="headerImg" /> <UBadge color="white" variant="solid" label="headerLogo" /> or <UBadge color="white" variant="solid" label="headerBgColor" /> to add cover photo. 
+            <div class="space-y-8">
+                <div class="space-y-2">
+                    <div class="font-bold text-lg text-gray-800 dark:text-gray-100">
+                        Popover Slot
+                    </div>
+                    <div class="font-light text-sm text-gray-500 dark:text-gray-100">
+                        Use the <UBadge color="white" variant="solid" label="label" /> <UBadge color="white" variant="solid" label="icon" /> and <UBadge color="white" variant="solid" label="event" /> for <UBadge color="white" variant="solid" label="popoverButtons" />
+                    </div>
                 </div>
-                <div class="font-light text-sm text-gray-500 dark:text-gray-100">
-                    Use the <UBadge color="white" variant="solid" label="label" /> <UBadge color="white" variant="solid" label="icon" /> and <UBadge color="white" variant="solid" label="event" /> for <UBadge color="white" variant="solid" label="footerButtons" />
-                </div>
+
+                <CGrid :columns="4">
+                    <CCard :cardDetails="card3" @edit="handleEdit" @download="handleDownload" @delete="handleDelete" />
+                </CGrid>
+
+                <CodeBlock :code="codes.card03" language="html" />
             </div>
 
-            <CGrid :columns="4">
-                <CCard :cardDetails="card2" @like="handleLike" @share="handleShare" @edit="handleEdit" @delete="handleDelete">
-                    <template #mainContent="{ cardDetail }">
-                        <div class="text-sm text-gray-500 dark:text-gray-400">{{ cardDetail.description }}</div>
-                    </template>
-                </CCard>
-            </CGrid>
-
-            <UAccordion :items="items" color="gray" variant="soft">
-                <template #code-block>
-                    <CodeBlock :code="codeSnippets.card02" language="html" />
-                </template>
-            </UAccordion>
-
-
-            <UDivider />
-            
-
-            <div class="space-y-2">
-                <div class="font-light text-sm text-gray-500 dark:text-gray-100">
-                    Use the <UBadge color="white" variant="solid" label="label" /> <UBadge color="white" variant="solid" label="icon" /> and <UBadge color="white" variant="solid" label="event" /> for <UBadge color="white" variant="solid" label="popoverButtons" />
+            <div class="space-y-8 last:pb-0">
+                <div class="space-y-2">
+                    <div class="font-bold text-lg text-gray-800 dark:text-gray-100">
+                        Badge
+                    </div>
+                    <div class="font-light text-sm text-gray-500 dark:text-gray-100">
+                        Use the <UBadge color="white" variant="solid" label="badge" /> to add label
+                    </div>
                 </div>
+
+                <CGrid :columns="4">
+                    <CCard :cardDetails="card4" @like="handleLike" @share="handleShare" @edit="handleEdit" @delete="handleDelete">
+                        <template #mainContent="{ cardDetail }">
+                            <CAvatarGroup :counts="cardDetail.avatars" />
+                            <CProgressBar v-if="cardDetail.progressBar"  :value="cardDetail.progressBar.value" />
+                        </template>
+                    </CCard>
+                </CGrid>
+
+                <CodeBlock :code="codes.card04" language="html" />
             </div>
-
-            <CGrid :columns="4">
-                <CCard :cardDetails="card3" @edit="handleEdit" @download="handleDownload" @delete="handleDelete" />
-            </CGrid>
-
-            <UAccordion :items="items" color="gray" variant="soft">
-                <template #code-block>
-                    <CodeBlock :code="codeSnippets.card03" language="html" />
-                </template>
-            </UAccordion>
-
-
-            <UDivider />
-
-
-            <div class="space-y-2">
-                <div class="font-light text-sm text-gray-500 dark:text-gray-100">
-                    Use the <UBadge color="white" variant="solid" label="badge" /> to add label
-                </div>
-            </div>
-
-            <CGrid :columns="4">
-                <CCard :cardDetails="card4" @like="handleLike" @share="handleShare" @edit="handleEdit" @delete="handleDelete">
-                    <template #mainContent="{ cardDetail }">
-                        <CAvatarGroup :counts="cardDetail.avatars" />
-                        <CProgressBar v-if="cardDetail.progressBar"  :value="cardDetail.progressBar.value" />
-                    </template>
-                </CCard>
-            </CGrid>
-
-            <UAccordion :items="items" color="gray" variant="soft">
-                <template #code-block>
-                    <CodeBlock :code="codeSnippets.card04" language="html" />
-                </template>
-            </UAccordion>
-
         </div>
     </CWrapper>
 </template>
 <script setup lang="ts">
-import codeSnippets from "@/data/codeSnippets.js";
-import { onMounted } from "vue";
-
 definePageMeta({
     title: 'Card'
 });
 
-const { $prism } = useNuxtApp();
-
-onMounted(() => {
-  $prism.highlightAll(); // Highlight code on mount
-});
-
-const codeRef = ref<HTMLPreElement | null>(null); // Reference for the <pre> element
-
-const items = [{
-  label: 'Code',
-  icon: 'i-lucide-code-xml',
-  slot: 'code-block'
-},]
+const codes = {
+  card01: "card01",
+  card02: "card02",
+  card03: "card03",
+  card04: "card04",
+};
 
 const card1 = [
     {

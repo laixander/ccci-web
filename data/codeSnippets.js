@@ -47,6 +47,7 @@ const employee = [
     //...
 ]
 </script>`,
+
     card02:`<template>
     <CCard :cardDetails="user" 
         @like="handleLike" 
@@ -87,6 +88,7 @@ const handleLike = (cardDetail: any) => {
     //...
 }
 </script>`,
+
     card03:`<template>
     <CCard :cardDetails="file" 
         @edit="handleEdit" 
@@ -114,6 +116,7 @@ const handleEdit = (cardDetail: any) => {
     //...
 }
 </script>`,
+
     card04:`<template>
     <CCard :cardDetails="task" 
         @like="handleLike" 
@@ -154,5 +157,257 @@ const task = [
 const handleEdit = (cardDetail: any) => {
     //...
 }
-</script>`
+</script>`,
+
+    list01:`<template>
+    <CListItem :itemList="employeeDetails" />
+</template>
+
+<script setup lang="ts">
+const employeeDetails = [
+    { label: 'Name', value: 'Lindsay Walton' },
+    { label: 'Title', value: 'Front-end Developer' },
+    { label: 'Role', value: 'Member' },
+    //...
+];
+</script>`,
+
+    list02:`<template>
+    <CListItem :itemList="employeeDetails">
+        <template #value-3="{ list }">
+            <UButton 
+                :label="list.value.email" variant="link" 
+                :padded="false" :ui="{ font: 'font-normal' }"
+            >
+                <template #trailing>
+                    <UIcon name="i-lucide-external-link" class="w-4 h-4" />
+                </template>
+            </UButton>
+        </template>
+        <template #value-5="{ list }">
+            <UBadge 
+                :label="list.value.label" :color="list.value.color" 
+                :ui="{ rounded: 'rounded-full' }" 
+            />
+        </template>
+    </CListItem>
+</template>
+
+<script setup lang="ts">
+const employeeDetails = [
+    { label: 'Name', value: 'Lindsay Walton' },
+    { label: 'Title', value: 'Front-end Developer' },
+    { label: 'Email', value: { email: 'lindsay.walton@example.com' } },
+    { label: 'Role', value: 'Member' },
+    { label: 'Status', value: { label: 'Online', color: 'lime' } },
+    //...
+];
+</script>`,
+
+    list03:`<template>
+    <CListProfile :profiles="profiles" />
+</template>
+
+<script setup lang="ts">
+const profiles = [
+    { id: 1, name: 'Tony Stark', role: 'Student', avatar: '/photo.jpg' },
+    { id: 2, name: 'Jane Copper', role: 'Faculty', avatar: '/photo.jpg' },
+    { id: 3, name: 'Curt Baker', role: 'Student', avatar: '/photo.jpg' },
+    //...
+];
+</script>`,
+
+    list04:`<template>
+    <CListProfile :profiles="profiles" :checkbox="true" />
+</template>
+
+<script setup lang="ts">
+const profiles = [
+    { id: 1, name: 'Tony Stark', role: 'Student', avatar: '/photo.jpg' },
+    { id: 2, name: 'Jane Copper', role: 'Faculty', avatar: '/photo.jpg' },
+    { id: 3, name: 'Curt Baker', role: 'Student', avatar: '/photo.jpg' },
+    //...
+];
+</script>`,
+
+    tabs01:`<template>
+    <CTabs :tabs="tabs">
+        <template #tab1>
+            Content 1
+        </template>
+        <template #tab2>
+            Content 2
+        </template>
+        <!-- ... -->
+    </CTabs>
+</template>
+
+<script setup lang="ts">
+const tabs = [
+    {
+        label: 'Tab 1',
+        icon: 'i-lucide-clipboard-pen',
+        slot: 'tab1',
+    }, 
+    {
+        label: 'Tab 2',
+        icon: 'i-lucide-download',
+        slot: 'tab2',
+    },
+    //...
+]
+</script>`,
+
+    tabs02:`<template>
+    <CTabs :tabs="tabs" variant="segmented">
+        <template #tab1>
+            Content 1
+        </template>
+        <template #tab2>
+            Content 2
+        </template>
+        <!-- ... -->
+    </CTabs>
+</template>
+
+<script setup lang="ts">
+const tabs = [
+    {
+        label: 'Tab 1',
+        icon: 'i-lucide-clipboard-pen',
+        slot: 'tab1',
+    }, 
+    {
+        label: 'Tab 2',
+        icon: 'i-lucide-download',
+        slot: 'tab2',
+    },
+    //...
+]
+</script>`,
+
+    tabs03:`<template>
+    <CTabs left :tabs="tabs">
+        <template #tab1>
+            Content 1
+        </template>
+        <template #tab2>
+            Content 2
+        </template>
+        <!-- ... -->
+    </CTabs>
+</template>
+
+<script setup lang="ts">
+const tabs = [
+    {
+        label: 'Tab 1',
+        icon: 'i-lucide-clipboard-pen',
+        slot: 'tab1',
+    }, 
+    {
+        label: 'Tab 2',
+        icon: 'i-lucide-download',
+        slot: 'tab2',
+    },
+    //...
+]
+</script>`,
+
+    tabs04:`<template>
+    <CTabs full :tabs="tabs">
+        <template #tab1>
+            Content 1
+        </template>
+        <template #tab2>
+            Content 2
+        </template>
+        <!-- ... -->
+    </CTabs>
+</template>
+
+<script setup lang="ts">
+const tabs = [
+    {
+        label: 'Tab 1',
+        icon: 'i-lucide-clipboard-pen',
+        slot: 'tab1',
+    }, 
+    {
+        label: 'Tab 2',
+        icon: 'i-lucide-download',
+        slot: 'tab2',
+    },
+    //...
+]
+</script>`,
+
+    tabs05:`<template>
+    <CTabs title="Tab with title" :tabs="tabs">
+        <template #tab1>
+            Content 1
+        </template>
+        <template #tab2>
+            Content 2
+        </template>
+        <!-- ... -->
+    </CTabs>
+</template>
+
+<script setup lang="ts">
+const tabs = [
+    {
+        label: 'Tab 1',
+        icon: 'i-lucide-clipboard-pen',
+        slot: 'tab1',
+    }, 
+    {
+        label: 'Tab 2',
+        icon: 'i-lucide-download',
+        slot: 'tab2',
+    },
+    //...
+]
+</script>`,
+
+    tabs06:`<template>
+    <CTabs title="Segmented with Search Input" :tabs="tabs" variant="segmented">
+        <div class="grid grid-cols-1 w-2/3">
+            <UInput
+                icon="i-heroicons-magnifying-glass-20-solid"
+                size="sm"
+                color="white"
+                :trailing="false"
+                placeholder="Search..."
+            />
+        </div>
+        <template #tab1>
+            Content 1
+        </template>
+        <template #tab2>
+            Content 2
+        </template>
+        <!-- ... -->
+    </CTabs>
+</template>
+
+<script setup lang="ts">
+const tabs = [
+    {
+        label: 'Tab 1',
+        icon: 'i-lucide-clipboard-pen',
+        slot: 'tab1',
+    }, 
+    {
+        label: 'Tab 2',
+        icon: 'i-lucide-download',
+        slot: 'tab2',
+    },
+    //...
+]
+</script>`,
+
+    grid01:`
+
+`
 };
