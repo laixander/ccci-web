@@ -1,5 +1,5 @@
 <template>
-  <CLayoutDashboard logo="/logo.png" name="UI Development" :links="links" :is-logged-in="true">
+  <CLayoutDashboard logo="/logo.png" name="UI Development" :links="links" :is-logged-in="false">
     <slot />
   </CLayoutDashboard>
 </template>

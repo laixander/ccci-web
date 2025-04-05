@@ -407,7 +407,60 @@ const tabs = [
 ]
 </script>`,
 
-    grid01:`
+    grid01:`<template>
+    <CGrid>
+        <!-- Content goes here -->
+    </CGrid>
+</template>`,
 
-`
+    grid02:`<template>
+    <CGrid layout="left-wide">
+        <!-- Content goes here -->
+    </CGrid>
+
+    <CGrid layout="left-wider">
+        <!-- Content goes here -->
+    </CGrid>
+
+    <CGrid layout="left-widest">
+        <!-- Content goes here -->
+    </CGrid>
+
+    <CGrid layout="right-wide">
+        <!-- Content goes here -->
+    </CGrid>
+
+    <CGrid layout="right-wider">
+        <!-- Content goes here -->
+    </CGrid>
+    
+    <CGrid layout="right-widest">
+        <!-- Content goes here -->
+    </CGrid>
+</template>`,
+
+    grid03:`<template>
+    <CGrid :columns="3" hasDivider>
+        <div class="first:pl-0">
+            <!-- Content goes here -->
+        </div>
+        <div>
+            <!-- Content goes here -->
+        </div>
+        <div class="last:pr-0">
+            <!-- Content goes here -->
+        </div>
+    </CGrid>
+</template>`,
+
+    grid04:`<template>
+    <CGrid layout="left-widest" hasDivider>
+        <CGrid :columns="2">
+            <!-- Content goes here -->
+        </CGrid>
+        <div class="last:pr-0">
+            <!-- Content goes here -->
+        </div>
+    <CGrid>
+</template>`
 };

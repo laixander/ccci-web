@@ -27,49 +27,54 @@
                     <div class="font-light text-sm text-gray-500 dark:text-gray-100">
                         Use the <UBadge color="white" variant="solid" label="layout" /> prop to set to <UBadge color="white" variant="solid" label="left-wide" /> <UBadge color="white" variant="solid" label="left-wider" /> <UBadge color="white" variant="solid" label="left-widest" /> or <UBadge color="white" variant="solid" label="right-wide" /> <UBadge color="white" variant="solid" label="right-wider" /> <UBadge color="white" variant="solid" label="right-widest" />
                     </div>
+                    <div class="font-light text-sm text-gray-500 dark:text-gray-100">
+                        Layout only have 2 columns
+                    </div>
                 </div>
-                <CGrid layout="left-wide">
-                    <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
-                        left-wide
-                    </div>
-                    <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
-                    </div>
-                </CGrid>
-                <CGrid layout="left-wider">
-                    <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
-                        left-wider
-                    </div>
-                    <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
-                    </div>
-                </CGrid>
-                <CGrid layout="left-widest">
-                    <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
-                        left-widest
-                    </div>
-                    <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
-                    </div>
-                </CGrid>
-                <CGrid layout="right-wide">
-                    <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
-                    </div>
-                    <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
-                        right-wide
-                    </div>
-                </CGrid>
-                <CGrid layout="right-wider">
-                    <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
-                    </div>
-                    <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
-                        right-wider
-                    </div>
-                </CGrid>
-                <CGrid layout="right-widest">
-                    <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
-                    </div>
-                    <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
-                        right-widest
-                    </div>
-                </CGrid>
+                <div class="space-y-4">
+                    <CGrid layout="left-wide">
+                        <div class="bg-yellow-100 dark:bg-yellow-950 text-gray-500 dark:text-gray-400 text-sm p-4">
+                            left-wide
+                        </div>
+                        <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
+                        </div>
+                    </CGrid>
+                    <CGrid layout="left-wider">
+                        <div class="bg-yellow-100 dark:bg-yellow-950 text-gray-500 dark:text-gray-400 text-sm p-4">
+                            left-wider
+                        </div>
+                        <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
+                        </div>
+                    </CGrid>
+                    <CGrid layout="left-widest">
+                        <div class="bg-yellow-100 dark:bg-yellow-950 text-gray-500 dark:text-gray-400 text-sm p-4">
+                            left-widest
+                        </div>
+                        <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
+                        </div>
+                    </CGrid>
+                    <CGrid layout="right-wide">
+                        <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
+                        </div>
+                        <div class="bg-yellow-100 dark:bg-yellow-950 text-gray-500 dark:text-gray-400 text-sm p-4">
+                            right-wide
+                        </div>
+                    </CGrid>
+                    <CGrid layout="right-wider">
+                        <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
+                        </div>
+                        <div class="bg-yellow-100 dark:bg-yellow-950 text-gray-500 dark:text-gray-400 text-sm p-4">
+                            right-wider
+                        </div>
+                    </CGrid>
+                    <CGrid layout="right-widest">
+                        <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
+                        </div>
+                        <div class="bg-yellow-100 dark:bg-yellow-950 text-gray-500 dark:text-gray-400 text-sm p-4">
+                            right-widest
+                        </div>
+                    </CGrid>
+                </div>
                 <CodeBlock :code="codes.grid02" language="html" />
             </div>
 
@@ -118,7 +123,7 @@
                         </UCard>
                     </CGrid>
                     <div class="last:pr-0 text-gray-500 dark:text-gray-400 text-sm font-light">
-                        Unde blanditiis laboriosam beatae excepturi earum, maxime doloremque deserunt. Dignissimos nostrum in consequatur consequuntur neque obcaecati voluptates maiores modi quod!
+                        Unde blanditiis laboriosam beatae excepturi earum, maxime doloremque deserunt. Dignissimos nostrum in consequatur consequuntur neque obcaecati!
                     </div>
                 </CGrid>
                 <CodeBlock :code="codes.grid04" language="html" />

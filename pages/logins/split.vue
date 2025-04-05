@@ -10,7 +10,7 @@
       @login="handleLogin"
       @recover="handleRecover"
       position="right"
-      styleType="straight"
+      styleType="diagonal"
   />
 </template>
 
@@ -25,7 +25,9 @@ definePageMeta({
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'  // Import router
 
+const router = useRouter()
 const isLoading = ref(false)
 const credentials = ref({ username: '', password: '' })
 
@@ -35,6 +37,7 @@ const handleLogin = () => {
   setTimeout(() => {
       isLoading.value = false
       alert('Login successful!')
+      window.location.href = '/portal'
   }, 2000)
 }
 
