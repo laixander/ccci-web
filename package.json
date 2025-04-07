@@ -10,7 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@ccci/ui-layer": "^0.0.1",
+    "@ccci/ui-layer": "^0.0.11",
     "@nuxt/ui": "^2.20.0",
     "nuxt": "^3.6.0",
     "prismjs": "^1.30.0",

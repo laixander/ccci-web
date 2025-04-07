@@ -33,21 +33,21 @@
                 </div>
                 <div class="space-y-4">
                     <CGrid layout="left-wide">
-                        <div class="bg-yellow-100 dark:bg-yellow-950 text-gray-500 dark:text-gray-400 text-sm p-4">
+                        <div class="bg-green-100 dark:bg-green-950 text-gray-500 dark:text-gray-400 text-sm p-4">
                             left-wide
                         </div>
                         <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
                         </div>
                     </CGrid>
                     <CGrid layout="left-wider">
-                        <div class="bg-yellow-100 dark:bg-yellow-950 text-gray-500 dark:text-gray-400 text-sm p-4">
+                        <div class="bg-green-100 dark:bg-green-950 text-gray-500 dark:text-gray-400 text-sm p-4">
                             left-wider
                         </div>
                         <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
                         </div>
                     </CGrid>
                     <CGrid layout="left-widest">
-                        <div class="bg-yellow-100 dark:bg-yellow-950 text-gray-500 dark:text-gray-400 text-sm p-4">
+                        <div class="bg-green-100 dark:bg-green-950 text-gray-500 dark:text-gray-400 text-sm p-4">
                             left-widest
                         </div>
                         <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
@@ -56,21 +56,21 @@
                     <CGrid layout="right-wide">
                         <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
                         </div>
-                        <div class="bg-yellow-100 dark:bg-yellow-950 text-gray-500 dark:text-gray-400 text-sm p-4">
+                        <div class="bg-green-100 dark:bg-green-950 text-gray-500 dark:text-gray-400 text-sm p-4">
                             right-wide
                         </div>
                     </CGrid>
                     <CGrid layout="right-wider">
                         <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
                         </div>
-                        <div class="bg-yellow-100 dark:bg-yellow-950 text-gray-500 dark:text-gray-400 text-sm p-4">
+                        <div class="bg-green-100 dark:bg-green-950 text-gray-500 dark:text-gray-400 text-sm p-4">
                             right-wider
                         </div>
                     </CGrid>
                     <CGrid layout="right-widest">
                         <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 text-sm p-4">
                         </div>
-                        <div class="bg-yellow-100 dark:bg-yellow-950 text-gray-500 dark:text-gray-400 text-sm p-4">
+                        <div class="bg-green-100 dark:bg-green-950 text-gray-500 dark:text-gray-400 text-sm p-4">
                             right-widest
                         </div>
                     </CGrid>

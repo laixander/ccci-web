@@ -4,8 +4,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxt/ui"],
   extends:[
-    '../ccci-layer'
-    // '@ccci/ui-layer'
+    // '../ccci-layer'
+    '@ccci/ui-layer'
   ],
   colorMode: {
     preference: 'light'
