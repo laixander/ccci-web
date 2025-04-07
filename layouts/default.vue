@@ -41,6 +41,11 @@ const links = [
   ],
   [
     {
+      label: 'Get Started',
+      icon: 'i-lucide-terminal',
+      to: '/Installation'
+    },
+    {
       label: 'Grid',
       icon: 'i-lucide-layout-dashboard',
       to: '/grid'
