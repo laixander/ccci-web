@@ -1,6 +1,6 @@
 <template>
     <CWrapper>
-        <div class="divide-y *:pt-8 *:pb-6">
+        <div class="divide-y dark:divide-gray-800 *:pt-8 *:pb-6">
             <div class="space-y-8 first:pt-0">
                 <div class="space-y-2">
                     <div class="font-bold text-lg text-gray-800 dark:text-gray-100">
