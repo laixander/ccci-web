@@ -25,7 +25,7 @@
                         Layout
                     </div>
                     <div class="font-light text-sm text-gray-500 dark:text-gray-100">
-                        Use the <UBadge color="white" variant="solid" label="layout" /> prop to set to <UBadge color="white" variant="solid" label="left-wide" /> <UBadge color="white" variant="solid" label="left-wider" /> <UBadge color="white" variant="solid" label="left-widest" /> or <UBadge color="white" variant="solid" label="right-wide" /> <UBadge color="white" variant="solid" label="right-wider" /> <UBadge color="white" variant="solid" label="right-widest" />
+                        Use the <UBadge color="white" variant="solid" label="layout" /> prop and set to <UBadge color="white" variant="solid" label="left-wide" /> <UBadge color="white" variant="solid" label="left-wider" /> <UBadge color="white" variant="solid" label="left-widest" /> or <UBadge color="white" variant="solid" label="right-wide" /> <UBadge color="white" variant="solid" label="right-wider" /> <UBadge color="white" variant="solid" label="right-widest" />
                     </div>
                     <div class="font-light text-sm text-gray-500 dark:text-gray-100">
                         Layout only have 2 columns
