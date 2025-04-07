@@ -1,5 +1,5 @@
 <template>
-    <CLayoutMinimal logo="logo.png" name="UI Development" :links="links" :is-logged-in="false">
+    <CLayoutMinimal logo="logo.png" name="UI Development" :links="links" :is-logged-in="false" :has-menu="false">
       <slot />
     </CLayoutMinimal>
   </template>

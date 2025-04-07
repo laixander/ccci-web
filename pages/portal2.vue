@@ -1,26 +1,11 @@
 <template>
-    <CBannerWeb 
-        start
-        title="Welcome to Your Portal"
-        description="Your central hub for seamless access to essential resources, tools, and updates. Stay connected, manage your tasks efficiently, and navigate your digital space with ease. Whether you’re here for work, learning, or collaboration, everything you need is just a click away."
-        :rounded="false" 
-        button="Documentation" icon="i-lucide-book-open-text" color="amber" @cta="handleCTA"
-    />
-    <div class="mt-4">
-        <UContainer>
-            <CGrid :columns="4">
-                <CCardApp :apps="apps" :actions="actions" />
-            </CGrid>
-        </UContainer>
-    </div>
+    <CPagePortal :apps="apps" :actions="actions" @signUp="handleSignUp" @logIn="handleLogin" />
 </template>
 
 <script setup lang="ts">
 definePageMeta({
     layout: 'minimal'
 })
-
-import { useRouter } from 'vue-router'
 
 const apps = ref([
     {
@@ -65,9 +50,11 @@ const actions = ref([
     },
 ]);
 
-const router = useRouter()
+const handleSignUp = () => {
+  console.log("Sign Up button clicked");
+};
 
-const handleCTA = () => {
-    router.push('/dashboard')
-}
+const handleLogin = () => {
+  console.log("Log In button clicked");
+};
 </script>
