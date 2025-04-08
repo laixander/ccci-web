@@ -7,38 +7,38 @@
 <script setup lang="ts">
 
 const links = [
-  [
-    {
-      label: 'Dashboard',
-      icon: 'i-lucide-house',
-      to: '/dashboard'
-    },
-    {
-      label: 'Profile',
-      icon: 'i-lucide-circle-user-round',
-      to: '/profile'
-    },
-    {
-      label: 'Wizard',
-      icon: 'i-lucide-wand',
-      to: '/wizard'
-    },
-    {
-      label: 'List',
-      icon: 'i-lucide-grid',
-      to: '/list'
-    },
-    {
-      label: 'Kanban',
-      icon: 'i-lucide-square-kanban',
-      to: '/kanban'
-    },
-    {
-      label: 'Settings',
-      icon: 'i-lucide-settings',
-      to: '/settings'
-    },
-  ],
+  // [
+  //   {
+  //     label: 'Dashboard',
+  //     icon: 'i-lucide-house',
+  //     to: '/dashboard'
+  //   },
+  //   {
+  //     label: 'Profile',
+  //     icon: 'i-lucide-circle-user-round',
+  //     to: '/profile'
+  //   },
+  //   {
+  //     label: 'Wizard',
+  //     icon: 'i-lucide-wand',
+  //     to: '/wizard'
+  //   },
+  //   {
+  //     label: 'List',
+  //     icon: 'i-lucide-grid',
+  //     to: '/list'
+  //   },
+  //   {
+  //     label: 'Kanban',
+  //     icon: 'i-lucide-square-kanban',
+  //     to: '/kanban'
+  //   },
+  //   {
+  //     label: 'Settings',
+  //     icon: 'i-lucide-settings',
+  //     to: '/settings'
+  //   },
+  // ],
   [
     {
       label: 'Get Started',

@@ -5,6 +5,6 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 onMounted(() => {
-  router.push('/logins/split')
+  router.push('/installation')
 })
 </script>
