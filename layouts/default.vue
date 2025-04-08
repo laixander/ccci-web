@@ -46,6 +46,11 @@ const links = [
       to: '/Installation'
     },
     {
+      label: 'Layouts',
+      icon: 'i-lucide-panels-top-left',
+      to: '/layouts'
+    },
+    {
       label: 'Grid',
       icon: 'i-lucide-layout-dashboard',
       to: '/grid'
