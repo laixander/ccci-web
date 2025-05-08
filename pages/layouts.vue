@@ -13,7 +13,7 @@
                 </div>
                 <CLayoutDashboard logo="/logo.png" name="UI Development" :links="links" :isLoggedIn="true" minHeight="min-h-full" customClass="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800" sidebarHeight="h-auto" title="Dashboard">
                     <CWrapper class="h-full">
-                        <div class="rounded-lg border-dashed border border-gray-300 bg-gray-100/60 h-full"></div>
+                        <div class="rounded-lg border-dashed border border-gray-300 dark:border-gray-700 bg-gray-100/60 dark:bg-gray-900/60 h-full"></div>
                     </CWrapper>
                 </CLayoutDashboard>
                 <CodeBlock :code="codes.dashboard" language="html" />
@@ -31,7 +31,7 @@
                 </div>
                 <CLayoutMinimal logo="logo.png" name="UI Development" :links="links" :isLoggedIn="false" :hasMenu="false" minHeight="min-h-full" customClass="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800">
                     <CWrapper>
-                        <div class="rounded-lg border-dashed border border-gray-300 bg-gray-100/60 h-32"></div>
+                        <div class="rounded-lg border-dashed border border-gray-300 dark:border-gray-700 bg-gray-100/60 dark:bg-gray-900/60 h-32"></div>
                     </CWrapper>
                 </CLayoutMinimal>
                 <CodeBlock :code="codes.minimal" language="html" />
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <CLayoutCentered minHeight="min-h-full" customClass="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800">
-                  <div class="rounded-lg border-dashed border border-gray-300 bg-gray-100/60 w-72 h-96 my-8"></div>
+                  <div class="rounded-lg border-dashed border border-gray-300 dark:border-gray-700 bg-gray-100/60 dark:bg-gray-900/60 w-72 h-96 my-8"></div>
                 </CLayoutCentered>
                 <CodeBlock :code="codes.centered" language="html" />
             </div>
