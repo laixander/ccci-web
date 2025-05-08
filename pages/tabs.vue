@@ -14,16 +14,24 @@
                 <UCard>
                     <CTabs :tabs="tabs">
                         <template #tab1>
-                            <UAlert color="primary" variant="soft" description="Tab 1 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 1 content
+                            </div>
                         </template>
                         <template #tab2>
-                            <UAlert color="primary" variant="soft" description="Tab 2 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 2 content
+                            </div>
                         </template>
                         <template #tab3>
-                            <UAlert color="primary" variant="soft" description="Tab 3 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 3 content
+                            </div>
                         </template>
                         <template #tab4>
-                            <UAlert color="primary" variant="soft" description="Tab 4 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 4 content
+                            </div>
                         </template>
                     </CTabs>
                 </UCard>
@@ -42,16 +50,24 @@
                 <UCard>
                     <CTabs :tabs="tabs" variant="segmented">
                         <template #tab1>
-                            <UAlert color="primary" variant="soft" description="Tab 1 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 1 content
+                            </div>
                         </template>
                         <template #tab2>
-                            <UAlert color="primary" variant="soft" description="Tab 2 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 2 content
+                            </div>
                         </template>
                         <template #tab3>
-                            <UAlert color="primary" variant="soft" description="Tab 3 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 3 content
+                            </div>
                         </template>
                         <template #tab4>
-                            <UAlert color="primary" variant="soft" description="Tab 4 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 4 content
+                            </div>
                         </template>
                     </CTabs>
                 </UCard>
@@ -70,32 +86,48 @@
                 <UCard>
                     <CTabs left :tabs="tabs">
                         <template #tab1>
-                            <UAlert color="primary" variant="soft" description="Tab 1 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 1 content
+                            </div>
                         </template>
                         <template #tab2>
-                            <UAlert color="primary" variant="soft" description="Tab 2 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 2 content
+                            </div>
                         </template>
                         <template #tab3>
-                            <UAlert color="primary" variant="soft" description="Tab 3 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 3 content
+                            </div>
                         </template>
                         <template #tab4>
-                            <UAlert color="primary" variant="soft" description="Tab 4 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 4 content
+                            </div>
                         </template>
                     </CTabs>
                 </UCard>
                 <UCard>
                     <CTabs left :tabs="tabs" variant="segmented">
                         <template #tab1>
-                            <UAlert color="primary" variant="soft" description="Tab 1 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 1 content
+                            </div>
                         </template>
                         <template #tab2>
-                            <UAlert color="primary" variant="soft" description="Tab 2 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 2 content
+                            </div>
                         </template>
                         <template #tab3>
-                            <UAlert color="primary" variant="soft" description="Tab 3 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 3 content
+                            </div>
                         </template>
                         <template #tab4>
-                            <UAlert color="primary" variant="soft" description="Tab 4 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 4 content
+                            </div>
                         </template>
                     </CTabs>
                 </UCard>
@@ -114,32 +146,48 @@
                 <UCard>
                     <CTabs full :tabs="tabs">
                         <template #tab1>
-                            <UAlert color="primary" variant="soft" description="Tab 1 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 1 content
+                            </div>
                         </template>
                         <template #tab2>
-                            <UAlert color="primary" variant="soft" description="Tab 2 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 2 content
+                            </div>
                         </template>
                         <template #tab3>
-                            <UAlert color="primary" variant="soft" description="Tab 3 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 3 content
+                            </div>
                         </template>
                         <template #tab4>
-                            <UAlert color="primary" variant="soft" description="Tab 4 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 4 content
+                            </div>
                         </template>
                     </CTabs>
                 </UCard>
                 <UCard>
                     <CTabs full :tabs="tabs" variant="segmented">
                         <template #tab1>
-                            <UAlert color="primary" variant="soft" description="Tab 1 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 1 content
+                            </div>
                         </template>
                         <template #tab2>
-                            <UAlert color="primary" variant="soft" description="Tab 2 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 2 content
+                            </div>
                         </template>
                         <template #tab3>
-                            <UAlert color="primary" variant="soft" description="Tab 3 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 3 content
+                            </div>
                         </template>
                         <template #tab4>
-                            <UAlert color="primary" variant="soft" description="Tab 4 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 4 content
+                            </div>
                         </template>
                     </CTabs>
                 </UCard>
@@ -158,32 +206,48 @@
                 <UCard>
                     <CTabs title="Tab with title" :tabs="tabs">
                         <template #tab1>
-                            <UAlert color="primary" variant="soft" description="Tab 1 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 1 content
+                            </div>
                         </template>
                         <template #tab2>
-                            <UAlert color="primary" variant="soft" description="Tab 2 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 2 content
+                            </div>
                         </template>
                         <template #tab3>
-                            <UAlert color="primary" variant="soft" description="Tab 3 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 3 content
+                            </div>
                         </template>
                         <template #tab4>
-                            <UAlert color="primary" variant="soft" description="Tab 4 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 4 content
+                            </div>
                         </template>
                     </CTabs>
                 </UCard>
                 <UCard>
                     <CTabs title="Segmented with title" :tabs="tabs" variant="segmented">
                         <template #tab1>
-                            <UAlert color="primary" variant="soft" description="Tab 1 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 1 content
+                            </div>
                         </template>
                         <template #tab2>
-                            <UAlert color="primary" variant="soft" description="Tab 2 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 2 content
+                            </div>
                         </template>
                         <template #tab3>
-                            <UAlert color="primary" variant="soft" description="Tab 3 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 3 content
+                            </div>
                         </template>
                         <template #tab4>
-                            <UAlert color="primary" variant="soft" description="Tab 4 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 4 content
+                            </div>
                         </template>
                     </CTabs>
                 </UCard>
@@ -201,7 +265,7 @@
                 </div>
                 <UCard>
                     <CTabs title="Segmented with Search Input" :tabs="tabs" variant="segmented">
-                        <div class="grid grid-cols-1 w-2/3">
+                        <div class="grid grid-cols-1 w-full lg:w-2/3">
                             <UInput
                                 icon="i-heroicons-magnifying-glass-20-solid"
                                 size="sm"
@@ -211,16 +275,24 @@
                             />
                         </div>
                         <template #tab1>
-                            <UAlert color="primary" variant="soft" description="Tab 1 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 1 content
+                            </div>
                         </template>
                         <template #tab2>
-                            <UAlert color="primary" variant="soft" description="Tab 2 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 2 content
+                            </div>
                         </template>
                         <template #tab3>
-                            <UAlert color="primary" variant="soft" description="Tab 3 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 3 content
+                            </div>
                         </template>
                         <template #tab4>
-                            <UAlert color="primary" variant="soft" description="Tab 4 content" />
+                            <div class="rounded-lg border-dashed border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 p-4 text-sm text-gray-300 dark:text-gray-600">
+                                Tab 4 content
+                            </div>
                         </template>
                     </CTabs>
                 </UCard>
