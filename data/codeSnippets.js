@@ -462,5 +462,74 @@ const tabs = [
             <!-- Content goes here -->
         </div>
     <CGrid>
-</template>`
+</template>`,
+
+    dashboard: `<!-- layouts/default.vue -->
+<template>
+    <CLayoutDashboard logo="/logo.png" name="UI Development" :links="links" :is-logged-in="false">
+        <slot />
+    </CLayoutDashboard>
+</template>
+
+<script setup lang="ts">
+const links = [
+  [
+    {
+      label: 'Dashboard',
+      icon: 'i-heroicons-home',
+      to: '/layouts'
+    },
+    {
+      label: 'Teams',
+      icon: 'i-heroicons-users',
+      to: '/'
+    },
+    {
+      label: 'Projects',
+      icon: 'i-heroicons-folder',
+      to: '/'
+    },
+    //...
+  ]
+]
+</script>`,
+
+    minimal: `<!-- layouts/minimal.vue -->
+<template>
+    <CLayoutMinimal logo="logo.png" name="UI Development" :is-logged-in="false" :has-menu="false">
+        <slot />
+    </CLayoutMinimal>
+</template>
+
+<!-- pages/portal.vue -->
+<template>
+    <CWrapper>
+        Hello World
+    </CWrapper>
+</template>
+
+<script setup lang="ts">
+definePageMeta({
+    layout: 'minimal'
+})
+</script>`,
+
+    centered: `<!-- layouts/centered.vue -->
+<template>
+    <CLayoutCentered>
+        <slot />
+    </CLayoutCentered>
+</template>
+
+<!-- pages/login.vue -->
+<template>
+    Hello World
+</template>
+
+<script setup lang="ts">
+definePageMeta({
+    layout: 'centered'
+})
+</script>`,
+
 };
