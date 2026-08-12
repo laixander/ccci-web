@@ -12,15 +12,14 @@ useHead({
   }
 })
 
-const title = 'Nuxt Starter Template'
-const description = 'A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours.'
+const title = 'CCCI — Centralized Cloud Computing International Inc.'
+const description = 'CCCI builds cloud-native enterprise software for Philippine organizations — HRIS, LMS, and CMS — in one unified platform trusted by 500+ companies and schools.'
 
 useSeoMeta({
   title,
   description,
   ogTitle: title,
   ogDescription: description,
-  ogImage: 'https://ui.nuxt.com/assets/templates/nuxt/starter-light.png',
   twitterCard: 'summary_large_image'
 })
 </script>
@@ -30,5 +29,6 @@ useSeoMeta({
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
+    <DemoModal />
   </UApp>
 </template>

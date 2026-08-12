@@ -19,7 +19,7 @@ const footerLinks = [
     ],
   },
   {
-    label: 'Institution',
+    label: 'Company',
     children: [
       { label: 'About', to: '#' },
       { label: 'Blog', to: '#' },
@@ -48,16 +48,16 @@ const footerLinks = [
 </script>
 
 <template>
-  <div class="theme-cms">
+  <div class="theme-hris">
     <UHeader>
       <template #title>
-        <!-- CampusCore Logo -->
+        <!-- PeopleCore Logo -->
         <div class="flex items-center gap-2.5">
           <div class="size-8 rounded-lg bg-primary flex items-center justify-center shadow-sm">
-            <UIcon name="i-lucide-graduation-cap" class="size-5 text-white" />
+            <UIcon name="i-lucide-users" class="size-5 text-white" />
           </div>
           <span class="font-bold text-xl tracking-tight text-highlighted">
-            Campus<span class="text-primary">Core</span>
+            People<span class="text-primary">Core</span>
           </span>
         </div>
       </template>
@@ -66,7 +66,7 @@ const footerLinks = [
 
       <template #right>
         <UColorModeButton />
-        <UButton label="Sign in" color="neutral" variant="ghost" class="hidden sm:flex" />
+        <UButton label="Sign in" color="neutral" variant="ghost" class="hidden sm:flex" to="/products/hris/login" />
         <UButton label="Request Demo" trailing-icon="i-lucide-calendar" />
       </template>
 
@@ -74,7 +74,7 @@ const footerLinks = [
       <template #body>
         <UNavigationMenu :items="navItems" orientation="vertical" class="-mx-2.5" />
         <div class="mt-4 flex flex-col gap-2">
-          <UButton label="Sign in" color="neutral" variant="outline" block />
+          <UButton label="Sign in" color="neutral" variant="outline" block to="/products/hris/dashboard" />
           <UButton label="Request Demo" block />
         </div>
       </template>
@@ -90,17 +90,17 @@ const footerLinks = [
           <UFooterColumns :columns="footerLinks">
             <template #left>
               <div class="space-y-4">
-                <!-- CampusCore Logo (footer) -->
+                <!-- PeopleCore Logo (footer) -->
                 <div class="flex items-center gap-2.5">
                   <div class="size-8 rounded-lg bg-primary flex items-center justify-center shadow-sm">
-                    <UIcon name="i-lucide-graduation-cap" class="size-5 text-white" />
+                    <UIcon name="i-lucide-users" class="size-5 text-white" />
                   </div>
                   <span class="font-bold text-xl tracking-tight text-highlighted">
-                    Campus<span class="text-primary">Core</span>
+                    People<span class="text-primary">Core</span>
                   </span>
                 </div>
                 <p class="text-muted text-sm leading-relaxed max-w-xs">
-                  The all-in-one campus management platform helping Philippine schools digitize enrollment, academics, and administration.
+                  The modern HR platform helping growing Philippine organizations manage their entire workforce lifecycle with confidence.
                 </p>
               </div>
             </template>
@@ -110,7 +110,7 @@ const footerLinks = [
 
       <template #left>
         <p class="text-muted text-sm flex items-center gap-2">
-          <UIcon name="i-lucide-copyright" /> <span>{{ new Date().getFullYear() }} CampusCore. All rights reserved.</span>
+          <UIcon name="i-lucide-copyright" /> <span>{{ new Date().getFullYear() }} PeopleCore. All rights reserved.</span>
         </p>
       </template>
 

@@ -183,7 +183,7 @@ const logoIcons = [
   </UPageSection>
 
   <!-- Stats banner -->
-  <div class="bg-primary py-20">
+  <div class="bg-primary dark:bg-primary/50 py-20">
     <UContainer>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
         <div v-for="stat in stats" :key="stat.label">

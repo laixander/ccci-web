@@ -48,7 +48,8 @@ const footerLinks = [
 </script>
 
 <template>
-  <UHeader>
+  <div class="theme-lms">
+    <UHeader>
     <template #title>
       <div class="flex items-center gap-2.5">
         <div class="size-8 rounded-lg bg-primary flex items-center justify-center shadow-sm">
@@ -143,4 +144,5 @@ const footerLinks = [
       </div>
     </template>
   </UFooter>
+  </div>
 </template>

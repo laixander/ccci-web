@@ -5,6 +5,60 @@
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+@theme static {
+  --color-cms-50: #fffbeb;
+  --color-cms-100: #fef3c7;
+  --color-cms-200: #fde68a;
+  --color-cms-300: #fcd34d;
+  --color-cms-400: #fbbf24;
+  --color-cms-500: #f59e0b;
+  --color-cms-600: #d97706;
+  --color-cms-700: #b45309;
+  --color-cms-800: #92400e;
+  --color-cms-900: #78350f;
+  --color-cms-950: #451a03;
+
+  --color-lms-50: #f5f3ff;
+  --color-lms-100: #ede9fe;
+  --color-lms-200: #ddd6fe;
+  --color-lms-300: #c4b5fd;
+  --color-lms-400: #a78bfa;
+  --color-lms-500: #8b5cf6;
+  --color-lms-600: #7c3aed;
+  --color-lms-700: #6d28d9;
+  --color-lms-800: #5b21b6;
+  --color-lms-900: #4c1d95;
+  --color-lms-950: #2e1065;
+
+  --color-hris-50: #f0fdf4;
+  --color-hris-100: #dcfce7;
+  --color-hris-200: #bbf7d0;
+  --color-hris-300: #86efac;
+  --color-hris-400: #4ade80;
+  --color-hris-500: #22c55e;
+  --color-hris-600: #16a34a;
+  --color-hris-700: #15803d;
+  --color-hris-800: #166534;
+  --color-hris-900: #14532d;
+  --color-hris-950: #052e16;
+}
+
+.theme-lms {
+  --ui-primary: var(--color-lms-500);
+}
+
+.theme-hris {
+  --ui-primary: var(--color-hris-500);
+}
+
+.theme-cms {
+  --ui-primary: var(--color-cms-500);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --ui-container: 80rem;
 }
@@ -12,5 +66,30 @@
 @layer utilities {
   .scrollbar {
     @apply [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-neutral-200 dark:[&::-webkit-scrollbar-track]:bg-neutral-100/5 [&::-webkit-scrollbar-thumb]:bg-neutral-400 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-400/20 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-neutral-500
+  }
+}
+
+.grid-overlay {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 90%);
+  mask-image: radial-gradient(circle at 50% 50%, black 40%, transparent 90%);
+}
+
+.dark .grid-overlay {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+}
+
+@keyframes scrollMarquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
   }
 }
