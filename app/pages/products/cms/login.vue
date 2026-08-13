@@ -2,7 +2,7 @@
 import { z } from 'zod'
 
 definePageMeta({
-  layout: false, // Use no layout for a standalone login page
+  layout: false,
 })
 
 const schema = z.object({
@@ -19,27 +19,25 @@ const state = reactive<Partial<Schema>>({
 
 const loading = ref(false)
 const rememberMe = ref(false)
-
 const toast = useToast()
 
 const handleLogin = async () => {
   loading.value = true
-  // Simulate network request
   await new Promise(resolve => setTimeout(resolve, 1000))
   loading.value = false
-  
+
   if (state.username === 'admin' && state.password === 'password') {
     toast.add({
       title: 'Login Successful',
-      description: 'Welcome back to your HRIS dashboard.',
+      description: 'Welcome back to your CampusCore dashboard.',
       color: 'success',
       icon: 'i-lucide-check-circle'
     })
-    navigateTo('/products/hris/dashboard')
+    navigateTo('/products/cms/dashboard')
   } else {
     toast.add({
       title: 'Login Failed',
-      description: 'Invalid credentials.',
+      description: 'Invalid credentials. Try admin / password.',
       color: 'error',
       icon: 'i-lucide-alert-circle'
     })
@@ -48,24 +46,24 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <div class="theme-hris min-h-screen bg-muted/30 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+  <div class="theme-cms min-h-screen bg-muted/30 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
     <!-- Background decoration -->
     <div class="absolute inset-0 -z-10 bg-gradient-to-br from-primary/5 via-transparent to-transparent" />
     <div class="absolute top-0 right-0 -z-10 size-[600px] rounded-full bg-primary/5 blur-3xl -translate-y-1/2 translate-x-1/3" />
-    
+    <div class="absolute bottom-0 left-0 -z-10 size-[400px] rounded-full bg-primary/5 blur-3xl translate-y-1/2 -translate-x-1/3" />
+
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
       <div class="flex justify-center">
-        <!-- PeopleCore Logo -->
-        <NuxtLink to="/products/hris" class="flex items-center gap-2.5 transition-transform hover:scale-105">
+        <NuxtLink to="/products/cms" class="flex items-center gap-2.5 transition-transform hover:scale-105">
           <div class="size-12 rounded-xl bg-primary flex items-center justify-center shadow-sm">
-            <UIcon name="i-lucide-users" class="size-7 text-white" />
+            <UIcon name="i-lucide-graduation-cap" class="size-7 text-white" />
           </div>
           <span class="font-bold text-3xl tracking-tight text-highlighted">
-            People<span class="text-primary">Core</span>
+            Campus<span class="text-primary">Core</span>
           </span>
         </NuxtLink>
       </div>
-      <p class="mt-4 text-center text-sm text-muted">Your complete Human Resource Information System</p>
+      <p class="mt-4 text-center text-sm text-muted">Campus management built for Philippine schools</p>
     </div>
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-[440px]">
@@ -75,15 +73,16 @@ const handleLogin = async () => {
             Welcome back
           </h2>
           <p class="mt-2 text-center text-sm text-muted">
-            Sign in to your HRIS dashboard
+            Sign in to your CampusCore dashboard
           </p>
         </div>
+
         <UForm :schema="schema" :state="state" class="space-y-6" @submit="handleLogin">
           <UFormField label="Username" name="username">
-            <UInput 
+            <UInput
               v-model="state.username"
-              type="text" 
-              required 
+              type="text"
+              required
               autocomplete="username"
               icon="i-lucide-user"
               placeholder="username"
@@ -93,10 +92,10 @@ const handleLogin = async () => {
           </UFormField>
 
           <UFormField label="Password" name="password">
-            <UInput 
+            <UInput
               v-model="state.password"
-              type="password" 
-              required 
+              type="password"
+              required
               autocomplete="current-password"
               icon="i-lucide-lock"
               placeholder="••••••••"
@@ -105,7 +104,7 @@ const handleLogin = async () => {
             />
           </UFormField>
 
-          <div class="flex items-center justify-between mt-4">
+          <div class="flex items-center justify-between">
             <UCheckbox v-model="rememberMe" label="Remember me" name="remember-me" color="primary" />
             <NuxtLink to="#" class="text-sm font-medium text-primary hover:text-primary/80 transition-colors">
               Forgot your password?
@@ -122,18 +121,9 @@ const handleLogin = async () => {
             </div>
           </div>
 
-          <div class="pt-2">
-            <UButton 
-              type="submit" 
-              block 
-              color="primary" 
-              size="xl"
-              :loading="loading"
-              class="font-semibold"
-            >
-              Sign in
-            </UButton>
-          </div>
+          <UButton type="submit" block color="primary" size="xl" :loading="loading" class="font-semibold">
+            Sign in
+          </UButton>
         </UForm>
 
         <div class="mt-8">
@@ -142,36 +132,19 @@ const handleLogin = async () => {
               <div class="w-full border-t border-default" />
             </div>
             <div class="relative flex justify-center text-sm">
-              <span class="bg-default px-4 text-muted text-xs font-medium uppercase tracking-wider">
-                Or continue with
-              </span>
+              <span class="bg-default px-4 text-muted text-xs font-medium uppercase tracking-wider">Or continue with</span>
             </div>
           </div>
-
           <div class="mt-6 grid grid-cols-2 gap-3">
-            <UButton 
-              color="neutral" 
-              variant="outline" 
-              block 
-              icon="i-simple-icons-microsoft" 
-              label="Microsoft" 
-              size="lg" 
-            />
-            <UButton 
-              color="neutral" 
-              variant="outline" 
-              block 
-              icon="i-simple-icons-google" 
-              label="Google" 
-              size="lg" 
-            />
+            <UButton color="neutral" variant="outline" block icon="i-simple-icons-microsoft" label="Microsoft" size="lg" />
+            <UButton color="neutral" variant="outline" block icon="i-simple-icons-google" label="Google" size="lg" />
           </div>
         </div>
       </UCard>
-      
+
       <p class="mt-8 text-center text-sm text-dimmed">
-        Don't have an account? 
-        <NuxtLink to="/products/hris" class="font-medium text-primary hover:text-primary/80 transition-colors ml-1">
+        Don't have an account?
+        <NuxtLink to="/products/cms" class="font-medium text-primary hover:text-primary/80 transition-colors ml-1">
           Contact Sales
         </NuxtLink>
       </p>

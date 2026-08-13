@@ -66,7 +66,7 @@ const footerLinks = [
 
       <template #right>
         <UColorModeButton />
-        <UButton label="Sign in" color="neutral" variant="ghost" class="hidden sm:flex" />
+        <UButton label="Sign in" color="neutral" variant="ghost" class="hidden sm:flex" to="/products/cms/login" />
         <UButton label="Request Demo" trailing-icon="i-lucide-calendar" />
       </template>
 
@@ -74,7 +74,7 @@ const footerLinks = [
       <template #body>
         <UNavigationMenu :items="navItems" orientation="vertical" class="-mx-2.5" />
         <div class="mt-4 flex flex-col gap-2">
-          <UButton label="Sign in" color="neutral" variant="outline" block />
+          <UButton label="Sign in" color="neutral" variant="outline" block to="/products/cms/login" />
           <UButton label="Request Demo" block />
         </div>
       </template>

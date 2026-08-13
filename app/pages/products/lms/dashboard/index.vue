@@ -12,52 +12,43 @@ const greeting = computed(() => {
 })
 
 const kpiCards = [
-  { label: 'Total Employees', value: '342', icon: 'i-lucide-users', iconColor: 'text-primary', change: '↑ 12 this month', changeColor: 'text-success', bg: 'bg-primary/5' },
-  { label: 'On Leave Today', value: '18', icon: 'i-lucide-plane-takeoff', iconColor: 'text-warning', change: '↓ 3 from yesterday', changeColor: 'text-muted', bg: 'bg-warning/5' },
-  { label: 'Payroll Due', value: '₱287k', icon: 'i-lucide-banknote', iconColor: 'text-success', change: '↑ 4.2% vs last mo.', changeColor: 'text-muted', bg: 'bg-success/5' },
-  { label: 'Open Positions', value: '9', icon: 'i-lucide-briefcase', iconColor: 'text-info', change: '3 interviews today', changeColor: 'text-info', bg: 'bg-info/5' },
-  { label: 'Attendance Rate', value: '94.7%', icon: 'i-lucide-clock', iconColor: 'text-primary', change: '↑ 1.2% vs last week', changeColor: 'text-success', bg: 'bg-primary/5' },
-  { label: 'Avg Performance', value: '4.2/5', icon: 'i-lucide-trending-up', iconColor: 'text-warning', change: 'Q3 2026 cycle', changeColor: 'text-muted', bg: 'bg-warning/5' },
+  { label: 'Active Courses', value: '84', icon: 'i-lucide-book-open', iconColor: 'text-primary', change: '↑ 6 this month', changeColor: 'text-success', bg: 'bg-primary/5' },
+  { label: 'Total Learners', value: '1,240', icon: 'i-lucide-users', iconColor: 'text-info', change: '↑ 48 this week', changeColor: 'text-success', bg: 'bg-info/5' },
+  { label: 'Avg Completion', value: '74%', icon: 'i-lucide-line-chart', iconColor: 'text-success', change: '↑ 3.2% vs last mo.', changeColor: 'text-success', bg: 'bg-success/5' },
+  { label: 'Certs Issued', value: '312', icon: 'i-lucide-award', iconColor: 'text-warning', change: '↑ 22 this month', changeColor: 'text-muted', bg: 'bg-warning/5' },
+  { label: 'Live Sessions', value: '7', icon: 'i-lucide-video', iconColor: 'text-primary', change: '3 scheduled today', changeColor: 'text-info', bg: 'bg-primary/5' },
+  { label: 'Avg Quiz Score', value: '82%', icon: 'i-lucide-check-circle', iconColor: 'text-success', change: '↑ 4pts vs last mo.', changeColor: 'text-success', bg: 'bg-success/5' },
 ]
 
 const recentActivity = [
-  { type: 'leave', icon: 'i-lucide-plane-takeoff', color: 'text-warning', bg: 'bg-warning/10', message: 'Mia Santos submitted a leave request', sub: 'Vacation · Aug 15–20', time: '2m ago' },
-  { type: 'hire', icon: 'i-lucide-user-plus', color: 'text-success', bg: 'bg-success/10', message: 'Carlos Mendoza accepted offer — Senior Dev', sub: 'Engineering · Start Sep 1', time: '1h ago' },
-  { type: 'payroll', icon: 'i-lucide-banknote', color: 'text-primary', bg: 'bg-primary/10', message: 'August payroll run completed', sub: '342 employees · ₱287,450', time: '3h ago' },
-  { type: 'review', icon: 'i-lucide-star', color: 'text-warning', bg: 'bg-warning/10', message: 'Q3 performance review cycle started', sub: '48 reviews pending', time: '5h ago' },
-  { type: 'attendance', icon: 'i-lucide-clock', color: 'text-info', bg: 'bg-info/10', message: 'Late arrivals flagged for today', sub: '7 employees · Compliance alert', time: '8h ago' },
+  { icon: 'i-lucide-user-plus', color: 'text-primary', bg: 'bg-primary/10', message: '12 new learners enrolled in "JavaScript Fundamentals"', sub: 'Course · Aug 13', time: '5m ago' },
+  { icon: 'i-lucide-award', color: 'text-warning', bg: 'bg-warning/10', message: 'Maria Santos completed "Project Management Pro"', sub: 'Certificate issued automatically', time: '1h ago' },
+  { icon: 'i-lucide-check-circle', color: 'text-success', bg: 'bg-success/10', message: 'Q3 Compliance Assessment submissions closed', sub: '98% pass rate · 156 learners', time: '3h ago' },
+  { icon: 'i-lucide-video', color: 'text-info', bg: 'bg-info/10', message: 'Live session "Advanced Excel" completed', sub: '34 attendees · Recording available', time: '5h ago' },
+  { icon: 'i-lucide-book-open', color: 'text-primary', bg: 'bg-primary/10', message: 'New course "AI for Business" published', sub: 'By Admin · 8 modules', time: '8h ago' },
 ]
 
 const quickLinks = [
-  { label: 'Run Payroll', icon: 'i-lucide-play-circle', to: '/products/hris/dashboard/payroll', color: 'text-primary', bg: 'bg-primary/10' },
-  { label: 'Add Employee', icon: 'i-lucide-user-plus', to: '/products/hris/dashboard/employees', color: 'text-success', bg: 'bg-success/10' },
-  { label: 'Approve Leaves', icon: 'i-lucide-calendar-check', to: '/products/hris/dashboard/attendance', color: 'text-warning', bg: 'bg-warning/10' },
-  { label: 'View Reports', icon: 'i-lucide-bar-chart-2', to: '/products/hris/dashboard/analytics', color: 'text-info', bg: 'bg-info/10' },
+  { label: 'Create Course', icon: 'i-lucide-plus-circle', to: '/products/lms/dashboard/courses', color: 'text-primary', bg: 'bg-primary/10' },
+  { label: 'Enroll Learner', icon: 'i-lucide-user-plus', to: '/products/lms/dashboard/progress', color: 'text-info', bg: 'bg-info/10' },
+  { label: 'Schedule Session', icon: 'i-lucide-calendar-plus', to: '/products/lms/dashboard/classrooms', color: 'text-success', bg: 'bg-success/10' },
+  { label: 'View Reports', icon: 'i-lucide-bar-chart-2', to: '/products/lms/dashboard/analytics', color: 'text-warning', bg: 'bg-warning/10' },
 ]
 
 const upcomingEvents = [
-  { label: 'Payroll processing deadline', date: 'Aug 14', icon: 'i-lucide-banknote', color: 'text-error', dot: 'bg-error' },
-  { label: 'Team all-hands meeting', date: 'Aug 15', icon: 'i-lucide-users', color: 'text-primary', dot: 'bg-primary' },
-  { label: 'Q3 performance reviews due', date: 'Sep 1', icon: 'i-lucide-star', color: 'text-warning', dot: 'bg-warning' },
-  { label: 'Carlos Mendoza start date', date: 'Sep 1', icon: 'i-lucide-user-plus', color: 'text-success', dot: 'bg-success' },
+  { label: 'Live: "Data Literacy Bootcamp"', date: 'Aug 14', dot: 'bg-primary' },
+  { label: 'Assessment deadline: Q3 Compliance', date: 'Aug 15', dot: 'bg-error' },
+  { label: 'New course release: "Leadership 101"', date: 'Aug 18', dot: 'bg-success' },
+  { label: 'Cert renewal batch expires', date: 'Sep 1', dot: 'bg-warning' },
 ]
 
-const headcountByDept = [
-  { dept: 'Engineering', count: 98, pct: 29 },
-  { dept: 'Sales', count: 72, pct: 21 },
-  { dept: 'Marketing', count: 55, pct: 16 },
-  { dept: 'Operations', count: 64, pct: 19 },
-  { dept: 'HR & Admin', count: 53, pct: 15 },
+const completionByCategory = [
+  { cat: 'Compliance', pct: 92 },
+  { cat: 'Leadership', pct: 71 },
+  { cat: 'Technical', pct: 68 },
+  { cat: 'Soft Skills', pct: 85 },
+  { cat: 'Onboarding', pct: 97 },
 ]
-
-const colorMode = useColorMode()
-const donutStyle = computed(() => {
-  const isDark = colorMode.value === 'dark'
-  const neutral = isDark ? '#374151' : '#e5e7eb'
-  return {
-    background: `conic-gradient(#3b82f6 0% 72%, ${neutral} 72% 85%, #1d4ed8 85% 100%)`,
-  }
-})
 </script>
 
 <template>
@@ -65,9 +56,9 @@ const donutStyle = computed(() => {
     <!-- Header -->
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-2xl font-bold text-highlighted">{{ greeting }}, Sarah 👋</h1>
+        <h1 class="text-2xl font-bold text-highlighted">{{ greeting }}, Alex 👋</h1>
         <p class="text-muted text-sm mt-1">
-          Here's what's happening across your organization today.
+          Here's what's happening across your learning programs today.
         </p>
       </div>
       <div class="flex items-center gap-3">
@@ -79,10 +70,10 @@ const donutStyle = computed(() => {
           size="sm"
         />
         <UButton
-          icon="i-lucide-play"
-          label="Run Payroll"
+          icon="i-lucide-plus"
+          label="Create Course"
           size="sm"
-          to="/products/hris/dashboard/payroll"
+          to="/products/lms/dashboard/courses"
         />
       </div>
     </div>
@@ -172,23 +163,22 @@ const donutStyle = computed(() => {
       </div>
     </div>
 
-    <!-- Headcount by Department -->
+    <!-- Course Completion by Category -->
     <UCard :ui="{ body: 'p-5' }">
       <div class="flex items-center justify-between mb-5">
-        <h2 class="font-semibold text-highlighted">Headcount by Department</h2>
-        <UButton label="Full Analytics" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" to="/products/hris/dashboard/analytics" />
+        <h2 class="font-semibold text-highlighted">Completion Rate by Category</h2>
+        <UButton label="Full Analytics" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" to="/products/lms/dashboard/analytics" />
       </div>
       <div class="space-y-3">
-        <div v-for="dept in headcountByDept" :key="dept.dept" class="flex items-center gap-4">
-          <span class="text-sm text-muted w-28 flex-shrink-0">{{ dept.dept }}</span>
+        <div v-for="cat in completionByCategory" :key="cat.cat" class="flex items-center gap-4">
+          <span class="text-sm text-muted w-24 flex-shrink-0">{{ cat.cat }}</span>
           <div class="flex-1 bg-muted/50 rounded-full h-2">
             <div
               class="bg-primary h-2 rounded-full transition-all duration-500"
-              :style="{ width: dept.pct + '%' }"
+              :style="{ width: cat.pct + '%' }"
             />
           </div>
-          <span class="text-sm font-semibold text-highlighted w-8 text-right">{{ dept.count }}</span>
-          <span class="text-xs text-dimmed w-8">{{ dept.pct }}%</span>
+          <span class="text-sm font-semibold text-highlighted w-10 text-right">{{ cat.pct }}%</span>
         </div>
       </div>
     </UCard>

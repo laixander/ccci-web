@@ -74,7 +74,7 @@ const footerLinks = [
       <template #body>
         <UNavigationMenu :items="navItems" orientation="vertical" class="-mx-2.5" />
         <div class="mt-4 flex flex-col gap-2">
-          <UButton label="Sign in" color="neutral" variant="outline" block to="/products/hris/dashboard" />
+          <UButton label="Sign in" color="neutral" variant="outline" block to="/products/hris/login" />
           <UButton label="Request Demo" block />
         </div>
       </template>
