@@ -114,7 +114,7 @@ const userInfo = computed(() => {
       </div>
 
       <template #footer>
-        <div v-if="!isCollapsed" class="flex items-center gap-3 px-2 py-3">
+        <div v-if="!isCollapsed" class="flex items-center justify-between gap-3 px-2 py-3 w-full">
           <UAvatar :text="userInfo.initials" size="sm" color="primary" />
           <div class="flex-1 min-w-0">
             <p class="text-sm font-semibold text-highlighted truncate">{{ userInfo.name }}</p>
@@ -122,7 +122,7 @@ const userInfo = computed(() => {
           </div>
           <UButton icon="i-lucide-log-out" size="xs" color="neutral" variant="ghost" :to="loginRoute" />
         </div>
-        <div v-else class="flex justify-center py-3">
+        <div v-else class="flex justify-center py-4 px-2">
           <UAvatar :text="userInfo.initials" size="sm" color="primary" />
         </div>
       </template>
@@ -164,7 +164,7 @@ const userInfo = computed(() => {
       </div>
 
       <!-- Page content -->
-      <div class="flex-1 overflow-y-auto p-6">
+      <div class="flex-1 overflow-y-auto p-4 sm:p-6 scrollbar">
         <slot />
       </div>
     </div>

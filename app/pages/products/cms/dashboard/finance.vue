@@ -1,4 +1,10 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { Bar } from 'vue-chartjs'
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+
 definePageMeta({ layout: 'dashboard' })
 
 const stats = [
@@ -26,7 +32,42 @@ const collectionTrend = [
   { month: 'Mar', value: 3.2 }, { month: 'Apr', value: 4.1 }, { month: 'May', value: 5.8 },
   { month: 'Jun', value: 2.4 }, { month: 'Jul', value: 6.3 }, { month: 'Aug', value: 18.4 },
 ]
-const maxCol = Math.max(...collectionTrend.map(d => d.value))
+
+const chartData = computed(() => ({
+  labels: collectionTrend.map(d => d.month),
+  datasets: [{
+    label: 'Collection (₱M)',
+    data: collectionTrend.map(d => d.value),
+    backgroundColor: '#10b981',
+    hoverBackgroundColor: '#059669',
+    borderRadius: 6,
+  }]
+}))
+
+const chartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      backgroundColor: '#1e293b',
+      titleColor: '#fff',
+      bodyColor: '#fff',
+      padding: 10,
+      cornerRadius: 8,
+      displayColors: false,
+      callbacks: {
+        label: function(context: any) {
+          return '₱' + context.parsed.y + 'M';
+        }
+      }
+    }
+  },
+  scales: {
+    y: { display: false, beginAtZero: true },
+    x: { grid: { display: false }, border: { display: false }, ticks: { color: '#64748b', font: { size: 12 } } }
+  }
+}
 
 const scholarships = [
   { name: 'Academic Excellence', count: 84, amount: '₱1.2M', color: 'bg-primary' },
@@ -78,12 +119,8 @@ const showPaymentModal = ref(false)
           </div>
           <UBadge label="₱18.4M this month" color="success" variant="subtle" />
         </div>
-        <div class="flex items-end gap-3 h-36">
-          <div v-for="d in collectionTrend" :key="d.month" class="flex-1 flex flex-col items-center gap-1">
-            <span class="text-xs font-bold text-highlighted">{{ d.value }}M</span>
-            <div class="w-full rounded-t-md bg-success/70 hover:bg-success transition-colors" :style="{ height: (d.value / maxCol * 100) + '%' }" />
-            <span class="text-xs text-dimmed">{{ d.month }}</span>
-          </div>
+        <div class="h-48 w-full mt-2">
+          <Bar :data="chartData" :options="chartOptions" />
         </div>
       </UCard>
 

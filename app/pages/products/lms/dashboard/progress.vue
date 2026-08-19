@@ -1,4 +1,10 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { Bar } from 'vue-chartjs'
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+
 definePageMeta({
   layout: 'dashboard'
 })
@@ -44,7 +50,49 @@ const enrollmentTrend = [
   { month: 'Mar', value: 180 }, { month: 'Apr', value: 210 }, { month: 'May', value: 260 },
   { month: 'Jun', value: 295 }, { month: 'Jul', value: 330 }, { month: 'Aug', value: 385 },
 ]
-const maxEnroll = Math.max(...enrollmentTrend.map(d => d.value))
+
+const chartData = computed(() => ({
+  labels: enrollmentTrend.map(d => d.month),
+  datasets: [{
+    label: 'New Enrollments',
+    data: enrollmentTrend.map(d => d.value),
+    backgroundColor: '#10b981',
+    hoverBackgroundColor: '#059669',
+    borderRadius: 6,
+  }]
+}))
+
+const chartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      backgroundColor: '#1e293b',
+      titleColor: '#fff',
+      bodyColor: '#fff',
+      padding: 10,
+      cornerRadius: 8,
+      displayColors: false,
+      callbacks: {
+        label: function(context: any) {
+          return context.parsed.y + ' enrollments';
+        }
+      }
+    }
+  },
+  scales: {
+    y: {
+      display: false,
+      beginAtZero: true
+    },
+    x: {
+      grid: { display: false },
+      border: { display: false },
+      ticks: { color: '#64748b', font: { size: 12 } }
+    }
+  }
+}
 
 const atRiskLearners = computed(() => learners.value.filter(l => l.status === 'At Risk'))
 </script>
@@ -90,15 +138,8 @@ const atRiskLearners = computed(() => learners.value.filter(l => l.status === 'A
           </div>
           <UBadge label="+55 this month" color="success" variant="subtle" />
         </div>
-        <div class="flex items-end gap-3 h-36">
-          <div v-for="d in enrollmentTrend" :key="d.month" class="flex-1 flex flex-col items-center gap-1">
-            <span class="text-xs font-bold text-highlighted">{{ d.value }}</span>
-            <div
-              class="w-full rounded-t-md bg-primary/80 hover:bg-primary transition-colors"
-              :style="{ height: (d.value / maxEnroll * 100) + '%' }"
-            />
-            <span class="text-xs text-dimmed">{{ d.month }}</span>
-          </div>
+        <div class="h-48 w-full mt-2">
+          <Bar :data="chartData" :options="chartOptions" />
         </div>
       </UCard>
 

@@ -1,4 +1,10 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { Bar } from 'vue-chartjs'
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+
 definePageMeta({
   layout: 'dashboard'
 })
@@ -31,12 +37,17 @@ const headcountTrend = [
   { month: 'Mar', value: 318 }, { month: 'Apr', value: 322 }, { month: 'May', value: 328 },
   { month: 'Jun', value: 330 }, { month: 'Jul', value: 338 }, { month: 'Aug', value: 342 },
 ]
-const maxHC = Math.max(...headcountTrend.map(d => d.value))
-const minHC = Math.min(...headcountTrend.map(d => d.value))
 
-function barHeight(val: number) {
-  return ((val - minHC + 5) / (maxHC - minHC + 10)) * 100
-}
+const headcountChartData = computed(() => ({
+  labels: headcountTrend.map(d => d.month),
+  datasets: [{
+    label: 'Headcount',
+    data: headcountTrend.map(d => d.value),
+    backgroundColor: '#3b82f6',
+    hoverBackgroundColor: '#2563eb',
+    borderRadius: 6,
+  }]
+}))
 
 const deptHeadcount = [
   { dept: 'Engineering', count: 98, color: 'bg-primary' },
@@ -51,13 +62,85 @@ const payrollTrend = [
   { month: 'Mar', value: 260 }, { month: 'Apr', value: 268 }, { month: 'May', value: 271 },
   { month: 'Jun', value: 278 }, { month: 'Jul', value: 284 }, { month: 'Aug', value: 287 },
 ]
-const maxPR = Math.max(...payrollTrend.map(d => d.value))
+
+const payrollChartData = computed(() => ({
+  labels: payrollTrend.map(d => d.month),
+  datasets: [{
+    label: 'Payroll Cost (₱k)',
+    data: payrollTrend.map(d => d.value),
+    backgroundColor: '#10b981',
+    hoverBackgroundColor: '#059669',
+    borderRadius: 6,
+  }]
+}))
 
 const turnoverByMonth = [
   { month: 'Mar', sep: 3, new: 8 }, { month: 'Apr', sep: 2, new: 6 },
   { month: 'May', sep: 4, new: 9 }, { month: 'Jun', sep: 1, new: 5 },
   { month: 'Jul', sep: 2, new: 10 }, { month: 'Aug', sep: 0, new: 4 },
 ]
+
+const turnoverChartData = computed(() => ({
+  labels: turnoverByMonth.map(d => d.month),
+  datasets: [
+    {
+      label: 'New Hires',
+      data: turnoverByMonth.map(d => d.new),
+      backgroundColor: '#10b981',
+      borderRadius: 4,
+    },
+    {
+      label: 'Separations',
+      data: turnoverByMonth.map(d => d.sep),
+      backgroundColor: '#ef4444',
+      borderRadius: 4,
+    }
+  ]
+}))
+
+const getChartOptions = (callback: any, min: number = 0) => ({
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      backgroundColor: '#1e293b',
+      titleColor: '#fff',
+      bodyColor: '#fff',
+      padding: 10,
+      cornerRadius: 8,
+      displayColors: false,
+      callbacks: { label: callback }
+    }
+  },
+  scales: {
+    y: { display: false, min },
+    x: { grid: { display: false }, border: { display: false }, ticks: { color: '#64748b', font: { size: 12 } } }
+  }
+})
+
+const headcountChartOptions = getChartOptions((context: any) => context.parsed.y + ' employees', Math.min(...headcountTrend.map(d => d.value)) - 5)
+const payrollChartOptions = getChartOptions((context: any) => '₱' + context.parsed.y + 'k')
+
+const turnoverChartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      backgroundColor: '#1e293b',
+      titleColor: '#fff',
+      bodyColor: '#fff',
+      padding: 10,
+      cornerRadius: 8,
+      displayColors: true,
+    }
+  },
+  scales: {
+    y: { display: false, min: 0 },
+    x: { grid: { display: false }, border: { display: false }, ticks: { color: '#64748b', font: { size: 12 } } }
+  }
+}
 
 const topPerformers = [
   { name: 'James Reyes', dept: 'Engineering', score: 4.8, initials: 'JR', color: 'primary' as const },
@@ -108,20 +191,8 @@ const topPerformers = [
           </div>
           <UBadge label="+12 this month" color="success" variant="subtle" />
         </div>
-        <!-- Bar chart -->
-        <div class="flex items-end gap-3 h-36">
-          <div
-            v-for="d in headcountTrend"
-            :key="d.month"
-            class="flex-1 flex flex-col items-center gap-1"
-          >
-            <span class="text-xs font-bold text-highlighted">{{ d.value }}</span>
-            <div
-              class="w-full rounded-t-md bg-primary/80 hover:bg-primary transition-colors"
-              :style="{ height: barHeight(d.value) + '%' }"
-            />
-            <span class="text-xs text-dimmed">{{ d.month }}</span>
-          </div>
+        <div class="h-48 w-full mt-2">
+          <Bar :data="headcountChartData" :options="headcountChartOptions" />
         </div>
       </UCard>
 
@@ -152,20 +223,8 @@ const topPerformers = [
             <p class="text-xs text-muted mt-0.5">₱k per month</p>
           </div>
         </div>
-        <!-- Line chart simulation with bars -->
-        <div class="flex items-end gap-3 h-28">
-          <div
-            v-for="d in payrollTrend"
-            :key="d.month"
-            class="flex-1 flex flex-col items-center gap-1"
-          >
-            <span class="text-xs font-bold text-highlighted">{{ d.value }}k</span>
-            <div
-              class="w-full rounded-t-md bg-success/70 hover:bg-success transition-colors"
-              :style="{ height: (d.value / maxPR * 100) + '%' }"
-            />
-            <span class="text-xs text-dimmed">{{ d.month }}</span>
-          </div>
+        <div class="h-40 w-full mt-2">
+          <Bar :data="payrollChartData" :options="payrollChartOptions" />
         </div>
       </UCard>
 
@@ -181,18 +240,8 @@ const topPerformers = [
             <span class="flex items-center gap-1.5"><span class="size-2 rounded-full bg-error inline-block" /> Separations</span>
           </div>
         </div>
-        <div class="flex items-end gap-3 h-28">
-          <div
-            v-for="d in turnoverByMonth"
-            :key="d.month"
-            class="flex-1 flex flex-col items-end gap-0.5"
-          >
-            <div class="w-full flex gap-0.5 items-end justify-center">
-              <div class="flex-1 bg-success/70 hover:bg-success rounded-t-sm transition-colors" :style="{ height: (d.new * 8) + 'px' }" />
-              <div class="flex-1 bg-error/70 hover:bg-error rounded-t-sm transition-colors" :style="{ height: (d.sep * 8) + 'px' }" />
-            </div>
-            <span class="text-xs text-dimmed">{{ d.month }}</span>
-          </div>
+        <div class="h-40 w-full mt-2">
+          <Bar :data="turnoverChartData" :options="turnoverChartOptions" />
         </div>
       </UCard>
     </div>

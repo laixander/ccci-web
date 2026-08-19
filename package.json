@@ -13,9 +13,12 @@
   "dependencies": {
     "@iconify-json/lucide": "^1.2.121",
     "@iconify-json/simple-icons": "^1.2.92",
+    "@nuxt/image": "2.1.0",
     "@nuxt/ui": "^4.10.0",
+    "chart.js": "^4.5.1",
     "nuxt": "^4.5.1",
     "tailwindcss": "^4.3.3",
+    "vue-chartjs": "^5.3.4",
     "zod": "^4.4.3"
   },
   "devDependencies": {

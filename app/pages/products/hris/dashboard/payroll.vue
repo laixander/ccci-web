@@ -41,11 +41,30 @@ const payslips = [
   { name: 'Ana Dela Cruz', id: 'E006', dept: 'Operations', gross: '₱58,000', net: '₱48,720', status: 'Paid', initials: 'AD', color: 'warning' as const },
 ]
 
+const payslipColumns = [
+  { accessorKey: 'employee', header: 'Employee' },
+  { accessorKey: 'dept', header: 'Department' },
+  { accessorKey: 'gross', header: 'Gross' },
+  { accessorKey: 'net', header: 'Net' },
+  { accessorKey: 'status', header: 'Status' },
+  { id: 'actions' }
+]
+
 const history = [
   { month: 'July 2026', employees: 340, gross: '₱342,500', net: '₱284,775', status: 'Completed', date: 'Jul 30, 2026' },
   { month: 'June 2026', employees: 338, gross: '₱339,200', net: '₱282,012', status: 'Completed', date: 'Jun 30, 2026' },
   { month: 'May 2026', employees: 335, gross: '₱334,000', net: '₱277,722', status: 'Completed', date: 'May 30, 2026' },
   { month: 'April 2026', employees: 330, gross: '₱326,400', net: '₱271,442', status: 'Completed', date: 'Apr 30, 2026' },
+]
+
+const historyColumns = [
+  { accessorKey: 'month', header: 'Period' },
+  { accessorKey: 'employees', header: 'Employees' },
+  { accessorKey: 'gross', header: 'Gross' },
+  { accessorKey: 'net', header: 'Net Pay' },
+  { accessorKey: 'date', header: 'Processed' },
+  { accessorKey: 'status', header: 'Status' },
+  { id: 'actions' }
 ]
 
 const runStep = ref(1)
@@ -87,31 +106,31 @@ async function processPayroll() {
         <div class="space-y-6 pt-4">
           <!-- Summary Banner -->
           <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
-            <UCard :ui="{ body: 'p-5' }" class="sm:col-span-1">
+            <UCard variant="subtle" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }" class="sm:col-span-1">
               <p class="text-xs text-dimmed uppercase tracking-wider font-semibold mb-1">Period</p>
               <p class="text-lg font-bold text-highlighted">{{ payrollSummary.month }}</p>
               <span class="text-xs px-2 py-0.5 rounded-full bg-success/10 text-success font-medium mt-2 inline-block">{{ payrollSummary.status }}</span>
             </UCard>
-            <UCard :ui="{ body: 'p-5' }">
+            <UCard variant="subtle" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
               <p class="text-xs text-dimmed uppercase tracking-wider font-semibold mb-1">Gross Pay</p>
               <p class="text-2xl font-bold text-highlighted">{{ payrollSummary.totalGross }}</p>
               <p class="text-xs text-muted mt-1">{{ payrollSummary.employees }} employees</p>
             </UCard>
-            <UCard :ui="{ body: 'p-5' }">
+            <UCard variant="subtle" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
               <p class="text-xs text-dimmed uppercase tracking-wider font-semibold mb-1">Total Deductions</p>
               <p class="text-2xl font-bold text-error">{{ payrollSummary.totalDeductions }}</p>
               <p class="text-xs text-muted mt-1">SSS, PhilHealth, Tax</p>
             </UCard>
-            <UCard :ui="{ body: 'p-5' }">
+            <UCard variant="subtle" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
               <p class="text-xs text-dimmed uppercase tracking-wider font-semibold mb-1">Net Pay</p>
               <p class="text-2xl font-bold text-success">{{ payrollSummary.totalNet }}</p>
               <p class="text-xs text-muted mt-1">After all deductions</p>
             </UCard>
           </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <!-- Pay Components -->
-            <UCard :ui="{ body: 'p-5' }">
+            <UCard variant="subtle" :ui="{ root: 'shadow-sm' }">
               <h2 class="font-semibold text-highlighted mb-4">Pay Components</h2>
               <div class="space-y-3">
                 <div v-for="item in breakdown" :key="item.label" class="flex items-center gap-4">
@@ -127,7 +146,7 @@ async function processPayroll() {
             </UCard>
 
             <!-- Deductions -->
-            <UCard :ui="{ body: 'p-5' }">
+            <UCard variant="subtle" :ui="{ root: 'shadow-sm' }">
               <h2 class="font-semibold text-highlighted mb-4">Statutory Deductions</h2>
               <div class="space-y-3">
                 <div v-for="item in deductions" :key="item.label" class="flex items-center justify-between">
@@ -145,48 +164,64 @@ async function processPayroll() {
           </div>
 
           <!-- Individual Payslips -->
-          <UCard :ui="{ body: 'p-0' }">
+          <UCard variant="subtle" :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
             <div class="flex items-center justify-between px-5 py-4 border-b border-default">
               <h2 class="font-semibold text-highlighted">Employee Payslips</h2>
               <UButton label="Export All" icon="i-lucide-download" size="xs" color="neutral" variant="ghost" />
             </div>
             <div class="overflow-x-auto">
-              <table class="w-full text-sm">
-                <thead>
-                  <tr class="border-b border-default">
-                    <th class="text-left px-5 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Employee</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Department</th>
-                    <th class="text-right px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Gross</th>
-                    <th class="text-right px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Net</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Status</th>
-                    <th class="px-4 py-3.5" />
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-default">
-                  <tr v-for="p in payslips" :key="p.id" class="hover:bg-muted/30 transition-colors">
-                    <td class="px-5 py-3.5">
-                      <div class="flex items-center gap-3">
-                        <UAvatar :text="p.initials" size="sm" :color="p.color" />
-                        <div>
-                          <p class="font-medium text-highlighted">{{ p.name }}</p>
-                          <p class="text-xs text-dimmed">{{ p.id }}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="px-4 py-3.5 text-muted">{{ p.dept }}</td>
-                    <td class="px-4 py-3.5 text-right font-medium text-highlighted">{{ p.gross }}</td>
-                    <td class="px-4 py-3.5 text-right font-bold text-success">{{ p.net }}</td>
-                    <td class="px-4 py-3.5">
-                      <span :class="['inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium', p.status === 'Paid' ? 'bg-success/10 text-success' : 'bg-warning/10 text-warning']">
-                        {{ p.status }}
-                      </span>
-                    </td>
-                    <td class="px-4 py-3.5">
-                      <UButton icon="i-lucide-download" size="xs" color="neutral" variant="ghost" />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <UTable
+                :data="payslips"
+                :columns="payslipColumns"
+                class="w-full text-sm"
+                :ui="{
+                  th: 'text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider',
+                  td: 'px-4 py-3.5',
+                  tr: 'hover:bg-muted/30 transition-colors'
+                }"
+              >
+                <template #gross-header>
+                  <div class="text-right w-full">Gross</div>
+                </template>
+                <template #net-header>
+                  <div class="text-right w-full">Net</div>
+                </template>
+
+                <template #employee-cell="{ row }">
+                  <div class="flex items-center gap-3">
+                    <UAvatar :text="row.original.initials" size="sm" :color="row.original.color" />
+                    <div>
+                      <p class="font-medium text-highlighted">{{ row.original.name }}</p>
+                      <p class="text-xs text-dimmed">{{ row.original.id }}</p>
+                    </div>
+                  </div>
+                </template>
+                <template #dept-cell="{ row }">
+                  <span class="text-muted">{{ row.original.dept }}</span>
+                </template>
+                <template #gross-cell="{ row }">
+                  <div class="text-right font-medium text-highlighted w-full">{{ row.original.gross }}</div>
+                </template>
+                <template #net-cell="{ row }">
+                  <div class="text-right font-bold text-success w-full">{{ row.original.net }}</div>
+                </template>
+                <template #status-cell="{ row }">
+                  <span :class="['inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium', row.original.status === 'Paid' ? 'bg-success/10 text-success' : 'bg-warning/10 text-warning']">
+                    {{ row.original.status }}
+                  </span>
+                </template>
+                <template #actions-cell>
+                  <div class="text-right w-full">
+                    <UButton icon="i-lucide-download" size="xs" color="neutral" variant="ghost" />
+                  </div>
+                </template>
+
+                <template #empty>
+                  <div class="py-16 flex flex-col items-center justify-center">
+                    <UEmpty icon="i-lucide-file-text" title="No payslips" description="No payslips generated for this period." />
+                  </div>
+                </template>
+              </UTable>
             </div>
           </UCard>
         </div>
@@ -304,36 +339,55 @@ async function processPayroll() {
       <!-- History Tab -->
       <template #history>
         <div class="pt-4">
-          <UCard :ui="{ body: 'p-0' }">
+          <UCard variant="subtle" :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
             <div class="overflow-x-auto">
-              <table class="w-full text-sm">
-                <thead>
-                  <tr class="border-b border-default">
-                    <th class="text-left px-5 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Period</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Employees</th>
-                    <th class="text-right px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Gross</th>
-                    <th class="text-right px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Net Pay</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Processed</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Status</th>
-                    <th class="px-4 py-3.5" />
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-default">
-                  <tr v-for="h in history" :key="h.month" class="hover:bg-muted/30 transition-colors">
-                    <td class="px-5 py-4 font-medium text-highlighted">{{ h.month }}</td>
-                    <td class="px-4 py-4 text-muted">{{ h.employees }}</td>
-                    <td class="px-4 py-4 text-right text-highlighted">{{ h.gross }}</td>
-                    <td class="px-4 py-4 text-right font-bold text-success">{{ h.net }}</td>
-                    <td class="px-4 py-4 text-muted text-xs">{{ h.date }}</td>
-                    <td class="px-4 py-4">
-                      <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success">{{ h.status }}</span>
-                    </td>
-                    <td class="px-4 py-4">
-                      <UButton icon="i-lucide-download" size="xs" color="neutral" variant="ghost" />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <UTable
+                :data="history"
+                :columns="historyColumns"
+                class="w-full text-sm"
+                :ui="{
+                  th: 'text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider',
+                  td: 'px-4 py-4',
+                  tr: 'hover:bg-muted/30 transition-colors'
+                }"
+              >
+                <template #gross-header>
+                  <div class="text-right w-full">Gross</div>
+                </template>
+                <template #net-header>
+                  <div class="text-right w-full">Net Pay</div>
+                </template>
+
+                <template #month-cell="{ row }">
+                  <span class="font-medium text-highlighted">{{ row.original.month }}</span>
+                </template>
+                <template #employees-cell="{ row }">
+                  <span class="text-muted">{{ row.original.employees }}</span>
+                </template>
+                <template #gross-cell="{ row }">
+                  <div class="text-right text-highlighted w-full">{{ row.original.gross }}</div>
+                </template>
+                <template #net-cell="{ row }">
+                  <div class="text-right font-bold text-success w-full">{{ row.original.net }}</div>
+                </template>
+                <template #date-cell="{ row }">
+                  <span class="text-muted text-xs">{{ row.original.date }}</span>
+                </template>
+                <template #status-cell="{ row }">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success">{{ row.original.status }}</span>
+                </template>
+                <template #actions-cell>
+                  <div class="text-right w-full">
+                    <UButton icon="i-lucide-download" size="xs" color="neutral" variant="ghost" />
+                  </div>
+                </template>
+
+                <template #empty>
+                  <div class="py-16 flex flex-col items-center justify-center">
+                    <UEmpty icon="i-lucide-history" title="No history" description="No previous payroll records found." />
+                  </div>
+                </template>
+              </UTable>
             </div>
           </UCard>
         </div>

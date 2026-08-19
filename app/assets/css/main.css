@@ -41,6 +41,18 @@
   --color-hris-800: #166534;
   --color-hris-900: #14532d;
   --color-hris-950: #052e16;
+
+  --color-brand-50: #f2f5ff;
+  --color-brand-100: #e3e9ff;
+  --color-brand-200: #ccd8ff;
+  --color-brand-300: #94adff;
+  --color-brand-400: #527aff;
+  --color-brand-500: #2254fc;
+  --color-brand-600: #083ce7;
+  --color-brand-700: #0c34bb;
+  --color-brand-800: #0e2d95;
+  --color-brand-900: #0f2676;
+  --color-brand-950: #0b1946;
 }
 
 .theme-lms {

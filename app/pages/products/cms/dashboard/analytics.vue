@@ -1,4 +1,10 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { Bar } from 'vue-chartjs'
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+
 definePageMeta({ layout: 'dashboard' })
 
 const kpis = [
@@ -27,9 +33,17 @@ const enrollmentTrend = [
   { sem: 'S2 AY24', value: 4055 }, { sem: 'S1 AY25', value: 4380 },
   { sem: 'S2 AY25', value: 4310 }, { sem: 'S1 AY26', value: 4190 },
 ]
-const maxEnroll = Math.max(...enrollmentTrend.map(d => d.value))
-const minEnroll = Math.min(...enrollmentTrend.map(d => d.value))
-function barH(v: number) { return ((v - minEnroll + 50) / (maxEnroll - minEnroll + 100)) * 100 }
+
+const enrollmentChartData = computed(() => ({
+  labels: enrollmentTrend.map(d => d.sem),
+  datasets: [{
+    label: 'Students',
+    data: enrollmentTrend.map(d => d.value),
+    backgroundColor: '#3b82f6',
+    hoverBackgroundColor: '#2563eb',
+    borderRadius: 6,
+  }]
+}))
 
 const deptBreakdown = [
   { dept: 'Engineering', count: 1024, color: 'bg-primary' },
@@ -45,7 +59,41 @@ const collectionTrend = [
   { month: 'Mar', value: 3.2 }, { month: 'Apr', value: 4.1 }, { month: 'May', value: 5.8 },
   { month: 'Jun', value: 2.4 }, { month: 'Jul', value: 6.3 }, { month: 'Aug', value: 18.4 },
 ]
-const maxCol = Math.max(...collectionTrend.map(d => d.value))
+
+const collectionChartData = computed(() => ({
+  labels: collectionTrend.map(d => d.month),
+  datasets: [{
+    label: 'Collection (₱M)',
+    data: collectionTrend.map(d => d.value),
+    backgroundColor: '#10b981',
+    hoverBackgroundColor: '#059669',
+    borderRadius: 6,
+  }]
+}))
+
+const getChartOptions = (callback: any, min?: number) => ({
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      backgroundColor: '#1e293b',
+      titleColor: '#fff',
+      bodyColor: '#fff',
+      padding: 10,
+      cornerRadius: 8,
+      displayColors: false,
+      callbacks: { label: callback }
+    }
+  },
+  scales: {
+    y: { display: false, min: min },
+    x: { grid: { display: false }, border: { display: false }, ticks: { color: '#64748b', font: { size: 10 } } }
+  }
+})
+
+const enrollmentChartOptions = getChartOptions((context: any) => context.parsed.y + ' students', Math.min(...enrollmentTrend.map(d => d.value)) - 200)
+const collectionChartOptions = getChartOptions((context: any) => '₱' + context.parsed.y + 'M', 0)
 
 const atRiskStudents = [
   { name: 'Ryan Cruz', initials: 'RC', dept: 'Engineering', gpa: '3.00', color: 'error' as const },
@@ -102,12 +150,8 @@ const complianceItems = [
           </div>
           <UBadge label="4,190 this sem." color="primary" variant="subtle" />
         </div>
-        <div class="flex items-end gap-3 h-36">
-          <div v-for="d in enrollmentTrend" :key="d.sem" class="flex-1 flex flex-col items-center gap-1">
-            <span class="text-xs font-bold text-highlighted">{{ (d.value / 1000).toFixed(1) }}k</span>
-            <div class="w-full rounded-t-md bg-primary/80 hover:bg-primary transition-colors" :style="{ height: barH(d.value) + '%' }" />
-            <span class="text-[10px] text-dimmed text-center leading-tight">{{ d.sem }}</span>
-          </div>
+        <div class="h-48 w-full mt-2">
+          <Bar :data="enrollmentChartData" :options="enrollmentChartOptions" />
         </div>
       </UCard>
 
@@ -133,12 +177,8 @@ const complianceItems = [
       <!-- Collection Trend -->
       <UCard :ui="{ body: 'p-5' }">
         <h2 class="font-semibold text-highlighted mb-5">Tuition Collection</h2>
-        <div class="flex items-end gap-2 h-28">
-          <div v-for="d in collectionTrend" :key="d.month" class="flex-1 flex flex-col items-center gap-1">
-            <span class="text-xs font-bold text-highlighted">{{ d.value }}M</span>
-            <div class="w-full rounded-t-md bg-success/70 hover:bg-success transition-colors" :style="{ height: (d.value / maxCol * 100) + '%' }" />
-            <span class="text-xs text-dimmed">{{ d.month }}</span>
-          </div>
+        <div class="h-40 w-full mt-2">
+          <Bar :data="collectionChartData" :options="collectionChartOptions" />
         </div>
       </UCard>
 

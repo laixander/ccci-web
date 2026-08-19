@@ -1,10 +1,11 @@
 <template>
   <div class="flex items-center gap-2.5">
-    <div class="size-8 rounded-lg bg-primary flex items-center justify-center shadow-sm">
+    <NuxtImg src="/ccci-logo.png" class="size-8" />
+    <!-- <div class="size-8 rounded-lg bg-primary flex items-center justify-center shadow-sm">
       <UIcon name="i-lucide-cloud" class="size-5 text-white" />
-    </div>
+    </div> -->
     <span class="font-bold text-xl tracking-tight text-highlighted">
-      CC<span class="text-primary">CI</span>
+      <span class="text-primary">CCCI</span> Inc.
     </span>
   </div>
 </template>

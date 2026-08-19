@@ -212,10 +212,10 @@ const productColorMap: Record<ProductColor, { bg: string, text: string, border: 
 </script>
 
 <template>
-  <canvas ref="bgCanvas" class="fixed inset-0 pointer-events-none z-[-1] opacity-60 dark:opacity-40 mix-blend-screen dark:mix-blend-lighten" />
-
   <!-- Background decoration -->
   <div class="grid-overlay fixed inset-0 -z-10 pointer-events-none" />
+
+  <canvas ref="bgCanvas" class="fixed inset-0 pointer-events-none z-[-1] mix-blend-screen dark:mix-blend-lighten" />
 
   <!-- ─── Hero ─────────────────────────────────────────────────────────── -->
   <section class="relative overflow-hidden">

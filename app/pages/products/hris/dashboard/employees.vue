@@ -41,6 +41,16 @@ const showAddModal = ref(false)
 const selectedEmployee = ref<typeof employees.value[0] | null>(null)
 const showDetailModal = ref(false)
 
+const columns = [
+  { accessorKey: 'employee', header: 'Employee' },
+  { accessorKey: 'role', header: 'Role' },
+  { accessorKey: 'dept', header: 'Department' },
+  { accessorKey: 'status', header: 'Status' },
+  { accessorKey: 'joined', header: 'Joined' },
+  { accessorKey: 'email', header: 'Contact' },
+  { id: 'actions' }
+]
+
 function viewEmployee(emp: typeof employees.value[0]) {
   selectedEmployee.value = emp
   showDetailModal.value = true
@@ -58,12 +68,13 @@ function viewEmployee(emp: typeof employees.value[0]) {
       <UButton
         icon="i-lucide-user-plus"
         label="Add Employee"
+        size="sm"
         @click="showAddModal = true"
       />
     </div>
 
     <!-- Filters -->
-    <UCard :ui="{ body: 'p-4' }">
+    <UCard variant="subtle" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
       <div class="flex flex-wrap gap-3 items-center">
         <UInput
           v-model="search"
@@ -86,65 +97,84 @@ function viewEmployee(emp: typeof employees.value[0]) {
     </UCard>
 
     <!-- Employee Table -->
-    <UCard :ui="{ body: 'p-0' }">
+    <UCard variant="subtle" :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
       <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-default">
-              <th class="text-left px-5 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Employee</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Role</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Department</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Status</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Joined</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Contact</th>
-              <th class="px-4 py-3.5" />
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-default">
-            <tr
-              v-for="emp in filtered"
-              :key="emp.id"
-              class="hover:bg-muted/30 transition-colors cursor-pointer"
-              @click="viewEmployee(emp)"
+        <UTable
+          :data="filtered"
+          :columns="columns"
+          class="w-full text-sm"
+          :ui="{
+            th: 'text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider',
+            td: 'px-4 py-4',
+            tr: 'hover:bg-muted/30 transition-colors cursor-pointer'
+          }"
+          @select="(e, row) => viewEmployee(row.original)"
+        >
+          <template #employee-header>
+            <span class="px-1">Employee</span>
+          </template>
+          <template #employee-cell="{ row }">
+            <div class="flex items-center gap-3 px-1">
+              <UAvatar :text="row.original.initials" size="sm" :color="row.original.avatarColor" />
+              <div>
+                <p class="font-medium text-highlighted">{{ row.original.name }}</p>
+                <p class="text-xs text-dimmed">{{ row.original.id }}</p>
+              </div>
+            </div>
+          </template>
+
+          <template #role-cell="{ row }">
+            <span class="text-muted">{{ row.original.role }}</span>
+          </template>
+
+          <template #dept-cell="{ row }">
+            <UBadge :label="row.original.dept" color="neutral" variant="subtle" size="sm" />
+          </template>
+
+          <template #status-cell="{ row }">
+            <span
+              class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium"
+              :class="statusConfig[row.original.status]?.class"
             >
-              <td class="px-5 py-4">
-                <div class="flex items-center gap-3">
-                  <UAvatar :text="emp.initials" size="sm" :color="emp.avatarColor" />
-                  <div>
-                    <p class="font-medium text-highlighted">{{ emp.name }}</p>
-                    <p class="text-xs text-dimmed">{{ emp.id }}</p>
-                  </div>
-                </div>
-              </td>
-              <td class="px-4 py-4 text-muted">{{ emp.role }}</td>
-              <td class="px-4 py-4">
-                <UBadge :label="emp.dept" color="neutral" variant="subtle" size="sm" />
-              </td>
-              <td class="px-4 py-4">
-                <span
-                  class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium"
-                  :class="statusConfig[emp.status]?.class"
-                >
-                  {{ emp.status }}
-                </span>
-              </td>
-              <td class="px-4 py-4 text-muted text-xs">{{ emp.joined }}</td>
-              <td class="px-4 py-4 text-muted text-xs">{{ emp.email }}</td>
-              <td class="px-4 py-4">
-                <div class="flex items-center gap-1" @click.stop>
-                  <UButton icon="i-lucide-eye" size="xs" color="neutral" variant="ghost" @click="viewEmployee(emp)" />
-                  <UButton icon="i-lucide-pencil" size="xs" color="neutral" variant="ghost" />
-                  <UButton icon="i-lucide-more-horizontal" size="xs" color="neutral" variant="ghost" />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div v-if="filtered.length === 0" class="py-16 text-center">
-          <UIcon name="i-lucide-users" class="size-10 text-muted mx-auto mb-3" />
-          <p class="text-muted font-medium">No employees found</p>
-          <p class="text-dimmed text-sm mt-1">Try adjusting your search or filters</p>
-        </div>
+              {{ row.original.status }}
+            </span>
+          </template>
+
+          <template #joined-cell="{ row }">
+            <span class="text-muted text-xs">{{ row.original.joined }}</span>
+          </template>
+
+          <template #email-cell="{ row }">
+            <span class="text-muted text-xs">{{ row.original.email }}</span>
+          </template>
+
+          <template #actions-cell="{ row }">
+            <div @click.stop>
+              <UDropdownMenu
+                :items="[
+                  [
+                    { label: 'View', icon: 'i-lucide-eye', onSelect: () => viewEmployee(row.original) },
+                    { label: 'Edit', icon: 'i-lucide-pencil' }
+                  ]
+                ]"
+                :content="{
+                  align: 'end',
+                  side: 'bottom',
+                  sideOffset: 8
+                }"
+                size="sm"
+              >
+                <UButton icon="i-lucide-more-horizontal" size="xs" color="neutral" variant="ghost" />
+              </UDropdownMenu>
+            </div>
+          </template>
+
+          <template #empty>
+            <div class="py-16 flex flex-col items-center justify-center">
+              <UEmpty icon="i-lucide-users" title="No employees found" description="Try adjusting your search or filters" />
+            </div>
+          </template>
+        </UTable>
       </div>
     </UCard>
 

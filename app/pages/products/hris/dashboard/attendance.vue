@@ -42,6 +42,14 @@ const shifts = [
   { label: 'Evening Shift', time: '2:00 PM – 10:00 PM', employees: 37, color: 'text-info', bg: 'bg-info/10' },
 ]
 
+const logColumns = [
+  { accessorKey: 'employee', header: 'Employee' },
+  { accessorKey: 'timeIn', header: 'Time In' },
+  { accessorKey: 'timeOut', header: 'Time Out' },
+  { accessorKey: 'type', header: 'Type' },
+  { accessorKey: 'status', header: 'Status' }
+]
+
 function approveLeave(idx: number) {
   const req = leaveRequests.value[idx]
   if (req) req.status = 'Approved'
@@ -62,13 +70,13 @@ function rejectLeave(idx: number) {
       </div>
       <div class="flex gap-3">
         <UButton icon="i-lucide-calendar-plus" label="Add Shift" color="neutral" variant="outline" size="sm" />
-        <UButton icon="i-lucide-download" label="Export Log" size="sm" color="neutral" variant="outline" />
+        <UButton icon="i-lucide-download" label="Export Log" color="neutral" variant="outline" size="sm" />
       </div>
     </div>
 
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="stat in stats" :key="stat.label" :ui="{ body: 'p-5' }">
+      <UCard v-for="stat in stats" :key="stat.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }" variant="subtle">
         <div class="flex items-center gap-4">
           <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', stat.bg]">
             <UIcon :name="stat.icon" :class="['size-5', stat.color]" />
@@ -81,54 +89,67 @@ function rejectLeave(idx: number) {
       </UCard>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <!-- Attendance Log -->
-      <UCard class="lg:col-span-2" :ui="{ body: 'p-0' }">
-        <div class="flex items-center justify-between px-5 py-4 border-b border-default">
-          <h2 class="font-semibold text-highlighted">Today's Attendance Log</h2>
-          <UBadge label="Live" color="success" variant="subtle" />
-        </div>
+      <UCard class="lg:col-span-2" :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }" variant="subtle">
+        <template #header>
+          <div class="flex items-center justify-between">
+            <h2 class="font-semibold text-highlighted">Today's Attendance Log</h2>
+            <UBadge color="success" variant="subtle" :ui="{ base: 'flex items-center gap-2' }">
+              <span class="relative flex size-2">
+                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75"></span>
+                <span class="relative inline-flex size-2 rounded-full bg-success"></span>
+              </span> Live
+            </UBadge>
+          </div>
+        </template>
         <div class="overflow-x-auto">
-          <table class="w-full text-sm">
-            <thead>
-              <tr class="border-b border-default">
-                <th class="text-left px-5 py-3 text-xs text-dimmed font-semibold uppercase tracking-wider">Employee</th>
-                <th class="text-left px-4 py-3 text-xs text-dimmed font-semibold uppercase tracking-wider">Time In</th>
-                <th class="text-left px-4 py-3 text-xs text-dimmed font-semibold uppercase tracking-wider">Time Out</th>
-                <th class="text-left px-4 py-3 text-xs text-dimmed font-semibold uppercase tracking-wider">Type</th>
-                <th class="text-left px-4 py-3 text-xs text-dimmed font-semibold uppercase tracking-wider">Status</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-default">
-              <tr v-for="emp in attendanceLog" :key="emp.name" class="hover:bg-muted/30 transition-colors">
-                <td class="px-5 py-3.5">
-                  <div class="flex items-center gap-3">
-                    <UAvatar :text="emp.initials" size="sm" :color="emp.color" />
-                    <div>
-                      <p class="font-medium text-highlighted">{{ emp.name }}</p>
-                      <p class="text-xs text-dimmed">{{ emp.dept }}</p>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-4 py-3.5 font-mono text-sm" :class="emp.timeIn === '—' ? 'text-dimmed' : 'text-highlighted'">{{ emp.timeIn }}</td>
-                <td class="px-4 py-3.5 font-mono text-sm text-dimmed">{{ emp.timeOut }}</td>
-                <td class="px-4 py-3.5">
-                  <UBadge v-if="emp.type !== '—'" :label="emp.type" color="neutral" variant="subtle" size="sm" />
-                  <span v-else class="text-dimmed">—</span>
-                </td>
-                <td class="px-4 py-3.5">
-                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium" :class="statusConfig[emp.status]">{{ emp.status }}</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <UTable
+            :data="attendanceLog"
+            :columns="logColumns"
+            class="w-full text-sm"
+            :ui="{
+              th: 'text-left px-4 py-3 text-xs text-dimmed font-semibold uppercase tracking-wider',
+              td: 'px-4 py-3.5',
+              tr: 'hover:bg-muted/30 transition-colors'
+            }"
+          >
+            <template #employee-cell="{ row }">
+              <div class="flex items-center gap-3">
+                <UAvatar :text="row.original.initials" size="sm" :color="row.original.color" />
+                <div>
+                  <p class="font-medium text-highlighted">{{ row.original.name }}</p>
+                  <p class="text-xs text-dimmed">{{ row.original.dept }}</p>
+                </div>
+              </div>
+            </template>
+            <template #timeIn-cell="{ row }">
+              <span class="font-mono text-sm" :class="row.original.timeIn === '—' ? 'text-dimmed' : 'text-highlighted'">{{ row.original.timeIn }}</span>
+            </template>
+            <template #timeOut-cell="{ row }">
+              <span class="font-mono text-sm text-dimmed">{{ row.original.timeOut }}</span>
+            </template>
+            <template #type-cell="{ row }">
+              <UBadge v-if="row.original.type !== '—'" :label="row.original.type" color="neutral" variant="subtle" size="sm" />
+              <span v-else class="text-dimmed">—</span>
+            </template>
+            <template #status-cell="{ row }">
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium" :class="statusConfig[row.original.status]">{{ row.original.status }}</span>
+            </template>
+
+            <template #empty>
+              <div class="py-16 flex flex-col items-center justify-center">
+                <UEmpty icon="i-lucide-calendar" title="No attendance records" description="No logs available for today." />
+              </div>
+            </template>
+          </UTable>
         </div>
       </UCard>
 
       <!-- Right column -->
-      <div class="space-y-6">
+      <div class="space-y-4">
         <!-- Shift Overview -->
-        <UCard :ui="{ body: 'p-5' }">
+        <UCard variant="subtle" :ui="{ root: 'shadow-sm' }">
           <h2 class="font-semibold text-highlighted mb-4">Shift Schedule</h2>
           <div class="space-y-3">
             <div v-for="shift in shifts" :key="shift.label" class="flex items-center gap-3">
@@ -145,13 +166,15 @@ function rejectLeave(idx: number) {
         </UCard>
 
         <!-- Leave Requests -->
-        <UCard :ui="{ body: 'p-0' }">
-          <div class="flex items-center justify-between px-5 py-4 border-b border-default">
-            <h2 class="font-semibold text-highlighted">Leave Requests</h2>
-            <UBadge :label="String(leaveRequests.filter(l => l.status === 'Pending').length) + ' pending'" color="warning" variant="subtle" size="sm" />
-          </div>
+        <UCard variant="subtle" :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+          <template #header>
+            <div class="flex items-center justify-between">
+              <h2 class="font-semibold text-highlighted">Leave Requests</h2>
+              <UBadge :label="String(leaveRequests.filter(l => l.status === 'Pending').length) + ' pending'" color="warning" variant="subtle" size="sm" />
+            </div>
+          </template>
           <div class="divide-y divide-default">
-            <div v-for="(req, idx) in leaveRequests" :key="req.name" class="p-4">
+            <div v-for="(req, idx) in leaveRequests" :key="req.name" class="p-4 sm:p-6">
               <div class="flex items-start gap-3 mb-2">
                 <UAvatar :text="req.initials" size="sm" :color="req.color" />
                 <div class="flex-1 min-w-0">
@@ -160,7 +183,7 @@ function rejectLeave(idx: number) {
                   <p class="text-xs text-dimmed mt-0.5 italic">"{{ req.reason }}"</p>
                 </div>
               </div>
-              <div class="flex items-center justify-between mt-2">
+              <div class="flex items-center justify-between mt-2 bg-muted/50 p-2 sm:p-3 rounded-lg">
                 <span :class="['inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium', req.status === 'Approved' ? 'bg-success/10 text-success' : req.status === 'Rejected' ? 'bg-error/10 text-error' : 'bg-warning/10 text-warning']">
                   {{ req.status }}
                 </span>
