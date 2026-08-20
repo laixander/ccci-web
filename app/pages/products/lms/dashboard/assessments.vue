@@ -41,6 +41,16 @@ const activeCycle = { name: 'Q3 2026 Assessment Cycle', deadline: 'September 1, 
 const showCreateModal = ref(false)
 const assessmentTypes = ['Quiz', 'Assessment', 'Assignment', 'Exam']
 const courseOptions = ['JavaScript Fundamentals', 'Q3 Compliance Training', 'Leadership Essentials', 'Data Literacy Bootcamp']
+
+const assessmentColumns = [
+  { id: 'assessment', header: 'Assessment' },
+  { accessorKey: 'type', header: 'Type' },
+  { accessorKey: 'learners', header: 'Learners', meta: { class: { td: 'font-semibold text-highlighted' } } },
+  { id: 'avgScore', header: 'Avg Score' },
+  { id: 'passedFailed', header: 'Passed / Failed' },
+  { accessorKey: 'status', header: 'Status' },
+  { id: 'actions', meta: { class: { th: 'text-right', td: 'text-right' } } },
+]
 </script>
 
 <template>
@@ -55,7 +65,7 @@ const courseOptions = ['JavaScript Fundamentals', 'Q3 Compliance Training', 'Lea
     </div>
 
     <!-- Active Cycle Banner -->
-    <UCard :ui="{ body: 'p-5' }" class="border-primary/30 bg-primary/5">
+    <UCard :ui="{ root: 'shadow-sm ring-primary/30 bg-primary/5' }">
       <div class="flex items-center gap-5">
         <div class="size-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
           <UIcon name="i-lucide-check-circle" class="size-6 text-primary" />
@@ -66,17 +76,15 @@ const courseOptions = ['JavaScript Fundamentals', 'Q3 Compliance Training', 'Lea
             <UBadge label="Active" color="success" variant="subtle" size="sm" />
           </div>
           <p class="text-sm text-muted mb-3">Deadline: {{ activeCycle.deadline }} · {{ activeCycle.progress }}% of submissions received</p>
-          <div class="bg-muted/50 rounded-full h-2 w-full max-w-sm">
-            <div class="bg-primary h-2 rounded-full transition-all duration-500" :style="{ width: activeCycle.progress + '%' }" />
-          </div>
+          <UProgress :model-value="activeCycle.progress" class="max-w-sm" />
         </div>
-        <UButton label="Send Reminder" icon="i-lucide-bell" color="neutral" variant="outline" size="sm" />
+        <UButton label="Send Reminder" icon="i-lucide-bell" variant="outline" size="sm" />
       </div>
     </UCard>
 
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="stat in stats" :key="stat.label" :ui="{ body: 'p-5' }">
+      <UCard v-for="stat in stats" :key="stat.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
         <div class="flex items-center gap-4">
           <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', stat.bg]">
             <UIcon :name="stat.icon" :class="['size-5', stat.color]" />
@@ -90,71 +98,55 @@ const courseOptions = ['JavaScript Fundamentals', 'Q3 Compliance Training', 'Lea
     </div>
 
     <!-- Assessment Table -->
-    <UCard :ui="{ body: 'p-0' }">
+    <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
       <div class="flex items-center justify-between px-5 py-4 border-b border-default">
         <h2 class="font-semibold text-highlighted">Assessments</h2>
         <UBadge label="Q3 2026" color="primary" variant="subtle" size="sm" />
       </div>
       <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-default">
-              <th class="text-left px-5 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Assessment</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Type</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Learners</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Avg Score</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Passed / Failed</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Status</th>
-              <th class="px-4 py-3.5" />
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-default">
-            <tr v-for="a in assessments" :key="a.id" class="hover:bg-muted/30 transition-colors">
-              <td class="px-5 py-4">
-                <p class="font-medium text-highlighted">{{ a.title }}</p>
-                <p class="text-xs text-dimmed">{{ a.course }}</p>
-              </td>
-              <td class="px-4 py-4">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" :class="typeConfig[a.type]">
-                  {{ a.type }}
-                </span>
-              </td>
-              <td class="px-4 py-4 font-semibold text-highlighted">{{ a.learners }}</td>
-              <td class="px-4 py-4">
-                <div class="flex items-center gap-2">
-                  <div class="w-16 bg-muted/50 rounded-full h-1.5">
-                    <div class="h-1.5 rounded-full bg-primary transition-all duration-500" :style="{ width: a.avgScore + '%' }" />
-                  </div>
-                  <span class="text-xs font-semibold text-highlighted">{{ a.avgScore }}%</span>
-                </div>
-              </td>
-              <td class="px-4 py-4 text-xs">
-                <span class="text-success font-semibold">{{ a.passed }} passed</span>
-                <span class="text-muted mx-1">·</span>
-                <span class="text-error font-semibold">{{ a.failed }} failed</span>
-              </td>
-              <td class="px-4 py-4">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" :class="statusConfig[a.status]">
-                  {{ a.status }}
-                </span>
-              </td>
-              <td class="px-4 py-4">
-                <UButton icon="i-lucide-eye" size="xs" color="neutral" variant="ghost" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <UTable :data="assessments" :columns="assessmentColumns" class="w-full">
+          <template #assessment-cell="{ row }">
+            <p class="font-medium text-highlighted">{{ row.original.title }}</p>
+            <p class="text-xs text-dimmed">{{ row.original.course }}</p>
+          </template>
+          <template #type-cell="{ row }">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" :class="typeConfig[row.original.type]">{{ row.original.type }}</span>
+          </template>
+          <template #avgScore-cell="{ row }">
+            <div class="flex items-center gap-2">
+              <UProgress :model-value="row.original.avgScore" class="w-16" />
+              <span class="text-xs font-semibold text-highlighted">{{ row.original.avgScore }}%</span>
+            </div>
+          </template>
+          <template #passedFailed-cell="{ row }">
+            <span class="text-success font-semibold text-xs">{{ row.original.passed }} passed</span>
+            <span class="text-muted mx-1">·</span>
+            <span class="text-error font-semibold text-xs">{{ row.original.failed }} failed</span>
+          </template>
+          <template #status-cell="{ row }">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" :class="statusConfig[row.original.status]">{{ row.original.status }}</span>
+          </template>
+          <template #actions-cell>
+            <UTooltip text="View Assessment">
+              <UButton icon="i-lucide-eye" size="xs" color="neutral" variant="ghost" />
+            </UTooltip>
+          </template>
+          <template #empty>
+            <UEmpty icon="i-lucide-file-text" title="No assessments found" />
+          </template>
+        </UTable>
       </div>
     </UCard>
 
     <!-- Peer Feedback -->
-    <UCard :ui="{ body: 'p-5' }">
-      <h2 class="font-semibold text-highlighted mb-5">Learner Feedback</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div
+    <UCard :ui="{ root: 'shadow-sm' }">
+      <h2 class="font-semibold text-highlighted">Learner Feedback</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 sm:mt-6">
+        <UCard
           v-for="fb in peerFeedback"
           :key="fb.from + fb.to"
-          class="p-4 rounded-xl bg-muted/30 border border-default space-y-3"
+          variant="subtle"
+          :ui="{ root: 'shadow-sm', body: 'sm:p-4 space-y-3' }"
         >
           <div class="flex gap-0.5">
             <UIcon v-for="i in 5" :key="i" name="i-lucide-star" :class="['size-3.5', i <= fb.rating ? 'text-warning' : 'text-muted']" />
@@ -167,7 +159,7 @@ const courseOptions = ['JavaScript Fundamentals', 'Q3 Compliance Training', 'Lea
               <p class="text-xs text-dimmed">→ {{ fb.to }}</p>
             </div>
           </div>
-        </div>
+        </UCard>
       </div>
     </UCard>
 

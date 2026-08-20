@@ -35,11 +35,28 @@ const payslips = [
   { month: 'May 2026', gross: '₱115,000', net: '₱97,000', date: 'May 30', status: 'Paid' },
 ]
 
+const payslipColumns = [
+  { accessorKey: 'month', header: 'Period', meta: { class: { td: 'font-medium text-highlighted' } } },
+  { accessorKey: 'gross', header: 'Gross Pay', meta: { class: { th: 'text-right', td: 'text-right text-highlighted' } } },
+  { accessorKey: 'net', header: 'Net Pay', meta: { class: { th: 'text-right', td: 'text-right font-bold text-success' } } },
+  { accessorKey: 'date', header: 'Paid On', meta: { class: { td: 'text-muted' } } },
+  { accessorKey: 'status', header: 'Status' },
+  { id: 'actions', meta: { class: { th: 'text-right', td: 'text-right' } } }
+]
+
 const leaveHistory = ref([
   { type: 'Vacation Leave', from: 'Jul 1', to: 'Jul 3', days: 3, status: 'Approved', applied: 'Jun 20' },
   { type: 'Sick Leave', from: 'May 22', to: 'May 23', days: 2, status: 'Approved', applied: 'May 22' },
   { type: 'Emergency Leave', from: 'Mar 5', to: 'Mar 5', days: 1, status: 'Approved', applied: 'Mar 5' },
 ])
+
+const leaveHistoryColumns = [
+  { accessorKey: 'type', header: 'Type', meta: { class: { td: 'font-medium text-highlighted' } } },
+  { id: 'dates', header: 'Dates', meta: { class: { td: 'text-muted text-xs' } } },
+  { accessorKey: 'days', header: 'Days', meta: { class: { td: 'text-highlighted' } } },
+  { accessorKey: 'applied', header: 'Applied', meta: { class: { td: 'text-muted text-xs' } } },
+  { accessorKey: 'status', header: 'Status' }
+]
 
 const showLeaveModal = ref(false)
 const leaveForm = reactive({
@@ -81,9 +98,9 @@ const profileForm = reactive({ ...user })
     </div>
 
     <!-- Profile Card -->
-    <UCard :ui="{ body: 'p-6' }">
+    <UCard :ui="{ root: 'shadow-sm' }">
       <div class="flex items-center gap-6">
-        <UAvatar :text="user.initials" size="2xl" :color="user.avatar" />
+        <UAvatar :text="user.initials" size="3xl" :color="user.avatar" />
         <div class="flex-1">
           <h2 class="text-xl font-bold text-highlighted">{{ user.name }}</h2>
           <p class="text-muted">{{ user.role }} · {{ user.dept }}</p>
@@ -102,11 +119,11 @@ const profileForm = reactive({ ...user })
       <!-- My Profile Tab -->
       <template #overview>
         <div class="pt-4 space-y-6">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <!-- Personal Info -->
-            <UCard :ui="{ body: 'p-6' }">
-              <h2 class="font-semibold text-highlighted mb-4">Personal Information</h2>
-              <div class="space-y-4">
+            <UCard :ui="{ root: 'shadow-sm' }">
+              <h2 class="font-semibold text-highlighted">Personal Information</h2>
+              <div class="space-y-4 mt-4 sm:mt-6">
                 <div>
                   <p class="text-xs text-dimmed uppercase tracking-wide font-semibold mb-1">Full Name</p>
                   <p class="text-highlighted font-medium">{{ user.name }}</p>
@@ -130,24 +147,21 @@ const profileForm = reactive({ ...user })
             </UCard>
 
             <!-- Leave Balances -->
-            <UCard :ui="{ body: 'p-6' }">
-              <h2 class="font-semibold text-highlighted mb-4">Leave Balances</h2>
-              <div class="space-y-5">
+            <UCard :ui="{ root: 'shadow-sm' }">
+              <h2 class="font-semibold text-highlighted">Leave Balances</h2>
+              <div class="space-y-4 mt-4 sm:mt-6">
                 <div v-for="(bal, type) in user.leaveBalance" :key="type" class="space-y-2">
                   <div class="flex items-center justify-between">
                     <p class="text-sm font-medium text-highlighted capitalize">{{ type.replace(/([A-Z])/g, ' $1').trim() }} Leave</p>
                     <span class="text-sm font-bold text-highlighted">{{ bal.total - bal.used }}<span class="text-dimmed font-normal"> / {{ bal.total }} days</span></span>
                   </div>
-                  <div class="bg-muted/50 rounded-full h-2">
-                    <div
-                      class="h-2 rounded-full transition-all duration-500"
-                      :class="type === 'sick' ? 'bg-error' : type === 'emergency' ? 'bg-warning' : 'bg-primary'"
-                      :style="{ width: ((bal.total - bal.used) / bal.total * 100) + '%' }"
-                    />
-                  </div>
+                  <UProgress
+                    :model-value="((bal.total - bal.used) / bal.total) * 100"
+                    :color="type === 'sick' ? 'error' : type === 'emergency' ? 'warning' : 'primary'"
+                  />
                   <p class="text-xs text-dimmed">{{ bal.used }} used this year</p>
                 </div>
-                <UButton icon="i-lucide-plus" label="File Leave Request" class="w-full" @click="showLeaveModal = true" />
+                <UButton block icon="i-lucide-plus" label="File Leave Request" @click="showLeaveModal = true" />
               </div>
             </UCard>
           </div>
@@ -157,34 +171,21 @@ const profileForm = reactive({ ...user })
       <!-- Payslips Tab -->
       <template #payslips>
         <div class="pt-4">
-          <UCard :ui="{ body: 'p-0' }">
+          <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
             <div class="overflow-x-auto">
-              <table class="w-full text-sm">
-                <thead>
-                  <tr class="border-b border-default">
-                    <th class="text-left px-5 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Period</th>
-                    <th class="text-right px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Gross Pay</th>
-                    <th class="text-right px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Net Pay</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Paid On</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Status</th>
-                    <th class="px-4 py-3.5" />
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-default">
-                  <tr v-for="p in payslips" :key="p.month" class="hover:bg-muted/30 transition-colors">
-                    <td class="px-5 py-4 font-medium text-highlighted">{{ p.month }}</td>
-                    <td class="px-4 py-4 text-right text-highlighted">{{ p.gross }}</td>
-                    <td class="px-4 py-4 text-right font-bold text-success">{{ p.net }}</td>
-                    <td class="px-4 py-4 text-muted text-xs">{{ p.date }}</td>
-                    <td class="px-4 py-4">
-                      <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success">{{ p.status }}</span>
-                    </td>
-                    <td class="px-4 py-4">
-                      <UButton icon="i-lucide-download" label="Download" size="xs" color="neutral" variant="ghost" />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <UTable :data="payslips" :columns="payslipColumns" class="w-full">
+                <template #status-cell="{ row }">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success">{{ row.original.status }}</span>
+                </template>
+                <template #actions-cell>
+                  <UTooltip text="Download Payslip">
+                    <UButton icon="i-lucide-download" size="xs" color="neutral" variant="ghost" />
+                  </UTooltip>
+                </template>
+                <template #empty>
+                  <UEmpty icon="i-lucide-file-text" title="No payslips found" description="You don't have any payslips yet." />
+                </template>
+              </UTable>
             </div>
           </UCard>
         </div>
@@ -196,32 +197,24 @@ const profileForm = reactive({ ...user })
           <div class="flex justify-end">
             <UButton icon="i-lucide-plus" label="File Leave Request" @click="showLeaveModal = true" />
           </div>
-          <UCard :ui="{ body: 'p-0' }">
+          <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
             <div class="overflow-x-auto">
-              <table class="w-full text-sm">
-                <thead>
-                  <tr class="border-b border-default">
-                    <th class="text-left px-5 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Type</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Dates</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Days</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Applied</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Status</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-default">
-                  <tr v-for="leave in leaveHistory" :key="leave.type + leave.from" class="hover:bg-muted/30 transition-colors">
-                    <td class="px-5 py-4 font-medium text-highlighted">{{ leave.type }}</td>
-                    <td class="px-4 py-4 text-muted text-xs">{{ leave.from }}<span v-if="leave.from !== leave.to"> – {{ leave.to }}</span></td>
-                    <td class="px-4 py-4 text-highlighted">{{ leave.days }}d</td>
-                    <td class="px-4 py-4 text-muted text-xs">{{ leave.applied }}</td>
-                    <td class="px-4 py-4">
-                      <span :class="['inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium', leave.status === 'Approved' ? 'bg-success/10 text-success' : leave.status === 'Pending' ? 'bg-warning/10 text-warning' : 'bg-error/10 text-error']">
-                        {{ leave.status }}
-                      </span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <UTable :data="leaveHistory" :columns="leaveHistoryColumns" class="w-full">
+                <template #dates-cell="{ row }">
+                  {{ row.original.from }}<span v-if="row.original.from !== row.original.to"> – {{ row.original.to }}</span>
+                </template>
+                <template #days-cell="{ row }">
+                  {{ row.original.days }}d
+                </template>
+                <template #status-cell="{ row }">
+                  <span :class="['inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium', row.original.status === 'Approved' ? 'bg-success/10 text-success' : row.original.status === 'Pending' ? 'bg-warning/10 text-warning' : 'bg-error/10 text-error']">
+                    {{ row.original.status }}
+                  </span>
+                </template>
+                <template #empty>
+                  <UEmpty icon="i-lucide-calendar" title="No leave history" description="You haven't filed any leave requests yet." />
+                </template>
+              </UTable>
             </div>
           </UCard>
         </div>

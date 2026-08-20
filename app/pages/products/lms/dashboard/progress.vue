@@ -95,6 +95,15 @@ const chartOptions = {
 }
 
 const atRiskLearners = computed(() => learners.value.filter(l => l.status === 'At Risk'))
+
+const learnerColumns = [
+  { id: 'learner', header: 'Learner' },
+  { accessorKey: 'course', header: 'Course', meta: { class: { td: 'text-muted' } } },
+  { id: 'progress', header: 'Progress' },
+  { accessorKey: 'lastActive', header: 'Last Active', meta: { class: { td: 'text-muted text-xs' } } },
+  { accessorKey: 'status', header: 'Status' },
+  { id: 'actions', meta: { class: { th: 'text-right', td: 'text-right' } } },
+]
 </script>
 
 <template>
@@ -113,7 +122,7 @@ const atRiskLearners = computed(() => learners.value.filter(l => l.status === 'A
 
     <!-- KPIs -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="kpi in kpis" :key="kpi.label" :ui="{ body: 'p-5' }" class="hover:shadow-md transition-shadow">
+      <UCard v-for="kpi in kpis" :key="kpi.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
         <div class="flex items-center gap-4">
           <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', kpi.bg]">
             <UIcon :name="kpi.icon" :class="['size-5', kpi.color]" />
@@ -130,26 +139,26 @@ const atRiskLearners = computed(() => learners.value.filter(l => l.status === 'A
     <!-- Charts row -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <!-- Enrollment Trend -->
-      <UCard class="lg:col-span-2" :ui="{ body: 'p-5' }">
-        <div class="flex items-center justify-between mb-5">
+      <UCard :ui="{ root: 'shadow-sm lg:col-span-2' }">
+        <div class="flex items-center justify-between">
           <div>
             <h2 class="font-semibold text-highlighted">Enrollment Trend</h2>
             <p class="text-xs text-muted mt-0.5">New enrollments per month</p>
           </div>
           <UBadge label="+55 this month" color="success" variant="subtle" />
         </div>
-        <div class="h-48 w-full mt-2">
+        <div class="h-48 w-full mt-4 sm:mt-6">
           <Bar :data="chartData" :options="chartOptions" />
         </div>
       </UCard>
 
       <!-- At-Risk Learners -->
-      <UCard :ui="{ body: 'p-5' }">
-        <div class="flex items-center justify-between mb-4">
+      <UCard :ui="{ root: 'shadow-sm' }">
+        <div class="flex items-center justify-between">
           <h2 class="font-semibold text-highlighted">At-Risk Learners</h2>
           <UBadge :label="`${atRiskLearners.length}`" color="error" variant="subtle" />
         </div>
-        <div class="space-y-3">
+        <div class="space-y-3 mt-4 sm:mt-6">
           <div v-for="learner in atRiskLearners" :key="learner.id" class="flex items-center gap-3 p-3 rounded-lg bg-error/5 border border-error/10">
             <UAvatar :text="learner.initials" size="sm" :color="learner.avatarColor" />
             <div class="flex-1 min-w-0">
@@ -158,13 +167,13 @@ const atRiskLearners = computed(() => learners.value.filter(l => l.status === 'A
             </div>
             <span class="text-xs font-bold text-error">{{ learner.pct }}%</span>
           </div>
-          <UButton label="Send Nudge to All" icon="i-lucide-send" size="sm" color="neutral" variant="outline" class="w-full" />
+          <UButton block label="Send Nudge to All" icon="i-lucide-send" size="sm" color="neutral" variant="outline" />
         </div>
       </UCard>
     </div>
 
     <!-- Filters -->
-    <UCard :ui="{ body: 'p-4' }">
+    <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
       <div class="flex flex-wrap gap-3 items-center">
         <UInput v-model="search" placeholder="Search learners…" icon="i-lucide-search" class="flex-1 min-w-48" />
         <USelect v-model="selectedCourse" :items="courseOptions" class="w-64" />
@@ -173,59 +182,40 @@ const atRiskLearners = computed(() => learners.value.filter(l => l.status === 'A
     </UCard>
 
     <!-- Learner Progress Table -->
-    <UCard :ui="{ body: 'p-0' }">
+    <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
       <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-default">
-              <th class="text-left px-5 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Learner</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Course</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Progress</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Last Active</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Status</th>
-              <th class="px-4 py-3.5" />
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-default">
-            <tr v-for="l in filtered" :key="l.id" class="hover:bg-muted/30 transition-colors">
-              <td class="px-5 py-4">
-                <div class="flex items-center gap-3">
-                  <UAvatar :text="l.initials" size="sm" :color="l.avatarColor" />
-                  <div>
-                    <p class="font-medium text-highlighted">{{ l.name }}</p>
-                    <p class="text-xs text-dimmed">{{ l.id }}</p>
-                  </div>
-                </div>
-              </td>
-              <td class="px-4 py-4 text-muted">{{ l.course }}</td>
-              <td class="px-4 py-4">
-                <div class="flex items-center gap-2">
-                  <div class="w-24 bg-muted/50 rounded-full h-1.5">
-                    <div
-                      class="h-1.5 rounded-full transition-all duration-500"
-                      :class="l.pct >= 80 ? 'bg-success' : l.pct >= 50 ? 'bg-primary' : 'bg-warning'"
-                      :style="{ width: l.pct + '%' }"
-                    />
-                  </div>
-                  <span class="text-xs font-semibold text-highlighted">{{ l.pct }}%</span>
-                </div>
-              </td>
-              <td class="px-4 py-4 text-muted text-xs">{{ l.lastActive }}</td>
-              <td class="px-4 py-4">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" :class="statusConfig[l.status]">
-                  {{ l.status }}
-                </span>
-              </td>
-              <td class="px-4 py-4">
-                <UButton icon="i-lucide-send" size="xs" color="neutral" variant="ghost" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div v-if="filtered.length === 0" class="py-16 text-center">
-          <UIcon name="i-lucide-users" class="size-10 text-muted mx-auto mb-3" />
-          <p class="text-muted font-medium">No learners found</p>
-        </div>
+        <UTable :data="filtered" :columns="learnerColumns" class="w-full">
+          <template #learner-cell="{ row }">
+            <div class="flex items-center gap-3">
+              <UAvatar :text="row.original.initials" size="sm" :color="row.original.avatarColor" />
+              <div>
+                <p class="font-medium text-highlighted">{{ row.original.name }}</p>
+                <p class="text-xs text-dimmed">{{ row.original.id }}</p>
+              </div>
+            </div>
+          </template>
+          <template #progress-cell="{ row }">
+            <div class="flex items-center gap-2">
+              <UProgress
+                :model-value="row.original.pct"
+                :color="row.original.pct >= 80 ? 'success' : row.original.pct >= 50 ? 'primary' : 'warning'"
+                class="w-24"
+              />
+              <span class="text-xs font-semibold text-highlighted">{{ row.original.pct }}%</span>
+            </div>
+          </template>
+          <template #status-cell="{ row }">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" :class="statusConfig[row.original.status]">{{ row.original.status }}</span>
+          </template>
+          <template #actions-cell="{ row }">
+            <UTooltip text="Send Nudge">
+              <UButton icon="i-lucide-send" size="xs" color="neutral" variant="ghost" />
+            </UTooltip>
+          </template>
+          <template #empty>
+            <UEmpty icon="i-lucide-users" title="No learners found" description="Try adjusting your search or filters." />
+          </template>
+        </UTable>
       </div>
     </UCard>
   </div>

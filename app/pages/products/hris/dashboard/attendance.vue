@@ -76,7 +76,7 @@ function rejectLeave(idx: number) {
 
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="stat in stats" :key="stat.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }" variant="subtle">
+      <UCard v-for="stat in stats" :key="stat.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
         <div class="flex items-center gap-4">
           <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', stat.bg]">
             <UIcon :name="stat.icon" :class="['size-5', stat.color]" />
@@ -91,7 +91,7 @@ function rejectLeave(idx: number) {
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <!-- Attendance Log -->
-      <UCard class="lg:col-span-2" :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }" variant="subtle">
+      <UCard class="lg:col-span-2" :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
         <template #header>
           <div class="flex items-center justify-between">
             <h2 class="font-semibold text-highlighted">Today's Attendance Log</h2>
@@ -149,9 +149,9 @@ function rejectLeave(idx: number) {
       <!-- Right column -->
       <div class="space-y-4">
         <!-- Shift Overview -->
-        <UCard variant="subtle" :ui="{ root: 'shadow-sm' }">
-          <h2 class="font-semibold text-highlighted mb-4">Shift Schedule</h2>
-          <div class="space-y-3">
+        <UCard :ui="{ root: 'shadow-sm' }">
+          <h2 class="font-semibold text-highlighted">Shift Schedule</h2>
+          <div class="space-y-3 mt-4 sm:mt-6">
             <div v-for="shift in shifts" :key="shift.label" class="flex items-center gap-3">
               <div :class="['size-9 rounded-lg flex items-center justify-center flex-shrink-0', shift.bg]">
                 <UIcon name="i-lucide-clock" :class="['size-4', shift.color]" />
@@ -166,7 +166,7 @@ function rejectLeave(idx: number) {
         </UCard>
 
         <!-- Leave Requests -->
-        <UCard variant="subtle" :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+        <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
           <template #header>
             <div class="flex items-center justify-between">
               <h2 class="font-semibold text-highlighted">Leave Requests</h2>
@@ -183,7 +183,7 @@ function rejectLeave(idx: number) {
                   <p class="text-xs text-dimmed mt-0.5 italic">"{{ req.reason }}"</p>
                 </div>
               </div>
-              <div class="flex items-center justify-between mt-2 bg-muted/50 p-2 sm:p-3 rounded-lg">
+              <UCard :ui="{ root: 'mt-2 shadow-sm', body: 'p-2 sm:p-3 flex items-center justify-between' }">
                 <span :class="['inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium', req.status === 'Approved' ? 'bg-success/10 text-success' : req.status === 'Rejected' ? 'bg-error/10 text-error' : 'bg-warning/10 text-warning']">
                   {{ req.status }}
                 </span>
@@ -191,7 +191,7 @@ function rejectLeave(idx: number) {
                   <UButton size="xs" color="success" variant="subtle" icon="i-lucide-check" @click="approveLeave(idx)" />
                   <UButton size="xs" color="error" variant="subtle" icon="i-lucide-x" @click="rejectLeave(idx)" />
                 </div>
-              </div>
+              </UCard>
             </div>
           </div>
         </UCard>

@@ -83,8 +83,7 @@ const completionByCategory = [
       <UCard
         v-for="kpi in kpiCards"
         :key="kpi.label"
-        :ui="{ body: 'p-4' }"
-        class="hover:shadow-md transition-shadow duration-200"
+        :ui="{ root: 'shadow-sm', body: 'sm:p-4' }"
       >
         <div class="flex items-center justify-between mb-3">
           <div :class="['size-9 rounded-lg flex items-center justify-center', kpi.bg]">
@@ -98,9 +97,9 @@ const completionByCategory = [
     </div>
 
     <!-- Main content row -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <!-- Recent Activity (2/3 width) -->
-      <UCard class="lg:col-span-2" :ui="{ body: 'p-0' }">
+      <UCard :ui="{ root: 'shadow-sm lg:col-span-2', body: 'p-0 sm:p-0' }">
         <div class="flex items-center justify-between px-5 py-4 border-b border-default">
           <h2 class="font-semibold text-highlighted">Recent Activity</h2>
           <UButton label="View all" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" />
@@ -126,9 +125,9 @@ const completionByCategory = [
       <!-- Right column -->
       <div class="space-y-6">
         <!-- Quick Actions -->
-        <UCard :ui="{ body: 'p-5' }">
-          <h2 class="font-semibold text-highlighted mb-4">Quick Actions</h2>
-          <div class="grid grid-cols-2 gap-2">
+        <UCard :ui="{ root: 'shadow-sm' }">
+          <h2 class="font-semibold text-highlighted">Quick Actions</h2>
+          <div class="grid grid-cols-2 gap-2 mt-4 sm:mt-6">
             <NuxtLink
               v-for="link in quickLinks"
               :key="link.label"
@@ -144,9 +143,9 @@ const completionByCategory = [
         </UCard>
 
         <!-- Upcoming Events -->
-        <UCard :ui="{ body: 'p-5' }">
-          <h2 class="font-semibold text-highlighted mb-4">Upcoming</h2>
-          <div class="space-y-3">
+        <UCard :ui="{ root: 'shadow-sm' }">
+          <h2 class="font-semibold text-highlighted">Upcoming</h2>
+          <div class="space-y-3 mt-4 sm:mt-6">
             <div
               v-for="event in upcomingEvents"
               :key="event.label"
@@ -164,20 +163,15 @@ const completionByCategory = [
     </div>
 
     <!-- Course Completion by Category -->
-    <UCard :ui="{ body: 'p-5' }">
-      <div class="flex items-center justify-between mb-5">
+    <UCard :ui="{ root: 'shadow-sm' }">
+      <div class="flex items-center justify-between">
         <h2 class="font-semibold text-highlighted">Completion Rate by Category</h2>
         <UButton label="Full Analytics" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" to="/products/lms/dashboard/analytics" />
       </div>
-      <div class="space-y-3">
+      <div class="space-y-3 mt-4 sm:mt-6">
         <div v-for="cat in completionByCategory" :key="cat.cat" class="flex items-center gap-4">
           <span class="text-sm text-muted w-24 flex-shrink-0">{{ cat.cat }}</span>
-          <div class="flex-1 bg-muted/50 rounded-full h-2">
-            <div
-              class="bg-primary h-2 rounded-full transition-all duration-500"
-              :style="{ width: cat.pct + '%' }"
-            />
-          </div>
+          <UProgress :model-value="cat.pct" class="flex-1" />
           <span class="text-sm font-semibold text-highlighted w-10 text-right">{{ cat.pct }}%</span>
         </div>
       </div>

@@ -144,3 +144,51 @@ export function useLmsDashboard() {
     navGroups
   }
 }
+
+export function useDmsDashboard() {
+  const meta = {
+    themeClass: 'theme-dms',
+    appIcon: 'i-lucide-folder-open',
+    appNamePrefix: 'Docu',
+    appNameHighlight: 'Core'
+  }
+
+  const navGroups: { label?: string; items: NavigationMenuItem[] }[] = [
+    {
+      items: [
+        {
+          label: 'Dashboard',
+          icon: 'i-lucide-layout-dashboard',
+          to: '/products/dms/dashboard',
+        },
+      ],
+    },
+    {
+      label: 'Files',
+      items: [
+        { label: 'All Documents', icon: 'i-lucide-files', to: '/products/dms/dashboard/documents' },
+        { label: 'Shared with Me', icon: 'i-lucide-users', to: '/products/dms/dashboard/shared' },
+        { label: 'Starred', icon: 'i-lucide-star', to: '/products/dms/dashboard/starred' },
+      ],
+    },
+    {
+      label: 'Workflows',
+      items: [
+        { label: 'My Approvals', icon: 'i-lucide-check-circle', to: '/products/dms/dashboard/approvals' },
+        { label: 'Signatures', icon: 'i-lucide-pen-tool', to: '/products/dms/dashboard/signatures' },
+      ],
+    },
+    {
+      label: 'Admin',
+      items: [
+        { label: 'Access Control', icon: 'i-lucide-shield-check', to: '/products/dms/dashboard/access' },
+        { label: 'Settings', icon: 'i-lucide-settings', to: '/products/dms/dashboard/settings' },
+      ],
+    },
+  ]
+
+  return {
+    ...meta,
+    navGroups
+  }
+}

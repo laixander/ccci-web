@@ -166,7 +166,7 @@ const topPerformers = [
 
     <!-- KPIs -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="kpi in kpis" :key="kpi.label" :ui="{ body: 'p-5' }" class="hover:shadow-md transition-shadow">
+      <UCard v-for="kpi in kpis" :key="kpi.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4'}">
         <div class="flex items-center justify-between mb-3">
           <div :class="['size-9 rounded-lg flex items-center justify-center', kpi.bg]">
             <UIcon :name="kpi.icon" :class="['size-4', kpi.color]" />
@@ -181,25 +181,25 @@ const topPerformers = [
     </div>
 
     <!-- Charts row -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <!-- Headcount Trend -->
-      <UCard class="lg:col-span-2" :ui="{ body: 'p-5' }">
-        <div class="flex items-center justify-between mb-5">
+      <UCard :ui="{ root: 'shadow-sm lg:col-span-2'}">
+        <div class="flex items-center justify-between">
           <div>
             <h2 class="font-semibold text-highlighted">Headcount Trend</h2>
             <p class="text-xs text-muted mt-0.5">Last 6 months</p>
           </div>
           <UBadge label="+12 this month" color="success" variant="subtle" />
         </div>
-        <div class="h-48 w-full mt-2">
+        <div class="h-48 w-full mt-4 sm:mt-6">
           <Bar :data="headcountChartData" :options="headcountChartOptions" />
         </div>
       </UCard>
 
       <!-- Dept Breakdown -->
-      <UCard :ui="{ body: 'p-5' }">
-        <h2 class="font-semibold text-highlighted mb-5">By Department</h2>
-        <div class="space-y-3">
+      <UCard :ui="{ root: 'shadow-sm'}">
+        <h2 class="font-semibold text-highlighted">By Department</h2>
+        <div class="space-y-3 mt-4 sm:mt-6">
           <div v-for="dept in deptHeadcount" :key="dept.dept" class="space-y-1">
             <div class="flex items-center justify-between text-sm">
               <span class="text-muted">{{ dept.dept }}</span>
@@ -214,23 +214,23 @@ const topPerformers = [
     </div>
 
     <!-- Second row -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
       <!-- Payroll Trend -->
-      <UCard :ui="{ body: 'p-5' }">
-        <div class="flex items-center justify-between mb-5">
+      <UCard :ui="{ root: 'shadow-sm'}">
+        <div class="flex items-center justify-between">
           <div>
             <h2 class="font-semibold text-highlighted">Payroll Cost Trend</h2>
             <p class="text-xs text-muted mt-0.5">₱k per month</p>
           </div>
         </div>
-        <div class="h-40 w-full mt-2">
+        <div class="h-40 w-full mt-4 sm:mt-6">
           <Bar :data="payrollChartData" :options="payrollChartOptions" />
         </div>
       </UCard>
 
       <!-- Attrition vs Hiring -->
-      <UCard :ui="{ body: 'p-5' }">
-        <div class="flex items-center justify-between mb-5">
+      <UCard :ui="{ root: 'shadow-sm'}">
+        <div class="flex items-center justify-between">
           <div>
             <h2 class="font-semibold text-highlighted">Hiring vs Attrition</h2>
             <p class="text-xs text-muted mt-0.5">Last 6 months</p>
@@ -240,27 +240,28 @@ const topPerformers = [
             <span class="flex items-center gap-1.5"><span class="size-2 rounded-full bg-error inline-block" /> Separations</span>
           </div>
         </div>
-        <div class="h-40 w-full mt-2">
+        <div class="h-40 w-full mt-4 sm:mt-6">
           <Bar :data="turnoverChartData" :options="turnoverChartOptions" />
         </div>
       </UCard>
     </div>
 
     <!-- Top Performers -->
-    <UCard :ui="{ body: 'p-5' }">
-      <div class="flex items-center justify-between mb-4">
+    <UCard :ui="{ root: 'shadow-sm'}">
+      <div class="flex items-center justify-between">
         <h2 class="font-semibold text-highlighted">Top Performers — Q3 2026</h2>
         <UButton label="Full Report" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" to="/products/hris/dashboard/performance" />
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 sm:mt-6">
+        <UCard
           v-for="(emp, i) in topPerformers"
           :key="emp.name"
-          class="flex items-center gap-4 p-4 rounded-xl bg-muted/30 border border-default hover:shadow-sm transition-shadow"
+          :ui="{ root: 'shadow-sm', body: 'sm:p-4 flex items-center gap-4' }"
+          variant="subtle"
         >
           <div class="relative">
             <UAvatar :text="emp.initials" size="lg" :color="emp.color" />
-            <span class="absolute -top-1 -right-1 size-5 rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center">#{{ i + 1 }}</span>
+            <span class="absolute -bottom-2 -right-2 size-5 rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center">#{{ i + 1 }}</span>
           </div>
           <div>
             <p class="font-semibold text-highlighted text-sm">{{ emp.name }}</p>
@@ -270,7 +271,7 @@ const topPerformers = [
               <span class="text-xs text-highlighted font-bold ml-1">{{ emp.score }}</span>
             </div>
           </div>
-        </div>
+        </UCard>
       </div>
     </UCard>
   </div>

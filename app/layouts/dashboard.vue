@@ -7,10 +7,18 @@ const collapsible = ref<SidebarProps['collapsible']>('icon')
 const open = ref(true)
 
 const route = useRoute()
+const currentProduct = computed(() => {
+  const match = route.path.match(/^\/products\/(cms|lms|hris|dms)/)
+  return match ? match[1] : 'hris'
+})
+
 const dashboardConfig = computed(() => {
-  if (route.path.startsWith('/products/cms')) return useCmsDashboard()
-  if (route.path.startsWith('/products/lms')) return useLmsDashboard()
-  return useHrisDashboard() // default fallback
+  switch (currentProduct.value) {
+    case 'cms': return useCmsDashboard()
+    case 'lms': return useLmsDashboard()
+    case 'dms': return useDmsDashboard()
+    default: return useHrisDashboard()
+  }
 })
 
 const themeClass = computed(() => dashboardConfig.value.themeClass)
@@ -21,22 +29,35 @@ const navGroups = computed(() => dashboardConfig.value.navGroups)
 
 const isCollapsed = computed(() => collapsible.value === 'icon' && !open.value)
 
-const loginRoute = computed(() => {
-  if (route.path.startsWith('/products/cms')) return '/products/cms/login'
-  if (route.path.startsWith('/products/lms')) return '/products/lms/login'
-  return '/products/hris/login'
-})
-
-const dashboardHomeRoute = computed(() => {
-  if (route.path.startsWith('/products/cms')) return '/products/cms/dashboard'
-  if (route.path.startsWith('/products/lms')) return '/products/lms/dashboard'
-  return '/products/hris/dashboard'
-})
+const loginRoute = computed(() => `/products/${currentProduct.value}/login`)
+const dashboardHomeRoute = computed(() => `/products/${currentProduct.value}/dashboard`)
 
 const userInfo = computed(() => {
-  if (route.path.startsWith('/products/lms')) return { initials: 'AR', name: 'Alex Rivera', role: 'L&D Manager' }
-  if (route.path.startsWith('/products/cms')) return { initials: 'RC', name: 'Reg. Carmen Reyes', role: 'Registrar' }
-  return { initials: 'SC', name: 'Sarah Chen', role: 'VP of HR' }
+  switch (currentProduct.value) {
+    case 'lms': return { initials: 'AR', name: 'Alex Rivera', role: 'L&D Manager' }
+    case 'cms': return { initials: 'RC', name: 'Reg. Carmen Reyes', role: 'Registrar' }
+    case 'dms': return { initials: 'AJ', name: 'Alex Johnson', role: 'System Admin' }
+    default: return { initials: 'SC', name: 'Sarah Chen', role: 'VP of HR' }
+  }
+})
+
+function flattenNavItems(nodes: any[]): { label: string; to: string }[] {
+  return nodes.flatMap(node => [
+    ...(node.to ? [{ label: node.label, to: node.to }] : []),
+    ...flattenNavItems(node.items ?? node.children ?? []),
+  ])
+}
+
+const breadcrumbItems = computed(() => {
+  const metaLabel = route.meta.breadcrumb as string
+  const navLabel = flattenNavItems(navGroups.value as any[]).find(n => n.to === route.path)?.label
+  const fallback = route.path.split('/').filter(Boolean).pop()?.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) ?? 'Dashboard'
+  const label = metaLabel || navLabel || fallback
+
+  return [
+    { label: appNamePrefix.value + appNameHighlight.value, to: dashboardHomeRoute.value },
+    { label }
+  ]
 })
 </script>
 
@@ -146,20 +167,15 @@ const userInfo = computed(() => {
             class="lg:hidden"
           />
           <!-- Breadcrumb -->
-          <UBreadcrumb
-            :items="[
-              { label: appNamePrefix + appNameHighlight, to: dashboardHomeRoute },
-              { label: ($route.meta.breadcrumb as string) || ($route.name as string)?.split('-').pop() || 'Dashboard' },
-            ]"
-          />
+          <UBreadcrumb :items="breadcrumbItems" />
         </div>
         <div class="flex items-center gap-2">
-          <UColorModeButton />
+          <UColorModeButton size="sm" />
           <div class="relative">
-            <UButton icon="i-lucide-bell" color="neutral" variant="ghost" size="sm" />
+            <UButton icon="i-lucide-bell" color="neutral" variant="ghost" size="sm" :to="dashboardHomeRoute + '/notifications'" />
             <span class="absolute top-1 right-1 size-2 rounded-full bg-primary" />
           </div>
-          <UButton icon="i-lucide-settings" color="neutral" variant="ghost" size="sm" />
+          <UButton icon="i-lucide-settings" color="neutral" variant="ghost" size="sm" :to="dashboardHomeRoute + '/settings'" />
         </div>
       </div>
 

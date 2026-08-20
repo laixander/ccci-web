@@ -93,7 +93,6 @@ const donutStyle = computed(() => {
         v-for="kpi in kpiCards"
         :key="kpi.label"
         :ui="{ root: 'shadow-sm hover:shadow-md transition-shadow duration-200', body: 'sm:p-4' }"
-        variant="subtle"
       >
         <div class="flex items-center justify-between mb-3">
           <div :class="['size-9 rounded-lg flex items-center justify-center', kpi.bg]">
@@ -109,7 +108,7 @@ const donutStyle = computed(() => {
     <!-- Main content row -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <!-- Recent Activity (2/3 width) -->
-      <UCard variant="subtle" class="lg:col-span-2" :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+      <UCard class="lg:col-span-2" :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
         <template #header>
           <div class="flex items-center justify-between">
             <h2 class="font-semibold text-highlighted">Recent Activity</h2>
@@ -137,9 +136,9 @@ const donutStyle = computed(() => {
       <!-- Right column -->
       <div class="space-y-4">
         <!-- Quick Actions -->
-        <UCard variant="subtle" :ui="{ root: 'shadow-sm' }">
-          <h2 class="font-semibold text-highlighted mb-4">Quick Actions</h2>
-          <div class="grid grid-cols-2 gap-2">
+        <UCard :ui="{ root: 'shadow-sm' }">
+          <h2 class="font-semibold text-highlighted">Quick Actions</h2>
+          <div class="grid grid-cols-2 gap-2 mt-4 sm:mt-6">
             <NuxtLink
               v-for="link in quickLinks"
               :key="link.label"
@@ -155,9 +154,9 @@ const donutStyle = computed(() => {
         </UCard>
 
         <!-- Upcoming Events -->
-        <UCard variant="subtle" :ui="{ root: 'shadow-sm' }">
-          <h2 class="font-semibold text-highlighted mb-4">Upcoming</h2>
-          <div class="space-y-3">
+        <UCard :ui="{ root: 'shadow-sm' }">
+          <h2 class="font-semibold text-highlighted">Upcoming</h2>
+          <div class="space-y-3 mt-4 sm:mt-6">
             <div
               v-for="event in upcomingEvents"
               :key="event.label"
@@ -175,14 +174,12 @@ const donutStyle = computed(() => {
     </div>
 
     <!-- Headcount by Department -->
-    <UCard variant="subtle" :ui="{ root: 'shadow-sm' }">
-      <template #header>
-        <div class="flex items-center justify-between">
-          <h2 class="font-semibold text-highlighted">Headcount by Department</h2>
-          <UButton label="Full Analytics" variant="ghost" size="xs" trailing-icon="i-lucide-arrow-right" to="/products/hris/dashboard/analytics" />
-        </div>
-      </template>
-      <div class="space-y-3">
+    <UCard :ui="{ root: 'shadow-sm' }">
+      <div class="flex items-center justify-between">
+        <h2 class="font-semibold text-highlighted">Headcount by Department</h2>
+        <UButton label="Full Analytics" variant="ghost" size="xs" trailing-icon="i-lucide-arrow-right" to="/products/hris/dashboard/analytics" />
+      </div>
+      <div class="space-y-3 mt-4 sm:mt-6">
         <div v-for="dept in headcountByDept" :key="dept.dept" class="flex items-center gap-4">
           <span class="text-sm text-muted w-28 flex-shrink-0">{{ dept.dept }}</span>
           <UProgress :model-value="dept.pct" :max="100" class="flex-1" />

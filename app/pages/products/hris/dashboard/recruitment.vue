@@ -89,7 +89,7 @@ const priorityConfig: Record<string, string> = {
 
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="stat in stats" :key="stat.label" :ui="{ body: 'p-5' }">
+      <UCard v-for="stat in stats" :key="stat.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
         <div class="flex items-center gap-4">
           <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', stat.bg]">
             <UIcon :name="stat.icon" :class="['size-5', stat.color]" />
@@ -103,13 +103,15 @@ const priorityConfig: Record<string, string> = {
     </div>
 
     <!-- Kanban Pipeline -->
-    <UCard :ui="{ body: 'p-5' }">
-      <div class="flex items-center justify-between mb-5">
-        <h2 class="font-semibold text-highlighted">Recruitment Pipeline</h2>
-        <UButton label="View all candidates" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" />
-      </div>
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div v-for="col in pipeline" :key="col.stage" class="space-y-3">
+    <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+      <template #header>
+        <div class="flex items-center justify-between">
+          <h2 class="font-semibold text-highlighted">Recruitment Pipeline</h2>
+          <UButton label="View all candidates" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" />
+        </div>
+      </template>
+      <div class="grid grid-cols-2 lg:grid-cols-4 divide-x divide-default">
+        <div v-for="col in pipeline" :key="col.stage" class="space-y-3 p-4">
           <!-- Column Header -->
           <div class="flex items-center gap-2 mb-3">
             <div :class="['size-7 rounded-lg flex items-center justify-center', col.bg]">
@@ -119,39 +121,41 @@ const priorityConfig: Record<string, string> = {
             <span class="text-xs text-dimmed ml-auto">{{ col.candidates.length }}</span>
           </div>
           <!-- Cards -->
-          <div
+          <UCard
             v-for="cand in col.candidates"
             :key="cand.name"
-            class="bg-muted/30 rounded-lg p-3 border border-default hover:shadow-sm transition-shadow cursor-pointer"
+            :ui="{ root: 'shadow-sm hover:shadow-md transition-shadow cursor-pointer', body: 'sm:p-4 flex items-center justify-between' }"
           >
-            <div class="flex items-center gap-2.5 mb-2">
-              <UAvatar :text="cand.initials" size="xs" :color="cand.color" />
-              <div>
-                <p class="text-xs font-semibold text-highlighted">{{ cand.name }}</p>
-                <p class="text-[10px] text-muted leading-tight">{{ cand.role }}</p>
-              </div>
-            </div>
+            <UUser
+              :name="cand.name"
+              :description="cand.role"
+              :avatar="{ text: cand.initials, color: cand.color }"
+              size="sm"
+              :ui="{ description: 'text-[10px] leading-tight' }"
+            />
             <div class="flex gap-1">
               <UButton size="xs" icon="i-lucide-arrow-right" color="neutral" variant="ghost" class="text-[10px]" />
               <UButton size="xs" icon="i-lucide-x" color="error" variant="ghost" class="text-[10px]" />
             </div>
-          </div>
+          </UCard>
         </div>
       </div>
     </UCard>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
       <!-- Open Positions -->
-      <UCard :ui="{ body: 'p-0' }">
-        <div class="flex items-center justify-between px-5 py-4 border-b border-default">
-          <h2 class="font-semibold text-highlighted">Open Positions</h2>
-          <UButton label="Post new job" size="xs" color="neutral" variant="ghost" trailing-icon="i-lucide-plus" />
-        </div>
+      <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+        <template #header>
+          <div class="flex items-center justify-between">
+            <h2 class="font-semibold text-highlighted">Open Positions</h2>
+            <UButton label="Post new job" size="xs" color="neutral" variant="ghost" trailing-icon="i-lucide-plus" />
+          </div>
+        </template>
         <div class="divide-y divide-default">
           <div
             v-for="role in openRoles"
             :key="role.title"
-            class="px-5 py-4 hover:bg-muted/30 transition-colors"
+            class="p-4 sm:px-6 hover:bg-muted/30 transition-colors"
           >
             <div class="flex items-start justify-between gap-3 mb-2">
               <div>
@@ -170,13 +174,13 @@ const priorityConfig: Record<string, string> = {
       </UCard>
 
       <!-- Today's Interviews -->
-      <UCard :ui="{ body: 'p-5' }">
-        <h2 class="font-semibold text-highlighted mb-4">Today's Interviews</h2>
-        <div class="space-y-4">
-          <div
+      <UCard :ui="{ root: 'shadow-sm' }">
+        <h2 class="font-semibold text-highlighted">Today's Interviews</h2>
+        <div class="space-y-4 mt-4 sm:mt-6">
+          <UCard
             v-for="interview in todayInterviews"
             :key="interview.candidate"
-            class="flex items-start gap-4 p-4 rounded-xl bg-muted/30 hover:bg-muted/50 transition-colors"
+            :ui="{ root: 'shadow-sm hover:shadow-md transition-colors', body: 'p-4 sm:p-4 flex items-center gap-4' }"
           >
             <div class="text-center min-w-16">
               <p class="text-xs font-bold text-primary">{{ interview.time }}</p>
@@ -190,7 +194,7 @@ const priorityConfig: Record<string, string> = {
               </div>
             </div>
             <UButton icon="i-lucide-video" size="xs" color="primary" variant="subtle" />
-          </div>
+          </UCard>
         </div>
       </UCard>
     </div>

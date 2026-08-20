@@ -79,11 +79,11 @@ const chartOptions = {
 }
 
 const categoryBreakdown = [
-  { cat: 'Compliance', learners: 342, color: 'bg-primary' },
-  { cat: 'Technical', learners: 406, color: 'bg-info' },
-  { cat: 'Leadership', learners: 154, color: 'bg-warning' },
-  { cat: 'Soft Skills', learners: 98, color: 'bg-success' },
-  { cat: 'Onboarding', learners: 240, color: 'bg-error' },
+  { cat: 'Compliance', learners: 342, color: 'primary' as const },
+  { cat: 'Technical', learners: 406, color: 'info' as const },
+  { cat: 'Leadership', learners: 154, color: 'warning' as const },
+  { cat: 'Soft Skills', learners: 98, color: 'success' as const },
+  { cat: 'Onboarding', learners: 240, color: 'error' as const },
 ]
 const totalLearners = categoryBreakdown.reduce((s, c) => s + c.learners, 0)
 
@@ -118,7 +118,7 @@ const leaderboard = [
 
     <!-- KPIs -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="kpi in kpis" :key="kpi.label" :ui="{ body: 'p-5' }" class="hover:shadow-md transition-shadow">
+      <UCard v-for="kpi in kpis" :key="kpi.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
         <div class="flex items-center justify-between mb-3">
           <div :class="['size-9 rounded-lg flex items-center justify-center', kpi.bg]">
             <UIcon :name="kpi.icon" :class="['size-4', kpi.color]" />
@@ -135,31 +135,29 @@ const leaderboard = [
     <!-- Charts row -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <!-- Enrollment Trend -->
-      <UCard class="lg:col-span-2" :ui="{ body: 'p-5' }">
-        <div class="flex items-center justify-between mb-5">
+      <UCard :ui="{ root: 'shadow-sm lg:col-span-2' }">
+        <div class="flex items-center justify-between">
           <div>
             <h2 class="font-semibold text-highlighted">Enrollment Trend</h2>
             <p class="text-xs text-muted mt-0.5">New enrollments per month</p>
           </div>
           <UBadge label="+55 this month" color="success" variant="subtle" />
         </div>
-        <div class="h-48 w-full mt-2">
+        <div class="h-48 w-full mt-4 sm:mt-6">
           <Bar :data="chartData" :options="chartOptions" />
         </div>
       </UCard>
 
       <!-- Category Breakdown -->
-      <UCard :ui="{ body: 'p-5' }">
-        <h2 class="font-semibold text-highlighted mb-5">By Category</h2>
-        <div class="space-y-3">
+      <UCard :ui="{ root: 'shadow-sm' }">
+        <h2 class="font-semibold text-highlighted">By Category</h2>
+        <div class="space-y-3 mt-4 sm:mt-6">
           <div v-for="cat in categoryBreakdown" :key="cat.cat" class="space-y-1">
             <div class="flex items-center justify-between text-sm">
               <span class="text-muted">{{ cat.cat }}</span>
               <span class="font-semibold text-highlighted">{{ cat.learners }} <span class="text-xs text-dimmed">({{ Math.round(cat.learners / totalLearners * 100) }}%)</span></span>
             </div>
-            <div class="bg-muted/50 rounded-full h-1.5">
-              <div :class="['h-1.5 rounded-full transition-all duration-500', cat.color]" :style="{ width: (cat.learners / totalLearners * 100) + '%' }" />
-            </div>
+            <UProgress :model-value="cat.learners / totalLearners * 100" :color="cat.color" />
           </div>
         </div>
       </UCard>
@@ -168,45 +166,47 @@ const leaderboard = [
     <!-- Bottom row -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <!-- Top Courses by Completion -->
-      <UCard :ui="{ body: 'p-5' }">
-        <div class="flex items-center justify-between mb-5">
+      <UCard :ui="{ root: 'shadow-sm' }">
+        <div class="flex items-center justify-between">
           <h2 class="font-semibold text-highlighted">Top Courses by Completion</h2>
         </div>
-        <div class="space-y-4">
-          <div v-for="(course, i) in topCourses" :key="course.title" class="flex items-center gap-4 p-3 rounded-xl bg-muted/30 border border-default">
+        <div class="space-y-4 mt-4 sm:mt-6">
+          <UCard
+            v-for="(course, i) in topCourses"
+            :key="course.title"
+            variant="subtle"
+            :ui="{ root: 'shadow-sm', body: 'sm:p-3 flex items-center gap-4' }"
+          >
             <div class="relative">
               <UAvatar :text="course.initials" size="lg" :color="course.color" />
-              <span class="absolute -top-1 -right-1 size-5 rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center">#{{ i + 1 }}</span>
+              <span class="absolute -bottom-2 -right-2 size-5 rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center">#{{ i + 1 }}</span>
             </div>
             <div class="flex-1 min-w-0">
               <p class="font-semibold text-highlighted text-sm truncate">{{ course.title }}</p>
               <p class="text-xs text-muted">{{ course.learners }} learners</p>
-              <div class="flex items-center gap-2 mt-1.5">
-                <div class="flex-1 bg-muted/50 rounded-full h-1.5">
-                  <div class="h-1.5 rounded-full bg-success transition-all duration-500" :style="{ width: course.completion + '%' }" />
-                </div>
-                <span class="text-xs font-bold text-success">{{ course.completion }}%</span>
-              </div>
+              <UProgress :model-value="course.completion" color="success" class="mt-1.5" />
             </div>
-          </div>
+            <span class="text-xs font-bold text-success">{{ course.completion }}%</span>
+          </UCard>
         </div>
       </UCard>
 
       <!-- Learner Leaderboard -->
-      <UCard :ui="{ body: 'p-5' }">
-        <div class="flex items-center justify-between mb-5">
+      <UCard :ui="{ root: 'shadow-sm' }">
+        <div class="flex items-center justify-between">
           <h2 class="font-semibold text-highlighted">Learner Leaderboard</h2>
           <UButton label="View All" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" to="/products/lms/dashboard/progress" />
         </div>
-        <div class="space-y-3">
-          <div
+        <div class="space-y-3 mt-4 sm:mt-6">
+          <UCard
             v-for="(learner, i) in leaderboard"
             :key="learner.name"
-            class="flex items-center gap-4 p-4 rounded-xl bg-muted/30 border border-default hover:shadow-sm transition-shadow"
+            variant="subtle"
+            :ui="{ root: 'shadow-sm', body: 'sm:p-4 flex items-center gap-4' }"
           >
             <div class="relative">
               <UAvatar :text="learner.initials" size="md" :color="learner.color" />
-              <span :class="['absolute -top-1 -right-1 size-5 rounded-full text-white text-[10px] font-bold flex items-center justify-center', i === 0 ? 'bg-warning' : i === 1 ? 'bg-neutral-400' : 'bg-amber-600']">#{{ i + 1 }}</span>
+              <span :class="['absolute -bottom-2 -right-2 size-5 rounded-full text-white text-[10px] font-bold flex items-center justify-center', i === 0 ? 'bg-warning' : i === 1 ? 'bg-neutral-400' : 'bg-amber-600']">{{ i + 1 }}</span>
             </div>
             <div class="flex-1">
               <p class="font-semibold text-highlighted text-sm">{{ learner.name }}</p>
@@ -216,7 +216,7 @@ const leaderboard = [
               <p class="font-bold text-highlighted">{{ learner.score }}%</p>
               <p class="text-xs text-dimmed">avg score</p>
             </div>
-          </div>
+          </UCard>
         </div>
       </UCard>
     </div>

@@ -54,7 +54,7 @@ const cycle = { name: 'Q3 2026 Review', deadline: 'September 1, 2026', progress:
     </div>
 
     <!-- Active Cycle Banner -->
-    <UCard :ui="{ body: 'p-5' }" class="border-primary/30 bg-primary/5">
+    <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }" class="ring-primary/30 bg-primary/5">
       <div class="flex items-center gap-5">
         <div class="size-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
           <UIcon name="i-lucide-star" class="size-6 text-primary" />
@@ -65,17 +65,15 @@ const cycle = { name: 'Q3 2026 Review', deadline: 'September 1, 2026', progress:
             <UBadge label="Active" color="success" variant="subtle" size="sm" />
           </div>
           <p class="text-sm text-muted mb-3">Deadline: {{ cycle.deadline }} · {{ cycle.progress }}% of reviews completed</p>
-          <div class="bg-muted/50 rounded-full h-2 w-full max-w-sm">
-            <div class="bg-primary h-2 rounded-full transition-all duration-500" :style="{ width: cycle.progress + '%' }" />
-          </div>
+          <UProgress :model-value="cycle.progress" :max="100" class="max-w-sm" />
         </div>
-        <UButton label="Send Reminder" icon="i-lucide-bell" color="neutral" variant="outline" size="sm" />
+        <UButton label="Send Reminder" icon="i-lucide-bell" variant="outline" size="sm" />
       </div>
     </UCard>
 
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="stat in stats" :key="stat.label" :ui="{ body: 'p-5' }">
+      <UCard v-for="stat in stats" :key="stat.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
         <div class="flex items-center gap-4">
           <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', stat.bg]">
             <UIcon :name="stat.icon" :class="['size-5', stat.color]" />
@@ -88,15 +86,17 @@ const cycle = { name: 'Q3 2026 Review', deadline: 'September 1, 2026', progress:
       </UCard>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
       <!-- Employee Scores Table -->
-      <UCard :ui="{ body: 'p-0' }">
-        <div class="flex items-center justify-between px-5 py-4 border-b border-default">
-          <h2 class="font-semibold text-highlighted">Employee Reviews</h2>
-          <UBadge label="Q3 2026" color="primary" variant="subtle" size="sm" />
-        </div>
+      <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+        <template #header>
+          <div class="flex items-center justify-between">
+            <h2 class="font-semibold text-highlighted">Employee Reviews</h2>
+            <UBadge label="Q3 2026" color="primary" variant="subtle" size="sm" />
+          </div>
+        </template>
         <div class="divide-y divide-default">
-          <div v-for="emp in employees" :key="emp.name" class="flex items-center gap-4 px-5 py-4 hover:bg-muted/30 transition-colors">
+          <div v-for="emp in employees" :key="emp.name" class="flex items-center gap-4 sm:px-6 p-4 hover:bg-muted/30 transition-colors">
             <UAvatar :text="emp.initials" size="sm" :color="emp.avatarColor" />
             <div class="flex-1 min-w-0">
               <p class="font-medium text-highlighted text-sm">{{ emp.name }}</p>
@@ -112,9 +112,9 @@ const cycle = { name: 'Q3 2026 Review', deadline: 'September 1, 2026', progress:
       </UCard>
 
       <!-- OKR Tracker -->
-      <UCard :ui="{ body: 'p-5' }">
-        <h2 class="font-semibold text-highlighted mb-5">Team OKRs</h2>
-        <div class="space-y-5">
+      <UCard :ui="{ root: 'shadow-sm' }">
+        <h2 class="font-semibold text-highlighted">Team OKRs</h2>
+        <div class="space-y-4 mt-4 sm:mt-6">
           <div v-for="okr in okrTeams" :key="okr.team" class="space-y-2">
             <div class="flex items-center justify-between">
               <div>
@@ -123,13 +123,10 @@ const cycle = { name: 'Q3 2026 Review', deadline: 'September 1, 2026', progress:
               </div>
               <span :class="['text-sm font-bold', okr.progress >= 80 ? 'text-success' : okr.progress >= 60 ? 'text-warning' : 'text-error']">{{ okr.progress }}%</span>
             </div>
-            <div class="bg-muted/50 rounded-full h-2">
-              <div
-                class="h-2 rounded-full transition-all duration-500"
-                :class="okr.progress >= 80 ? 'bg-success' : okr.progress >= 60 ? 'bg-warning' : 'bg-error'"
-                :style="{ width: okr.progress + '%' }"
-              />
-            </div>
+            <UProgress
+              :model-value="okr.progress"
+              :color="okr.progress >= 80 ? 'success' : okr.progress >= 60 ? 'warning' : 'error'"
+            />
             <p class="text-xs text-dimmed">{{ okr.key }}</p>
           </div>
         </div>
@@ -137,13 +134,14 @@ const cycle = { name: 'Q3 2026 Review', deadline: 'September 1, 2026', progress:
     </div>
 
     <!-- 360° Feedback -->
-    <UCard :ui="{ body: 'p-5' }">
-      <h2 class="font-semibold text-highlighted mb-5">360° Peer Feedback</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div
+    <UCard :ui="{ root: 'shadow-sm' }">
+      <h2 class="font-semibold text-highlighted">360° Peer Feedback</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 sm:mt-6">
+        <UCard
           v-for="fb in feedbacks"
           :key="fb.from + fb.to"
-          class="p-4 rounded-xl bg-muted/30 border border-default space-y-3"
+          :ui="{ root: 'shadow-sm', body: 'sm:p-4 space-y-3' }"
+          variant="subtle"
         >
           <div class="flex gap-0.5">
             <UIcon v-for="i in 5" :key="i" name="i-lucide-star" :class="['size-3.5', i <= fb.rating ? 'text-warning' : 'text-muted']" />
@@ -156,7 +154,7 @@ const cycle = { name: 'Q3 2026 Review', deadline: 'September 1, 2026', progress:
               <p class="text-xs text-dimmed">→ {{ fb.to }}</p>
             </div>
           </div>
-        </div>
+        </UCard>
       </div>
     </UCard>
   </div>

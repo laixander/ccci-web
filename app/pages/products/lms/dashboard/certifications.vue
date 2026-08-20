@@ -38,6 +38,15 @@ const search = ref('')
 const filteredCerts = computed(() =>
   certificates.value.filter(c => !search.value || c.learner.toLowerCase().includes(search.value.toLowerCase()) || c.course.toLowerCase().includes(search.value.toLowerCase()))
 )
+
+const certColumns = [
+  { id: 'learner', header: 'Learner' },
+  { accessorKey: 'course', header: 'Course', meta: { class: { td: 'text-muted' } } },
+  { accessorKey: 'issued', header: 'Issued', meta: { class: { td: 'text-muted text-xs' } } },
+  { accessorKey: 'expiry', header: 'Expires', meta: { class: { td: 'text-muted text-xs' } } },
+  { accessorKey: 'status', header: 'Status' },
+  { id: 'actions', meta: { class: { th: 'text-right', td: 'text-right' } } },
+]
 </script>
 
 <template>
@@ -53,7 +62,7 @@ const filteredCerts = computed(() =>
 
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="stat in stats" :key="stat.label" :ui="{ body: 'p-5' }" class="hover:shadow-md transition-shadow">
+      <UCard v-for="stat in stats" :key="stat.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }" class="hover:shadow-sm transition-shadow">
         <div class="flex items-center gap-4">
           <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', stat.bg]">
             <UIcon :name="stat.icon" :class="['size-5', stat.color]" />
@@ -68,13 +77,14 @@ const filteredCerts = computed(() =>
     </div>
 
     <!-- Badges -->
-    <UCard :ui="{ body: 'p-5' }">
-      <h2 class="font-semibold text-highlighted mb-5">Achievement Badges</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div
+    <UCard :ui="{ root: 'shadow-sm' }">
+      <h2 class="font-semibold text-highlighted">Achievement Badges</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 sm:mt-6">
+        <UCard
           v-for="badge in badges"
           :key="badge.name"
-          class="flex flex-col items-center gap-3 p-5 rounded-xl bg-muted/30 border border-default hover:shadow-sm transition-shadow text-center"
+          variant="subtle"
+          :ui="{ root: 'shadow-sm', body: 'sm:p-5 flex flex-col items-center gap-3 text-center' }"
         >
           <div :class="['size-14 rounded-full flex items-center justify-center', badge.bg]">
             <UIcon :name="badge.icon" :class="['size-7', badge.color]" />
@@ -83,61 +93,57 @@ const filteredCerts = computed(() =>
             <p class="font-semibold text-highlighted text-sm">{{ badge.name }}</p>
             <p class="text-xs text-dimmed mt-0.5">{{ badge.count }} awarded</p>
           </div>
-        </div>
+        </UCard>
       </div>
     </UCard>
 
     <!-- Search -->
-    <UCard :ui="{ body: 'p-4' }">
+    <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
       <UInput v-model="search" placeholder="Search by learner or course…" icon="i-lucide-search" class="max-w-md" />
     </UCard>
 
     <!-- Certificate Table -->
-    <UCard :ui="{ body: 'p-0' }">
+    <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
       <div class="flex items-center justify-between px-5 py-4 border-b border-default">
         <h2 class="font-semibold text-highlighted">Certificate Registry</h2>
         <span class="text-sm text-muted">{{ filteredCerts.length }} certificates</span>
       </div>
       <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-default">
-              <th class="text-left px-5 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Learner</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Course</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Issued</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Expires</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Status</th>
-              <th class="px-4 py-3.5" />
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-default">
-            <tr v-for="cert in filteredCerts" :key="cert.id" class="hover:bg-muted/30 transition-colors">
-              <td class="px-5 py-4">
-                <div class="flex items-center gap-3">
-                  <UAvatar :text="cert.initials" size="sm" :color="cert.avatarColor" />
-                  <div>
-                    <p class="font-medium text-highlighted">{{ cert.learner }}</p>
-                    <p class="text-xs text-dimmed">{{ cert.id }}</p>
-                  </div>
-                </div>
-              </td>
-              <td class="px-4 py-4 text-muted">{{ cert.course }}</td>
-              <td class="px-4 py-4 text-muted text-xs">{{ cert.issued }}</td>
-              <td class="px-4 py-4 text-muted text-xs">{{ cert.expiry }}</td>
-              <td class="px-4 py-4">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" :class="statusConfig[cert.status]">
-                  {{ cert.status }}
-                </span>
-              </td>
-              <td class="px-4 py-4">
-                <div class="flex items-center gap-1">
-                  <UButton icon="i-lucide-download" size="xs" color="neutral" variant="ghost" />
-                  <UButton icon="i-lucide-share-2" size="xs" color="neutral" variant="ghost" />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <UTable :data="filteredCerts" :columns="certColumns" class="w-full">
+          <template #learner-cell="{ row }">
+            <div class="flex items-center gap-3">
+              <UAvatar :text="row.original.initials" size="sm" :color="row.original.avatarColor" />
+              <div>
+                <p class="font-medium text-highlighted">{{ row.original.learner }}</p>
+                <p class="text-xs text-dimmed">{{ row.original.id }}</p>
+              </div>
+            </div>
+          </template>
+          <template #status-cell="{ row }">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" :class="statusConfig[row.original.status]">{{ row.original.status }}</span>
+          </template>
+          <template #actions-cell>
+            <div class="flex items-center justify-end">
+              <UDropdownMenu
+                :items="[
+                  { label: 'Download', icon: 'i-lucide-download' },
+                  { label: 'Share', icon: 'i-lucide-share-2' }
+                ]"
+                size="sm"
+                :content="{
+                  align: 'end',
+                  side: 'bottom',
+                  sideOffset: 8
+                }"
+              >
+                <UButton icon="i-lucide-more-vertical" size="xs" color="neutral" variant="ghost" />
+              </UDropdownMenu>
+            </div>
+          </template>
+          <template #empty>
+            <UEmpty icon="i-lucide-award" title="No certificates found" description="Try adjusting your search." />
+          </template>
+        </UTable>
       </div>
     </UCard>
 

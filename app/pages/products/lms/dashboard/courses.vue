@@ -46,11 +46,21 @@ function viewCourse(course: typeof courses.value[0]) {
   showDetailModal.value = true
 }
 
-function completionColor(pct: number) {
-  if (pct >= 80) return 'bg-success'
-  if (pct >= 50) return 'bg-primary'
-  return 'bg-warning'
+function completionColor(pct: number): 'success' | 'primary' | 'warning' {
+  if (pct >= 80) return 'success'
+  if (pct >= 50) return 'primary'
+  return 'warning'
 }
+
+const courseColumns = [
+  { id: 'course', header: 'Course' },
+  { accessorKey: 'category', header: 'Category' },
+  { accessorKey: 'status', header: 'Status' },
+  { accessorKey: 'learners', header: 'Learners', meta: { class: { td: 'font-semibold text-highlighted' } } },
+  { id: 'completion', header: 'Completion' },
+  { accessorKey: 'instructor', header: 'Instructor', meta: { class: { td: 'text-muted text-xs' } } },
+  { id: 'actions', meta: { class: { th: 'text-right', td: 'text-right' } } },
+]
 </script>
 
 <template>
@@ -70,26 +80,54 @@ function completionColor(pct: number) {
 
     <!-- Stats row -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard :ui="{ body: 'p-4' }">
-        <p class="text-2xl font-bold text-highlighted">{{ courses.filter(c => c.status === 'Published').length }}</p>
-        <p class="text-xs text-muted mt-1">Published Courses</p>
+      <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+        <div class="flex items-center gap-4">
+          <div class="size-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-success/10">
+            <UIcon name="i-lucide-check-circle-2" class="size-5 text-success" />
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-highlighted">{{ courses.filter(c => c.status === 'Published').length }}</p>
+            <p class="text-xs text-muted mt-1">Published Courses</p>
+          </div>
+        </div>
       </UCard>
-      <UCard :ui="{ body: 'p-4' }">
-        <p class="text-2xl font-bold text-highlighted">{{ courses.reduce((s, c) => s + c.learners, 0).toLocaleString() }}</p>
-        <p class="text-xs text-muted mt-1">Total Enrollments</p>
+      <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+        <div class="flex items-center gap-4">
+          <div class="size-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-info/10">
+            <UIcon name="i-lucide-users" class="size-5 text-info" />
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-highlighted">{{ courses.reduce((s, c) => s + c.learners, 0).toLocaleString() }}</p>
+            <p class="text-xs text-muted mt-1">Total Enrollments</p>
+          </div>
+        </div>
       </UCard>
-      <UCard :ui="{ body: 'p-4' }">
-        <p class="text-2xl font-bold text-highlighted">{{ Math.round(courses.filter(c => c.status === 'Published').reduce((s, c) => s + c.completion, 0) / courses.filter(c => c.status === 'Published').length) }}%</p>
-        <p class="text-xs text-muted mt-1">Avg Completion Rate</p>
+      <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+        <div class="flex items-center gap-4">
+          <div class="size-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-primary/10">
+            <UIcon name="i-lucide-trending-up" class="size-5 text-primary" />
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-highlighted">{{ Math.round(courses.filter(c => c.status === 'Published').reduce((s, c) => s + c.completion, 0) / courses.filter(c => c.status === 'Published').length) }}%</p>
+            <p class="text-xs text-muted mt-1">Avg Completion Rate</p>
+          </div>
+        </div>
       </UCard>
-      <UCard :ui="{ body: 'p-4' }">
-        <p class="text-2xl font-bold text-highlighted">{{ courses.filter(c => c.status === 'Draft').length }}</p>
-        <p class="text-xs text-muted mt-1">Courses in Draft</p>
+      <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+        <div class="flex items-center gap-4">
+          <div class="size-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-warning/10">
+            <UIcon name="i-lucide-file-edit" class="size-5 text-warning" />
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-highlighted">{{ courses.filter(c => c.status === 'Draft').length }}</p>
+            <p class="text-xs text-muted mt-1">Courses in Draft</p>
+          </div>
+        </div>
       </UCard>
     </div>
 
     <!-- Filters -->
-    <UCard :ui="{ body: 'p-4' }">
+    <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
       <div class="flex flex-wrap gap-3 items-center">
         <UInput
           v-model="search"
@@ -104,75 +142,54 @@ function completionColor(pct: number) {
     </UCard>
 
     <!-- Course Table -->
-    <UCard :ui="{ body: 'p-0' }">
+    <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
       <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-default">
-              <th class="text-left px-5 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Course</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Category</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Status</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Learners</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Completion</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Instructor</th>
-              <th class="px-4 py-3.5" />
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-default">
-            <tr
-              v-for="course in filtered"
-              :key="course.id"
-              class="hover:bg-muted/30 transition-colors cursor-pointer"
-              @click="viewCourse(course)"
-            >
-              <td class="px-5 py-4">
-                <div class="flex items-center gap-3">
-                  <div class="size-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <UIcon name="i-lucide-book-open" class="size-4 text-primary" />
-                  </div>
-                  <div>
-                    <p class="font-medium text-highlighted">{{ course.title }}</p>
-                    <p class="text-xs text-dimmed">{{ course.modules }} modules · {{ course.duration }}</p>
-                  </div>
-                </div>
-              </td>
-              <td class="px-4 py-4">
-                <UBadge :label="course.category" color="neutral" variant="subtle" size="sm" />
-              </td>
-              <td class="px-4 py-4">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" :class="statusConfig[course.status]">
-                  {{ course.status }}
-                </span>
-              </td>
-              <td class="px-4 py-4 font-semibold text-highlighted">{{ course.learners.toLocaleString() }}</td>
-              <td class="px-4 py-4">
-                <div class="flex items-center gap-2">
-                  <div class="flex-1 bg-muted/50 rounded-full h-1.5 min-w-16">
-                    <div
-                      class="h-1.5 rounded-full transition-all duration-500"
-                      :class="completionColor(course.completion)"
-                      :style="{ width: course.completion + '%' }"
-                    />
-                  </div>
-                  <span class="text-xs font-semibold text-highlighted w-8">{{ course.completion }}%</span>
-                </div>
-              </td>
-              <td class="px-4 py-4 text-muted text-xs">{{ course.instructor }}</td>
-              <td class="px-4 py-4">
-                <div class="flex items-center gap-1" @click.stop>
-                  <UButton icon="i-lucide-eye" size="xs" color="neutral" variant="ghost" @click="viewCourse(course)" />
-                  <UButton icon="i-lucide-pencil" size="xs" color="neutral" variant="ghost" />
-                  <UButton icon="i-lucide-more-horizontal" size="xs" color="neutral" variant="ghost" />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div v-if="filtered.length === 0" class="py-16 text-center">
-          <UIcon name="i-lucide-book-open" class="size-10 text-muted mx-auto mb-3" />
-          <p class="text-muted font-medium">No courses found</p>
-          <p class="text-dimmed text-sm mt-1">Try adjusting your search or filters</p>
-        </div>
+        <UTable :data="filtered" :columns="courseColumns" class="w-full" @select="(e, row) => viewCourse(row.original)">
+          <template #course-cell="{ row }">
+            <div class="flex items-center gap-3">
+              <div class="size-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <UIcon name="i-lucide-book-open" class="size-4 text-primary" />
+              </div>
+              <div>
+                <p class="font-medium text-highlighted">{{ row.original.title }}</p>
+                <p class="text-xs text-dimmed">{{ row.original.modules }} modules · {{ row.original.duration }}</p>
+              </div>
+            </div>
+          </template>
+          <template #category-cell="{ row }">
+            <UBadge :label="row.original.category" color="neutral" variant="subtle" size="sm" />
+          </template>
+          <template #status-cell="{ row }">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" :class="statusConfig[row.original.status]">{{ row.original.status }}</span>
+          </template>
+          <template #completion-cell="{ row }">
+            <div class="flex items-center gap-2">
+              <UProgress :model-value="row.original.completion" :color="completionColor(row.original.completion)" class="min-w-16" />
+              <span class="text-xs font-semibold text-highlighted w-8">{{ row.original.completion }}%</span>
+            </div>
+          </template>
+          <template #actions-cell="{ row }">
+            <div class="flex items-center justify-end" @click.stop>
+              <UDropdownMenu
+                :items="[
+                  { label: 'View', icon: 'i-lucide-eye', onSelect: () => viewCourse(row.original) },
+                  { label: 'Edit', icon: 'i-lucide-pencil' }
+                ]"
+                size="sm"
+                :content="{
+                  align: 'end',
+                  side: 'bottom',
+                  sideOffset: 8
+                }"
+              >
+                <UButton icon="i-lucide-more-vertical" size="xs" color="neutral" variant="ghost" />
+              </UDropdownMenu>
+            </div>
+          </template>
+          <template #empty>
+            <UEmpty icon="i-lucide-book-open" title="No courses found" description="Try adjusting your search or filters." />
+          </template>
+        </UTable>
       </div>
     </UCard>
 

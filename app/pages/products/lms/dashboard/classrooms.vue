@@ -33,6 +33,15 @@ const platformIcons: Record<string, string> = {
 const showScheduleModal = ref(false)
 const platforms = ['Zoom', 'Google Meet', 'Microsoft Teams']
 const courseOptions = ['JavaScript Fundamentals', 'Leadership Essentials', 'Data Literacy Bootcamp', 'AI for Business']
+
+const sessionColumns = [
+  { id: 'session', header: 'Session' },
+  { id: 'platform', header: 'Platform' },
+  { id: 'dateTime', header: 'Date & Time' },
+  { id: 'attendees', header: 'Attendees' },
+  { accessorKey: 'status', header: 'Status' },
+  { id: 'actions', meta: { class: { th: 'text-right', td: 'text-right' } } },
+]
 </script>
 
 <template>
@@ -48,7 +57,7 @@ const courseOptions = ['JavaScript Fundamentals', 'Leadership Essentials', 'Data
 
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="stat in stats" :key="stat.label" :ui="{ body: 'p-5' }" class="hover:shadow-md transition-shadow">
+      <UCard v-for="stat in stats" :key="stat.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
         <div class="flex items-center gap-4">
           <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', stat.bg]">
             <UIcon :name="stat.icon" :class="['size-5', stat.color]" />
@@ -62,7 +71,7 @@ const courseOptions = ['JavaScript Fundamentals', 'Leadership Essentials', 'Data
     </div>
 
     <!-- Live Now Banner -->
-    <UCard v-if="sessions.some(s => s.status === 'Live')" :ui="{ body: 'p-5' }" class="border-error/30 bg-error/5">
+    <UCard v-if="sessions.some(s => s.status === 'Live')" :ui="{ root: 'shadow-sm ring-error/30 bg-error/5' }">
       <div class="flex items-center gap-4">
         <div class="size-3 rounded-full bg-error animate-pulse" />
         <div class="flex-1">
@@ -78,66 +87,53 @@ const courseOptions = ['JavaScript Fundamentals', 'Leadership Essentials', 'Data
     </UCard>
 
     <!-- Sessions Table -->
-    <UCard :ui="{ body: 'p-0' }">
+    <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
       <div class="flex items-center justify-between px-5 py-4 border-b border-default">
         <h2 class="font-semibold text-highlighted">All Sessions</h2>
         <span class="text-sm text-muted">{{ sessions.length }} sessions</span>
       </div>
       <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-default">
-              <th class="text-left px-5 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Session</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Platform</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Date & Time</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Attendees</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Status</th>
-              <th class="px-4 py-3.5" />
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-default">
-            <tr v-for="s in sessions" :key="s.id" class="hover:bg-muted/30 transition-colors">
-              <td class="px-5 py-4">
-                <p class="font-medium text-highlighted">{{ s.title }}</p>
-                <p class="text-xs text-dimmed">{{ s.host }} · {{ s.duration }}</p>
-              </td>
-              <td class="px-4 py-4">
-                <div class="flex items-center gap-2">
-                  <UIcon :name="platformIcons[s.platform] || 'i-lucide-video'" class="size-4 text-muted" />
-                  <span class="text-muted text-xs">{{ s.platform }}</span>
-                </div>
-              </td>
-              <td class="px-4 py-4 text-muted text-xs">
-                <p>{{ s.date }}</p>
-                <p>{{ s.time }}</p>
-              </td>
-              <td class="px-4 py-4">
-                <div class="flex items-center gap-2">
-                  <span class="text-sm font-semibold text-highlighted">{{ s.attendees }}</span>
-                  <span class="text-xs text-dimmed">/ {{ s.maxAttendees }}</span>
-                </div>
-              </td>
-              <td class="px-4 py-4">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" :class="statusConfig[s.status]">
-                  {{ s.status }}
-                </span>
-              </td>
-              <td class="px-4 py-4">
-                <div class="flex items-center gap-1">
-                  <UButton
-                    v-if="s.status === 'Live' || s.status === 'Upcoming'"
-                    :icon="s.status === 'Live' ? 'i-lucide-video' : 'i-lucide-link'"
-                    size="xs"
-                    :color="s.status === 'Live' ? 'error' : 'primary'"
-                    variant="soft"
-                    :label="s.status === 'Live' ? 'Join' : 'Copy Link'"
-                  />
-                  <UButton v-if="s.status === 'Completed'" icon="i-lucide-play-circle" size="xs" color="neutral" variant="ghost" label="Recording" />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <UTable :data="sessions" :columns="sessionColumns" class="w-full">
+          <template #session-cell="{ row }">
+            <p class="font-medium text-highlighted">{{ row.original.title }}</p>
+            <p class="text-xs text-dimmed">{{ row.original.host }} · {{ row.original.duration }}</p>
+          </template>
+          <template #platform-cell="{ row }">
+            <div class="flex items-center gap-2">
+              <UIcon :name="platformIcons[row.original.platform] || 'i-lucide-video'" class="size-4 text-muted" />
+              <span class="text-muted text-xs">{{ row.original.platform }}</span>
+            </div>
+          </template>
+          <template #dateTime-cell="{ row }">
+            <p class="text-muted text-xs">{{ row.original.date }}</p>
+            <p class="text-muted text-xs">{{ row.original.time }}</p>
+          </template>
+          <template #attendees-cell="{ row }">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-semibold text-highlighted">{{ row.original.attendees }}</span>
+              <span class="text-xs text-dimmed">/ {{ row.original.maxAttendees }}</span>
+            </div>
+          </template>
+          <template #status-cell="{ row }">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" :class="statusConfig[row.original.status]">{{ row.original.status }}</span>
+          </template>
+          <template #actions-cell="{ row }">
+            <div class="flex items-center gap-1 justify-end">
+              <UButton
+                v-if="row.original.status === 'Live' || row.original.status === 'Upcoming'"
+                :icon="row.original.status === 'Live' ? 'i-lucide-video' : 'i-lucide-link'"
+                size="xs"
+                :color="row.original.status === 'Live' ? 'error' : 'primary'"
+                variant="soft"
+                :label="row.original.status === 'Live' ? 'Join' : 'Copy Link'"
+              />
+              <UButton v-if="row.original.status === 'Completed'" icon="i-lucide-play-circle" size="xs" color="neutral" variant="ghost" label="Recording" />
+            </div>
+          </template>
+          <template #empty>
+            <UEmpty icon="i-lucide-video" title="No sessions found" />
+          </template>
+        </UTable>
       </div>
     </UCard>
 
