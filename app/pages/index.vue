@@ -25,10 +25,10 @@ const stats = [
   { target: 500, suffix: '+', label: 'Organizations', decimals: 0 },
   { target: 100, suffix: 'k+', label: 'Active Users', decimals: 0 },
   { target: 99.9, suffix: '%', label: 'Uptime SLA', decimals: 1 },
-  { target: 3, suffix: '', label: 'Enterprise Products', decimals: 0 },
+  { target: 6, suffix: '', label: 'Enterprise Products', decimals: 0 },
 ]
 
-type ProductColor = 'green' | 'violet' | 'amber'
+type ProductColor = 'green' | 'violet' | 'amber' | 'sky' | 'slate' | 'rose' | 'teal' | 'indigo' | 'blue'
 
 interface Product {
   id: string
@@ -94,6 +94,108 @@ const products: Product[] = [
       'CHED Compliance Reporting',
     ],
     ctaLabel: 'Explore CMS',
+  },
+  {
+    id: 'dms',
+    name: 'DMS',
+    fullName: 'Document Management System',
+    tagline: 'Control your documents end-to-end',
+    description: 'Digitize, organize, and automate document workflows in a single secure platform. Eliminate paper trails with smart search, approvals, and e-signatures.',
+    icon: 'i-lucide-folder-open',
+    to: '/products/dms',
+    color: 'slate',
+    features: [
+      'Centralized Document Repository',
+      'Automated Approval Workflows',
+      'Version Control & Audit Trail',
+      'Integrated E-Signatures',
+    ],
+    ctaLabel: 'Explore DMS',
+  },
+  {
+    id: 'ams',
+    name: 'AMS',
+    fullName: 'Asset Management System',
+    tagline: 'Track and optimize every asset',
+    description: 'Monitor, manage, and maximize the value of your physical and digital assets — from procurement to disposal with real-time visibility.',
+    icon: 'i-lucide-boxes',
+    to: '/products/ams',
+    color: 'sky',
+    features: [
+      'Real-Time Asset Tracking',
+      'Maintenance Scheduling',
+      'Depreciation Calculation',
+      'Barcode & QR Code Scanning',
+    ],
+    ctaLabel: 'Explore AMS',
+  },
+  {
+    id: 'ilsp',
+    name: 'ILSP',
+    fullName: 'International Linkages System',
+    tagline: 'Manage global partnerships',
+    description: 'Track and manage your institutional partnerships, MOUs, student exchange programs, and international grants in one unified directory.',
+    icon: 'i-lucide-globe',
+    to: '/products/ilsp',
+    color: 'rose',
+    features: [
+      'MOU & Agreement Tracking',
+      'Student & Faculty Mobility',
+      'Global Partnership Directory',
+      'International Grants & Analytics',
+    ],
+    ctaLabel: 'Explore ILSP',
+  },
+  {
+    id: 'aissp',
+    name: 'AISSP',
+    fullName: 'Automated Information Systems Strategic Plan',
+    tagline: 'Strategic alignment for ICT investments',
+    description: 'Align your organization\'s ICT projects with strategic goals. Track systems, budgets, and compliance effortlessly.',
+    icon: 'i-lucide-network',
+    to: '/products/aissp',
+    color: 'teal',
+    features: [
+      'Strategic ICT Alignment',
+      'Resource & Budget Tracking',
+      'System Lifecycle Management',
+      'Compliance & Audit Trails',
+    ],
+    ctaLabel: 'Explore AISSP',
+  },
+  {
+    id: 'eis',
+    name: 'EIS',
+    fullName: 'Executive Information System',
+    tagline: 'Strategic intelligence for top leadership',
+    description: 'Give executives a real-time, consolidated view of your organization\'s performance — KPIs, forecasts, and critical alerts in one premium dashboard.',
+    icon: 'i-lucide-bar-chart-3',
+    to: '/products/eis',
+    color: 'indigo',
+    features: [
+      'Consolidated KPI Dashboard',
+      'Cross-Module Data Aggregation',
+      'Predictive Forecasting',
+      'Executive Reports & Alerts',
+    ],
+    ctaLabel: 'Explore EIS',
+  },
+  {
+    id: 'fms',
+    name: 'FMS',
+    fullName: 'Financial Management System',
+    tagline: 'Core financial control and accounting',
+    description: 'Manage income, expenses, budgets, and compliance. Ensure financial stability and profitability across your organization.',
+    icon: 'i-lucide-wallet',
+    to: '/products/fms',
+    color: 'blue',
+    features: [
+      'General Ledger & Accounting',
+      'Budgeting & Forecasting',
+      'Cash Flow Management',
+      'Financial Reporting',
+    ],
+    ctaLabel: 'Explore FMS',
   },
 ]
 
@@ -208,7 +310,95 @@ const productColorMap: Record<ProductColor, { bg: string, text: string, border: 
     badge: 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300',
     icon: 'bg-amber-500',
   },
+  slate: {
+    bg: 'bg-slate-50 dark:bg-slate-950/30',
+    text: 'text-slate-600 dark:text-slate-400',
+    border: 'border-slate-200 dark:border-slate-700',
+    badge: 'bg-slate-100 text-slate-700 dark:bg-slate-800/50 dark:text-slate-300',
+    icon: 'bg-slate-500',
+  },
+  sky: {
+    bg: 'bg-sky-50 dark:bg-sky-950/30',
+    text: 'text-sky-600 dark:text-sky-400',
+    border: 'border-sky-200 dark:border-sky-800',
+    badge: 'bg-sky-100 text-sky-700 dark:bg-sky-900/50 dark:text-sky-300',
+    icon: 'bg-sky-500',
+  },
+  rose: {
+    bg: 'bg-rose-50 dark:bg-rose-950/30',
+    text: 'text-rose-600 dark:text-rose-400',
+    border: 'border-rose-200 dark:border-rose-800',
+    badge: 'bg-rose-100 text-rose-700 dark:bg-rose-900/50 dark:text-rose-300',
+    icon: 'bg-rose-500',
+  },
+  teal: {
+    bg: 'bg-teal-50 dark:bg-teal-950/30',
+    text: 'text-teal-600 dark:text-teal-400',
+    border: 'border-teal-200 dark:border-teal-800',
+    badge: 'bg-teal-100 text-teal-700 dark:bg-teal-900/50 dark:text-teal-300',
+    icon: 'bg-teal-500',
+  },
+  indigo: {
+    bg: 'bg-indigo-50 dark:bg-indigo-950/30',
+    text: 'text-indigo-600 dark:text-indigo-400',
+    border: 'border-indigo-200 dark:border-indigo-800',
+    badge: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300',
+    icon: 'bg-indigo-500',
+  },
+  blue: {
+    bg: 'bg-blue-50 dark:bg-blue-950/30',
+    text: 'text-blue-600 dark:text-blue-400',
+    border: 'border-blue-200 dark:border-blue-800',
+    badge: 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300',
+    icon: 'bg-blue-500',
+  },
 }
+
+const carouselRef = ref<HTMLElement | null>(null)
+const activeIndex = ref(0)
+const cardsPerView = ref(3)
+
+function updateCardsPerView() {
+  if (typeof window === 'undefined') return
+  if (window.innerWidth < 768) cardsPerView.value = 1
+  else if (window.innerWidth < 1280) cardsPerView.value = 2
+  else cardsPerView.value = 3
+}
+
+onMounted(() => {
+  updateCardsPerView()
+  window.addEventListener('resize', updateCardsPerView)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateCardsPerView)
+})
+
+const maxIndex = computed(() => Math.max(0, products.length - cardsPerView.value))
+
+function scrollToIndex(index: number) {
+  activeIndex.value = Math.max(0, Math.min(index, maxIndex.value))
+  const el = carouselRef.value
+  if (!el) return
+  const card = el.querySelector('[data-card]') as HTMLElement
+  if (!card) return
+  const cardWidth = card.offsetWidth + 24 // gap-6 = 24px
+  el.scrollTo({ left: activeIndex.value * cardWidth, behavior: 'smooth' })
+}
+
+function prevSlide() { scrollToIndex(activeIndex.value - 1) }
+function nextSlide() { scrollToIndex(activeIndex.value + 1) }
+
+// Card width = (visible container content area - gaps) / numCards
+// Visible area = min(100vw, 80rem) - 3rem (the 2x left+right container padding of 1.5rem each)
+const cardStyle = computed(() => {
+  const n = cardsPerView.value
+  const gaps = n - 1
+  return {
+    flexShrink: 0,
+    width: `calc((min(100vw, 80rem) - 3rem - ${gaps} * 1.5rem) / ${n})`,
+  }
+})
 </script>
 
 <template>
@@ -296,71 +486,113 @@ const productColorMap: Record<ProductColor, { bg: string, text: string, border: 
   </div>
 
   <!-- ─── Products ─────────────────────────────────────────────────────── -->
-  <section id="products" class="py-24">
+  <section id="products" class="py-24 overflow-hidden">
     <UContainer>
       <div class="text-center mb-16">
         <p class="text-primary text-sm font-semibold uppercase tracking-widest mb-3">Our Products</p>
         <h2 class="text-4xl font-extrabold text-highlighted tracking-tight mb-4">
-          Three Products. One Platform.
+          Six Products. One Platform.
         </h2>
         <p class="text-muted text-lg max-w-2xl mx-auto">
           Whether you're running a company, a school, or both — CCCI has the enterprise software to digitize and streamline your operations.
         </p>
       </div>
-
-      <div class="grid md:grid-cols-3 gap-6">
-        <div
-          v-for="product in products"
-          :key="product.id"
-          class="rounded-2xl border p-8 flex flex-col gap-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-          :class="[productColorMap[product.color].bg, productColorMap[product.color].border]"
-        >
-          <!-- Icon + badge -->
-          <div class="flex items-start justify-between">
-            <div class="size-12 rounded-xl flex items-center justify-center shadow-sm" :class="productColorMap[product.color].icon">
-              <UIcon :name="product.icon" class="size-6 text-white" />
-            </div>
-            <span class="text-xs font-bold px-2.5 py-1 rounded-full" :class="productColorMap[product.color].badge">
-              {{ product.name }}
-            </span>
-          </div>
-
-          <!-- Content -->
-          <div>
-            <h3 class="text-xl font-bold text-highlighted mb-1">{{ product.fullName }}</h3>
-            <p class="text-sm font-medium mb-3" :class="productColorMap[product.color].text">{{ product.tagline }}</p>
-            <p class="text-muted text-sm leading-relaxed">{{ product.description }}</p>
-          </div>
-
-          <!-- Feature list -->
-          <ul class="space-y-2 flex-1">
-            <li
-              v-for="feature in product.features"
-              :key="feature"
-              class="flex items-center gap-2 text-sm text-muted"
-            >
-              <UIcon name="i-lucide-check" class="size-4 shrink-0" :class="productColorMap[product.color].text" />
-              {{ feature }}
-            </li>
-          </ul>
-
-          <!-- CTA -->
-          <UButton
-            :id="`product-cta-${product.id}`"
-            :to="product.to"
-            :color="product.color"
-            variant="outline"
-            size="lg"
-            block
-          >
-            {{ product.ctaLabel }}
-            <template #trailing>
-              <UIcon name="i-lucide-arrow-right" class="size-4" />
-            </template>
-          </UButton>
-        </div>
-      </div>
     </UContainer>
+
+    <!-- Carousel — full viewport width -->
+    <div class="relative">
+      <!-- Prev button -->
+      <button
+        v-if="activeIndex > 0"
+        class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 size-10 rounded-full bg-default border border-default shadow-lg flex items-center justify-center hover:bg-elevated transition-all"
+        aria-label="Previous products"
+        @click="prevSlide"
+      >
+        <UIcon name="i-lucide-chevron-left" class="size-5 text-muted" />
+      </button>
+
+      <!-- Scroll track -->
+      <div
+        ref="carouselRef"
+        class="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4"
+        style="scrollbar-width: none; -ms-overflow-style: none; padding-left: max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem)); padding-right: max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem)); scroll-padding-left: max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem));"
+      >
+          <div
+            v-for="product in products"
+            :key="product.id"
+            data-card
+            class="snap-start rounded-2xl border p-8 flex flex-col gap-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+            :class="[productColorMap[product.color].bg, productColorMap[product.color].border]"
+            :style="cardStyle"
+          >
+            <!-- Icon + badge -->
+            <div class="flex items-start justify-between">
+              <div class="size-12 rounded-xl flex items-center justify-center shadow-sm" :class="productColorMap[product.color].icon">
+                <UIcon :name="product.icon" class="size-6 text-white" />
+              </div>
+              <span class="text-xs font-bold px-2.5 py-1 rounded-full" :class="productColorMap[product.color].badge">
+                {{ product.name }}
+              </span>
+            </div>
+
+            <!-- Content -->
+            <div>
+              <h3 class="text-xl font-bold text-highlighted mb-1">{{ product.fullName }}</h3>
+              <p class="text-sm font-medium mb-3" :class="productColorMap[product.color].text">{{ product.tagline }}</p>
+              <p class="text-muted text-sm leading-relaxed">{{ product.description }}</p>
+            </div>
+
+            <!-- Feature list -->
+            <ul class="space-y-2 flex-1">
+              <li
+                v-for="feature in product.features"
+                :key="feature"
+                class="flex items-center gap-2 text-sm text-muted"
+              >
+                <UIcon name="i-lucide-check" class="size-4 shrink-0" :class="productColorMap[product.color].text" />
+                {{ feature }}
+              </li>
+            </ul>
+
+            <!-- CTA -->
+            <UButton
+              :id="`product-cta-${product.id}`"
+              :to="product.to"
+              :color="(product.color as any)"
+              variant="outline"
+              size="lg"
+              block
+            >
+              {{ product.ctaLabel }}
+              <template #trailing>
+                <UIcon name="i-lucide-arrow-right" class="size-4" />
+              </template>
+            </UButton>
+          </div>
+      </div>
+
+      <!-- Next button -->
+      <button
+        v-if="activeIndex < maxIndex"
+        class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 size-10 rounded-full bg-default border border-default shadow-lg flex items-center justify-center hover:bg-elevated transition-all"
+        aria-label="Next products"
+        @click="nextSlide"
+      >
+        <UIcon name="i-lucide-chevron-right" class="size-5 text-muted" />
+      </button>
+    </div>
+
+    <!-- Dot indicators -->
+    <div class="flex justify-center gap-2 mt-8">
+      <button
+        v-for="i in maxIndex + 1"
+        :key="i"
+        class="h-2 rounded-full transition-all duration-300"
+        :class="activeIndex === i - 1 ? 'w-6 bg-primary' : 'w-2 bg-muted hover:bg-muted-foreground'"
+        :aria-label="`Go to slide ${i}`"
+        @click="scrollToIndex(i - 1)"
+      />
+    </div>
   </section>
 
   <!-- ─── Why CCCI / Features Grid ────────────────────────────────────── -->
@@ -452,7 +684,7 @@ const productColorMap: Record<ProductColor, { bg: string, text: string, border: 
             <p class="text-muted text-xs mt-1 font-medium">Headquarters</p>
           </div>
           <div class="rounded-xl bg-accented/40 p-5 text-center">
-            <p class="text-3xl font-extrabold text-highlighted">3</p>
+            <p class="text-3xl font-extrabold text-highlighted">6</p>
             <p class="text-muted text-xs mt-1 font-medium">Core Products</p>
           </div>
         </div>

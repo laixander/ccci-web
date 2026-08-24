@@ -21,6 +21,14 @@ export default defineAppConfig({
       fuchsia: 'fuchsia',
       pink: 'pink',
       rose: 'rose',
+      slate: 'slate',
+      gray: 'gray',
+      zinc: 'zinc',
+      stone: 'stone',
+      taupe: 'taupe',
+      mauve: 'mauve',
+      mist: 'mist',
+      olive: 'olive',
     }
   }
 })

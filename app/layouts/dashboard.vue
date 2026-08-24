@@ -8,7 +8,7 @@ const open = ref(true)
 
 const route = useRoute()
 const currentProduct = computed(() => {
-  const match = route.path.match(/^\/products\/(cms|lms|hris|dms)/)
+  const match = route.path.match(/^\/products\/(cms|lms|hris|dms|ams|ilsp|aissp|eis|fms)/)
   return match ? match[1] : 'hris'
 })
 
@@ -17,6 +17,11 @@ const dashboardConfig = computed(() => {
     case 'cms': return useCmsDashboard()
     case 'lms': return useLmsDashboard()
     case 'dms': return useDmsDashboard()
+    case 'ams': return useAmsDashboard()
+    case 'ilsp': return useIlspDashboard()
+    case 'aissp': return useAisspDashboard()
+    case 'eis': return useEisDashboard()
+    case 'fms': return useFmsDashboard()
     default: return useHrisDashboard()
   }
 })
@@ -37,6 +42,11 @@ const userInfo = computed(() => {
     case 'lms': return { initials: 'AR', name: 'Alex Rivera', role: 'L&D Manager' }
     case 'cms': return { initials: 'RC', name: 'Reg. Carmen Reyes', role: 'Registrar' }
     case 'dms': return { initials: 'AJ', name: 'Alex Johnson', role: 'System Admin' }
+    case 'ams': return { initials: 'SA', name: 'System Admin', role: 'Asset Manager' }
+    case 'ilsp': return { initials: 'LD', name: 'Linkages Director', role: 'Global Partnerships' }
+    case 'aissp': return { initials: 'CIO', name: 'Chief Info Officer', role: 'Strategic Planning' }
+    case 'eis': return { initials: 'CEO', name: 'Chief Executive', role: 'Executive Leadership' }
+    case 'fms': return { initials: 'CFO', name: 'Chief Financial Officer', role: 'Finance Department' }
     default: return { initials: 'SC', name: 'Sarah Chen', role: 'VP of HR' }
   }
 })

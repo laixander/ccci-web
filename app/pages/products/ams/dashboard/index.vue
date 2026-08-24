@@ -12,43 +12,42 @@ const greeting = computed(() => {
 })
 
 const kpiCards = [
-  { label: 'Total Documents', value: '14,823', icon: 'i-lucide-file-text', iconColor: 'text-primary', change: '↑ 242 this week', changeColor: 'text-success', bg: 'bg-primary/5' },
-  { label: 'Pending Approvals', value: '34', icon: 'i-lucide-clock', iconColor: 'text-warning', change: '5 urgent', changeColor: 'text-error', bg: 'bg-warning/5' },
-  { label: 'Storage Used', value: '458 GB', icon: 'i-lucide-hard-drive', iconColor: 'text-info', change: '45.8% of 1TB', changeColor: 'text-muted', bg: 'bg-info/5' },
-  { label: 'Active Users', value: '128', icon: 'i-lucide-users', iconColor: 'text-success', change: '↑ 12 this month', changeColor: 'text-success', bg: 'bg-success/5' },
-  { label: 'Shared Externally', value: '87', icon: 'i-lucide-share-2', iconColor: 'text-primary', change: 'Links active', changeColor: 'text-muted', bg: 'bg-primary/5' },
-  { label: 'Compliance Flags', value: '2', icon: 'i-lucide-alert-triangle', iconColor: 'text-error', change: 'Requires review', changeColor: 'text-error', bg: 'bg-error/5' },
+  { label: 'Total Assets', value: '5,234', icon: 'i-lucide-boxes', iconColor: 'text-primary', change: '↑ 124 this month', changeColor: 'text-success', bg: 'bg-primary/5' },
+  { label: 'Pending Maintenance', value: '18', icon: 'i-lucide-wrench', iconColor: 'text-warning', change: '3 critical', changeColor: 'text-error', bg: 'bg-warning/5' },
+  { label: 'Assets Deployed', value: '4,102', icon: 'i-lucide-send', iconColor: 'text-info', change: '78.3% deployed', changeColor: 'text-muted', bg: 'bg-info/5' },
+  { label: 'Active Alerts', value: '12', icon: 'i-lucide-alert-triangle', iconColor: 'text-error', change: 'Requires review', changeColor: 'text-error', bg: 'bg-error/5' },
+  { label: 'Total Value', value: '₱12.4M', icon: 'i-lucide-circle-dollar-sign', iconColor: 'text-success', change: '↑ 2.1% this year', changeColor: 'text-success', bg: 'bg-success/5' },
+  { label: 'Audit Progress', value: '45%', icon: 'i-lucide-clipboard-check', iconColor: 'text-primary', change: 'Q3 Audit', changeColor: 'text-muted', bg: 'bg-primary/5' },
 ]
 
 const recentActivity = [
-  { icon: 'i-lucide-file-plus', color: 'text-success', bg: 'bg-success/10', message: 'Q3 Financial Report uploaded', sub: 'Uploaded by Jane Doe · Finance', time: '10m ago' },
-  { icon: 'i-lucide-check-circle', color: 'text-primary', bg: 'bg-primary/10', message: 'Vendor Contract Approved', sub: 'Approved by John Smith · Legal', time: '1h ago' },
-  { icon: 'i-lucide-edit', color: 'text-warning', bg: 'bg-warning/10', message: 'Employee Handbook v2.1 updated', sub: 'Updated by HR Dept', time: '3h ago' },
-  { icon: 'i-lucide-share-2', color: 'text-info', bg: 'bg-info/10', message: 'Marketing Assets shared externally', sub: 'Link created by Marketing Team', time: '5h ago' },
-  { icon: 'i-lucide-trash-2', color: 'text-error', bg: 'bg-error/10', message: 'Old server logs archived', sub: 'System action', time: 'Yesterday' },
+  { icon: 'i-lucide-check-circle', color: 'text-success', bg: 'bg-success/10', message: 'Laptop XPS-13 assigned to John Doe', sub: 'Assigned by IT Dept', time: '10m ago' },
+  { icon: 'i-lucide-wrench', color: 'text-warning', bg: 'bg-warning/10', message: 'Printer PRN-001 maintenance started', sub: 'Scheduled maintenance', time: '2h ago' },
+  { icon: 'i-lucide-plus-circle', color: 'text-primary', bg: 'bg-primary/10', message: '20 new monitors added to inventory', sub: 'Procurement', time: '5h ago' },
+  { icon: 'i-lucide-arrow-right-left', color: 'text-info', bg: 'bg-info/10', message: 'Office Chairs relocated to 3rd Floor', sub: 'Facilities', time: 'Yesterday' },
+  { icon: 'i-lucide-trash-2', color: 'text-error', bg: 'bg-error/10', message: 'Old servers decommissioned', sub: 'IT Operations', time: 'Yesterday' },
 ]
 
 const quickLinks = [
-  { label: 'Upload File', icon: 'i-lucide-upload-cloud', to: '#', color: 'text-primary', bg: 'bg-primary/10' },
-  { label: 'My Approvals', icon: 'i-lucide-check-square', to: '#', color: 'text-warning', bg: 'bg-warning/10' },
-  { label: 'Browse Folders', icon: 'i-lucide-folder', to: '#', color: 'text-success', bg: 'bg-success/10' },
-  { label: 'Search', icon: 'i-lucide-search', to: '#', color: 'text-info', bg: 'bg-info/10' },
+  { label: 'Add Asset', icon: 'i-lucide-plus', to: '#', color: 'text-primary', bg: 'bg-primary/10' },
+  { label: 'Assign Asset', icon: 'i-lucide-user-plus', to: '#', color: 'text-info', bg: 'bg-info/10' },
+  { label: 'Maintenance', icon: 'i-lucide-wrench', to: '#', color: 'text-warning', bg: 'bg-warning/10' },
+  { label: 'Scan Barcode', icon: 'i-lucide-scan-line', to: '#', color: 'text-success', bg: 'bg-success/10' },
 ]
 
 const pendingTasks = [
-  { label: 'Review NDA - Acme Corp', date: 'Due Today', dot: 'bg-error' },
-  { label: 'Approve Leave Request (Jane Doe)', date: 'Due Tomorrow', dot: 'bg-warning' },
-  { label: 'Sign Q2 Board Minutes', date: 'Due Friday', dot: 'bg-primary' },
-  { label: 'Review IT Security Policy Updates', date: 'Next Week', dot: 'bg-success' },
+  { label: 'Approve IT Procurement Request', date: 'Due Today', dot: 'bg-error' },
+  { label: 'Perform Server Room Audit', date: 'Due Tomorrow', dot: 'bg-warning' },
+  { label: 'Renew Software Licenses', date: 'Due Friday', dot: 'bg-primary' },
+  { label: 'Schedule Fleet Maintenance', date: 'Next Week', dot: 'bg-success' },
 ]
 
-const documentsByDepartment = [
-  { dept: 'Finance', count: 4250, pct: 28 },
-  { dept: 'HR', count: 3100, pct: 21 },
-  { dept: 'Legal', count: 2800, pct: 19 },
-  { dept: 'Operations', count: 2100, pct: 14 },
-  { dept: 'Marketing', count: 1500, pct: 10 },
-  { dept: 'IT', count: 1073, pct: 8 },
+const assetsByCategory = [
+  { category: 'Laptops', count: 1250, pct: 24 },
+  { category: 'Monitors', count: 1500, pct: 29 },
+  { category: 'Peripherals', count: 1800, pct: 34 },
+  { category: 'Servers', count: 150, pct: 3 },
+  { category: 'Furniture', count: 534, pct: 10 },
 ]
 </script>
 
@@ -57,12 +56,12 @@ const documentsByDepartment = [
     <!-- Header -->
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-2xl font-bold text-highlighted">{{ greeting }}, Alex 👋</h1>
-        <p class="text-muted text-sm mt-1">Here is the latest activity in your document repository.</p>
+        <h1 class="text-2xl font-bold text-highlighted">{{ greeting }}, Admin 👋</h1>
+        <p class="text-muted text-sm mt-1">Here is the overview of your assets.</p>
       </div>
       <div class="flex items-center gap-3">
         <UButton icon="i-lucide-search" label="Advanced Search" color="neutral" variant="outline" size="sm" />
-        <UButton icon="i-lucide-upload" label="Upload Document" size="sm" />
+        <UButton icon="i-lucide-plus" label="Add Asset" size="sm" />
       </div>
     </div>
 
@@ -147,17 +146,17 @@ const documentsByDepartment = [
     <!-- Storage by Department -->
     <UCard :ui="{ root: 'shadow-sm' }">
       <div class="flex items-center justify-between">
-        <h2 class="font-semibold text-highlighted">Storage by Department</h2>
-        <UButton label="Storage Analytics" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" to="#" />
+        <h2 class="font-semibold text-highlighted">Assets by Category</h2>
+        <UButton label="Asset Analytics" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" to="#" />
       </div>
       <div class="space-y-3 mt-4 sm:mt-6">
-        <div v-for="dept in documentsByDepartment" :key="dept.dept" class="flex items-center gap-4">
-          <span class="text-sm text-muted w-32 flex-shrink-0">{{ dept.dept }}</span>
+        <div v-for="category in assetsByCategory" :key="category.category" class="flex items-center gap-4">
+          <span class="text-sm text-muted w-32 flex-shrink-0">{{ category.category }}</span>
           <div class="flex-1 bg-muted/50 rounded-full h-2">
-            <div class="bg-primary h-2 rounded-full transition-all duration-500" :style="{ width: dept.pct + '%' }" />
+            <div class="bg-primary h-2 rounded-full transition-all duration-500" :style="{ width: category.pct + '%' }" />
           </div>
-          <span class="text-sm font-semibold text-highlighted w-12 text-right">{{ dept.count.toLocaleString() }}</span>
-          <span class="text-xs text-dimmed w-8">{{ dept.pct }}%</span>
+          <span class="text-sm font-semibold text-highlighted w-12 text-right">{{ category.count.toLocaleString() }}</span>
+          <span class="text-xs text-dimmed w-8">{{ category.pct }}%</span>
         </div>
       </div>
     </UCard>

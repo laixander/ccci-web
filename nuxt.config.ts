@@ -51,6 +51,14 @@ export default defineNuxtConfig({
         'fuchsia',
         'pink',
         'rose',
+        'slate',
+        'gray',
+        'zinc',
+        'stone',
+        'taupe',
+        'mauve',
+        'mist',
+        'olive',
       ]
     }
   }

@@ -42,6 +42,83 @@
   --color-hris-900: #14532d;
   --color-hris-950: #052e16;
 
+  --color-ams-50: #f0f9ff;
+  --color-ams-100: #e0f2fe;
+  --color-ams-200: #bae6fd;
+  --color-ams-300: #7dd3fc;
+  --color-ams-400: #38bdf8;
+  --color-ams-500: #0ea5e9;
+  --color-ams-600: #0284c7;
+  --color-ams-700: #0369a1;
+  --color-ams-800: #075985;
+  --color-ams-900: #0c4a6e;
+  --color-ams-950: #082f49;
+
+  /* for dms, slate as base */
+  --color-dms-50: #f8fafc;
+  --color-dms-100: #f1f5f9;
+  --color-dms-200: #e2e8f0;
+  --color-dms-300: #cbd5e1;
+  --color-dms-400: #94a3b8;
+  --color-dms-500: #64748b;
+  --color-dms-600: #475569;
+  --color-dms-700: #334155;
+  --color-dms-800: #1e293b;
+  --color-dms-900: #0f172a;
+  --color-dms-950: #020617;
+
+  /* for ilsp, rose as base */
+  --color-ilsp-50: #fff1f2;
+  --color-ilsp-100: #ffe4e6;
+  --color-ilsp-200: #fecdd3;
+  --color-ilsp-300: #fda4af;
+  --color-ilsp-400: #fb7185;
+  --color-ilsp-500: #f43f5e;
+  --color-ilsp-600: #e11d48;
+  --color-ilsp-700: #be123c;
+  --color-ilsp-800: #9f1239;
+  --color-ilsp-900: #881337;
+  --color-ilsp-950: #4c0519;
+
+  /* for aissp, teal as base */
+  --color-aissp-50: #f0fdfa;
+  --color-aissp-100: #ccfbf1;
+  --color-aissp-200: #99f6e4;
+  --color-aissp-300: #5eead4;
+  --color-aissp-400: #2dd4bf;
+  --color-aissp-500: #14b8a6;
+  --color-aissp-600: #0d9488;
+  --color-aissp-700: #0f766e;
+  --color-aissp-800: #115e59;
+  --color-aissp-900: #134e4a;
+  --color-aissp-950: #042f2e;
+
+  /* for eis, indigo as base */
+  --color-eis-50: #eef2ff;
+  --color-eis-100: #e0e7ff;
+  --color-eis-200: #c7d2fe;
+  --color-eis-300: #a5b4fc;
+  --color-eis-400: #818cf8;
+  --color-eis-500: #6366f1;
+  --color-eis-600: #4f46e5;
+  --color-eis-700: #4338ca;
+  --color-eis-800: #3730a3;
+  --color-eis-900: #312e81;
+  --color-eis-950: #1e1b4b;
+
+  /* for fms, blue as base */
+  --color-fms-50: #eff6ff;
+  --color-fms-100: #dbeafe;
+  --color-fms-200: #bfdbfe;
+  --color-fms-300: #93c5fd;
+  --color-fms-400: #60a5fa;
+  --color-fms-500: #3b82f6;
+  --color-fms-600: #2563eb;
+  --color-fms-700: #1d4ed8;
+  --color-fms-800: #1e40af;
+  --color-fms-900: #1e3a8a;
+  --color-fms-950: #172554;
+
   --color-brand-50: #f2f5ff;
   --color-brand-100: #e3e9ff;
   --color-brand-200: #ccd8ff;
@@ -65,6 +142,30 @@
 
 .theme-cms {
   --ui-primary: var(--color-cms-500);
+}
+
+.theme-ams {
+  --ui-primary: var(--color-ams-500);
+}
+
+.theme-dms {
+  --ui-primary: var(--color-dms-500);
+}
+
+.theme-ilsp {
+  --ui-primary: var(--color-ilsp-500);
+}
+
+.theme-aissp {
+  --ui-primary: var(--color-aissp-500);
+}
+
+.theme-eis {
+  --ui-primary: var(--color-eis-500);
+}
+
+.theme-fms {
+  --ui-primary: var(--color-fms-500);
 }
 
 html {

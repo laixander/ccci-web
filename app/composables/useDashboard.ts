@@ -192,3 +192,256 @@ export function useDmsDashboard() {
     navGroups
   }
 }
+
+export function useAmsDashboard() {
+  const meta = {
+    themeClass: 'theme-ams',
+    appIcon: 'i-lucide-boxes',
+    appNamePrefix: 'Asset',
+    appNameHighlight: 'Core'
+  }
+
+  const navGroups: { label?: string; items: NavigationMenuItem[] }[] = [
+    {
+      items: [
+        {
+          label: 'Dashboard',
+          icon: 'i-lucide-layout-dashboard',
+          to: '/products/ams/dashboard',
+        },
+      ],
+    },
+    {
+      label: 'Assets',
+      items: [
+        { label: 'All Assets', icon: 'i-lucide-box', to: '/products/ams/dashboard/assets' },
+        { label: 'Assigned', icon: 'i-lucide-user-check', to: '/products/ams/dashboard/assigned' },
+        { label: 'Maintenance', icon: 'i-lucide-wrench', to: '/products/ams/dashboard/maintenance' },
+      ],
+    },
+    {
+      label: 'Inventory',
+      items: [
+        { label: 'Hardware', icon: 'i-lucide-laptop', to: '/products/ams/dashboard/hardware' },
+        { label: 'Software', icon: 'i-lucide-code', to: '/products/ams/dashboard/software' },
+      ],
+    },
+    {
+      label: 'Reports',
+      items: [
+        { label: 'Analytics', icon: 'i-lucide-pie-chart', to: '/products/ams/dashboard/analytics' },
+        { label: 'Depreciation', icon: 'i-lucide-trending-down', to: '/products/ams/dashboard/depreciation' },
+      ],
+    },
+    {
+      label: 'Admin',
+      items: [
+        { label: 'Access Control', icon: 'i-lucide-shield-check', to: '/products/ams/dashboard/access' },
+        { label: 'Settings', icon: 'i-lucide-settings', to: '/products/ams/dashboard/settings' },
+      ],
+    },
+  ]
+
+  return {
+    ...meta,
+    navGroups
+  }
+}
+
+export function useIlspDashboard() {
+  const meta = {
+    themeClass: 'theme-ilsp',
+    appIcon: 'i-lucide-globe',
+    appNamePrefix: 'Linkages',
+    appNameHighlight: 'Core'
+  }
+
+  const navGroups: { label?: string; items: NavigationMenuItem[] }[] = [
+    {
+      items: [
+        {
+          label: 'Dashboard',
+          icon: 'i-lucide-layout-dashboard',
+          to: '/products/ilsp/dashboard',
+        },
+      ],
+    },
+    {
+      label: 'Partnerships',
+      items: [
+        { label: 'Institutions', icon: 'i-lucide-building-2', to: '/products/ilsp/dashboard/partnerships' },
+        { label: 'MOUs & Agreements', icon: 'i-lucide-file-text', to: '/products/ilsp/dashboard/mou' },
+      ],
+    },
+    {
+      label: 'Programs',
+      items: [
+        { label: 'Mobility & Exchange', icon: 'i-lucide-plane', to: '/products/ilsp/dashboard/mobility' },
+        { label: 'Grants & Funding', icon: 'i-lucide-badge-dollar-sign', to: '/products/ilsp/dashboard/grants' },
+      ],
+    },
+    {
+      label: 'Insights',
+      items: [
+        { label: 'Analytics', icon: 'i-lucide-pie-chart', to: '/products/ilsp/dashboard/analytics' },
+      ],
+    },
+    {
+      label: 'Admin',
+      items: [
+        { label: 'Settings', icon: 'i-lucide-settings', to: '/products/ilsp/dashboard/settings' },
+      ],
+    },
+  ]
+
+  return {
+    ...meta,
+    navGroups
+  }
+}
+
+export function useAisspDashboard() {
+  const meta = {
+    themeClass: 'theme-aissp',
+    appIcon: 'i-lucide-network',
+    appNamePrefix: 'AIS',
+    appNameHighlight: 'SP'
+  }
+
+  const navGroups: { label?: string; items: NavigationMenuItem[] }[] = [
+    {
+      items: [
+        {
+          label: 'Dashboard',
+          icon: 'i-lucide-layout-dashboard',
+          to: '/products/aissp/dashboard',
+        },
+      ],
+    },
+    {
+      label: 'Planning',
+      items: [
+        { label: 'Information Systems', icon: 'i-lucide-monitor', to: '/products/aissp/dashboard/systems' },
+        { label: 'Budget & Procurement', icon: 'i-lucide-wallet', to: '/products/aissp/dashboard/budget' },
+      ],
+    },
+    {
+      label: 'Governance',
+      items: [
+        { label: 'Compliance & Audits', icon: 'i-lucide-shield-check', to: '/products/aissp/dashboard/compliance' },
+      ],
+    },
+    {
+      label: 'Insights',
+      items: [
+        { label: 'Analytics', icon: 'i-lucide-pie-chart', to: '/products/aissp/dashboard/analytics' },
+      ],
+    },
+    {
+      label: 'Admin',
+      items: [
+        { label: 'Settings', icon: 'i-lucide-settings', to: '/products/aissp/dashboard/settings' },
+      ],
+    },
+  ]
+
+  return {
+    ...meta,
+    navGroups
+  }
+}
+
+export function useEisDashboard() {
+  const meta = {
+    themeClass: 'theme-eis',
+    appIcon: 'i-lucide-bar-chart-3',
+    appNamePrefix: 'Exec',
+    appNameHighlight: 'IS'
+  }
+
+  const navGroups: { label?: string; items: NavigationMenuItem[] }[] = [
+    {
+      items: [
+        {
+          label: 'Dashboard',
+          icon: 'i-lucide-layout-dashboard',
+          to: '/products/eis/dashboard',
+        },
+      ],
+    },
+    {
+      label: 'Performance',
+      items: [
+        { label: 'KPI Tracker', icon: 'i-lucide-target', to: '/products/eis/dashboard/kpi' },
+        { label: 'Forecasting', icon: 'i-lucide-trending-up', to: '/products/eis/dashboard/forecast' },
+      ],
+    },
+    {
+      label: 'Intelligence',
+      items: [
+        { label: 'Reports', icon: 'i-lucide-file-bar-chart', to: '/products/eis/dashboard/reports' },
+      ],
+    },
+    {
+      label: 'Admin',
+      items: [
+        { label: 'Settings', icon: 'i-lucide-settings', to: '/products/eis/dashboard/settings' },
+      ],
+    },
+  ]
+
+  return {
+    ...meta,
+    navGroups
+  }
+}
+
+export function useFmsDashboard() {
+  const meta = {
+    themeClass: 'theme-fms',
+    appIcon: 'i-lucide-wallet',
+    appNamePrefix: 'F',
+    appNameHighlight: 'MS'
+  }
+
+  const navGroups: { label?: string; items: NavigationMenuItem[] }[] = [
+    {
+      items: [
+        {
+          label: 'Dashboard',
+          icon: 'i-lucide-layout-dashboard',
+          to: '/products/fms/dashboard',
+        },
+      ],
+    },
+    {
+      label: 'Core Accounting',
+      items: [
+        { label: 'General Ledger', icon: 'i-lucide-book', to: '/products/fms/dashboard/ledger' },
+      ],
+    },
+    {
+      label: 'Planning',
+      items: [
+        { label: 'Budgeting', icon: 'i-lucide-pie-chart', to: '/products/fms/dashboard/budget' },
+      ],
+    },
+    {
+      label: 'Intelligence',
+      items: [
+        { label: 'Reports', icon: 'i-lucide-file-text', to: '/products/fms/dashboard/reports' },
+      ],
+    },
+    {
+      label: 'Admin',
+      items: [
+        { label: 'Settings', icon: 'i-lucide-settings', to: '/products/fms/dashboard/settings' },
+      ],
+    },
+  ]
+
+  return {
+    ...meta,
+    navGroups
+  }
+}

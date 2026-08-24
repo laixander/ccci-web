@@ -114,12 +114,12 @@ const ctaLinks = [
 ]
 
 const logoIcons = [
-  { name: 'i-simple-icons-ibm', label: 'IBM' },
+  { name: 'i-simple-icons-microsoft', label: 'Microsoft' },
+  { name: 'i-simple-icons-google', label: 'Google' },
+  { name: 'i-simple-icons-amazon', label: 'Amazon' },
+  { name: 'i-simple-icons-apple', label: 'Apple' },
   { name: 'i-simple-icons-accenture', label: 'Accenture' },
-  { name: 'i-simple-icons-deloitte', label: 'Deloitte' },
-  { name: 'i-simple-icons-pwc', label: 'PwC' },
-  { name: 'i-simple-icons-kpmg', label: 'KPMG' },
-  { name: 'i-simple-icons-ey', label: 'EY' },
+  { name: 'i-simple-icons-salesforce', label: 'Salesforce' },
 ]
 </script>
 
@@ -132,12 +132,7 @@ const logoIcons = [
     :links="heroLinks"
     orientation="horizontal"
   >
-    <div class="bg-muted/50 rounded-xl border border-default p-4 flex items-center justify-center aspect-video">
-      <div class="text-center">
-        <UIcon name="i-lucide-image" class="size-12 text-muted mb-2 mx-auto" />
-        <p class="text-sm font-medium text-dimmed">DocuCore Dashboard Mockup</p>
-      </div>
-    </div>
+    <MockupScreenDmsDashboard />
   </UPageHero>
 
   <!-- Social proof -->
@@ -166,6 +161,25 @@ const logoIcons = [
     description="From secure storage to automated approvals — handle the complete document lifecycle with ease."
     :features="features"
   />
+
+  <!-- Feature detail: Document Repository -->
+  <UPageSection
+    title="A single home for every document"
+    description="Stop hunting through email threads and shared drives. DocuCore gives your entire organization one centralized, searchable repository. Powerful full-text search and OCR scanning mean any document — even scanned PDFs — can be found in seconds."
+    orientation="horizontal"
+  >
+    <MockupScreenDmsDocuments />
+  </UPageSection>
+
+  <!-- Feature detail: Approvals -->
+  <UPageSection
+    title="Workflows that move at the speed of business"
+    description="Route documents to the right approvers automatically. Track every step of the review cycle in real time, get instant notifications, and never let a deadline slip through the cracks. Average approval time reduced by 60%."
+    orientation="horizontal"
+    reverse
+  >
+    <MockupScreenDmsApprovals />
+  </UPageSection>
 
   <!-- Stats banner -->
   <div class="bg-primary dark:bg-primary/50 py-20">
