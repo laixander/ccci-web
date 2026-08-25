@@ -40,7 +40,7 @@ const columns: TableColumn<typeof reports[0]>[] = [
           <USelect :items="['All Types', 'Quarterly', 'Annual', 'Monthly', 'Ad-Hoc']" class="w-full sm:w-40" />
         </div>
       </template>
-      <UTable :data="reports" :columns="columns">
+      <UTable class="scrollbar" :data="reports" :columns="columns">
         <template #name-cell="{ row }">
           <span class="font-medium text-highlighted">{{ row.original.name }}</span>
         </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
   title: 'AISSP by CCCI',
-  layout: 'aissp',
+  layout: 'product',
 })
 
 useSeoMeta({

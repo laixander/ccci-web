@@ -1,7 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
   title: 'LinkagesCore by CCCI',
-  layout: 'ilsp',
+  layout: 'product',
 })
 
 useSeoMeta({

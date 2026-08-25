@@ -2,62 +2,56 @@
 import { computed } from 'vue'
 import type { NavigationMenuItem } from '@nuxt/ui'
 
+const route = useRoute()
+const currentProduct = computed(() => {
+  const match = route.path.match(/^\/products\/(cms|lms|hris|dms|ams|ilsp|aissp|eis|fms)/)
+  return match?.[1] || 'hris'
+})
+
+// Reuse dashboard configs for core branding
+const dashboardConfig = computed(() => {
+  switch (currentProduct.value) {
+    case 'cms': return useCmsDashboard()
+    case 'lms': return useLmsDashboard()
+    case 'dms': return useDmsDashboard()
+    case 'ams': return useAmsDashboard()
+    case 'ilsp': return useIlspDashboard()
+    case 'aissp': return useAisspDashboard()
+    case 'eis': return useEisDashboard()
+    case 'fms': return useFmsDashboard()
+    default: return useHrisDashboard()
+  }
+})
+
+const landingConfig = computed(() => useProductLanding(currentProduct.value))
+
+const themeClass = computed(() => dashboardConfig.value.themeClass)
+const appIcon = computed(() => dashboardConfig.value.appIcon)
+const appNamePrefix = computed(() => dashboardConfig.value.appNamePrefix)
+const appNameHighlight = computed(() => dashboardConfig.value.appNameHighlight)
+
+const description = computed(() => landingConfig.value.description)
+const primaryButton = computed(() => landingConfig.value.primaryButton)
+const footerLinks = computed(() => landingConfig.value.footerLinks)
+const social = computed(() => landingConfig.value.social)
+
 const navItems = computed<NavigationMenuItem[]>(() => [
   { label: 'Features', to: '#features' },
   { label: 'Pricing', to: '#pricing' },
   { label: 'Testimonials', to: '#testimonials' },
 ])
-
-const footerLinks = [
-  {
-    label: 'Product',
-    children: [
-      { label: 'Features', to: '#features' },
-      { label: 'Pricing', to: '#pricing' },
-      { label: 'Security', to: '#' },
-      { label: 'Changelog', to: '#' },
-    ],
-  },
-  {
-    label: 'Company',
-    children: [
-      { label: 'About', to: '#' },
-      { label: 'Blog', to: '#' },
-      { label: 'Careers', to: '#' },
-      { label: 'Contact', to: '#' },
-    ],
-  },
-  {
-    label: 'Resources',
-    children: [
-      { label: 'Documentation', to: '#' },
-      { label: 'Implementation Guide', to: '#' },
-      { label: 'Community', to: '#' },
-      { label: 'Support Center', to: '#' },
-    ],
-  },
-  {
-    label: 'Legal',
-    children: [
-      { label: 'Privacy Policy', to: '#' },
-      { label: 'Terms of Service', to: '#' },
-      { label: 'Data Protection', to: '#' },
-    ],
-  },
-]
 </script>
 
 <template>
-  <div class="theme-hris">
+  <div :class="themeClass">
     <UHeader>
       <template #title>
-        <!-- PeopleCore Logo -->
         <div class="flex items-center gap-2.5">
           <div class="size-8 rounded-lg bg-primary flex items-center justify-center shadow-sm">
-            <UIcon name="i-lucide-users" class="size-5 text-white" />
+            <UIcon :name="appIcon" class="size-5 text-white" />
           </div>
           <span class="font-bold text-xl tracking-tight text-highlighted">
-            People<span class="text-primary">Core</span>
+            {{ appNamePrefix }}<span class="text-primary">{{ appNameHighlight }}</span>
           </span>
         </div>
       </template>
@@ -66,16 +60,16 @@ const footerLinks = [
 
       <template #right>
         <UColorModeButton />
-        <UButton label="Sign in" color="neutral" variant="ghost" class="hidden sm:flex" to="/products/hris/login" />
-        <UButton label="Request Demo" trailing-icon="i-lucide-calendar" />
+        <UButton label="Sign in" color="neutral" variant="ghost" class="hidden sm:flex" :to="`/products/${currentProduct}/login`" />
+        <UButton :label="primaryButton.label" :trailing-icon="primaryButton.icon" />
       </template>
 
       <!-- Mobile menu body -->
       <template #body>
         <UNavigationMenu :items="navItems" orientation="vertical" class="-mx-2.5" />
         <div class="mt-4 flex flex-col gap-2">
-          <UButton label="Sign in" color="neutral" variant="outline" block to="/products/hris/login" />
-          <UButton label="Request Demo" block />
+          <UButton label="Sign in" color="neutral" variant="outline" block :to="`/products/${currentProduct}/login`" />
+          <UButton :label="primaryButton.label" block />
         </div>
       </template>
     </UHeader>
@@ -90,17 +84,16 @@ const footerLinks = [
           <UFooterColumns :columns="footerLinks">
             <template #left>
               <div class="space-y-4">
-                <!-- PeopleCore Logo (footer) -->
                 <div class="flex items-center gap-2.5">
                   <div class="size-8 rounded-lg bg-primary flex items-center justify-center shadow-sm">
-                    <UIcon name="i-lucide-users" class="size-5 text-white" />
+                    <UIcon :name="appIcon" class="size-5 text-white" />
                   </div>
                   <span class="font-bold text-xl tracking-tight text-highlighted">
-                    People<span class="text-primary">Core</span>
+                    {{ appNamePrefix }}<span class="text-primary">{{ appNameHighlight }}</span>
                   </span>
                 </div>
                 <p class="text-muted text-sm leading-relaxed max-w-xs">
-                  The modern HR platform helping growing Philippine organizations manage their entire workforce lifecycle with confidence.
+                  {{ description }}
                 </p>
               </div>
             </template>
@@ -110,13 +103,14 @@ const footerLinks = [
 
       <template #left>
         <p class="text-muted text-sm flex items-center gap-2">
-          <UIcon name="i-lucide-copyright" /> <span>{{ new Date().getFullYear() }} PeopleCore. All rights reserved.</span>
+          <UIcon name="i-lucide-copyright" /> <span>{{ new Date().getFullYear() }} {{ appNamePrefix }}{{ appNameHighlight }}. All rights reserved.</span>
         </p>
       </template>
 
       <template #right>
         <div class="flex items-center gap-1">
           <UButton
+            v-if="social.includes('linkedin')"
             icon="i-simple-icons-linkedin"
             color="neutral"
             variant="ghost"
@@ -126,6 +120,7 @@ const footerLinks = [
             aria-label="LinkedIn"
           />
           <UButton
+            v-if="social.includes('x')"
             icon="i-simple-icons-x"
             color="neutral"
             variant="ghost"
@@ -135,6 +130,7 @@ const footerLinks = [
             aria-label="X (Twitter)"
           />
           <UButton
+            v-if="social.includes('facebook')"
             icon="i-simple-icons-facebook"
             color="neutral"
             variant="ghost"
@@ -142,6 +138,16 @@ const footerLinks = [
             to="https://facebook.com"
             target="_blank"
             aria-label="Facebook"
+          />
+          <UButton
+            v-if="social.includes('youtube')"
+            icon="i-simple-icons-youtube"
+            color="neutral"
+            variant="ghost"
+            size="sm"
+            to="https://youtube.com"
+            target="_blank"
+            aria-label="YouTube"
           />
         </div>
       </template>

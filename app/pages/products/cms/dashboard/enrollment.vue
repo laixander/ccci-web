@@ -52,11 +52,11 @@ const yearLevels = ['1st Year', '2nd Year', '3rd Year', '4th Year']
         <h1 class="text-2xl font-bold text-highlighted">Online Enrollment Management</h1>
         <p class="text-muted text-sm mt-1">Streamline subject selection, scheduling, and payment in one flow</p>
       </div>
-      <UButton icon="i-lucide-user-plus" label="Enroll Student" @click="showEnrollModal = true" />
+      <UButton icon="i-lucide-user-plus" label="Enroll Student" size="sm" @click="showEnrollModal = true" />
     </div>
 
     <!-- Active Semester Banner -->
-    <UCard :ui="{ body: 'p-5' }" class="border-primary/30 bg-primary/5">
+    <UCard :ui="{ root: 'ring-primary/30 bg-primary/5 shadow-sm' }">
       <div class="flex items-center gap-5">
         <div class="size-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
           <UIcon name="i-lucide-clipboard-list" class="size-6 text-primary" />
@@ -67,17 +67,15 @@ const yearLevels = ['1st Year', '2nd Year', '3rd Year', '4th Year']
             <UBadge label="Enrollment Open" color="success" variant="subtle" size="sm" />
           </div>
           <p class="text-sm text-muted mb-3">Deadline: {{ semesterProgress.deadline }} · {{ semesterProgress.enrollPct }}% of students enrolled</p>
-          <div class="bg-muted/50 rounded-full h-2 w-full max-w-sm">
-            <div class="bg-primary h-2 rounded-full transition-all duration-500" :style="{ width: semesterProgress.enrollPct + '%' }" />
-          </div>
+          <UProgress :model-value="semesterProgress.enrollPct" color="primary" class="w-full max-w-sm" />
         </div>
-        <UButton label="Send Reminder" icon="i-lucide-bell" color="neutral" variant="outline" size="sm" />
+        <UButton label="Send Reminder" icon="i-lucide-bell" color="warning" variant="outline" size="sm" />
       </div>
     </UCard>
 
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="stat in stats" :key="stat.label" :ui="{ body: 'p-5' }" class="hover:shadow-md transition-shadow">
+      <UCard v-for="stat in stats" :key="stat.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
         <div class="flex items-center gap-4">
           <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', stat.bg]">
             <UIcon :name="stat.icon" :class="['size-5', stat.color]" />
@@ -92,25 +90,26 @@ const yearLevels = ['1st Year', '2nd Year', '3rd Year', '4th Year']
     </div>
 
     <!-- Charts + Table row -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <!-- Dept Breakdown -->
-      <UCard :ui="{ body: 'p-5' }">
-        <h2 class="font-semibold text-highlighted mb-5">By Department</h2>
-        <div class="space-y-3">
+      <UCard :ui="{ root: 'shadow-sm' }">
+        <h2 class="font-semibold text-highlighted">By Department</h2>
+        <div class="space-y-4 pt-4 sm:pt-6">
           <div v-for="dept in enrollmentByDept" :key="dept.dept" class="space-y-1">
             <div class="flex justify-between text-sm">
               <span class="text-muted">{{ dept.dept }}</span>
-              <span class="font-semibold text-highlighted">{{ dept.count.toLocaleString() }} <span class="text-xs text-dimmed">({{ dept.pct }}%)</span></span>
+              <span class="flex items-center gap-2">
+                <span class="font-semibold text-highlighted">{{ dept.count.toLocaleString() }}</span>
+                <UBadge size="sm" variant="soft" color="neutral">{{ dept.pct }}%</UBadge>
+              </span>
             </div>
-            <div class="bg-muted/50 rounded-full h-1.5">
-              <div :class="['h-1.5 rounded-full transition-all duration-500', dept.color]" :style="{ width: dept.pct + '%' }" />
-            </div>
+            <UProgress :model-value="dept.pct" :color="(dept.color.replace('bg-', '') as any)" />
           </div>
         </div>
       </UCard>
 
       <!-- Enrollment Table -->
-      <UCard class="lg:col-span-2" :ui="{ body: 'p-0' }">
+      <UCard class="lg:col-span-2" :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
         <div class="flex items-center justify-between px-5 py-4 border-b border-default">
           <h2 class="font-semibold text-highlighted">Recent Enrollments</h2>
           <UInput v-model="search" placeholder="Search…" icon="i-lucide-search" size="sm" class="w-48" />
@@ -123,9 +122,7 @@ const yearLevels = ['1st Year', '2nd Year', '3rd Year', '4th Year']
               <p class="text-xs text-muted">{{ e.dept }} · {{ e.year }} · {{ e.units }} units</p>
             </div>
             <p class="text-sm font-semibold text-highlighted hidden md:block">{{ e.tuition }}</p>
-            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium flex-shrink-0" :class="statusConfig[e.status]">
-              {{ e.status }}
-            </span>
+            <UBadge :label="e.status" :color="({ 'Enrolled': 'success', 'Pending Payment': 'warning', 'For Assessment': 'info', 'Withdrawn': 'error' } as any)[e.status]" variant="subtle" size="sm" />
           </div>
         </div>
       </UCard>

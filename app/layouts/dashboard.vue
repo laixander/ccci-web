@@ -34,6 +34,9 @@ const navGroups = computed(() => dashboardConfig.value.navGroups)
 
 const isCollapsed = computed(() => collapsible.value === 'icon' && !open.value)
 
+// Apply theme class to <body> so UModal (which teleports there) inherits the theme
+useHead(computed(() => ({ bodyAttrs: { class: themeClass.value } })))
+
 const loginRoute = computed(() => `/products/${currentProduct.value}/login`)
 const dashboardHomeRoute = computed(() => `/products/${currentProduct.value}/dashboard`)
 

@@ -77,6 +77,23 @@ const scholarships = [
 ]
 
 const showPaymentModal = ref(false)
+
+const txStatusColorMap: Record<string, any> = {
+  'Paid': 'success',
+  'Pending': 'warning',
+  'Overdue': 'error',
+}
+
+const txColumns = [
+  { accessorKey: 'student', label: 'Student' },
+  { accessorKey: 'or', label: 'OR No.' },
+  { accessorKey: 'amount', label: 'Amount' },
+  { accessorKey: 'type', label: 'Type' },
+  { accessorKey: 'method', label: 'Method' },
+  { accessorKey: 'date', label: 'Date' },
+  { accessorKey: 'status', label: 'Status' },
+  { id: 'actions', meta: { class: { td: 'text-right' } } }
+]
 </script>
 
 <template>
@@ -95,7 +112,7 @@ const showPaymentModal = ref(false)
 
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="stat in stats" :key="stat.label" :ui="{ body: 'p-5' }" class="hover:shadow-md transition-shadow">
+      <UCard v-for="stat in stats" :key="stat.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
         <div class="flex items-center gap-4">
           <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', stat.bg]">
             <UIcon :name="stat.icon" :class="['size-5', stat.color]" />
@@ -111,84 +128,77 @@ const showPaymentModal = ref(false)
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <!-- Collection Trend -->
-      <UCard class="lg:col-span-2" :ui="{ body: 'p-5' }">
-        <div class="flex items-center justify-between mb-5">
+      <UCard class="lg:col-span-2" :ui="{ root: 'shadow-sm' }">
+        <div class="flex items-center justify-between">
           <div>
             <h2 class="font-semibold text-highlighted">Collection Trend</h2>
             <p class="text-xs text-muted mt-0.5">₱M collected per month</p>
           </div>
           <UBadge label="₱18.4M this month" color="success" variant="subtle" />
         </div>
-        <div class="h-48 w-full mt-2">
+        <div class="h-48 w-full mt-4 sm:mt-6">
           <Bar :data="chartData" :options="chartOptions" />
         </div>
       </UCard>
 
       <!-- Scholarships -->
-      <UCard :ui="{ body: 'p-5' }">
-        <h2 class="font-semibold text-highlighted mb-5">Scholarships</h2>
-        <div class="space-y-4">
+      <UCard :ui="{ root: 'shadow-sm' }">
+        <h2 class="font-semibold text-highlighted">Scholarships</h2>
+        <div class="space-y-4 mt-4 sm:mt-6">
           <div v-for="s in scholarships" :key="s.name" class="space-y-1.5">
             <div class="flex justify-between text-sm">
               <span class="text-muted">{{ s.name }}</span>
               <span class="font-semibold text-highlighted">{{ s.count }} <span class="text-xs text-dimmed">· {{ s.amount }}</span></span>
             </div>
-            <div class="bg-muted/50 rounded-full h-1.5">
-              <div :class="['h-1.5 rounded-full transition-all duration-500', s.color]" :style="{ width: (s.count / 248 * 100) + '%' }" />
-            </div>
+            <UProgress :model-value="Math.round(s.count / 248 * 100)" :color="(s.color.replace('bg-', '') as any)" />
           </div>
         </div>
       </UCard>
     </div>
 
     <!-- Transactions -->
-    <UCard :ui="{ body: 'p-0' }">
+    <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
       <div class="flex items-center justify-between px-5 py-4 border-b border-default">
         <h2 class="font-semibold text-highlighted">Recent Transactions</h2>
         <UButton label="View All" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" />
       </div>
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-default">
-              <th class="text-left px-5 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Student</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">OR No.</th>
-              <th class="text-right px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Amount</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Type</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Method</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Date</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Status</th>
-              <th class="px-4 py-3.5" />
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-default">
-            <tr v-for="t in transactions" :key="t.id" class="hover:bg-muted/30 transition-colors">
-              <td class="px-5 py-4">
-                <div class="flex items-center gap-3">
-                  <UAvatar :text="t.initials" size="sm" :color="t.avatarColor" />
-                  <div>
-                    <p class="font-medium text-highlighted">{{ t.student }}</p>
-                    <p class="text-xs text-dimmed">{{ t.studentId }}</p>
-                  </div>
-                </div>
-              </td>
-              <td class="px-4 py-4 text-muted text-xs font-mono">{{ t.id }}</td>
-              <td class="px-4 py-4 text-right font-bold text-success">{{ t.amount }}</td>
-              <td class="px-4 py-4 text-muted text-xs">{{ t.type }}</td>
-              <td class="px-4 py-4 text-muted text-xs">{{ t.method }}</td>
-              <td class="px-4 py-4 text-muted text-xs">{{ t.date }}</td>
-              <td class="px-4 py-4">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" :class="statusConfig[t.status]">
-                  {{ t.status }}
-                </span>
-              </td>
-              <td class="px-4 py-4">
-                <UButton icon="i-lucide-download" size="xs" color="neutral" variant="ghost" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <UTable class="scrollbar" :data="transactions" :columns="txColumns">
+        <template #student-cell="{ row }">
+          <div class="flex items-center gap-3">
+            <UAvatar :text="row.original.initials" size="sm" :color="row.original.avatarColor" />
+            <div>
+              <p class="font-medium text-highlighted">{{ row.original.student }}</p>
+              <p class="text-xs text-dimmed">{{ row.original.studentId }}</p>
+            </div>
+          </div>
+        </template>
+        <template #or-cell="{ row }">
+          <span class="text-muted text-xs font-mono">{{ row.original.id }}</span>
+        </template>
+        <template #amount-cell="{ row }">
+          <span class="font-bold text-success">{{ row.original.amount }}</span>
+        </template>
+        <template #type-cell="{ row }">
+          <span class="text-muted text-xs">{{ row.original.type }}</span>
+        </template>
+        <template #method-cell="{ row }">
+          <span class="text-muted text-xs">{{ row.original.method }}</span>
+        </template>
+        <template #date-cell="{ row }">
+          <span class="text-muted text-xs">{{ row.original.date }}</span>
+        </template>
+        <template #status-cell="{ row }">
+          <UBadge :label="row.original.status" :color="txStatusColorMap[row.original.status]" variant="subtle" size="sm" />
+        </template>
+        <template #actions-cell="{ row }">
+          <UTooltip text="Download">
+            <UButton icon="i-lucide-download" size="xs" color="neutral" variant="ghost" />
+          </UTooltip>
+        </template>
+        <template #empty>
+          <UEmpty title="No transactions found" icon="i-lucide-banknote" />
+        </template>
+      </UTable>
     </UCard>
 
     <!-- Process Payment Modal -->

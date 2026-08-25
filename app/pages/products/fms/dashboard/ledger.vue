@@ -45,7 +45,7 @@ const columns: TableColumn<typeof entries[0]>[] = [
           </div>
         </div>
       </template>
-      <UTable :data="entries" :columns="columns">
+      <UTable class="scrollbar" :data="entries" :columns="columns">
         <template #account-cell="{ row }">
           <span class="font-medium text-highlighted">{{ row.original.account }}</span>
         </template>

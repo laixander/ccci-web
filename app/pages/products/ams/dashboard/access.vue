@@ -19,7 +19,7 @@ const roles = ref([
     </div>
 
     <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
-      <UTable :data="roles" class="w-full text-sm" :ui="{ th: 'text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider', td: 'px-4 py-4', tr: 'hover:bg-muted/30 transition-colors' }" />
+      <UTable :data="roles" class="scrollbar w-full text-sm" :ui="{ th: 'text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider', td: 'px-4 py-4', tr: 'hover:bg-muted/30 transition-colors' }" />
     </UCard>
   </div>
 </template>

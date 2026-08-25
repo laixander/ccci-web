@@ -1,7 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
   title: 'FMS by CCCI',
-  layout: 'fms',
+  layout: 'product',
 })
 
 useSeoMeta({

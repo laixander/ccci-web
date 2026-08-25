@@ -125,7 +125,7 @@ const complianceItems = [
 
     <!-- KPIs -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="kpi in kpis" :key="kpi.label" :ui="{ body: 'p-5' }" class="hover:shadow-md transition-shadow">
+      <UCard v-for="kpi in kpis" :key="kpi.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
         <div class="flex items-center justify-between mb-3">
           <div :class="['size-9 rounded-lg flex items-center justify-center', kpi.bg]">
             <UIcon :name="kpi.icon" :class="['size-4', kpi.color]" />
@@ -142,31 +142,29 @@ const complianceItems = [
     <!-- Charts row -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <!-- Enrollment Trend -->
-      <UCard class="lg:col-span-2" :ui="{ body: 'p-5' }">
-        <div class="flex items-center justify-between mb-5">
+      <UCard class="lg:col-span-2" :ui="{ root: 'shadow-sm' }">
+        <div class="flex items-center justify-between">
           <div>
             <h2 class="font-semibold text-highlighted">Enrollment Trend</h2>
             <p class="text-xs text-muted mt-0.5">Students per semester</p>
           </div>
           <UBadge label="4,190 this sem." color="primary" variant="subtle" />
         </div>
-        <div class="h-48 w-full mt-2">
+        <div class="h-48 w-full mt-4 sm:mt-6">
           <Bar :data="enrollmentChartData" :options="enrollmentChartOptions" />
         </div>
       </UCard>
 
       <!-- Dept Breakdown -->
-      <UCard :ui="{ body: 'p-5' }">
-        <h2 class="font-semibold text-highlighted mb-5">By Department</h2>
-        <div class="space-y-3">
+      <UCard :ui="{ root: 'shadow-sm' }">
+        <h2 class="font-semibold text-highlighted">By Department</h2>
+        <div class="space-y-4 mt-4 sm:mt-6">
           <div v-for="dept in deptBreakdown" :key="dept.dept" class="space-y-1">
             <div class="flex justify-between text-sm">
               <span class="text-muted text-xs">{{ dept.dept }}</span>
               <span class="font-semibold text-highlighted text-xs">{{ dept.count.toLocaleString() }} <span class="text-dimmed">({{ Math.round(dept.count / totalDept * 100) }}%)</span></span>
             </div>
-            <div class="bg-muted/50 rounded-full h-1.5">
-              <div :class="['h-1.5 rounded-full transition-all duration-500', dept.color]" :style="{ width: (dept.count / totalDept * 100) + '%' }" />
-            </div>
+            <UProgress :model-value="Math.round(dept.count / totalDept * 100)" :color="(dept.color.replace('bg-', '') as any)" />
           </div>
         </div>
       </UCard>
@@ -175,48 +173,48 @@ const complianceItems = [
     <!-- Second row -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <!-- Collection Trend -->
-      <UCard :ui="{ body: 'p-5' }">
-        <h2 class="font-semibold text-highlighted mb-5">Tuition Collection</h2>
-        <div class="h-40 w-full mt-2">
+      <UCard :ui="{ root: 'shadow-sm' }">
+        <h2 class="font-semibold text-highlighted">Tuition Collection</h2>
+        <div class="h-40 w-full mt-4 sm:mt-6">
           <Bar :data="collectionChartData" :options="collectionChartOptions" />
         </div>
       </UCard>
 
       <!-- CHED Compliance -->
-      <UCard :ui="{ body: 'p-5' }">
-        <div class="flex items-center justify-between mb-5">
+      <UCard :ui="{ root: 'shadow-sm' }">
+        <div class="flex items-center justify-between">
           <h2 class="font-semibold text-highlighted">CHED Compliance</h2>
           <UBadge label="Accredited" color="success" variant="subtle" size="sm" />
         </div>
-        <div class="space-y-4">
+        <div class="space-y-4 mt-4 sm:mt-6">
           <div v-for="item in complianceItems" :key="item.label" class="space-y-1.5">
             <div class="flex justify-between text-xs">
               <span class="text-muted">{{ item.label }}</span>
               <span class="font-bold text-highlighted">{{ item.pct }}%</span>
             </div>
-            <div class="bg-muted/50 rounded-full h-1.5">
-              <div :class="['h-1.5 rounded-full transition-all duration-500', item.color]" :style="{ width: item.pct + '%' }" />
-            </div>
+            <UProgress :model-value="item.pct" :color="(item.color.replace('bg-', '') as any)" />
           </div>
         </div>
       </UCard>
 
       <!-- At-Risk Students -->
-      <UCard :ui="{ body: 'p-5' }">
-        <div class="flex items-center justify-between mb-4">
+      <UCard :ui="{ root: 'shadow-sm' }">
+        <div class="flex items-center justify-between">
           <h2 class="font-semibold text-highlighted">At-Risk Students</h2>
           <UBadge label="97" color="error" variant="subtle" />
         </div>
-        <div class="space-y-3">
-          <div v-for="s in atRiskStudents" :key="s.name" class="flex items-center gap-3 p-3 rounded-lg bg-error/5 border border-error/10">
-            <UAvatar :text="s.initials" size="sm" :color="s.color" />
-            <div class="flex-1 min-w-0">
-              <p class="text-sm font-medium text-highlighted truncate">{{ s.name }}</p>
-              <p class="text-xs text-muted">{{ s.dept }}</p>
+        <div class="space-y-3 mt-4 sm:mt-6">
+          <UCard v-for="s in atRiskStudents" :key="s.name" variant="subtle">
+            <div class="flex items-center gap-3">
+              <UAvatar :text="s.initials" size="sm" :color="s.color" />
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-highlighted truncate">{{ s.name }}</p>
+                <p class="text-xs text-muted">{{ s.dept }}</p>
+              </div>
+              <span class="text-xs font-bold text-error">GPA {{ s.gpa }}</span>
             </div>
-            <span class="text-xs font-bold text-error">GPA {{ s.gpa }}</span>
-          </div>
-          <UButton label="View All 97" icon="i-lucide-arrow-right" size="sm" color="neutral" variant="outline" class="w-full" to="/products/cms/dashboard/students" />
+          </UCard>
+          <UButton label="View All 97" icon="i-lucide-arrow-right" size="sm" color="neutral" variant="outline" block to="/products/cms/dashboard/students" />
         </div>
       </UCard>
     </div>

@@ -41,7 +41,7 @@ const formatCurrency = (val: number) => `₱${val.toLocaleString()}`
           <h3 class="font-semibold text-highlighted">FY 2026 Department Budgets</h3>
         </div>
       </template>
-      <UTable :data="budgets" :columns="columns">
+      <UTable class="scrollbar" :data="budgets" :columns="columns">
         <template #department-cell="{ row }">
           <span class="font-medium text-highlighted">{{ row.original.department }}</span>
         </template>

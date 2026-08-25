@@ -49,7 +49,7 @@ const getStatusColor = (status: string) => {
       <div class="p-4 border-b border-default flex items-center justify-between">
         <UInput icon="i-lucide-search" placeholder="Search institutions..." class="w-full max-w-sm" />
       </div>
-      <UTable :data="partners" :columns="columns">
+      <UTable class="scrollbar" :data="partners" :columns="columns">
         <template #name-cell="{ row }">
           <div class="flex items-center gap-3">
             <UAvatar :text="row.original.avatar" size="sm" color="primary" variant="soft" />

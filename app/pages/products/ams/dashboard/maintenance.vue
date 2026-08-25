@@ -45,7 +45,7 @@ const columns = [
     </div>
 
     <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
-      <UTable :data="tasks" :columns="columns" class="w-full text-sm" :ui="{ th: 'text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider', td: 'px-4 py-4', tr: 'hover:bg-muted/30 transition-colors' }">
+      <UTable :data="tasks" :columns="columns" class="scrollbar w-full text-sm" :ui="{ th: 'text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider', td: 'px-4 py-4', tr: 'hover:bg-muted/30 transition-colors' }">
         <template #status-cell="{ row }">
           <span v-if="row.original.status === 'Completed'" class="text-success text-xs font-medium bg-success/10 px-2 py-1 rounded-full">{{ row.original.status }}</span>
           <span v-else-if="row.original.status === 'In Progress'" class="text-warning text-xs font-medium bg-warning/10 px-2 py-1 rounded-full">{{ row.original.status }}</span>

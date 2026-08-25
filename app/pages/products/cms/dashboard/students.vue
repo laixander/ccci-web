@@ -54,6 +54,30 @@ function gpaColor(gpa: string) {
   if (v <= 2.50) return 'text-highlighted'
   return 'text-error'
 }
+
+const statusColorMap: Record<string, any> = {
+  'Regular': 'success',
+  'Irregular': 'warning',
+  'Transferee': 'info',
+  'Returnee': 'primary',
+  'Probationary': 'error',
+}
+
+const stats = [
+  { label: 'Total Students', value: '4,823', icon: 'i-lucide-users', color: 'text-primary', bg: 'bg-primary/10' },
+  { label: 'Currently Enrolled', value: '4,190', icon: 'i-lucide-user-check', color: 'text-success', bg: 'bg-success/10' },
+  { label: 'At-Risk (GPA < 2.75)', value: '97', icon: 'i-lucide-alert-triangle', color: 'text-error', bg: 'bg-error/10' },
+  { label: 'New Applicants', value: '142', icon: 'i-lucide-user-plus', color: 'text-warning', bg: 'bg-warning/10' },
+]
+
+const columns = [
+  { accessorKey: 'student', label: 'Student' },
+  { accessorKey: 'dept', label: 'Dept. / Year' },
+  { accessorKey: 'status', label: 'Status' },
+  { accessorKey: 'gpa', label: 'GPA' },
+  { accessorKey: 'email', label: 'Email' },
+  { id: 'actions', meta: { class: { td: 'text-right' } } }
+]
 </script>
 
 <template>
@@ -64,31 +88,26 @@ function gpaColor(gpa: string) {
         <h1 class="text-2xl font-bold text-highlighted">Student Information System</h1>
         <p class="text-muted text-sm mt-1">Manage {{ students.length }} student records</p>
       </div>
-      <UButton icon="i-lucide-user-plus" label="Add Student" @click="showAddModal = true" />
+      <UButton icon="i-lucide-user-plus" label="Add Student" size="sm" @click="showAddModal = true" />
     </div>
 
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard :ui="{ body: 'p-4' }">
-        <p class="text-2xl font-bold text-highlighted">4,823</p>
-        <p class="text-xs text-muted mt-1">Total Students</p>
-      </UCard>
-      <UCard :ui="{ body: 'p-4' }">
-        <p class="text-2xl font-bold text-success">4,190</p>
-        <p class="text-xs text-muted mt-1">Currently Enrolled</p>
-      </UCard>
-      <UCard :ui="{ body: 'p-4' }">
-        <p class="text-2xl font-bold text-error">97</p>
-        <p class="text-xs text-muted mt-1">At-Risk (GPA &lt; 2.75)</p>
-      </UCard>
-      <UCard :ui="{ body: 'p-4' }">
-        <p class="text-2xl font-bold text-warning">142</p>
-        <p class="text-xs text-muted mt-1">New Applicants</p>
+      <UCard v-for="stat in stats" :key="stat.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+        <div class="flex items-center gap-4">
+          <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', stat.bg]">
+            <UIcon :name="stat.icon" :class="['size-5', stat.color]" />
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-highlighted">{{ stat.value }}</p>
+            <p class="text-xs text-muted">{{ stat.label }}</p>
+          </div>
+        </div>
       </UCard>
     </div>
 
     <!-- Filters -->
-    <UCard :ui="{ body: 'p-4' }">
+    <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
       <div class="flex flex-wrap gap-3 items-center">
         <UInput v-model="search" placeholder="Search by name or ID…" icon="i-lucide-search" class="flex-1 min-w-48" />
         <USelect v-model="selectedDept" :items="departments" class="w-44" />
@@ -99,57 +118,54 @@ function gpaColor(gpa: string) {
     </UCard>
 
     <!-- Table -->
-    <UCard :ui="{ body: 'p-0' }">
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-default">
-              <th class="text-left px-5 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Student</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Dept. / Year</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Status</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">GPA</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Email</th>
-              <th class="px-4 py-3.5" />
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-default">
-            <tr v-for="s in filtered" :key="s.id" class="hover:bg-muted/30 transition-colors cursor-pointer" @click="viewStudent(s)">
-              <td class="px-5 py-4">
-                <div class="flex items-center gap-3">
-                  <UAvatar :text="s.initials" size="sm" :color="s.avatarColor" />
-                  <div>
-                    <p class="font-medium text-highlighted">{{ s.name }}</p>
-                    <p class="text-xs text-dimmed">{{ s.id }}</p>
-                  </div>
-                </div>
-              </td>
-              <td class="px-4 py-4">
-                <p class="text-muted">{{ s.dept }}</p>
-                <p class="text-xs text-dimmed">{{ s.year }}</p>
-              </td>
-              <td class="px-4 py-4">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" :class="statusConfig[s.status]">
-                  {{ s.status }}
-                </span>
-              </td>
-              <td class="px-4 py-4">
-                <span :class="['font-bold text-sm', gpaColor(s.gpa)]">{{ s.gpa }}</span>
-              </td>
-              <td class="px-4 py-4 text-muted text-xs">{{ s.email }}</td>
-              <td class="px-4 py-4">
-                <div class="flex items-center gap-1" @click.stop>
-                  <UButton icon="i-lucide-eye" size="xs" color="neutral" variant="ghost" @click="viewStudent(s)" />
-                  <UButton icon="i-lucide-pencil" size="xs" color="neutral" variant="ghost" />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div v-if="filtered.length === 0" class="py-16 text-center">
-          <UIcon name="i-lucide-user-round" class="size-10 text-muted mx-auto mb-3" />
-          <p class="text-muted font-medium">No students found</p>
-        </div>
-      </div>
+    <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+      <UTable class="scrollbar" :data="filtered" :columns="columns" @select="(_e, row) => viewStudent(row.original)">
+        <template #student-cell="{ row }">
+          <div class="flex items-center gap-3">
+            <UAvatar :text="row.original.initials" size="sm" :color="row.original.avatarColor" />
+            <div>
+              <p class="font-medium text-highlighted">{{ row.original.name }}</p>
+              <p class="text-xs text-dimmed">{{ row.original.id }}</p>
+            </div>
+          </div>
+        </template>
+        <template #dept-cell="{ row }">
+          <p class="text-muted">{{ row.original.dept }}</p>
+          <p class="text-xs text-dimmed">{{ row.original.year }}</p>
+        </template>
+        <template #status-cell="{ row }">
+          <UBadge :label="row.original.status" :color="statusColorMap[row.original.status]" variant="subtle" size="sm" />
+        </template>
+        <template #gpa-cell="{ row }">
+          <span :class="['font-bold text-sm', gpaColor(row.original.gpa)]">{{ row.original.gpa }}</span>
+        </template>
+        <template #email-cell="{ row }">
+          <span class="text-muted text-xs">{{ row.original.email }}</span>
+        </template>
+        <template #actions-cell="{ row }">
+          <div @click.stop>
+            <UDropdownMenu
+              :items="[
+                [
+                  { label: 'View', icon: 'i-lucide-eye', onSelect: () => viewStudent(row.original) },
+                  { label: 'Edit', icon: 'i-lucide-pencil' }
+                ]
+              ]"
+              :content="{
+                align: 'end',
+                side: 'bottom',
+                sideOffset: 8
+              }"
+              size="sm"
+            >
+              <UButton icon="i-lucide-more-vertical" size="xs" color="neutral" variant="ghost" />
+            </UDropdownMenu>
+          </div>
+        </template>
+        <template #empty>
+          <UEmpty title="No students found" icon="i-lucide-user-round" />
+        </template>
+      </UTable>
     </UCard>
 
     <!-- Detail Modal -->

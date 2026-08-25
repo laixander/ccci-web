@@ -45,6 +45,22 @@ const search = ref('')
 const filtered = computed(() => grades.value.filter(g => !search.value || g.name.toLowerCase().includes(search.value.toLowerCase())))
 
 const showGradeModal = ref(false)
+
+const remarksColorMap: Record<string, any> = {
+  'Passed': 'success',
+  'Failed': 'error',
+  'Inc': 'warning',
+  'Dropped': 'neutral',
+}
+
+const gradeColumns = [
+  { accessorKey: 'student', label: 'Student' },
+  { accessorKey: 'subject', label: 'Subject' },
+  { accessorKey: 'midterm', label: 'Midterm' },
+  { accessorKey: 'final', label: 'Final' },
+  { accessorKey: 'gpa', label: 'GPA' },
+  { accessorKey: 'remarks', label: 'Remarks' },
+]
 </script>
 
 <template>
@@ -62,7 +78,7 @@ const showGradeModal = ref(false)
     </div>
 
     <!-- Active Cycle Banner -->
-    <UCard :ui="{ body: 'p-5' }" class="border-primary/30 bg-primary/5">
+    <UCard :ui="{ root: 'ring-primary/30 bg-primary/5 shadow-sm' }">
       <div class="flex items-center gap-5">
         <div class="size-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
           <UIcon name="i-lucide-award" class="size-6 text-primary" />
@@ -73,17 +89,15 @@ const showGradeModal = ref(false)
             <UBadge label="Closed" color="neutral" variant="subtle" size="sm" />
           </div>
           <p class="text-sm text-muted mb-3">Deadline: {{ activeCycle.deadline }} · {{ activeCycle.progress }}% of faculty submitted</p>
-          <div class="bg-muted/50 rounded-full h-2 w-full max-w-sm">
-            <div class="bg-success h-2 rounded-full transition-all duration-500" :style="{ width: activeCycle.progress + '%' }" />
-          </div>
+          <UProgress :model-value="activeCycle.progress" color="success" class="w-full max-w-sm" />
         </div>
-        <UButton label="Send Reminder" icon="i-lucide-bell" color="neutral" variant="outline" size="sm" />
+        <UButton label="Send Reminder" icon="i-lucide-bell" color="warning" variant="outline" size="sm" />
       </div>
     </UCard>
 
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="stat in stats" :key="stat.label" :ui="{ body: 'p-5' }">
+      <UCard v-for="stat in stats" :key="stat.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
         <div class="flex items-center gap-4">
           <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', stat.bg]">
             <UIcon :name="stat.icon" :class="['size-5', stat.color]" />
@@ -96,70 +110,60 @@ const showGradeModal = ref(false)
       </UCard>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <!-- GPA Distribution -->
-      <UCard :ui="{ body: 'p-5' }">
-        <h2 class="font-semibold text-highlighted mb-5">GPA Distribution</h2>
-        <div class="space-y-3">
+      <UCard :ui="{ root: 'shadow-sm' }">
+        <h2 class="font-semibold text-highlighted">GPA Distribution</h2>
+        <div class="space-y-4 pt-4 sm:pt-6">
           <div v-for="d in gpaDistribution" :key="d.range" class="space-y-1">
             <div class="flex justify-between text-sm">
               <span class="text-muted">{{ d.range }}</span>
-              <span class="font-semibold text-highlighted">{{ d.count.toLocaleString() }} <span class="text-xs text-dimmed">({{ d.pct }}%)</span></span>
+              <span class="flex items-center gap-2">
+                <span class="font-semibold text-highlighted">{{ d.count.toLocaleString() }}</span> 
+                <UBadge size="sm" variant="soft" color="neutral">{{ d.pct }}%</UBadge>
+              </span>
             </div>
-            <div class="bg-muted/50 rounded-full h-1.5">
-              <div :class="['h-1.5 rounded-full transition-all duration-500', d.color]" :style="{ width: d.pct + '%' }" />
-            </div>
+            <UProgress :model-value="d.pct" :color="(d.color.replace('bg-', '') as any)" />
           </div>
         </div>
       </UCard>
 
       <!-- Grades Table -->
-      <UCard class="lg:col-span-2" :ui="{ body: 'p-0' }">
+      <UCard class="lg:col-span-2" :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
         <div class="flex items-center justify-between px-5 py-4 border-b border-default">
           <h2 class="font-semibold text-highlighted">Student Grade Records</h2>
           <UInput v-model="search" placeholder="Search…" icon="i-lucide-search" size="sm" class="w-48" />
         </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm">
-            <thead>
-              <tr class="border-b border-default">
-                <th class="text-left px-5 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Student</th>
-                <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Subject</th>
-                <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Midterm</th>
-                <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Final</th>
-                <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">GPA</th>
-                <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Remarks</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-default">
-              <tr v-for="g in filtered" :key="g.id + g.subject" class="hover:bg-muted/30 transition-colors">
-                <td class="px-5 py-4">
-                  <div class="flex items-center gap-3">
-                    <UAvatar :text="g.initials" size="sm" :color="g.avatarColor" />
-                    <div>
-                      <p class="font-medium text-highlighted">{{ g.name }}</p>
-                      <p class="text-xs text-dimmed">{{ g.id }}</p>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-4 py-4">
-                  <p class="text-muted text-xs">{{ g.subject }}</p>
-                  <p class="text-dimmed text-xs">{{ g.faculty }}</p>
-                </td>
-                <td class="px-4 py-4 font-semibold text-highlighted">{{ g.midterm }}</td>
-                <td class="px-4 py-4 font-semibold text-highlighted">{{ g.final }}</td>
-                <td class="px-4 py-4">
-                  <span :class="['font-bold', gpaColor(g.gpa)]">{{ g.gpa }}</span>
-                </td>
-                <td class="px-4 py-4">
-                  <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" :class="remarksConfig[g.remarks]">
-                    {{ g.remarks }}
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <UTable class="scrollbar" :data="filtered" :columns="gradeColumns">
+          <template #student-cell="{ row }">
+            <div class="flex items-center gap-3">
+              <UAvatar :text="row.original.initials" size="sm" :color="row.original.avatarColor" />
+              <div>
+                <p class="font-medium text-highlighted">{{ row.original.name }}</p>
+                <p class="text-xs text-dimmed">{{ row.original.id }}</p>
+              </div>
+            </div>
+          </template>
+          <template #subject-cell="{ row }">
+            <p class="text-muted text-xs">{{ row.original.subject }}</p>
+            <p class="text-dimmed text-xs">{{ row.original.faculty }}</p>
+          </template>
+          <template #midterm-cell="{ row }">
+            <span class="font-semibold text-highlighted">{{ row.original.midterm }}</span>
+          </template>
+          <template #final-cell="{ row }">
+            <span class="font-semibold text-highlighted">{{ row.original.final }}</span>
+          </template>
+          <template #gpa-cell="{ row }">
+            <span :class="['font-bold', gpaColor(row.original.gpa)]">{{ row.original.gpa }}</span>
+          </template>
+          <template #remarks-cell="{ row }">
+            <UBadge :label="row.original.remarks" :color="remarksColorMap[row.original.remarks]" variant="subtle" size="sm" />
+          </template>
+          <template #empty>
+            <UEmpty title="No grade records found" icon="i-lucide-award" />
+          </template>
+        </UTable>
       </UCard>
     </div>
 

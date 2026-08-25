@@ -193,7 +193,7 @@ const assessmentColumns = [
         <div class="pt-4">
           <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
           <div class="overflow-x-auto">
-            <UTable :data="myAssessments" :columns="assessmentColumns" class="w-full">
+            <UTable :data="myAssessments" :columns="assessmentColumns" class="scrollbar w-full">
               <template #assessment-cell="{ row }">
                 <p class="font-medium text-highlighted">{{ row.original.title }}</p>
                 <p class="text-xs text-dimmed">{{ row.original.course }}</p>

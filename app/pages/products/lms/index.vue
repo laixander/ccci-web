@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: 'lms',
+  layout: 'product',
 })
 
 const features = [

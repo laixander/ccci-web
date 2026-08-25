@@ -60,7 +60,7 @@ const getStatusColor = (status: string) => {
     </div>
 
     <UCard :ui="{ body: 'p-0 sm:p-0' }">
-      <UTable :data="grants" :columns="columns">
+      <UTable class="scrollbar" :data="grants" :columns="columns">
         <template #title-cell="{ row }">
           <span class="font-medium text-highlighted">{{ row.original.title }}</span>
         </template>

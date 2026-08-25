@@ -104,7 +104,7 @@ const assessmentColumns = [
         <UBadge label="Q3 2026" color="primary" variant="subtle" size="sm" />
       </div>
       <div class="overflow-x-auto">
-        <UTable :data="assessments" :columns="assessmentColumns" class="w-full">
+        <UTable :data="assessments" :columns="assessmentColumns" class="scrollbar w-full">
           <template #assessment-cell="{ row }">
             <p class="font-medium text-highlighted">{{ row.original.title }}</p>
             <p class="text-xs text-dimmed">{{ row.original.course }}</p>

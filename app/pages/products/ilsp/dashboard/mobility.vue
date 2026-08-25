@@ -66,7 +66,7 @@ const getStatusColor = (status: string) => {
             <UButton color="neutral" variant="ghost" size="sm">View All</UButton>
           </div>
         </template>
-        <UTable :data="inboundStudents" :columns="inboundColumns">
+        <UTable class="scrollbar" :data="inboundStudents" :columns="inboundColumns">
           <template #name-cell="{ row }">
             <div class="flex items-center gap-3">
               <UAvatar :text="row.original.initials" size="xs" color="primary" variant="soft" />
@@ -97,7 +97,7 @@ const getStatusColor = (status: string) => {
             <UButton color="neutral" variant="ghost" size="sm">View All</UButton>
           </div>
         </template>
-        <UTable :data="outboundStudents" :columns="outboundColumns">
+        <UTable class="scrollbar" :data="outboundStudents" :columns="outboundColumns">
           <template #name-cell="{ row }">
             <div class="flex items-center gap-3">
               <UAvatar :text="row.original.initials" size="xs" color="primary" variant="soft" />

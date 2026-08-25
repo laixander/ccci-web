@@ -51,6 +51,25 @@ const subjectStatusConfig: Record<string, string> = {
 
 const profileEditing = ref(false)
 const progressPct = Math.round((user.units / user.totalUnits) * 100)
+
+const subjectColumns = [
+  { accessorKey: 'subject', label: 'Subject' },
+  { accessorKey: 'units', label: 'Units' },
+  { accessorKey: 'faculty', label: 'Faculty' },
+  { accessorKey: 'midterm', label: 'Midterm' },
+  { accessorKey: 'final', label: 'Final' },
+  { accessorKey: 'status', label: 'Status' }
+]
+
+const paymentColumns = [
+  { accessorKey: 'or', label: 'OR No.' },
+  { accessorKey: 'description', label: 'Description' },
+  { accessorKey: 'amount', label: 'Amount' },
+  { accessorKey: 'date', label: 'Date' },
+  { accessorKey: 'method', label: 'Method' },
+  { accessorKey: 'status', label: 'Status' },
+  { id: 'actions', meta: { class: { td: 'text-right' } } }
+]
 </script>
 
 <template>
@@ -64,7 +83,7 @@ const progressPct = Math.round((user.units / user.totalUnits) * 100)
     </div>
 
     <!-- Profile Card -->
-    <UCard :ui="{ body: 'p-6' }">
+    <UCard :ui="{ root: 'shadow-sm', body: 'p-6' }">
       <div class="flex items-center gap-6">
         <UAvatar :text="user.initials" size="2xl" :color="user.avatar" />
         <div class="flex-1">
@@ -99,9 +118,7 @@ const progressPct = Math.round((user.units / user.totalUnits) * 100)
           <span>Program Progress</span>
           <span>{{ user.units }} / {{ user.totalUnits }} units</span>
         </div>
-        <div class="bg-muted/50 rounded-full h-2">
-          <div class="bg-primary h-2 rounded-full transition-all duration-500" :style="{ width: progressPct + '%' }" />
-        </div>
+        <UProgress :model-value="progressPct" color="primary" />
       </div>
     </UCard>
 
@@ -111,9 +128,9 @@ const progressPct = Math.round((user.units / user.totalUnits) * 100)
       <!-- My Profile Tab -->
       <template #overview>
         <div class="pt-4 grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <UCard :ui="{ body: 'p-6' }">
-            <h2 class="font-semibold text-highlighted mb-4">Personal Information</h2>
-            <div class="space-y-4">
+          <UCard :ui="{ root: 'shadow-sm', body: 'p-6' }">
+            <h2 class="font-semibold text-highlighted">Personal Information</h2>
+            <div class="space-y-4 mt-4 sm:mt-6">
               <div>
                 <p class="text-xs text-dimmed uppercase tracking-wide font-semibold mb-1">Full Name</p>
                 <p class="text-highlighted font-medium">{{ user.name }}</p>
@@ -136,9 +153,9 @@ const progressPct = Math.round((user.units / user.totalUnits) * 100)
             </div>
           </UCard>
 
-          <UCard :ui="{ body: 'p-6' }">
-            <h2 class="font-semibold text-highlighted mb-4">Current Enrollment</h2>
-            <div class="space-y-3">
+          <UCard :ui="{ root: 'shadow-sm', body: 'p-6' }">
+            <h2 class="font-semibold text-highlighted">Current Enrollment</h2>
+            <div class="space-y-3 mt-4 sm:mt-6">
               <div v-for="subj in mySubjects.slice(0, 3)" :key="subj.code" class="flex items-start gap-3">
                 <div class="size-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <UIcon name="i-lucide-book-open" class="size-4 text-primary" />
@@ -147,9 +164,7 @@ const progressPct = Math.round((user.units / user.totalUnits) * 100)
                   <p class="text-sm font-medium text-highlighted truncate">{{ subj.title }}</p>
                   <p class="text-xs text-muted">{{ subj.code }} · {{ subj.schedule }}</p>
                 </div>
-                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium flex-shrink-0" :class="subjectStatusConfig[subj.status]">
-                  {{ subj.status }}
-                </span>
+                <UBadge :label="subj.status" :color="subj.status === 'Completed' ? 'success' : 'primary'" variant="subtle" size="sm" />
               </div>
             </div>
           </UCard>
@@ -159,36 +174,31 @@ const progressPct = Math.round((user.units / user.totalUnits) * 100)
       <!-- My Grades Tab -->
       <template #grades>
         <div class="pt-4">
-          <UCard :ui="{ body: 'p-0' }">
-            <div class="overflow-x-auto">
-              <table class="w-full text-sm">
-                <thead>
-                  <tr class="border-b border-default">
-                    <th class="text-left px-5 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Subject</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Units</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Faculty</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Midterm</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Final</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Status</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-default">
-                  <tr v-for="s in mySubjects" :key="s.code" class="hover:bg-muted/30 transition-colors">
-                    <td class="px-5 py-4">
-                      <p class="font-medium text-highlighted">{{ s.title }}</p>
-                      <p class="text-xs text-dimmed">{{ s.code }} · {{ s.room }}</p>
-                    </td>
-                    <td class="px-4 py-4 font-semibold text-highlighted">{{ s.units }}</td>
-                    <td class="px-4 py-4 text-muted text-xs">{{ s.faculty }}</td>
-                    <td class="px-4 py-4 font-semibold text-highlighted">{{ s.midterm }}</td>
-                    <td class="px-4 py-4 font-semibold text-highlighted">{{ s.final }}</td>
-                    <td class="px-4 py-4">
-                      <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" :class="subjectStatusConfig[s.status]">{{ s.status }}</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+            <UTable class="scrollbar" :data="mySubjects" :columns="subjectColumns">
+              <template #subject-cell="{ row }">
+                <p class="font-medium text-highlighted">{{ row.original.title }}</p>
+                <p class="text-xs text-dimmed">{{ row.original.code }} · {{ row.original.room }}</p>
+              </template>
+              <template #units-cell="{ row }">
+                <span class="font-semibold text-highlighted">{{ row.original.units }}</span>
+              </template>
+              <template #faculty-cell="{ row }">
+                <span class="text-muted text-xs">{{ row.original.faculty }}</span>
+              </template>
+              <template #midterm-cell="{ row }">
+                <span class="font-semibold text-highlighted">{{ row.original.midterm }}</span>
+              </template>
+              <template #final-cell="{ row }">
+                <span class="font-semibold text-highlighted">{{ row.original.final }}</span>
+              </template>
+              <template #status-cell="{ row }">
+                <UBadge :label="row.original.status" :color="row.original.status === 'Completed' ? 'success' : 'primary'" variant="subtle" size="sm" />
+              </template>
+              <template #empty>
+                <UEmpty title="No subjects found" icon="i-lucide-book-open" />
+              </template>
+            </UTable>
           </UCard>
         </div>
       </template>
@@ -196,37 +206,35 @@ const progressPct = Math.round((user.units / user.totalUnits) * 100)
       <!-- My Finances Tab -->
       <template #finances>
         <div class="pt-4">
-          <UCard :ui="{ body: 'p-0' }">
-            <div class="overflow-x-auto">
-              <table class="w-full text-sm">
-                <thead>
-                  <tr class="border-b border-default">
-                    <th class="text-left px-5 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">OR No.</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Description</th>
-                    <th class="text-right px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Amount</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Date</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Method</th>
-                    <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Status</th>
-                    <th class="px-4 py-3.5" />
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-default">
-                  <tr v-for="p in myPayments" :key="p.or" class="hover:bg-muted/30 transition-colors">
-                    <td class="px-5 py-4 text-xs font-mono text-muted">{{ p.or }}</td>
-                    <td class="px-4 py-4 font-medium text-highlighted">{{ p.description }}</td>
-                    <td class="px-4 py-4 text-right font-bold text-success">{{ p.amount }}</td>
-                    <td class="px-4 py-4 text-muted text-xs">{{ p.date }}</td>
-                    <td class="px-4 py-4 text-muted text-xs">{{ p.method }}</td>
-                    <td class="px-4 py-4">
-                      <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium" :class="paymentStatusConfig[p.status]">{{ p.status }}</span>
-                    </td>
-                    <td class="px-4 py-4">
-                      <UButton icon="i-lucide-download" size="xs" color="neutral" variant="ghost" label="OR" />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+            <UTable class="scrollbar" :data="myPayments" :columns="paymentColumns">
+              <template #or-cell="{ row }">
+                <span class="text-xs font-mono text-muted">{{ row.original.or }}</span>
+              </template>
+              <template #description-cell="{ row }">
+                <span class="font-medium text-highlighted">{{ row.original.description }}</span>
+              </template>
+              <template #amount-cell="{ row }">
+                <span class="font-bold text-success">{{ row.original.amount }}</span>
+              </template>
+              <template #date-cell="{ row }">
+                <span class="text-muted text-xs">{{ row.original.date }}</span>
+              </template>
+              <template #method-cell="{ row }">
+                <span class="text-muted text-xs">{{ row.original.method }}</span>
+              </template>
+              <template #status-cell="{ row }">
+                <UBadge :label="row.original.status" :color="row.original.status === 'Paid' ? 'success' : 'warning'" variant="subtle" size="sm" />
+              </template>
+              <template #actions-cell="{ row }">
+                <UTooltip text="Download OR">
+                  <UButton icon="i-lucide-download" size="xs" color="neutral" variant="ghost" />
+                </UTooltip>
+              </template>
+              <template #empty>
+                <UEmpty title="No transactions found" icon="i-lucide-banknote" />
+              </template>
+            </UTable>
           </UCard>
         </div>
       </template>

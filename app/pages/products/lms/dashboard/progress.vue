@@ -184,7 +184,7 @@ const learnerColumns = [
     <!-- Learner Progress Table -->
     <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
       <div class="overflow-x-auto">
-        <UTable :data="filtered" :columns="learnerColumns" class="w-full">
+        <UTable :data="filtered" :columns="learnerColumns" class="scrollbar w-full">
           <template #learner-cell="{ row }">
             <div class="flex items-center gap-3">
               <UAvatar :text="row.original.initials" size="sm" :color="row.original.avatarColor" />

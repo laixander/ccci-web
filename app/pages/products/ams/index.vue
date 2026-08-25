@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'ams' })
+definePageMeta({ layout: 'product' })
 const features = [
   {
     title: 'Asset Tracking',

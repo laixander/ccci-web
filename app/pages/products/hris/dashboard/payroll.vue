@@ -173,7 +173,7 @@ async function processPayroll() {
               <UTable
                 :data="payslips"
                 :columns="payslipColumns"
-                class="w-full text-sm"
+                class="scrollbar w-full text-sm"
                 :ui="{
                   th: 'text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider',
                   td: 'px-4 py-3.5',
@@ -344,7 +344,7 @@ async function processPayroll() {
               <UTable
                 :data="history"
                 :columns="historyColumns"
-                class="w-full text-sm"
+                class="scrollbar w-full text-sm"
                 :ui="{
                   th: 'text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider',
                   td: 'px-4 py-4',

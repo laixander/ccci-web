@@ -34,6 +34,22 @@ const search = ref('')
 const filtered = computed(() => faculty.value.filter(f => !search.value || f.name.toLowerCase().includes(search.value.toLowerCase())))
 
 const showAddFacultyModal = ref(false)
+
+const facultyColumns = [
+  { accessorKey: 'faculty', label: 'Faculty' },
+  { accessorKey: 'dept', label: 'Department' },
+  { accessorKey: 'position', label: 'Position' },
+  { accessorKey: 'load', label: 'Load' },
+  { accessorKey: 'evaluation', label: 'Evaluation' },
+  { accessorKey: 'status', label: 'Status' },
+  { id: 'actions', meta: { class: { td: 'text-right' } } }
+]
+
+const statusColorMap: Record<string, any> = {
+  'Active': 'success',
+  'On Leave': 'warning',
+  'Resigned': 'error'
+}
 </script>
 
 <template>
@@ -44,12 +60,12 @@ const showAddFacultyModal = ref(false)
         <h1 class="text-2xl font-bold text-highlighted">Faculty & Curriculum Management</h1>
         <p class="text-muted text-sm mt-1">Manage faculty loads, programs, and CHED compliance</p>
       </div>
-      <UButton icon="i-lucide-user-plus" label="Add Faculty" @click="showAddFacultyModal = true" />
+      <UButton icon="i-lucide-user-plus" label="Add Faculty" size="sm" @click="showAddFacultyModal = true" />
     </div>
 
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="stat in stats" :key="stat.label" :ui="{ body: 'p-5' }" class="hover:shadow-md transition-shadow">
+      <UCard v-for="stat in stats" :key="stat.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
         <div class="flex items-center gap-4">
           <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', stat.bg]">
             <UIcon :name="stat.icon" :class="['size-5', stat.color]" />
@@ -64,98 +80,85 @@ const showAddFacultyModal = ref(false)
     </div>
 
     <!-- Faculty Table -->
-    <UCard :ui="{ body: 'p-0' }">
+    <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
       <div class="flex items-center justify-between px-5 py-4 border-b border-default">
         <h2 class="font-semibold text-highlighted">Faculty Roster</h2>
         <UInput v-model="search" placeholder="Search faculty…" icon="i-lucide-search" size="sm" class="w-52" />
       </div>
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-default">
-              <th class="text-left px-5 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Faculty</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Department</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Position</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Load</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Evaluation</th>
-              <th class="text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider">Status</th>
-              <th class="px-4 py-3.5" />
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-default">
-            <tr v-for="f in filtered" :key="f.id" class="hover:bg-muted/30 transition-colors">
-              <td class="px-5 py-4">
-                <div class="flex items-center gap-3">
-                  <UAvatar :text="f.initials" size="sm" :color="f.avatarColor" />
-                  <div>
-                    <p class="font-medium text-highlighted">{{ f.name }}</p>
-                    <p class="text-xs text-dimmed">{{ f.id }}</p>
-                  </div>
-                </div>
-              </td>
-              <td class="px-4 py-4 text-muted">{{ f.dept }}</td>
-              <td class="px-4 py-4">
-                <UBadge :label="f.position" color="neutral" variant="subtle" size="sm" />
-              </td>
-              <td class="px-4 py-4">
-                <span class="font-semibold text-highlighted">{{ f.load }}</span>
-                <span class="text-xs text-muted ml-1">units · {{ f.subjects }} subjects</span>
-              </td>
-              <td class="px-4 py-4">
-                <div class="flex items-center gap-1.5">
-                  <div class="flex gap-0.5">
-                    <UIcon v-for="i in 5" :key="i" name="i-lucide-star" :class="['size-3.5', i <= Math.round(f.evaluation) ? 'text-warning' : 'text-muted']" />
-                  </div>
-                  <span class="text-xs font-bold text-highlighted">{{ f.evaluation }}</span>
-                </div>
-              </td>
-              <td class="px-4 py-4">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium" :class="statusConfig[f.status]">
-                  {{ f.status }}
-                </span>
-              </td>
-              <td class="px-4 py-4">
-                <UButton icon="i-lucide-pencil" size="xs" color="neutral" variant="ghost" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <UTable class="scrollbar" :data="filtered" :columns="facultyColumns">
+        <template #faculty-cell="{ row }">
+          <div class="flex items-center gap-3">
+            <UAvatar :text="row.original.initials" size="sm" :color="row.original.avatarColor" />
+            <div>
+              <p class="font-medium text-highlighted">{{ row.original.name }}</p>
+              <p class="text-xs text-dimmed">{{ row.original.id }}</p>
+            </div>
+          </div>
+        </template>
+        <template #dept-cell="{ row }">
+          <span class="text-muted">{{ row.original.dept }}</span>
+        </template>
+        <template #position-cell="{ row }">
+          <UBadge :label="row.original.position" color="neutral" variant="subtle" size="sm" />
+        </template>
+        <template #load-cell="{ row }">
+          <span class="font-semibold text-highlighted">{{ row.original.load }}</span>
+          <span class="text-xs text-muted ml-1">units · {{ row.original.subjects }} subjects</span>
+        </template>
+        <template #evaluation-cell="{ row }">
+          <div class="flex items-center gap-1.5">
+            <div class="flex gap-0.5">
+              <UIcon v-for="i in 5" :key="i" name="i-lucide-star" :class="['size-3.5', i <= Math.round(row.original.evaluation) ? 'text-warning' : 'text-muted']" />
+            </div>
+            <span class="text-xs font-bold text-highlighted">{{ row.original.evaluation }}</span>
+          </div>
+        </template>
+        <template #status-cell="{ row }">
+          <UBadge :label="row.original.status" :color="statusColorMap[row.original.status]" variant="subtle" size="sm" />
+        </template>
+        <template #actions-cell="{ row }">
+          <UTooltip text="Edit">
+            <UButton icon="i-lucide-pencil" size="xs" color="neutral" variant="ghost" />
+          </UTooltip>
+        </template>
+        <template #empty>
+          <UEmpty title="No faculty found" icon="i-lucide-user-check" />
+        </template>
+      </UTable>
     </UCard>
 
     <!-- Academic Programs -->
-    <UCard :ui="{ body: 'p-5' }">
-      <h2 class="font-semibold text-highlighted mb-5">Academic Programs & Curriculum</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div
+    <UCard :ui="{ root: 'shadow-sm' }">
+      <h2 class="font-semibold text-highlighted">Academic Programs & Curriculum</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 sm:mt-6">
+        <UCard
           v-for="program in programs"
           :key="program.name"
-          class="p-4 rounded-xl bg-muted/30 border border-default hover:shadow-sm transition-shadow space-y-3"
+          variant="subtle"
+          :ui="{ body: 'sm:p-4 flex flex-col gap-3' }"
         >
           <div class="flex items-start justify-between gap-2">
             <div>
               <p class="font-semibold text-highlighted text-sm">{{ program.name }}</p>
               <p class="text-xs text-muted">{{ program.dept }}</p>
             </div>
-            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium flex-shrink-0" :class="program.statusClass">
-              {{ program.status }}
-            </span>
+            <UBadge :label="program.status" :color="program.status === 'CHED Accredited' ? 'success' : 'warning'" variant="subtle" size="sm" />
           </div>
           <div class="grid grid-cols-3 gap-2 text-center">
-            <div class="bg-muted/30 rounded-lg p-2">
+            <div class="bg-muted rounded-lg p-2">
               <p class="font-bold text-highlighted text-sm">{{ program.years }}yr</p>
               <p class="text-xs text-dimmed">Duration</p>
             </div>
-            <div class="bg-muted/30 rounded-lg p-2">
+            <div class="bg-muted rounded-lg p-2">
               <p class="font-bold text-highlighted text-sm">{{ program.units }}</p>
               <p class="text-xs text-dimmed">Units</p>
             </div>
-            <div class="bg-muted/30 rounded-lg p-2">
+            <div class="bg-muted rounded-lg p-2">
               <p class="font-bold text-highlighted text-sm">{{ program.students.toLocaleString() }}</p>
               <p class="text-xs text-dimmed">Students</p>
             </div>
           </div>
-        </div>
+        </UCard>
       </div>
     </UCard>
 

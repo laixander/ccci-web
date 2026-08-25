@@ -71,8 +71,7 @@ const enrollmentByDept = [
       <UCard
         v-for="kpi in kpiCards"
         :key="kpi.label"
-        :ui="{ body: 'p-4' }"
-        class="hover:shadow-md transition-shadow duration-200"
+        :ui="{ root: 'shadow-sm', body: 'sm:p-4' }"
       >
         <div class="flex items-center justify-between mb-3">
           <div :class="['size-9 rounded-lg flex items-center justify-center', kpi.bg]">
@@ -86,9 +85,9 @@ const enrollmentByDept = [
     </div>
 
     <!-- Main content row -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <!-- Recent Activity -->
-      <UCard class="lg:col-span-2" :ui="{ body: 'p-0' }">
+      <UCard class="lg:col-span-2" :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
         <div class="flex items-center justify-between px-5 py-4 border-b border-default">
           <h2 class="font-semibold text-highlighted">Recent Activity</h2>
           <UButton label="View all" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" />
@@ -112,11 +111,11 @@ const enrollmentByDept = [
       </UCard>
 
       <!-- Right column -->
-      <div class="space-y-6">
+      <div class="space-y-4">
         <!-- Quick Actions -->
-        <UCard :ui="{ body: 'p-5' }">
-          <h2 class="font-semibold text-highlighted mb-4">Quick Actions</h2>
-          <div class="grid grid-cols-2 gap-2">
+        <UCard :ui="{ root: 'shadow-sm' }">
+          <h2 class="font-semibold text-highlighted">Quick Actions</h2>
+          <div class="grid grid-cols-2 gap-2 mt-4 sm:mt-6">
             <NuxtLink
               v-for="link in quickLinks"
               :key="link.label"
@@ -132,9 +131,9 @@ const enrollmentByDept = [
         </UCard>
 
         <!-- Upcoming Events -->
-        <UCard :ui="{ body: 'p-5' }">
-          <h2 class="font-semibold text-highlighted mb-4">Upcoming</h2>
-          <div class="space-y-3">
+        <UCard :ui="{ root: 'shadow-sm' }">
+          <h2 class="font-semibold text-highlighted">Upcoming</h2>
+          <div class="space-y-3 mt-4 sm:mt-6">
             <div v-for="event in upcomingEvents" :key="event.label" class="flex items-center gap-3">
               <span :class="['size-2 rounded-full flex-shrink-0', event.dot]" />
               <p class="text-xs font-medium text-highlighted flex-1 truncate">{{ event.label }}</p>
@@ -146,17 +145,15 @@ const enrollmentByDept = [
     </div>
 
     <!-- Enrollment by Department -->
-    <UCard :ui="{ body: 'p-5' }">
-      <div class="flex items-center justify-between mb-5">
+    <UCard :ui="{ root: 'shadow-sm' }">
+      <div class="flex items-center justify-between">
         <h2 class="font-semibold text-highlighted">Enrollment by Department</h2>
         <UButton label="Full Analytics" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" to="/products/cms/dashboard/analytics" />
       </div>
-      <div class="space-y-3">
+      <div class="space-y-3 mt-4 sm:mt-6">
         <div v-for="dept in enrollmentByDept" :key="dept.dept" class="flex items-center gap-4">
           <span class="text-sm text-muted w-32 flex-shrink-0">{{ dept.dept }}</span>
-          <div class="flex-1 bg-muted/50 rounded-full h-2">
-            <div class="bg-primary h-2 rounded-full transition-all duration-500" :style="{ width: dept.pct + '%' }" />
-          </div>
+          <UProgress :model-value="dept.pct" color="primary" class="flex-1" />
           <span class="text-sm font-semibold text-highlighted w-12 text-right">{{ dept.count.toLocaleString() }}</span>
           <span class="text-xs text-dimmed w-8">{{ dept.pct }}%</span>
         </div>

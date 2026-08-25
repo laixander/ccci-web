@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'cms' })
+definePageMeta({ layout: 'product' })
 const features = [
   {
     title: 'Student Information System',

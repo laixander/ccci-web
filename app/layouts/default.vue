@@ -2,32 +2,33 @@
 import type { NavigationMenuItem } from '@nuxt/ui'
 
 const navItems: NavigationMenuItem[] = [
+  { label: 'Products', to: '#products' },
   { label: 'About', to: '#about' },
   { label: 'Contact', to: '#contact' },
-  {
-    label: 'Products',
-    icon: 'i-lucide-layout-grid',
-    children: [
-      {
-        label: 'HRIS',
-        description: 'Human Resource Information System',
-        icon: 'i-lucide-users',
-        to: '/products/hris',
-      },
-      {
-        label: 'LMS',
-        description: 'Learning Management System',
-        icon: 'i-lucide-book-open',
-        to: '/products/lms',
-      },
-      {
-        label: 'CMS',
-        description: 'Campus Management System',
-        icon: 'i-lucide-graduation-cap',
-        to: '/products/cms',
-      },
-    ],
-  },
+  // {
+  //   label: 'Products',
+  //   icon: 'i-lucide-layout-grid',
+  //   children: [
+  //     {
+  //       label: 'HRIS',
+  //       description: 'Human Resource Information System',
+  //       icon: 'i-lucide-users',
+  //       to: '/products/hris',
+  //     },
+  //     {
+  //       label: 'LMS',
+  //       description: 'Learning Management System',
+  //       icon: 'i-lucide-book-open',
+  //       to: '/products/lms',
+  //     },
+  //     {
+  //       label: 'CMS',
+  //       description: 'Campus Management System',
+  //       icon: 'i-lucide-graduation-cap',
+  //       to: '/products/cms',
+  //     },
+  //   ],
+  // },
 ]
 
 const footerLinks = [

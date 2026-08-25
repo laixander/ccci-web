@@ -93,7 +93,7 @@ const sessionColumns = [
         <span class="text-sm text-muted">{{ sessions.length }} sessions</span>
       </div>
       <div class="overflow-x-auto">
-        <UTable :data="sessions" :columns="sessionColumns" class="w-full">
+        <UTable :data="sessions" :columns="sessionColumns" class="scrollbar w-full">
           <template #session-cell="{ row }">
             <p class="font-medium text-highlighted">{{ row.original.title }}</p>
             <p class="text-xs text-dimmed">{{ row.original.host }} · {{ row.original.duration }}</p>

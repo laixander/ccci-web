@@ -173,7 +173,7 @@ const profileForm = reactive({ ...user })
         <div class="pt-4">
           <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
             <div class="overflow-x-auto">
-              <UTable :data="payslips" :columns="payslipColumns" class="w-full">
+              <UTable :data="payslips" :columns="payslipColumns" class="scrollbar w-full">
                 <template #status-cell="{ row }">
                   <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success">{{ row.original.status }}</span>
                 </template>
@@ -199,7 +199,7 @@ const profileForm = reactive({ ...user })
           </div>
           <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
             <div class="overflow-x-auto">
-              <UTable :data="leaveHistory" :columns="leaveHistoryColumns" class="w-full">
+              <UTable :data="leaveHistory" :columns="leaveHistoryColumns" class="scrollbar w-full">
                 <template #dates-cell="{ row }">
                   {{ row.original.from }}<span v-if="row.original.from !== row.original.to"> – {{ row.original.to }}</span>
                 </template>

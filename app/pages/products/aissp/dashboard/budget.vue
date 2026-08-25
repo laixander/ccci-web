@@ -65,7 +65,7 @@ const getStatusColor = (status: string) => {
           <USelect :items="['All Types', 'CAPEX', 'OPEX']" class="w-full sm:w-40" />
         </div>
       </template>
-      <UTable :data="budgetItems" :columns="columns">
+      <UTable class="scrollbar" :data="budgetItems" :columns="columns">
         <template #item-cell="{ row }">
           <span class="font-medium text-highlighted">{{ row.original.item }}</span>
         </template>

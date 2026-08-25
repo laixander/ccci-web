@@ -92,7 +92,7 @@ const notificationSettings = ref({
               <UButton icon="i-lucide-plus" size="sm" color="primary">Add User</UButton>
             </div>
           </template>
-          <UTable :data="users" :columns="userColumns">
+          <UTable class="scrollbar" :data="users" :columns="userColumns">
             <template #status-cell="{ row }">
               <UBadge color="success" variant="subtle" size="sm">{{ row.original.status }}</UBadge>
             </template>

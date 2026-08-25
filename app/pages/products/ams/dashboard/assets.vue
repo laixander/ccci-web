@@ -61,7 +61,7 @@ const columns = [
     </UCard>
 
     <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
-      <UTable :data="filtered" :columns="columns" class="w-full text-sm" :ui="{ th: 'text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider', td: 'px-4 py-4', tr: 'hover:bg-muted/30 transition-colors' }">
+      <UTable :data="filtered" :columns="columns" class="scrollbar w-full text-sm" :ui="{ th: 'text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider', td: 'px-4 py-4', tr: 'hover:bg-muted/30 transition-colors' }">
         <template #id-cell="{ row }"><span class="font-mono text-xs text-muted">{{ row.original.id }}</span></template>
         <template #name-cell="{ row }"><span class="font-medium text-highlighted">{{ row.original.name }}</span></template>
         <template #status-cell="{ row }">

@@ -102,7 +102,7 @@ function viewEmployee(emp: typeof employees.value[0]) {
         <UTable
           :data="filtered"
           :columns="columns"
-          class="w-full text-sm"
+          class="scrollbar w-full text-sm"
           :ui="{
             th: 'text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider',
             td: 'px-4 py-4',

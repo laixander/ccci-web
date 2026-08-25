@@ -54,7 +54,7 @@ const getStatusColor = (status: string) => {
           </div>
         </div>
       </template>
-      <UTable :data="systems" :columns="columns">
+      <UTable class="scrollbar" :data="systems" :columns="columns">
         <template #name-cell="{ row }">
           <span class="font-medium text-highlighted">{{ row.original.name }}</span>
         </template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'dms' })
+definePageMeta({ layout: 'product' })
 const features = [
   {
     title: 'Centralized Document Repository',

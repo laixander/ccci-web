@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'hris' })
+definePageMeta({ layout: 'product' })
 const features = [
   {
     title: 'Smart Payroll',

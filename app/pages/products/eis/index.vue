@@ -1,7 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
   title: 'ExecIS by CCCI',
-  layout: 'eis',
+  layout: 'product',
 })
 
 useSeoMeta({

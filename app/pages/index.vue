@@ -374,7 +374,8 @@ onUnmounted(() => {
   window.removeEventListener('resize', updateCardsPerView)
 })
 
-const maxIndex = computed(() => Math.max(0, products.length - cardsPerView.value))
+const totalCards = computed(() => products.length + 1) // +1 for Coming Soon card
+const maxIndex = computed(() => Math.max(0, totalCards.value - cardsPerView.value))
 
 function scrollToIndex(index: number) {
   activeIndex.value = Math.max(0, Math.min(index, maxIndex.value))
@@ -500,16 +501,19 @@ const cardStyle = computed(() => {
     </UContainer>
 
     <!-- Carousel — full viewport width -->
-    <div class="relative">
+    <div class="relative group">
       <!-- Prev button -->
-      <button
+       <UButton
         v-if="activeIndex > 0"
-        class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 size-10 rounded-full bg-default border border-default shadow-lg flex items-center justify-center hover:bg-elevated transition-all"
+        class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10 size-10 rounded-full shadow-lg flex items-center justify-center hover:bg-elevated transition-all opacity-0 group-hover:opacity-100"
         aria-label="Previous products"
         @click="prevSlide"
+        variant="outline"
+        color="neutral"
+        square
       >
         <UIcon name="i-lucide-chevron-left" class="size-5 text-muted" />
-      </button>
+      </UButton>
 
       <!-- Scroll track -->
       <div
@@ -521,7 +525,7 @@ const cardStyle = computed(() => {
             v-for="product in products"
             :key="product.id"
             data-card
-            class="snap-start rounded-2xl border p-8 flex flex-col gap-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+            class="snap-start rounded-2xl border p-8 flex flex-col gap-6 transition-all duration-300 hover:shadow-lg"
             :class="[productColorMap[product.color].bg, productColorMap[product.color].border]"
             :style="cardStyle"
           >
@@ -569,17 +573,68 @@ const cardStyle = computed(() => {
               </template>
             </UButton>
           </div>
+
+          <!-- Coming Soon Card -->
+          <div
+            data-card
+            class="snap-start rounded-2xl border border-dashed border-white/10 p-8 flex flex-col gap-6 relative overflow-hidden"
+            :style="[cardStyle, { background: 'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)' }]"
+          >
+            <!-- Animated background glow -->
+            <div class="absolute inset-0 pointer-events-none">
+              <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-48 rounded-full bg-primary/10 blur-3xl animate-pulse" />
+            </div>
+
+            <!-- Faded content overlay -->
+            <div class="relative z-10 flex flex-col items-center justify-center h-full gap-6 text-center py-8">
+              <!-- Icon -->
+              <div class="size-16 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center shadow-inner">
+                <UIcon name="i-lucide-sparkles" class="size-7 text-primary/60 animate-pulse" />
+              </div>
+
+              <!-- Badge -->
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-primary/10 text-primary/70 border border-primary/20 uppercase tracking-widest">
+                <span class="size-1.5 rounded-full bg-primary/60 animate-ping" />
+                Coming Soon
+              </span>
+
+              <!-- Text -->
+              <div class="space-y-2">
+                <h3 class="text-xl font-bold text-highlighted/40">More Products</h3>
+                <p class="text-sm text-muted/50 leading-relaxed max-w-[220px]">
+                  We're building more powerful tools to complete your enterprise ecosystem.
+                </p>
+              </div>
+
+              <!-- Feature placeholders -->
+              <ul class="space-y-3 w-full flex-1">
+                <li v-for="i in 3" :key="i" class="flex items-center gap-3">
+                  <div class="size-4 rounded-full bg-white/5 shrink-0" />
+                  <div class="h-2.5 rounded-full bg-white/5 flex-1" :style="{ width: `${55 + i * 10}%` }" />
+                </li>
+              </ul>
+
+              <!-- Locked CTA -->
+              <div class="w-full rounded-xl border border-white/8 bg-white/3 py-3 flex items-center justify-center gap-2 text-sm text-muted/40 font-medium">
+                <UIcon name="i-lucide-lock" class="size-4" />
+                Unlock Soon
+              </div>
+            </div>
+          </div>
       </div>
 
       <!-- Next button -->
-      <button
+      <UButton
         v-if="activeIndex < maxIndex"
-        class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 size-10 rounded-full bg-default border border-default shadow-lg flex items-center justify-center hover:bg-elevated transition-all"
+        class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-10 size-10 rounded-full shadow-lg flex items-center justify-center hover:bg-elevated transition-all opacity-0 group-hover:opacity-100"
         aria-label="Next products"
         @click="nextSlide"
+        variant="outline"
+        color="neutral"
+        square
       >
         <UIcon name="i-lucide-chevron-right" class="size-5 text-muted" />
-      </button>
+      </UButton>
     </div>
 
     <!-- Dot indicators -->

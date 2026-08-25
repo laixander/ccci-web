@@ -144,7 +144,7 @@ const courseColumns = [
     <!-- Course Table -->
     <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
       <div class="overflow-x-auto">
-        <UTable :data="filtered" :columns="courseColumns" class="w-full" @select="(e, row) => viewCourse(row.original)">
+        <UTable :data="filtered" :columns="courseColumns" class="scrollbar w-full" @select="(e, row) => viewCourse(row.original)">
           <template #course-cell="{ row }">
             <div class="flex items-center gap-3">
               <div class="size-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">

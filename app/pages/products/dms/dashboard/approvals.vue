@@ -86,7 +86,7 @@ const urgencyConfig: Record<string, { color: 'error' | 'primary' | 'neutral' }> 
             <UTable
               :data="pendingApprovals"
               :columns="columnsPending"
-              class="w-full text-sm"
+              class="scrollbar w-full text-sm"
               :ui="{
                 th: 'text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider',
                 td: 'px-4 py-4',
@@ -149,7 +149,7 @@ const urgencyConfig: Record<string, { color: 'error' | 'primary' | 'neutral' }> 
             <UTable
               :data="completedApprovals"
               :columns="columnsCompleted"
-              class="w-full text-sm"
+              class="scrollbar w-full text-sm"
               :ui="{
                 th: 'text-left px-4 py-3.5 text-xs text-dimmed font-semibold uppercase tracking-wider',
                 td: 'px-4 py-4',

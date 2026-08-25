@@ -109,7 +109,7 @@ const certColumns = [
         <span class="text-sm text-muted">{{ filteredCerts.length }} certificates</span>
       </div>
       <div class="overflow-x-auto">
-        <UTable :data="filteredCerts" :columns="certColumns" class="w-full">
+        <UTable :data="filteredCerts" :columns="certColumns" class="scrollbar w-full">
           <template #learner-cell="{ row }">
             <div class="flex items-center gap-3">
               <UAvatar :text="row.original.initials" size="sm" :color="row.original.avatarColor" />
