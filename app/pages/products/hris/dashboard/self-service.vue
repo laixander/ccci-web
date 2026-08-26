@@ -98,7 +98,7 @@ const profileForm = reactive({ ...user })
     </div>
 
     <!-- Profile Card -->
-    <UCard :ui="{ root: 'shadow-sm' }">
+    <UCard>
       <div class="flex items-center gap-6">
         <UAvatar :text="user.initials" size="3xl" :color="user.avatar" />
         <div class="flex-1">
@@ -121,9 +121,8 @@ const profileForm = reactive({ ...user })
         <div class="pt-4 space-y-6">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <!-- Personal Info -->
-            <UCard :ui="{ root: 'shadow-sm' }">
-              <h2 class="font-semibold text-highlighted">Personal Information</h2>
-              <div class="space-y-4 mt-4 sm:mt-6">
+            <UCard title="Personal Information">
+              <div class="space-y-3">
                 <div>
                   <p class="text-xs text-dimmed uppercase tracking-wide font-semibold mb-1">Full Name</p>
                   <p class="text-highlighted font-medium">{{ user.name }}</p>
@@ -147,9 +146,8 @@ const profileForm = reactive({ ...user })
             </UCard>
 
             <!-- Leave Balances -->
-            <UCard :ui="{ root: 'shadow-sm' }">
-              <h2 class="font-semibold text-highlighted">Leave Balances</h2>
-              <div class="space-y-4 mt-4 sm:mt-6">
+            <UCard title="Leave Balances">
+              <div class="space-y-3">
                 <div v-for="(bal, type) in user.leaveBalance" :key="type" class="space-y-2">
                   <div class="flex items-center justify-between">
                     <p class="text-sm font-medium text-highlighted capitalize">{{ type.replace(/([A-Z])/g, ' $1').trim() }} Leave</p>
@@ -171,11 +169,11 @@ const profileForm = reactive({ ...user })
       <!-- Payslips Tab -->
       <template #payslips>
         <div class="pt-4">
-          <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+          <UCard :ui="{ body: 'p-0 sm:p-0' }">
             <div class="overflow-x-auto">
               <UTable :data="payslips" :columns="payslipColumns" class="scrollbar w-full">
                 <template #status-cell="{ row }">
-                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success">{{ row.original.status }}</span>
+                  <UBadge :label="row.original.status" color="success" variant="soft" class="rounded-full" />
                 </template>
                 <template #actions-cell>
                   <UTooltip text="Download Payslip">
@@ -197,7 +195,7 @@ const profileForm = reactive({ ...user })
           <div class="flex justify-end">
             <UButton icon="i-lucide-plus" label="File Leave Request" @click="showLeaveModal = true" />
           </div>
-          <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+          <UCard :ui="{ body: 'p-0 sm:p-0' }">
             <div class="overflow-x-auto">
               <UTable :data="leaveHistory" :columns="leaveHistoryColumns" class="scrollbar w-full">
                 <template #dates-cell="{ row }">
@@ -207,9 +205,12 @@ const profileForm = reactive({ ...user })
                   {{ row.original.days }}d
                 </template>
                 <template #status-cell="{ row }">
-                  <span :class="['inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium', row.original.status === 'Approved' ? 'bg-success/10 text-success' : row.original.status === 'Pending' ? 'bg-warning/10 text-warning' : 'bg-error/10 text-error']">
-                    {{ row.original.status }}
-                  </span>
+                  <UBadge
+                    :label="row.original.status"
+                    :color="row.original.status === 'Approved' ? 'success' : row.original.status === 'Pending' ? 'warning' : 'error'"
+                    variant="soft"
+                    class="rounded-full"
+                  />
                 </template>
                 <template #empty>
                   <UEmpty icon="i-lucide-calendar" title="No leave history" description="You haven't filed any leave requests yet." />

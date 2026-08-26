@@ -118,6 +118,17 @@ export function useProductLanding(product: string): { description: string, prima
         { label: 'Legal', children: commonLinks.legal }
       ],
       social: ['linkedin', 'x', 'youtube']
+    },
+    hkas: {
+      description: 'The comprehensive human kinetics assessment platform helping schools, universities, and organizations measure, track, and improve physical fitness.',
+      primaryButton: { label: 'Request Demo', icon: 'i-lucide-calendar' },
+      footerLinks: [
+        { label: 'Product', children: commonLinks.product },
+        { label: 'Solutions', children: [{ label: 'Schools & Universities', to: '#' }, { label: 'Corporate Wellness', to: '#' }, { label: 'Sports Organizations', to: '#' }, { label: 'Government Agencies', to: '#' }] },
+        { label: 'Resources', children: commonLinks.resources },
+        { label: 'Legal', children: commonLinks.legal }
+      ],
+      social: ['linkedin', 'x', 'facebook', 'youtube']
     }
   }
 

@@ -68,9 +68,9 @@ const todayInterviews = [
 ]
 
 const priorityConfig: Record<string, string> = {
-  'High': 'bg-error/10 text-error',
-  'Medium': 'bg-warning/10 text-warning',
-  'Low': 'bg-muted text-muted',
+  'High': 'error',
+  'Medium': 'warning',
+  'Low': 'neutral',
 }
 </script>
 
@@ -89,7 +89,7 @@ const priorityConfig: Record<string, string> = {
 
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="stat in stats" :key="stat.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+      <UCard v-for="stat in stats" :key="stat.label">
         <div class="flex items-center gap-4">
           <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', stat.bg]">
             <UIcon :name="stat.icon" :class="['size-5', stat.color]" />
@@ -103,7 +103,7 @@ const priorityConfig: Record<string, string> = {
     </div>
 
     <!-- Kanban Pipeline -->
-    <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+    <UCard :ui="{ body: 'p-0 sm:p-0' }">
       <template #header>
         <div class="flex items-center justify-between">
           <h2 class="font-semibold text-highlighted">Recruitment Pipeline</h2>
@@ -124,15 +124,18 @@ const priorityConfig: Record<string, string> = {
           <UCard
             v-for="cand in col.candidates"
             :key="cand.name"
-            :ui="{ root: 'shadow-sm hover:shadow-md transition-shadow cursor-pointer', body: 'sm:p-4 flex items-center justify-between' }"
+            :ui="{ root: 'group hover:ring-1 hover:ring-primary/30 transition-colors cursor-pointer', body: 'sm:p-4 flex items-center justify-between' }"
           >
             <UUser
-              :name="cand.name"
               :description="cand.role"
               :avatar="{ text: cand.initials, color: cand.color }"
               size="sm"
               :ui="{ description: 'text-[10px] leading-tight' }"
-            />
+            >
+              <template #name>
+                <span class="group-hover:text-primary transition-colors">{{ cand.name }}</span>
+              </template>
+            </UUser>
             <div class="flex gap-1">
               <UButton size="xs" icon="i-lucide-arrow-right" color="neutral" variant="ghost" class="text-[10px]" />
               <UButton size="xs" icon="i-lucide-x" color="error" variant="ghost" class="text-[10px]" />
@@ -144,7 +147,7 @@ const priorityConfig: Record<string, string> = {
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
       <!-- Open Positions -->
-      <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+      <UCard :ui="{ body: 'p-0 sm:p-0' }">
         <template #header>
           <div class="flex items-center justify-between">
             <h2 class="font-semibold text-highlighted">Open Positions</h2>
@@ -155,40 +158,41 @@ const priorityConfig: Record<string, string> = {
           <div
             v-for="role in openRoles"
             :key="role.title"
-            class="p-4 sm:px-6 hover:bg-muted/30 transition-colors"
+            class="p-4 sm:px-6 group hover:bg-muted/20 transition-colors"
           >
-            <div class="flex items-start justify-between gap-3 mb-2">
+            <div class="flex items-center justify-between gap-3">
               <div>
-                <p class="font-medium text-highlighted text-sm">{{ role.title }}</p>
+                <p class="font-medium text-highlighted text-sm group-hover:text-primary transition-colors">{{ role.title }}</p>
                 <p class="text-xs text-muted mt-0.5">{{ role.dept }} · {{ role.type }}</p>
+                <div class="flex items-center gap-4 text-xs text-dimmed mt-1">
+                  <span class="flex items-center gap-1"><UIcon name="i-lucide-users" class="size-3" /> {{ role.applicants }} applicants</span>
+                  <span class="flex items-center gap-1"><UIcon name="i-lucide-calendar" class="size-3" /> Posted {{ role.posted }}</span>
+                </div>
               </div>
-              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium flex-shrink-0" :class="priorityConfig[role.priority]">{{ role.priority }}</span>
-            </div>
-            <div class="flex items-center gap-4 text-xs text-dimmed">
-              <span class="flex items-center gap-1"><UIcon name="i-lucide-users" class="size-3" /> {{ role.applicants }} applicants</span>
-              <span class="flex items-center gap-1"><UIcon name="i-lucide-calendar" class="size-3" /> Posted {{ role.posted }}</span>
-              <UBadge :label="role.stage" color="primary" variant="subtle" size="xs" class="ml-auto" />
+              <div class="flex items-center gap-2">
+                <UBadge :label="role.stage" color="neutral" variant="soft" class="rounded-full shrink-0" />
+                <UBadge :label="role.priority" :color="(priorityConfig[role.priority] as any)" variant="soft" class="rounded-full shrink-0" />
+              </div>
             </div>
           </div>
         </div>
       </UCard>
 
       <!-- Today's Interviews -->
-      <UCard :ui="{ root: 'shadow-sm' }">
-        <h2 class="font-semibold text-highlighted">Today's Interviews</h2>
-        <div class="space-y-4 mt-4 sm:mt-6">
+      <UCard title="Today's Interviews">
+        <div class="space-y-3">
           <UCard
             v-for="interview in todayInterviews"
             :key="interview.candidate"
-            :ui="{ root: 'shadow-sm hover:shadow-md transition-colors', body: 'p-4 sm:p-4 flex items-center gap-4' }"
+            :ui="{ root: 'group hover:ring-1 hover:ring-primary/30 transition-colors', body: 'p-4 sm:p-4 flex items-center gap-4' }"
           >
             <div class="text-center min-w-16">
               <p class="text-xs font-bold text-primary">{{ interview.time }}</p>
             </div>
             <div class="flex-1">
-              <p class="font-medium text-highlighted text-sm">{{ interview.candidate }}</p>
+              <p class="font-medium text-highlighted text-sm group-hover:text-primary transition-colors">{{ interview.candidate }}</p>
               <p class="text-xs text-muted">{{ interview.role }}</p>
-              <div class="flex items-center gap-3 mt-2">
+              <div class="flex items-center gap-2 mt-2">
                 <UBadge :label="interview.type" color="neutral" variant="subtle" size="xs" />
                 <span class="text-xs text-dimmed">with {{ interview.interviewer }}</span>
               </div>

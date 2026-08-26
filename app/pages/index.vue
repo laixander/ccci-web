@@ -28,7 +28,7 @@ const stats = [
   { target: 6, suffix: '', label: 'Enterprise Products', decimals: 0 },
 ]
 
-type ProductColor = 'green' | 'violet' | 'amber' | 'sky' | 'slate' | 'rose' | 'teal' | 'indigo' | 'blue'
+type ProductColor = 'green' | 'violet' | 'amber' | 'sky' | 'slate' | 'rose' | 'teal' | 'indigo' | 'blue' | 'red'
 
 interface Product {
   id: string
@@ -197,6 +197,23 @@ const products: Product[] = [
     ],
     ctaLabel: 'Explore FMS',
   },
+  {
+    id: 'hkas',
+    name: 'HKAS',
+    fullName: 'Human Kinetics Assessment System',
+    tagline: 'Assess, track, and elevate physical performance',
+    description: 'Digitize fitness assessments, track body composition, manage PE curriculum, and run corporate wellness programs — all in one platform built for schools, universities, and organizations.',
+    icon: 'i-lucide-activity',
+    to: '/products/hkas',
+    color: 'red',
+    features: [
+      'Standardized Fitness Testing',
+      'Body Composition Tracking',
+      'PE Curriculum Management',
+      'Corporate Wellness Programs',
+    ],
+    ctaLabel: 'Explore HKAS',
+  },
 ]
 
 const whyFeatures = [
@@ -352,6 +369,13 @@ const productColorMap: Record<ProductColor, { bg: string, text: string, border: 
     badge: 'bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300',
     icon: 'bg-blue-500',
   },
+  red: {
+    bg: 'bg-red-50 dark:bg-red-950/30',
+    text: 'text-red-600 dark:text-red-400',
+    border: 'border-red-200 dark:border-red-800',
+    badge: 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300',
+    icon: 'bg-red-500',
+  },
 }
 
 const carouselRef = ref<HTMLElement | null>(null)
@@ -365,9 +389,24 @@ function updateCardsPerView() {
   else cardsPerView.value = 3
 }
 
+// ── Page-load hero fade-in ───────────────────────────────────────────────
+const heroVisible = ref(false)
+
+// ── Per-section scroll-reveal ────────────────────────────────────────────
+const { el: logoBarEl, isVisible: logoBarVisible } = useScrollReveal({ threshold: 0.15, delay: 400 })
+const { el: productsEl, isVisible: productsVisible } = useScrollReveal({ threshold: 0.1, delay: 400 })
+const { el: featuresEl, isVisible: featuresVisible } = useScrollReveal({ threshold: 0.1, delay: 400 })
+const { el: statsEl, isVisible: statsVisible2 } = useScrollReveal({ threshold: 0.2, delay: 400 })
+const { el: howItWorksEl, isVisible: howItWorksVisible } = useScrollReveal({ threshold: 0.1, delay: 400 })
+const { el: aboutEl, isVisible: aboutVisible } = useScrollReveal({ threshold: 0.1, delay: 400 })
+const { el: testimonialsEl, isVisible: testimonialsVisible } = useScrollReveal({ threshold: 0.1, delay: 400 })
+const { el: ctaEl, isVisible: ctaVisible } = useScrollReveal({ threshold: 0.2, delay: 400 })
+
 onMounted(() => {
   updateCardsPerView()
   window.addEventListener('resize', updateCardsPerView)
+  // Trigger hero fade-in on next frame so CSS transition fires
+  requestAnimationFrame(() => { heroVisible.value = true })
 })
 
 onUnmounted(() => {
@@ -408,29 +447,35 @@ const cardStyle = computed(() => {
 
   <canvas ref="bgCanvas" class="fixed inset-0 pointer-events-none z-[-1] mix-blend-screen dark:mix-blend-lighten" />
 
-  <!-- ─── Hero ─────────────────────────────────────────────────────────── -->
-  <section class="relative overflow-hidden">
+  <!-- ─── Hero (page-load fade-in) ─────────────────────────────────────── -->
+  <section
+    class="relative overflow-hidden section-reveal"
+    :class="{ 'is-visible': heroVisible }"
+  >
     <div class="absolute inset-0 -z-10 bg-gradient-to-br from-primary/5 via-transparent to-transparent" />
     <div class="absolute top-0 right-0 -z-10 size-[600px] rounded-full bg-primary/5 blur-3xl -translate-y-1/2 translate-x-1/3" />
 
     <UContainer class="py-24 md:py-32">
       <div class="mx-auto max-w-3xl text-center">
-        <!-- Badge -->
-        <div class="inline-flex items-center gap-2 rounded-full border border-default bg-elevated px-4 py-1.5 text-sm font-medium text-muted mb-8">
+        <!-- Badge: slides down from above -->
+        <div class="reveal-down inline-flex items-center gap-2 rounded-full border border-default bg-elevated px-4 py-1.5 text-sm font-medium text-muted mb-8">
           <span class="size-2 rounded-full bg-primary animate-pulse" />
           Trusted by 500+ Philippine organizations
         </div>
 
-        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-highlighted leading-[1.05] mb-6">
+        <!-- Headline: fades up with slight delay -->
+        <h1 class="reveal-up reveal-delay-150 text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-highlighted leading-[1.05] mb-6">
           Enterprise Cloud Software,
           <span class="text-primary">Built for the Philippines</span>
         </h1>
 
-        <p class="text-xl text-muted leading-relaxed max-w-2xl mx-auto mb-10">
+        <!-- Sub-copy -->
+        <p class="reveal-up reveal-delay-300 text-xl text-muted leading-relaxed max-w-2xl mx-auto mb-10">
           CCCI delivers HRIS, LMS, and Campus Management in one unified platform — locally compliant, cloud-native, and built to scale with every Philippine organization.
         </p>
 
-        <div class="flex flex-wrap items-center justify-center gap-4">
+        <!-- CTAs -->
+        <div class="reveal-up reveal-delay-400 flex flex-wrap items-center justify-center gap-4">
           <UButton
             id="hero-cta-demo"
             label="Book a Free Demo"
@@ -453,14 +498,18 @@ const cardStyle = computed(() => {
   </section>
 
   <!-- ─── Social Proof / Logo Bar ─────────────────────────────────────── -->
-  <div class="border-y border-default bg-muted/40 py-10 overflow-hidden">
+  <div
+    ref="logoBarEl"
+    class="border-y border-default bg-muted/40 py-10 overflow-hidden section-reveal"
+    :class="{ 'is-visible': logoBarVisible }"
+  >
     <UContainer>
-      <p class="text-center text-dimmed text-xs font-semibold uppercase tracking-widest mb-8">
+      <p class="reveal-up text-center text-dimmed text-xs font-semibold uppercase tracking-widest mb-8">
         Trusted by leading organizations
       </p>
     </UContainer>
-    <div 
-      class="w-full flex overflow-hidden group"
+    <div
+      class="reveal-up reveal-delay-200 w-full flex overflow-hidden group"
       style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);"
     >
       <div class="flex shrink-0 gap-[60px] pr-[60px] items-center animate-[scrollMarquee_30s_linear_infinite] group-hover:[animation-play-state:paused]">
@@ -487,21 +536,26 @@ const cardStyle = computed(() => {
   </div>
 
   <!-- ─── Products ─────────────────────────────────────────────────────── -->
-  <section id="products" class="py-24 overflow-hidden">
+  <section
+    id="products"
+    ref="productsEl"
+    class="py-24 overflow-hidden section-reveal"
+    :class="{ 'is-visible': productsVisible }"
+  >
     <UContainer>
       <div class="text-center mb-16">
-        <p class="text-primary text-sm font-semibold uppercase tracking-widest mb-3">Our Products</p>
-        <h2 class="text-4xl font-extrabold text-highlighted tracking-tight mb-4">
+        <p class="reveal-down text-primary text-sm font-semibold uppercase tracking-widest mb-3">Our Products</p>
+        <h2 class="reveal-up reveal-delay-150 text-4xl font-extrabold text-highlighted tracking-tight mb-4">
           Six Products. One Platform.
         </h2>
-        <p class="text-muted text-lg max-w-2xl mx-auto">
+        <p class="reveal-up reveal-delay-300 text-muted text-lg max-w-2xl mx-auto">
           Whether you're running a company, a school, or both — CCCI has the enterprise software to digitize and streamline your operations.
         </p>
       </div>
     </UContainer>
 
     <!-- Carousel — full viewport width -->
-    <div class="relative group">
+    <div class="reveal-up reveal-delay-400 relative group">
       <!-- Prev button -->
        <UButton
         v-if="activeIndex > 0"
@@ -651,21 +705,49 @@ const cardStyle = computed(() => {
   </section>
 
   <!-- ─── Why CCCI / Features Grid ────────────────────────────────────── -->
-  <div class="bg-muted/30">
-    <UPageSection
-      id="features"
-      headline="Why CCCI"
-      title="Everything your organization needs to go digital"
-      description="From a single startup to a multi-campus university — CCCI's platform grows with you, stays locally compliant, and keeps your teams productive."
-      :features="whyFeatures"
-    />
+  <div
+    ref="featuresEl"
+    class="bg-muted/30 section-reveal"
+    :class="{ 'is-visible': featuresVisible }"
+  >
+    <UPageSection id="features">
+      <template #headline>
+        <h4 class="reveal-down text-primary text-sm font-semibold uppercase tracking-widest mb-3 text-center">Why CCCI</h4>
+      </template>
+      <template #title>
+        <h2 class="reveal-up reveal-delay-150 text-4xl font-extrabold text-highlighted tracking-tight mb-4">Everything your organization needs to go digital</h2>
+      </template>
+      <template #description>
+        <p class="reveal-up reveal-delay-300">
+          From a single startup to a multi-campus university — CCCI's platform grows with you, stays locally compliant, and keeps your teams productive.
+        </p>
+      </template>
+      <template #features>
+        <UPageFeature
+          v-for="(feature, i) in whyFeatures"
+          :key="feature.title"
+          v-bind="feature"
+          class="reveal-up"
+          :style="{ animationDelay: `${400 + i * 120}ms` }"
+        />
+      </template>
+    </UPageSection>
   </div>
 
   <!-- ─── Stats Banner ─────────────────────────────────────────────────── -->
-  <div class="bg-primary dark:bg-primary/60 py-20">
+  <div
+    ref="statsEl"
+    class="bg-primary dark:bg-primary/60 py-20 section-reveal"
+    :class="{ 'is-visible': statsVisible2 }"
+  >
     <UContainer>
       <div ref="statsContainer" class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
-        <div v-for="stat in stats" :key="stat.label">
+        <div
+          v-for="(stat, i) in stats"
+          :key="stat.label"
+          class="reveal-up"
+          :style="{ animationDelay: `${i * 120}ms` }"
+        >
           <p class="text-4xl lg:text-5xl font-extrabold text-white">
             {{ (stat.target * statsProgress).toFixed(stat.decimals) }}{{ stat.suffix }}
           </p>
@@ -676,14 +758,19 @@ const cardStyle = computed(() => {
   </div>
 
   <!-- ─── How It Works ─────────────────────────────────────────────────── -->
-  <section class="py-24">
+  <section
+    id="how-it-works"
+    ref="howItWorksEl"
+    class="py-24 min-h-screen flex flex-col justify-center section-reveal"
+    :class="{ 'is-visible': howItWorksVisible }"
+  >
     <UContainer>
       <div class="text-center mb-16">
-        <p class="text-primary text-sm font-semibold uppercase tracking-widest mb-3">How It Works</p>
-        <h2 class="text-4xl font-extrabold text-highlighted tracking-tight mb-4">
+        <p class="reveal-down text-primary text-sm font-semibold uppercase tracking-widest mb-3">How It Works</p>
+        <h2 class="reveal-up reveal-delay-150 text-4xl font-extrabold text-highlighted tracking-tight mb-4">
           Up and running in weeks, not months
         </h2>
-        <p class="text-muted text-lg max-w-2xl mx-auto">
+        <p class="reveal-up reveal-delay-300 text-muted text-lg max-w-2xl mx-auto">
           We handle the heavy lifting so your team can focus on what matters. Our proven onboarding process gets you live quickly with zero disruption.
         </p>
       </div>
@@ -693,11 +780,16 @@ const cardStyle = computed(() => {
           v-for="(step, index) in steps"
           :key="step.step"
           class="flex flex-col items-center text-center gap-5 relative"
+          :class="[
+            index === 0 ? 'reveal-left reveal-delay-200' : '',
+            index === 1 ? 'reveal-up reveal-delay-300' : '',
+            index === 2 ? 'reveal-right reveal-delay-400' : '',
+          ]"
         >
           <!-- Connecting line to next item (desktop only) -->
-          <div 
-            v-if="index < steps.length - 1" 
-            class="hidden md:block absolute top-10 left-[calc(50%+3.5rem)] w-[calc(100%-5rem)] h-px bg-primary/20" 
+          <div
+            v-if="index < steps.length - 1"
+            class="hidden md:block absolute top-10 left-[calc(50%+3.5rem)] w-[calc(100%-5rem)] h-px bg-primary/20"
           />
           <div class="relative">
             <div class="size-20 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20">
@@ -717,14 +809,25 @@ const cardStyle = computed(() => {
   </section>
 
   <!-- ─── About ─────────────────────────────────────────────────────────── -->
-  <div id="about" class="bg-muted/30">
-    <UPageSection
-      headline="About CCCI"
-      title="Built in the Philippines, for the Philippines"
-      description="Founded in 2020, Centralized Cloud Computing International Inc. started with a single mission: make enterprise-grade software accessible to every Philippine organization — from small businesses to large universities. Today, we serve 500+ clients nationwide with a team of 80+ engineers, implementation specialists, and support staff based in Manila."
-      orientation="horizontal"
-    >
-      <div class="rounded-2xl bg-muted border border-default p-8 space-y-6">
+  <div
+    id="about"
+    ref="aboutEl"
+    class="bg-muted/30 min-h-screen flex flex-col justify-center section-reveal"
+    :class="{ 'is-visible': aboutVisible }"
+  >
+    <UPageSection orientation="horizontal">
+      <template #headline>
+        <h4 class="reveal-down text-primary text-sm font-semibold uppercase tracking-widest mb-3">About CCCI</h4>
+      </template>
+      <template #title>
+        <h2 class="reveal-up reveal-delay-150 text-4xl font-extrabold text-highlighted tracking-tight mb-4">Built in the Philippines, for the Philippines</h2>
+      </template>
+      <template #description>
+        <p class="reveal-up reveal-delay-300">
+          Founded in 2020, Centralized Cloud Computing International Inc. started with a single mission: make enterprise-grade software accessible to every Philippine organization — from small businesses to large universities. Today, we serve 500+ clients nationwide with a team of 80+ engineers, implementation specialists, and support staff based in Manila.
+        </p>
+      </template>
+      <div class="reveal-right reveal-delay-200 rounded-2xl bg-muted border border-default p-8 space-y-6">
         <div class="grid grid-cols-2 gap-4">
           <div class="rounded-xl bg-accented/40 p-5 text-center">
             <p class="text-3xl font-extrabold text-highlighted">2020</p>
@@ -758,18 +861,32 @@ const cardStyle = computed(() => {
   </div>
 
   <!-- ─── Testimonials ─────────────────────────────────────────────────── -->
-  <UPageSection
-    id="testimonials"
-    headline="Customer Stories"
-    title="Trusted by leaders across industries"
-    description="From HR directors to school registrars — here's what organizations say about switching to CCCI."
+  <div
+    ref="testimonialsEl"
+    class="min-h-screen flex flex-col justify-center section-reveal"
+    :class="{ 'is-visible': testimonialsVisible }"
   >
+  <UPageSection id="testimonials">
+    <template #headline>
+      <h4 class="reveal-down text-primary text-sm font-semibold uppercase tracking-widest mb-3 text-center">Customer Stories</h4>
+    </template>
+    <template #title>
+      <h2 class="reveal-up reveal-delay-150 text-4xl font-extrabold text-highlighted tracking-tight mb-4">Trusted by leaders across industries</h2>
+    </template>
+    <template #description>
+      <p class="reveal-up reveal-delay-300">From HR directors to school registrars — here's what organizations say about switching to CCCI.</p>
+    </template>
     <UPageGrid>
-      <UCard v-for="t in testimonials" :key="t.author">
+      <UCard
+        v-for="(t, i) in testimonials"
+        :key="t.author"
+        class="reveal-up"
+        :style="{ animationDelay: `${400 + i * 150}ms` }"
+      >
         <div class="flex flex-col h-full">
           <div class="flex items-center justify-between mb-5">
             <div class="flex gap-0.5">
-              <UIcon v-for="i in 5" :key="i" name="i-lucide-star" class="size-4 text-warning" />
+              <UIcon v-for="j in 5" :key="j" name="i-lucide-star" class="size-4 text-warning" />
             </div>
             <UBadge :label="t.product" color="neutral" variant="subtle" size="sm" />
           </div>
@@ -785,27 +902,43 @@ const cardStyle = computed(() => {
       </UCard>
     </UPageGrid>
   </UPageSection>
+  </div>
 
   <!-- ─── Contact / CTA ─────────────────────────────────────────────────── -->
-  <div id="contact" class="bg-muted/30">
+  <div
+    id="contact"
+    ref="ctaEl"
+    class="bg-muted/30 section-reveal"
+    :class="{ 'is-visible': ctaVisible }"
+  >
     <UPageSection>
-      <UPageCTA
-        id="cta-main"
-        title="Ready to transform your organization?"
-        description="Join 500+ Philippine companies and schools using CCCI to automate HR, deliver learning, and manage campuses — all from one cloud platform. Book a free demo with our local team today."
-        :links="[{
-          label: 'Book a Free Demo',
-          size: 'lg',
-          trailingIcon: 'i-lucide-calendar',
-          onClick: () => useDemoModal().open(),
-        }, {
-          label: 'Talk to Sales',
-          color: 'neutral',
-          variant: 'subtle',
-          size: 'lg',
-          trailingIcon: 'i-lucide-phone',
-        }]"
-      />
+      <UPageCTA id="cta-main" class="reveal-up">
+        <template #title>
+          <h2 class="reveal-up reveal-delay-200 text-4xl font-extrabold text-highlighted tracking-tight mb-4">Ready to transform your organization?</h2>
+        </template>
+        <template #description>
+          <p class="reveal-up reveal-delay-300">Join 500+ Philippine companies and schools using CCCI to automate HR, deliver learning, and manage campuses — all from one cloud platform. Book a free demo with our local team today.</p>
+        </template>
+        <template #links>
+          <div class="reveal-up reveal-delay-400 flex flex-wrap justify-center gap-3">
+            <UButton
+              size="lg"
+              trailing-icon="i-lucide-calendar"
+              @click="useDemoModal().open()"
+            >
+              Book a Free Demo
+            </UButton>
+            <UButton
+              size="lg"
+              color="neutral"
+              variant="subtle"
+              trailing-icon="i-lucide-phone"
+            >
+              Talk to Sales
+            </UButton>
+          </div>
+        </template>
+      </UPageCTA>
     </UPageSection>
   </div>
 </template>

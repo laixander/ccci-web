@@ -8,7 +8,7 @@ const open = ref(true)
 
 const route = useRoute()
 const currentProduct = computed(() => {
-  const match = route.path.match(/^\/products\/(cms|lms|hris|dms|ams|ilsp|aissp|eis|fms)/)
+  const match = route.path.match(/^\/products\/(cms|lms|hris|dms|ams|ilsp|aissp|eis|fms|hkas)/)
   return match ? match[1] : 'hris'
 })
 
@@ -22,6 +22,7 @@ const dashboardConfig = computed(() => {
     case 'aissp': return useAisspDashboard()
     case 'eis': return useEisDashboard()
     case 'fms': return useFmsDashboard()
+    case 'hkas': return useHkasDashboard()
     default: return useHrisDashboard()
   }
 })
@@ -50,6 +51,7 @@ const userInfo = computed(() => {
     case 'aissp': return { initials: 'CIO', name: 'Chief Info Officer', role: 'Strategic Planning' }
     case 'eis': return { initials: 'CEO', name: 'Chief Executive', role: 'Executive Leadership' }
     case 'fms': return { initials: 'CFO', name: 'Chief Financial Officer', role: 'Finance Department' }
+    case 'hkas': return { initials: 'CS', name: 'Coach Sarah', role: 'Physical Education' }
     default: return { initials: 'SC', name: 'Sarah Chen', role: 'VP of HR' }
   }
 })

@@ -106,22 +106,22 @@ async function processPayroll() {
         <div class="space-y-6 pt-4">
           <!-- Summary Banner -->
           <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
-            <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }" class="sm:col-span-1">
+            <UCard class="sm:col-span-1">
               <p class="text-xs text-dimmed uppercase tracking-wider font-semibold mb-1">Period</p>
               <p class="text-lg font-bold text-highlighted">{{ payrollSummary.month }}</p>
               <span class="text-xs px-2 py-0.5 rounded-full bg-success/10 text-success font-medium mt-2 inline-block">{{ payrollSummary.status }}</span>
             </UCard>
-            <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+            <UCard>
               <p class="text-xs text-dimmed uppercase tracking-wider font-semibold mb-1">Gross Pay</p>
               <p class="text-2xl font-bold text-highlighted">{{ payrollSummary.totalGross }}</p>
               <p class="text-xs text-muted mt-1">{{ payrollSummary.employees }} employees</p>
             </UCard>
-            <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+            <UCard>
               <p class="text-xs text-dimmed uppercase tracking-wider font-semibold mb-1">Total Deductions</p>
               <p class="text-2xl font-bold text-error">{{ payrollSummary.totalDeductions }}</p>
               <p class="text-xs text-muted mt-1">SSS, PhilHealth, Tax</p>
             </UCard>
-            <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+            <UCard>
               <p class="text-xs text-dimmed uppercase tracking-wider font-semibold mb-1">Net Pay</p>
               <p class="text-2xl font-bold text-success">{{ payrollSummary.totalNet }}</p>
               <p class="text-xs text-muted mt-1">After all deductions</p>
@@ -130,8 +130,7 @@ async function processPayroll() {
 
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <!-- Pay Components -->
-            <UCard :ui="{ root: 'shadow-sm' }">
-              <h2 class="font-semibold text-highlighted mb-4">Pay Components</h2>
+            <UCard title="Pay Components">
               <div class="space-y-3">
                 <div v-for="item in breakdown" :key="item.label" class="flex items-center gap-4">
                   <div :class="['size-9 rounded-lg flex items-center justify-center flex-shrink-0', item.bg]">
@@ -146,8 +145,7 @@ async function processPayroll() {
             </UCard>
 
             <!-- Deductions -->
-            <UCard :ui="{ root: 'shadow-sm' }">
-              <h2 class="font-semibold text-highlighted mb-4">Statutory Deductions</h2>
+            <UCard title="Statutory Deductions">
               <div class="space-y-3">
                 <div v-for="item in deductions" :key="item.label" class="flex items-center justify-between">
                   <div class="flex items-center gap-3">
@@ -164,11 +162,13 @@ async function processPayroll() {
           </div>
 
           <!-- Individual Payslips -->
-          <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
-            <div class="flex items-center justify-between px-5 py-4 border-b border-default">
-              <h2 class="font-semibold text-highlighted">Employee Payslips</h2>
-              <UButton label="Export All" icon="i-lucide-download" size="xs" color="neutral" variant="ghost" />
-            </div>
+          <UCard :ui="{ body: 'p-0 sm:p-0' }">
+            <template #header>
+              <div class="flex items-center justify-between">
+                <h2 class="font-semibold text-highlighted">Employee Payslips</h2>
+                <UButton label="Export All" icon="i-lucide-download" size="xs" color="neutral" variant="ghost" />
+              </div>
+            </template>
             <div class="overflow-x-auto">
               <UTable
                 :data="payslips"
@@ -243,7 +243,7 @@ async function processPayroll() {
           </div>
 
           <!-- Step 1: Verify -->
-          <UCard v-if="runStep === 1" :ui="{ root: 'shadow-sm' }">
+          <UCard v-if="runStep === 1">
             <h2 class="text-lg font-bold text-highlighted mb-4">Verify Payroll Data</h2>
             <div class="space-y-3 mb-6">
               <div v-for="check in [{ label: 'Employee records up to date', ok: true }, { label: 'Attendance data synchronized', ok: true }, { label: 'Leave balances verified', ok: true }, { label: 'Overtime approved', ok: false }]" :key="check.label" class="flex items-center gap-3">
@@ -265,7 +265,7 @@ async function processPayroll() {
           </UCard>
 
           <!-- Step 2: Adjust -->
-          <UCard v-else-if="runStep === 2" :ui="{ root: 'shadow-sm' }">
+          <UCard v-else-if="runStep === 2">
             <h2 class="text-lg font-bold text-highlighted mb-4">Adjustments & Bonuses</h2>
             <div class="space-y-4 mb-6">
               <UFormField label="Pay Period">
@@ -288,7 +288,7 @@ async function processPayroll() {
           </UCard>
 
           <!-- Step 3: Review -->
-          <UCard v-else-if="runStep === 3" :ui="{ root: 'shadow-sm' }">
+          <UCard v-else-if="runStep === 3">
             <h2 class="text-lg font-bold text-highlighted mb-4">Review & Confirm</h2>
             <div class="space-y-3 mb-6">
               <div class="flex justify-between py-2 border-b border-default">
@@ -322,7 +322,7 @@ async function processPayroll() {
           </UCard>
 
           <!-- Step 4: Done -->
-          <UCard v-else-if="runStep === 4" :ui="{ root: 'shadow-sm', body: 'text-center' }">
+          <UCard v-else-if="runStep === 4" :ui="{ body: 'text-center' }">
             <div class="size-16 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-4">
               <UIcon name="i-lucide-check-circle" class="size-8 text-success" />
             </div>
@@ -339,7 +339,7 @@ async function processPayroll() {
       <!-- History Tab -->
       <template #history>
         <div class="pt-4">
-          <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+          <UCard :ui="{ body: 'p-0 sm:p-0' }">
             <div class="overflow-x-auto">
               <UTable
                 :data="history"

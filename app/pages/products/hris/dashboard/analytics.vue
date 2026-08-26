@@ -166,7 +166,7 @@ const topPerformers = [
 
     <!-- KPIs -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="kpi in kpis" :key="kpi.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4'}">
+      <UCard v-for="kpi in kpis" :key="kpi.label">
         <div class="flex items-center justify-between mb-3">
           <div :class="['size-9 rounded-lg flex items-center justify-center', kpi.bg]">
             <UIcon :name="kpi.icon" :class="['size-4', kpi.color]" />
@@ -183,23 +183,24 @@ const topPerformers = [
     <!-- Charts row -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <!-- Headcount Trend -->
-      <UCard :ui="{ root: 'shadow-sm lg:col-span-2'}">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="font-semibold text-highlighted">Headcount Trend</h2>
-            <p class="text-xs text-muted mt-0.5">Last 6 months</p>
+      <UCard class="lg:col-span-2">
+        <template #header>
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="font-semibold text-highlighted">Headcount Trend</h2>
+              <p class="text-xs text-muted mt-0.5">Last 6 months</p>
+            </div>
+            <UBadge label="+12 this month" color="success" variant="subtle" />
           </div>
-          <UBadge label="+12 this month" color="success" variant="subtle" />
-        </div>
+        </template>
         <div class="h-48 w-full mt-4 sm:mt-6">
           <Bar :data="headcountChartData" :options="headcountChartOptions" />
         </div>
       </UCard>
 
       <!-- Dept Breakdown -->
-      <UCard :ui="{ root: 'shadow-sm'}">
-        <h2 class="font-semibold text-highlighted">By Department</h2>
-        <div class="space-y-3 mt-4 sm:mt-6">
+      <UCard title="By Department">
+        <div class="space-y-3">
           <div v-for="dept in deptHeadcount" :key="dept.dept" class="space-y-1">
             <div class="flex items-center justify-between text-sm">
               <span class="text-muted">{{ dept.dept }}</span>
@@ -216,47 +217,53 @@ const topPerformers = [
     <!-- Second row -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
       <!-- Payroll Trend -->
-      <UCard :ui="{ root: 'shadow-sm'}">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="font-semibold text-highlighted">Payroll Cost Trend</h2>
-            <p class="text-xs text-muted mt-0.5">₱k per month</p>
+      <UCard>
+        <template #header>
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="font-semibold text-highlighted">Payroll Cost Trend</h2>
+              <p class="text-xs text-muted mt-0.5">₱k per month</p>
+            </div>
           </div>
-        </div>
-        <div class="h-40 w-full mt-4 sm:mt-6">
+        </template>
+        <div class="h-40 w-full">
           <Bar :data="payrollChartData" :options="payrollChartOptions" />
         </div>
       </UCard>
 
       <!-- Attrition vs Hiring -->
-      <UCard :ui="{ root: 'shadow-sm'}">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="font-semibold text-highlighted">Hiring vs Attrition</h2>
-            <p class="text-xs text-muted mt-0.5">Last 6 months</p>
+      <UCard>
+        <template #header>
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="font-semibold text-highlighted">Hiring vs Attrition</h2>
+              <p class="text-xs text-muted mt-0.5">Last 6 months</p>
+            </div>
+            <div class="flex gap-4 text-xs">
+              <span class="flex items-center gap-1.5"><span class="size-2 rounded-full bg-success inline-block" /> New hires</span>
+              <span class="flex items-center gap-1.5"><span class="size-2 rounded-full bg-error inline-block" /> Separations</span>
+            </div>
           </div>
-          <div class="flex gap-4 text-xs">
-            <span class="flex items-center gap-1.5"><span class="size-2 rounded-full bg-success inline-block" /> New hires</span>
-            <span class="flex items-center gap-1.5"><span class="size-2 rounded-full bg-error inline-block" /> Separations</span>
-          </div>
-        </div>
-        <div class="h-40 w-full mt-4 sm:mt-6">
+        </template>
+        <div class="h-40 w-full">
           <Bar :data="turnoverChartData" :options="turnoverChartOptions" />
         </div>
       </UCard>
     </div>
 
     <!-- Top Performers -->
-    <UCard :ui="{ root: 'shadow-sm'}">
-      <div class="flex items-center justify-between">
-        <h2 class="font-semibold text-highlighted">Top Performers — Q3 2026</h2>
-        <UButton label="Full Report" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" to="/products/hris/dashboard/performance" />
-      </div>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 sm:mt-6">
+    <UCard>
+      <template #header>
+        <div class="flex items-center justify-between">
+          <h2 class="font-semibold text-highlighted">Top Performers — Q3 2026</h2>
+          <UButton label="Full Report" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" to="/products/hris/dashboard/performance" />
+        </div>
+      </template>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <UCard
           v-for="(emp, i) in topPerformers"
           :key="emp.name"
-          :ui="{ root: 'shadow-sm', body: 'sm:p-4 flex items-center gap-4' }"
+          :ui="{ body: 'sm:p-4 flex items-center gap-4' }"
           variant="subtle"
         >
           <div class="relative">

@@ -396,6 +396,68 @@ export function useEisDashboard() {
   }
 }
 
+export function useHkasDashboard() {
+  const meta = {
+    themeClass: 'theme-hkas',
+    appIcon: 'i-lucide-activity',
+    appNamePrefix: 'Kinetics',
+    appNameHighlight: 'Core'
+  }
+
+  const navGroups: { label?: string; items: NavigationMenuItem[] }[] = [
+    {
+      items: [
+        {
+          label: 'Dashboard',
+          icon: 'i-lucide-layout-dashboard',
+          to: '/products/hkas/dashboard',
+        },
+      ],
+    },
+    {
+      label: 'Assessment',
+      items: [
+        { label: 'Fitness Tests', icon: 'i-lucide-clipboard-list', to: '/products/hkas/dashboard/fitness-tests' },
+        { label: 'Body Composition', icon: 'i-lucide-person-standing', to: '/products/hkas/dashboard/body-composition' },
+        { label: 'Assessment Records', icon: 'i-lucide-file-check', to: '/products/hkas/dashboard/records' },
+      ],
+    },
+    {
+      label: 'Programs',
+      items: [
+        { label: 'PE Curriculum', icon: 'i-lucide-book-open', to: '/products/hkas/dashboard/curriculum' },
+        { label: 'Training Plans', icon: 'i-lucide-dumbbell', to: '/products/hkas/dashboard/training' },
+      ],
+    },
+    {
+      label: 'Wellness',
+      items: [
+        { label: 'Corporate Wellness', icon: 'i-lucide-heart-pulse', to: '/products/hkas/dashboard/wellness' },
+        { label: 'Sports Performance', icon: 'i-lucide-trophy', to: '/products/hkas/dashboard/sports' },
+      ],
+    },
+    {
+      label: 'Insights',
+      items: [
+        { label: 'Analytics', icon: 'i-lucide-bar-chart-2', to: '/products/hkas/dashboard/analytics' },
+        { label: 'Reports', icon: 'i-lucide-file-bar-chart', to: '/products/hkas/dashboard/reports' },
+      ],
+    },
+    {
+      label: 'Admin',
+      items: [
+        { label: 'Notifications', icon: 'i-lucide-bell', to: '/products/hkas/dashboard/notifications' },
+        { label: 'Settings', icon: 'i-lucide-settings', to: '/products/hkas/dashboard/settings' },
+      ],
+    },
+  ]
+
+  return {
+    ...meta,
+    navGroups
+  }
+}
+
 export function useFmsDashboard() {
   const meta = {
     themeClass: 'theme-fms',

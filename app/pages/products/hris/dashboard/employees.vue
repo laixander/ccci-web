@@ -74,7 +74,7 @@ function viewEmployee(emp: typeof employees.value[0]) {
     </div>
 
     <!-- Filters -->
-    <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+    <UCard :ui="{ body: 'sm:p-4' }">
       <div class="flex flex-wrap gap-3 items-center">
         <UInput
           v-model="search"
@@ -97,7 +97,7 @@ function viewEmployee(emp: typeof employees.value[0]) {
     </UCard>
 
     <!-- Employee Table -->
-    <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+    <UCard :ui="{ body: 'p-0 sm:p-0' }">
       <div class="overflow-x-auto">
         <UTable
           :data="filtered"

@@ -3,7 +3,10 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 
 const navItems: NavigationMenuItem[] = [
   { label: 'Products', to: '#products' },
+  { label: 'Features', to: '#features' },
+  { label: 'How It Works', to: '#how-it-works' },
   { label: 'About', to: '#about' },
+  { label: 'Customer Stories', to: '#testimonials' },
   { label: 'Contact', to: '#contact' },
   // {
   //   label: 'Products',

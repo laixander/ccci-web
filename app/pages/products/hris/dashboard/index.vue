@@ -92,7 +92,6 @@ const donutStyle = computed(() => {
       <UCard
         v-for="kpi in kpiCards"
         :key="kpi.label"
-        :ui="{ root: 'shadow-sm hover:shadow-md transition-shadow duration-200', body: 'sm:p-4' }"
       >
         <div class="flex items-center justify-between mb-3">
           <div :class="['size-9 rounded-lg flex items-center justify-center', kpi.bg]">
@@ -108,11 +107,11 @@ const donutStyle = computed(() => {
     <!-- Main content row -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <!-- Recent Activity (2/3 width) -->
-      <UCard class="lg:col-span-2" :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+      <UCard class="lg:col-span-2" :ui="{ body: 'p-0 sm:p-0' }">
         <template #header>
           <div class="flex items-center justify-between">
             <h2 class="font-semibold text-highlighted">Recent Activity</h2>
-            <UButton label="View all" variant="ghost" size="xs" trailing-icon="i-lucide-arrow-right" />
+            <UButton label="View all" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" />
           </div>
         </template>
         <div class="divide-y divide-default">
@@ -136,27 +135,25 @@ const donutStyle = computed(() => {
       <!-- Right column -->
       <div class="space-y-4">
         <!-- Quick Actions -->
-        <UCard :ui="{ root: 'shadow-sm' }">
-          <h2 class="font-semibold text-highlighted">Quick Actions</h2>
-          <div class="grid grid-cols-2 gap-2 mt-4 sm:mt-6">
+        <UCard title="Quick Actions">
+          <div class="grid grid-cols-2 gap-3">
             <NuxtLink
               v-for="link in quickLinks"
               :key="link.label"
               :to="link.to"
-              :class="['flex flex-col items-center gap-2 p-3 rounded-lg transition-all hover:scale-105', link.bg]"
+              :class="['flex flex-col items-center gap-2 p-3 rounded-xl transition-colors hover:bg-muted/50', link.bg]"
             >
-              <div :class="['size-8 rounded-md flex items-center justify-center', link.bg]">
+              <div :class="['size-10 rounded-xl flex items-center justify-center', link.bg]">
                 <UIcon :name="link.icon" :class="['size-5', link.color]" />
               </div>
-              <span :class="['text-xs font-medium text-center', link.color]">{{ link.label }}</span>
+              <span :class="['text-xs font-medium text-highlighted text-center', link.color]">{{ link.label }}</span>
             </NuxtLink>
           </div>
         </UCard>
 
         <!-- Upcoming Events -->
-        <UCard :ui="{ root: 'shadow-sm' }">
-          <h2 class="font-semibold text-highlighted">Upcoming</h2>
-          <div class="space-y-3 mt-4 sm:mt-6">
+        <UCard title="Upcoming">
+          <div class="space-y-3">
             <div
               v-for="event in upcomingEvents"
               :key="event.label"
@@ -164,9 +161,9 @@ const donutStyle = computed(() => {
             >
               <span :class="['size-2 rounded-full flex-shrink-0', event.dot]" />
               <div class="flex-1 min-w-0">
-                <p class="text-xs font-medium text-highlighted truncate">{{ event.label }}</p>
+                <p class="text-sm text-highlighted truncate">{{ event.label }}</p>
               </div>
-              <span class="text-xs text-dimmed whitespace-nowrap">{{ event.date }}</span>
+              <span class="text-xs text-dimmed shrink-0 font-medium">{{ event.date }}</span>
             </div>
           </div>
         </UCard>
@@ -174,12 +171,14 @@ const donutStyle = computed(() => {
     </div>
 
     <!-- Headcount by Department -->
-    <UCard :ui="{ root: 'shadow-sm' }">
-      <div class="flex items-center justify-between">
-        <h2 class="font-semibold text-highlighted">Headcount by Department</h2>
-        <UButton label="Full Analytics" variant="ghost" size="xs" trailing-icon="i-lucide-arrow-right" to="/products/hris/dashboard/analytics" />
-      </div>
-      <div class="space-y-3 mt-4 sm:mt-6">
+    <UCard>
+      <template #header>
+        <div class="flex items-center justify-between">
+          <h2 class="font-semibold text-highlighted">Headcount by Department</h2>
+          <UButton label="Full Analytics" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" to="/products/hris/dashboard/analytics" />
+        </div>
+      </template>
+      <div class="space-y-3">
         <div v-for="dept in headcountByDept" :key="dept.dept" class="flex items-center gap-4">
           <span class="text-sm text-muted w-28 flex-shrink-0">{{ dept.dept }}</span>
           <UProgress :model-value="dept.pct" :max="100" class="flex-1" />

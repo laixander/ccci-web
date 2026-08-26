@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+@source inline("{group-hover:,,}{bg,text,ring,border,to,from}-{red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose}-{50,100,200,300,400,500,600,700,800,900,950}{,,/10}");
+
 @theme {
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
@@ -119,6 +121,19 @@
   --color-fms-900: #1e3a8a;
   --color-fms-950: #172554;
 
+  /* for hkas, red as base */
+  --color-hkas-50: #fff1f2;
+  --color-hkas-100: #ffe4e6;
+  --color-hkas-200: #fecdd3;
+  --color-hkas-300: #fda4af;
+  --color-hkas-400: #fb7185;
+  --color-hkas-500: #ef4444;
+  --color-hkas-600: #dc2626;
+  --color-hkas-700: #b91c1c;
+  --color-hkas-800: #991b1b;
+  --color-hkas-900: #7f1d1d;
+  --color-hkas-950: #450a0a;
+
   --color-brand-50: #f2f5ff;
   --color-brand-100: #e3e9ff;
   --color-brand-200: #ccd8ff;
@@ -168,6 +183,10 @@
   --ui-primary: var(--color-fms-500);
 }
 
+.theme-hkas {
+  --ui-primary: var(--color-hkas-500);
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -204,5 +223,76 @@ html {
 
   to {
     transform: translateX(-100%);
+  }
+}
+
+/* ── Per-element scroll-reveal animations ───────────────────────────────── */
+
+/**
+ * Elements carrying a reveal-* class start hidden (opacity 0, offset) and
+ * play their keyframe once the nearest ancestor .section-reveal gains .is-visible.
+ * animation-play-state: paused → running means no overshoot is possible.
+ */
+.reveal-up,
+.reveal-down,
+.reveal-left,
+.reveal-right {
+  opacity: 0;
+  animation-duration: 0.85s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: both;
+  animation-play-state: paused;
+}
+
+.reveal-up    { animation-name: kf-reveal-up;    }
+.reveal-down  { animation-name: kf-reveal-down;  }
+.reveal-left  { animation-name: kf-reveal-left;  }
+.reveal-right { animation-name: kf-reveal-right; }
+
+/* Stagger helpers */
+.reveal-delay-100 { animation-delay: 100ms; }
+.reveal-delay-150 { animation-delay: 150ms; }
+.reveal-delay-200 { animation-delay: 200ms; }
+.reveal-delay-300 { animation-delay: 300ms; }
+.reveal-delay-400 { animation-delay: 400ms; }
+.reveal-delay-500 { animation-delay: 500ms; }
+.reveal-delay-600 { animation-delay: 600ms; }
+
+/* Trigger: play all child reveal animations once parent gets .is-visible */
+.section-reveal.is-visible .reveal-up,
+.section-reveal.is-visible .reveal-down,
+.section-reveal.is-visible .reveal-left,
+.section-reveal.is-visible .reveal-right {
+  animation-play-state: running;
+}
+
+@keyframes kf-reveal-up {
+  from { opacity: 0; transform: translateY(1.75rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes kf-reveal-down {
+  from { opacity: 0; transform: translateY(-1.25rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes kf-reveal-left {
+  from { opacity: 0; transform: translateX(-2rem); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes kf-reveal-right {
+  from { opacity: 0; transform: translateX(2rem); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Honour reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-up,
+  .reveal-down,
+  .reveal-left,
+  .reveal-right {
+    animation: none;
+    opacity: 1;
   }
 }

@@ -54,7 +54,7 @@ const cycle = { name: 'Q3 2026 Review', deadline: 'September 1, 2026', progress:
     </div>
 
     <!-- Active Cycle Banner -->
-    <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }" class="ring-primary/30 bg-primary/5">
+    <UCard class="ring-primary/30 bg-primary/5">
       <div class="flex items-center gap-5">
         <div class="size-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
           <UIcon name="i-lucide-star" class="size-6 text-primary" />
@@ -73,7 +73,7 @@ const cycle = { name: 'Q3 2026 Review', deadline: 'September 1, 2026', progress:
 
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="stat in stats" :key="stat.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+      <UCard v-for="stat in stats" :key="stat.label">
         <div class="flex items-center gap-4">
           <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', stat.bg]">
             <UIcon :name="stat.icon" :class="['size-5', stat.color]" />
@@ -88,7 +88,7 @@ const cycle = { name: 'Q3 2026 Review', deadline: 'September 1, 2026', progress:
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
       <!-- Employee Scores Table -->
-      <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+      <UCard :ui="{ body: 'p-0 sm:p-0' }">
         <template #header>
           <div class="flex items-center justify-between">
             <h2 class="font-semibold text-highlighted">Employee Reviews</h2>
@@ -96,10 +96,10 @@ const cycle = { name: 'Q3 2026 Review', deadline: 'September 1, 2026', progress:
           </div>
         </template>
         <div class="divide-y divide-default">
-          <div v-for="emp in employees" :key="emp.name" class="flex items-center gap-4 sm:px-6 p-4 hover:bg-muted/30 transition-colors">
+          <div v-for="emp in employees" :key="emp.name" class="flex items-center gap-4 sm:px-6 p-4 group hover:bg-muted/20 transition-colors">
             <UAvatar :text="emp.initials" size="sm" :color="emp.avatarColor" />
             <div class="flex-1 min-w-0">
-              <p class="font-medium text-highlighted text-sm">{{ emp.name }}</p>
+              <p class="font-medium text-highlighted text-sm group-hover:text-primary transition-colors">{{ emp.name }}</p>
               <p class="text-xs text-muted">{{ emp.dept }}</p>
             </div>
             <div class="flex gap-0.5">
@@ -112,9 +112,8 @@ const cycle = { name: 'Q3 2026 Review', deadline: 'September 1, 2026', progress:
       </UCard>
 
       <!-- OKR Tracker -->
-      <UCard :ui="{ root: 'shadow-sm' }">
-        <h2 class="font-semibold text-highlighted">Team OKRs</h2>
-        <div class="space-y-4 mt-4 sm:mt-6">
+      <UCard title="Team OKRs">
+        <div class="space-y-3">
           <div v-for="okr in okrTeams" :key="okr.team" class="space-y-2">
             <div class="flex items-center justify-between">
               <div>
@@ -134,13 +133,12 @@ const cycle = { name: 'Q3 2026 Review', deadline: 'September 1, 2026', progress:
     </div>
 
     <!-- 360° Feedback -->
-    <UCard :ui="{ root: 'shadow-sm' }">
-      <h2 class="font-semibold text-highlighted">360° Peer Feedback</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 sm:mt-6">
+    <UCard title="360° Peer Feedback">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <UCard
           v-for="fb in feedbacks"
           :key="fb.from + fb.to"
-          :ui="{ root: 'shadow-sm', body: 'sm:p-4 space-y-3' }"
+          :ui="{ body: 'sm:p-4 space-y-3' }"
           variant="subtle"
         >
           <div class="flex gap-0.5">
