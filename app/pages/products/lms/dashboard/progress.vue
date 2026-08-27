@@ -26,7 +26,7 @@ const learners = ref([
   { id: 'L002', name: 'James Reyes', initials: 'JR', course: 'Leadership Essentials', pct: 60, lastActive: 'Yesterday', status: 'On Track', avatarColor: 'neutral' as const },
   { id: 'L003', name: 'Ana Dela Cruz', initials: 'AD', course: 'Q3 Compliance Training', pct: 95, lastActive: 'Today', status: 'Completed', avatarColor: 'warning' as const },
   { id: 'L004', name: 'Carlos Wu', initials: 'CW', course: 'Data Literacy Bootcamp', pct: 28, lastActive: '9 days ago', status: 'At Risk', avatarColor: 'secondary' as const },
-  { id: 'L005', name: 'Priya Lal', initials: 'PL', course: 'New Employee Onboarding', pct: 100, lastActive: 'Aug 8', status: 'Completed', avatarColor: 'success' as const },
+  { id: 'L005', name: 'Priya Lal', initials: 'PL', course: 'New Employee Onboarding', pct: 35, lastActive: 'Aug 8', status: 'At Risk', avatarColor: 'success' as const },
   { id: 'L006', name: 'Ryan Cruz', initials: 'RC', course: 'JavaScript Fundamentals', pct: 15, lastActive: '12 days ago', status: 'At Risk', avatarColor: 'error' as const },
   { id: 'L007', name: 'Ben Torres', initials: 'BT', course: 'Leadership Essentials', pct: 72, lastActive: '2 days ago', status: 'On Track', avatarColor: 'info' as const },
   { id: 'L008', name: 'Lena Park', initials: 'LP', course: 'Q3 Compliance Training', pct: 100, lastActive: 'Aug 5', status: 'Completed', avatarColor: 'primary' as const },
@@ -47,8 +47,10 @@ const filtered = computed(() => {
 })
 
 const enrollmentTrend = [
-  { month: 'Mar', value: 180 }, { month: 'Apr', value: 210 }, { month: 'May', value: 260 },
-  { month: 'Jun', value: 295 }, { month: 'Jul', value: 330 }, { month: 'Aug', value: 385 },
+  { month: 'Jan', value: 120 }, { month: 'Feb', value: 150 }, { month: 'Mar', value: 180 }, 
+  { month: 'Apr', value: 210 }, { month: 'May', value: 260 }, { month: 'Jun', value: 295 }, 
+  { month: 'Jul', value: 330 }, { month: 'Aug', value: 385 }, { month: 'Sep', value: 420 },
+  { month: 'Oct', value: 450 }, { month: 'Nov', value: 490 }, { month: 'Dec', value: 540 },
 ]
 
 const chartData = computed(() => ({
@@ -122,7 +124,7 @@ const learnerColumns = [
 
     <!-- KPIs -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="kpi in kpis" :key="kpi.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+      <UCard v-for="kpi in kpis" :key="kpi.label">
         <div class="flex items-center gap-4">
           <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', kpi.bg]">
             <UIcon :name="kpi.icon" :class="['size-5', kpi.color]" />
@@ -139,26 +141,30 @@ const learnerColumns = [
     <!-- Charts row -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <!-- Enrollment Trend -->
-      <UCard :ui="{ root: 'shadow-sm lg:col-span-2' }">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="font-semibold text-highlighted">Enrollment Trend</h2>
-            <p class="text-xs text-muted mt-0.5">New enrollments per month</p>
+      <UCard class="lg:col-span-2">
+        <template #header> 
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="font-semibold text-highlighted">Enrollment Trend</h2>
+              <p class="text-xs text-muted mt-0.5">New enrollments per month</p>
+            </div>
+            <UBadge label="+55 this month" color="success" variant="subtle" />
           </div>
-          <UBadge label="+55 this month" color="success" variant="subtle" />
-        </div>
+        </template>
         <div class="h-48 w-full mt-4 sm:mt-6">
           <Bar :data="chartData" :options="chartOptions" />
         </div>
       </UCard>
 
       <!-- At-Risk Learners -->
-      <UCard :ui="{ root: 'shadow-sm' }">
-        <div class="flex items-center justify-between">
-          <h2 class="font-semibold text-highlighted">At-Risk Learners</h2>
-          <UBadge :label="`${atRiskLearners.length}`" color="error" variant="subtle" />
-        </div>
-        <div class="space-y-3 mt-4 sm:mt-6">
+      <UCard>
+        <template #header>
+          <div class="flex items-center justify-between">
+            <h2 class="font-semibold text-highlighted">At-Risk Learners</h2>
+            <UBadge :label="`${atRiskLearners.length}`" color="error" variant="subtle" />
+          </div>
+        </template>
+        <div class="space-y-3">
           <div v-for="learner in atRiskLearners" :key="learner.id" class="flex items-center gap-3 p-3 rounded-lg bg-error/5 border border-error/10">
             <UAvatar :text="learner.initials" size="sm" :color="learner.avatarColor" />
             <div class="flex-1 min-w-0">
@@ -167,13 +173,15 @@ const learnerColumns = [
             </div>
             <span class="text-xs font-bold text-error">{{ learner.pct }}%</span>
           </div>
-          <UButton block label="Send Nudge to All" icon="i-lucide-send" size="sm" color="neutral" variant="outline" />
+          <UButton block color="neutral" variant="outline">
+            <UIcon name="i-lucide-send" class="size-4 shrink-0" /> Send Nudge to All
+          </UButton>
         </div>
       </UCard>
     </div>
 
     <!-- Filters -->
-    <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+    <UCard :ui="{ body: 'sm:p-4' }">
       <div class="flex flex-wrap gap-3 items-center">
         <UInput v-model="search" placeholder="Search learners…" icon="i-lucide-search" class="flex-1 min-w-48" />
         <USelect v-model="selectedCourse" :items="courseOptions" class="w-64" />
@@ -182,7 +190,7 @@ const learnerColumns = [
     </UCard>
 
     <!-- Learner Progress Table -->
-    <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+    <UCard :ui="{ body: 'p-0 sm:p-0' }">
       <div class="overflow-x-auto">
         <UTable :data="filtered" :columns="learnerColumns" class="scrollbar w-full">
           <template #learner-cell="{ row }">

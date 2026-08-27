@@ -81,7 +81,7 @@ const assessmentColumns = [
     </div>
 
     <!-- Profile Card -->
-    <UCard :ui="{ root: 'shadow-sm' }">
+    <UCard>
       <div class="flex items-center gap-6">
         <UAvatar :text="user.initials" size="2xl" :color="user.avatar" />
         <div class="flex-1">
@@ -120,7 +120,7 @@ const assessmentColumns = [
             <UCard
               v-for="course in myCourses"
               :key="course.id"
-              :ui="{ root: 'shadow-sm' }"
+             
               class="cursor-pointer"
             >
               <div class="flex items-start gap-4">
@@ -162,7 +162,7 @@ const assessmentColumns = [
             <UCard
               v-for="cert in myCertificates"
               :key="cert.id"
-              :ui="{ root: 'shadow-sm ring-warning/20 bg-warning/5' }"
+              :ui="{ root: 'ring-warning/20 bg-warning/5' }"
             >
               <div class="flex items-start gap-4">
                 <div class="size-14 rounded-xl bg-warning/10 flex items-center justify-center flex-shrink-0">
@@ -191,7 +191,7 @@ const assessmentColumns = [
       <!-- Assessments Tab -->
       <template #assessments>
         <div class="pt-4">
-          <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
+          <UCard :ui="{ body: 'p-0 sm:p-0' }">
           <div class="overflow-x-auto">
             <UTable :data="myAssessments" :columns="assessmentColumns" class="scrollbar w-full">
               <template #assessment-cell="{ row }">

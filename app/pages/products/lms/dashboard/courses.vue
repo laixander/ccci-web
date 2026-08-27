@@ -80,7 +80,7 @@ const courseColumns = [
 
     <!-- Stats row -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+      <UCard>
         <div class="flex items-center gap-4">
           <div class="size-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-success/10">
             <UIcon name="i-lucide-check-circle-2" class="size-5 text-success" />
@@ -91,7 +91,7 @@ const courseColumns = [
           </div>
         </div>
       </UCard>
-      <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+      <UCard>
         <div class="flex items-center gap-4">
           <div class="size-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-info/10">
             <UIcon name="i-lucide-users" class="size-5 text-info" />
@@ -102,7 +102,7 @@ const courseColumns = [
           </div>
         </div>
       </UCard>
-      <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+      <UCard>
         <div class="flex items-center gap-4">
           <div class="size-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-primary/10">
             <UIcon name="i-lucide-trending-up" class="size-5 text-primary" />
@@ -113,7 +113,7 @@ const courseColumns = [
           </div>
         </div>
       </UCard>
-      <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+      <UCard>
         <div class="flex items-center gap-4">
           <div class="size-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-warning/10">
             <UIcon name="i-lucide-file-edit" class="size-5 text-warning" />
@@ -127,7 +127,7 @@ const courseColumns = [
     </div>
 
     <!-- Filters -->
-    <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+    <UCard :ui="{ body: 'sm:p-4' }">
       <div class="flex flex-wrap gap-3 items-center">
         <UInput
           v-model="search"

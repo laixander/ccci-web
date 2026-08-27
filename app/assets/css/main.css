@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
-@source inline("{group-hover:,,}{bg,text,ring,border,to,from}-{red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose}-{50,100,200,300,400,500,600,700,800,900,950}{,,/10}");
+@source inline("{group-hover:,,}{bg,text,ring,border,to,from}-{red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose}-{50,100,200,300,400,500,600,700,800,900,950}{,,/5,/10,/20,/30,/40,/50}");
 
 @theme {
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -244,19 +244,50 @@ html {
   animation-play-state: paused;
 }
 
-.reveal-up    { animation-name: kf-reveal-up;    }
-.reveal-down  { animation-name: kf-reveal-down;  }
-.reveal-left  { animation-name: kf-reveal-left;  }
-.reveal-right { animation-name: kf-reveal-right; }
+.reveal-up {
+  animation-name: kf-reveal-up;
+}
+
+.reveal-down {
+  animation-name: kf-reveal-down;
+}
+
+.reveal-left {
+  animation-name: kf-reveal-left;
+}
+
+.reveal-right {
+  animation-name: kf-reveal-right;
+}
 
 /* Stagger helpers */
-.reveal-delay-100 { animation-delay: 100ms; }
-.reveal-delay-150 { animation-delay: 150ms; }
-.reveal-delay-200 { animation-delay: 200ms; }
-.reveal-delay-300 { animation-delay: 300ms; }
-.reveal-delay-400 { animation-delay: 400ms; }
-.reveal-delay-500 { animation-delay: 500ms; }
-.reveal-delay-600 { animation-delay: 600ms; }
+.reveal-delay-100 {
+  animation-delay: 100ms;
+}
+
+.reveal-delay-150 {
+  animation-delay: 150ms;
+}
+
+.reveal-delay-200 {
+  animation-delay: 200ms;
+}
+
+.reveal-delay-300 {
+  animation-delay: 300ms;
+}
+
+.reveal-delay-400 {
+  animation-delay: 400ms;
+}
+
+.reveal-delay-500 {
+  animation-delay: 500ms;
+}
+
+.reveal-delay-600 {
+  animation-delay: 600ms;
+}
 
 /* Trigger: play all child reveal animations once parent gets .is-visible */
 .section-reveal.is-visible .reveal-up,
@@ -267,27 +298,56 @@ html {
 }
 
 @keyframes kf-reveal-up {
-  from { opacity: 0; transform: translateY(1.75rem); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(1.75rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes kf-reveal-down {
-  from { opacity: 0; transform: translateY(-1.25rem); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-1.25rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes kf-reveal-left {
-  from { opacity: 0; transform: translateX(-2rem); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-2rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @keyframes kf-reveal-right {
-  from { opacity: 0; transform: translateX(2rem); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(2rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* Honour reduced-motion preference */
 @media (prefers-reduced-motion: reduce) {
+
   .reveal-up,
   .reveal-down,
   .reveal-left,

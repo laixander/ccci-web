@@ -65,7 +65,7 @@ const assessmentColumns = [
     </div>
 
     <!-- Active Cycle Banner -->
-    <UCard :ui="{ root: 'shadow-sm ring-primary/30 bg-primary/5' }">
+    <UCard :ui="{ root: 'ring-primary/30 bg-primary/5' }">
       <div class="flex items-center gap-5">
         <div class="size-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
           <UIcon name="i-lucide-check-circle" class="size-6 text-primary" />
@@ -84,7 +84,7 @@ const assessmentColumns = [
 
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="stat in stats" :key="stat.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+      <UCard v-for="stat in stats" :key="stat.label">
         <div class="flex items-center gap-4">
           <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', stat.bg]">
             <UIcon :name="stat.icon" :class="['size-5', stat.color]" />
@@ -98,11 +98,13 @@ const assessmentColumns = [
     </div>
 
     <!-- Assessment Table -->
-    <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
-      <div class="flex items-center justify-between px-5 py-4 border-b border-default">
-        <h2 class="font-semibold text-highlighted">Assessments</h2>
-        <UBadge label="Q3 2026" color="primary" variant="subtle" size="sm" />
-      </div>
+    <UCard :ui="{ body: 'p-0 sm:p-0' }">
+      <template #header>
+        <div class="flex items-center justify-between">
+          <h2 class="font-semibold text-highlighted">Assessments</h2>
+          <UBadge label="Q3 2026" color="primary" variant="subtle" size="sm" />
+        </div>
+      </template>
       <div class="overflow-x-auto">
         <UTable :data="assessments" :columns="assessmentColumns" class="scrollbar w-full">
           <template #assessment-cell="{ row }">
@@ -139,14 +141,13 @@ const assessmentColumns = [
     </UCard>
 
     <!-- Peer Feedback -->
-    <UCard :ui="{ root: 'shadow-sm' }">
-      <h2 class="font-semibold text-highlighted">Learner Feedback</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 sm:mt-6">
+    <UCard title="Learner Feedback">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <UCard
           v-for="fb in peerFeedback"
           :key="fb.from + fb.to"
           variant="subtle"
-          :ui="{ root: 'shadow-sm', body: 'sm:p-4 space-y-3' }"
+          :ui="{ body: 'sm:p-4 space-y-3' }"
         >
           <div class="flex gap-0.5">
             <UIcon v-for="i in 5" :key="i" name="i-lucide-star" :class="['size-3.5', i <= fb.rating ? 'text-warning' : 'text-muted']" />

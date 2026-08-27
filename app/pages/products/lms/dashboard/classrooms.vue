@@ -57,7 +57,7 @@ const sessionColumns = [
 
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="stat in stats" :key="stat.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
+      <UCard v-for="stat in stats" :key="stat.label">
         <div class="flex items-center gap-4">
           <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', stat.bg]">
             <UIcon :name="stat.icon" :class="['size-5', stat.color]" />
@@ -71,7 +71,7 @@ const sessionColumns = [
     </div>
 
     <!-- Live Now Banner -->
-    <UCard v-if="sessions.some(s => s.status === 'Live')" :ui="{ root: 'shadow-sm ring-error/30 bg-error/5' }">
+    <UCard v-if="sessions.some(s => s.status === 'Live')" :ui="{ root: 'ring-error/30 bg-error/5' }">
       <div class="flex items-center gap-4">
         <div class="size-3 rounded-full bg-error animate-pulse" />
         <div class="flex-1">
@@ -87,11 +87,13 @@ const sessionColumns = [
     </UCard>
 
     <!-- Sessions Table -->
-    <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
-      <div class="flex items-center justify-between px-5 py-4 border-b border-default">
-        <h2 class="font-semibold text-highlighted">All Sessions</h2>
-        <span class="text-sm text-muted">{{ sessions.length }} sessions</span>
-      </div>
+    <UCard :ui="{ body: 'p-0 sm:p-0' }">
+      <template #header>
+        <div class="flex items-center justify-between">
+          <h2 class="font-semibold text-highlighted">All Sessions</h2>
+          <span class="text-sm text-muted">{{ sessions.length }} sessions</span>
+        </div>
+      </template>
       <div class="overflow-x-auto">
         <UTable :data="sessions" :columns="sessionColumns" class="scrollbar w-full">
           <template #session-cell="{ row }">

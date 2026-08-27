@@ -31,8 +31,10 @@ function isImprovement(kpi: typeof kpis[0]) {
 }
 
 const enrollmentTrend = [
-  { month: 'Mar', value: 180 }, { month: 'Apr', value: 210 }, { month: 'May', value: 260 },
-  { month: 'Jun', value: 295 }, { month: 'Jul', value: 330 }, { month: 'Aug', value: 385 },
+  { month: 'Jan', value: 120 }, { month: 'Feb', value: 150 }, { month: 'Mar', value: 180 }, 
+  { month: 'Apr', value: 210 }, { month: 'May', value: 260 }, { month: 'Jun', value: 295 }, 
+  { month: 'Jul', value: 330 }, { month: 'Aug', value: 385 }, { month: 'Sep', value: 420 },
+  { month: 'Oct', value: 450 }, { month: 'Nov', value: 490 }, { month: 'Dec', value: 540 },
 ]
 
 const chartData = computed(() => ({
@@ -135,23 +137,24 @@ const leaderboard = [
     <!-- Charts row -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <!-- Enrollment Trend -->
-      <UCard :ui="{ root: 'shadow-sm lg:col-span-2' }">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="font-semibold text-highlighted">Enrollment Trend</h2>
-            <p class="text-xs text-muted mt-0.5">New enrollments per month</p>
+      <UCard class="lg:col-span-2">
+        <template #header>
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="font-semibold text-highlighted">Enrollment Trend</h2>
+              <p class="text-xs text-muted mt-0.5">New enrollments per month</p>
+            </div>
+            <UBadge label="+55 this month" color="success" variant="subtle" />
           </div>
-          <UBadge label="+55 this month" color="success" variant="subtle" />
-        </div>
+        </template>
         <div class="h-48 w-full mt-4 sm:mt-6">
           <Bar :data="chartData" :options="chartOptions" />
         </div>
       </UCard>
 
       <!-- Category Breakdown -->
-      <UCard :ui="{ root: 'shadow-sm' }">
-        <h2 class="font-semibold text-highlighted">By Category</h2>
-        <div class="space-y-3 mt-4 sm:mt-6">
+      <UCard title="By Category">
+        <div class="space-y-3">
           <div v-for="cat in categoryBreakdown" :key="cat.cat" class="space-y-1">
             <div class="flex items-center justify-between text-sm">
               <span class="text-muted">{{ cat.cat }}</span>
@@ -166,11 +169,8 @@ const leaderboard = [
     <!-- Bottom row -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <!-- Top Courses by Completion -->
-      <UCard :ui="{ root: 'shadow-sm' }">
-        <div class="flex items-center justify-between">
-          <h2 class="font-semibold text-highlighted">Top Courses by Completion</h2>
-        </div>
-        <div class="space-y-4 mt-4 sm:mt-6">
+      <UCard title="Top Courses by Completion">
+        <div class="space-y-3">
           <UCard
             v-for="(course, i) in topCourses"
             :key="course.title"
@@ -192,12 +192,14 @@ const leaderboard = [
       </UCard>
 
       <!-- Learner Leaderboard -->
-      <UCard :ui="{ root: 'shadow-sm' }">
-        <div class="flex items-center justify-between">
-          <h2 class="font-semibold text-highlighted">Learner Leaderboard</h2>
-          <UButton label="View All" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" to="/products/lms/dashboard/progress" />
-        </div>
-        <div class="space-y-3 mt-4 sm:mt-6">
+      <UCard>
+        <template #header>
+          <div class="flex items-center justify-between">
+            <h2 class="font-semibold text-highlighted">Learner Leaderboard</h2>
+            <UButton label="View All" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" to="/products/lms/dashboard/progress" />
+          </div>
+        </template>
+        <div class="space-y-3">
           <UCard
             v-for="(learner, i) in leaderboard"
             :key="learner.name"

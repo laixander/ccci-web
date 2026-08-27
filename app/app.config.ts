@@ -3,6 +3,10 @@ export default defineAppConfig({
     colors: {
       primary: 'brand',
       neutral: 'zinc',
+      info: 'sky',
+      success: 'green',
+      warning: 'orange',
+      danger: 'red',
       // Full Tailwind palette
       red: 'red',
       orange: 'orange',

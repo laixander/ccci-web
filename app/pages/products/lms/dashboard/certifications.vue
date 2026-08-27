@@ -4,10 +4,10 @@ definePageMeta({
 })
 
 const stats = [
-  { label: 'Total Issued', value: '312', icon: 'i-lucide-award', color: 'text-warning', bg: 'bg-warning/10', change: '↑ 22 this month' },
-  { label: 'Expiring Soon', value: '18', icon: 'i-lucide-clock', color: 'text-error', bg: 'bg-error/10', change: 'Within 30 days' },
-  { label: 'Active Certificates', value: '294', icon: 'i-lucide-shield-check', color: 'text-success', bg: 'bg-success/10', change: '94% still valid' },
-  { label: 'Courses with Certs', value: '14', icon: 'i-lucide-book-open', color: 'text-primary', bg: 'bg-primary/10', change: 'Out of 84 courses' },
+  { label: 'Total Issued', value: '312', icon: 'i-lucide-award', color: 'text-warning', bg: 'bg-warning/10', change: '↑ 22 this month', changeColor: 'text-warning' },
+  { label: 'Expiring Soon', value: '18', icon: 'i-lucide-clock', color: 'text-error', bg: 'bg-error/10', change: 'Within 30 days', changeColor: 'text-error' },
+  { label: 'Active Certificates', value: '294', icon: 'i-lucide-shield-check', color: 'text-success', bg: 'bg-success/10', change: '94% still valid', changeColor: 'text-success' },
+  { label: 'Courses with Certs', value: '14', icon: 'i-lucide-book-open', color: 'text-primary', bg: 'bg-primary/10', change: 'Out of 84 courses', changeColor: 'text-primary' },
 ]
 
 const certificates = ref([
@@ -26,10 +26,10 @@ const statusConfig: Record<string, string> = {
 }
 
 const badges = [
-  { name: 'Fast Learner', icon: 'i-lucide-zap', color: 'text-warning', bg: 'bg-warning/10', count: 48 },
-  { name: 'Perfect Score', icon: 'i-lucide-star', color: 'text-primary', bg: 'bg-primary/10', count: 23 },
-  { name: 'Compliance Pro', icon: 'i-lucide-shield-check', color: 'text-success', bg: 'bg-success/10', count: 156 },
-  { name: 'Mentor', icon: 'i-lucide-users', color: 'text-info', bg: 'bg-info/10', count: 12 },
+  { name: 'Fast Learner', icon: 'i-lucide-zap', color: 'amber', count: 48 },
+  { name: 'Perfect Score', icon: 'i-lucide-star', color: 'violet', count: 23 },
+  { name: 'Compliance Pro', icon: 'i-lucide-shield-check', color: 'green', count: 156 },
+  { name: 'Mentor', icon: 'i-lucide-users', color: 'sky', count: 12 },
 ]
 
 const showIssueModal = ref(false)
@@ -62,7 +62,7 @@ const certColumns = [
 
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <UCard v-for="stat in stats" :key="stat.label" :ui="{ root: 'shadow-sm', body: 'sm:p-4' }" class="hover:shadow-sm transition-shadow">
+      <UCard v-for="stat in stats" :key="stat.label">
         <div class="flex items-center gap-4">
           <div :class="['size-10 rounded-xl flex items-center justify-center flex-shrink-0', stat.bg]">
             <UIcon :name="stat.icon" :class="['size-5', stat.color]" />
@@ -72,22 +72,33 @@ const certColumns = [
             <p class="text-xs text-muted">{{ stat.label }}</p>
           </div>
         </div>
-        <p class="text-xs text-dimmed mt-2">{{ stat.change }}</p>
+        <p :class="['text-xs mt-2', stat.changeColor]">{{ stat.change }}</p>
       </UCard>
     </div>
 
     <!-- Badges -->
-    <UCard :ui="{ root: 'shadow-sm' }">
-      <h2 class="font-semibold text-highlighted">Achievement Badges</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 sm:mt-6">
+    <UCard>
+      <template #header>
+        <div class="flex items-center justify-between">
+          <h2 class="font-semibold text-highlighted">Achievement Badges</h2>
+          <span class="text-sm text-muted">{{ badges.length }} badges</span>
+        </div>
+      </template>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <UCard
           v-for="badge in badges"
           :key="badge.name"
           variant="subtle"
-          :ui="{ root: 'shadow-sm', body: 'sm:p-5 flex flex-col items-center gap-3 text-center' }"
+          :ui="{ root: `ring-${badge.color}-500/30 bg-${badge.color}-500/5`, body: 'relative flex flex-col items-center gap-3 text-center' }"
         >
-          <div :class="['size-14 rounded-full flex items-center justify-center', badge.bg]">
-            <UIcon :name="badge.icon" :class="['size-7', badge.color]" />
+          <!-- Certificate inner border -->
+          <div class="absolute inset-1 border border-dashed opacity-[0.15] pointer-events-none rounded-lg" :class="`border-${badge.color}-500`" />
+          <!-- Watermark icon -->
+          <div class="absolute inset-0 overflow-hidden pointer-events-none rounded-xl">
+            <UIcon :name="badge.icon" class="absolute -right-4 -bottom-4 size-28 opacity-[0.06] -rotate-12" :class="`text-${badge.color}-500`" />
+          </div>
+          <div :class="['size-14 rounded-full flex items-center justify-center', `bg-${badge.color}-500/10`]">
+            <UIcon :name="badge.icon" :class="['size-7', `text-${badge.color}-500`]" />
           </div>
           <div>
             <p class="font-semibold text-highlighted text-sm">{{ badge.name }}</p>
@@ -98,16 +109,21 @@ const certColumns = [
     </UCard>
 
     <!-- Search -->
-    <UCard :ui="{ root: 'shadow-sm', body: 'sm:p-4' }">
-      <UInput v-model="search" placeholder="Search by learner or course…" icon="i-lucide-search" class="max-w-md" />
+    <UCard :ui="{ body: 'sm:p-4' }">
+      <div class="flex flex-wrap gap-3 items-center">
+        <UInput v-model="search" placeholder="Search by learner or course…" icon="i-lucide-search" class="flex-1 min-w-48" />
+        <span class="text-sm text-muted ml-auto">{{ filteredCerts.length }} results</span>
+      </div>
     </UCard>
 
     <!-- Certificate Table -->
-    <UCard :ui="{ root: 'shadow-sm', body: 'p-0 sm:p-0' }">
-      <div class="flex items-center justify-between px-5 py-4 border-b border-default">
-        <h2 class="font-semibold text-highlighted">Certificate Registry</h2>
-        <span class="text-sm text-muted">{{ filteredCerts.length }} certificates</span>
-      </div>
+    <UCard :ui="{ body: 'p-0 sm:p-0' }">
+      <template #header>
+        <div class="flex items-center justify-between">
+          <h2 class="font-semibold text-highlighted">Certificate Registry</h2>
+          <span class="text-sm text-muted">{{ filteredCerts.length }} certificates</span>
+        </div>
+      </template>
       <div class="overflow-x-auto">
         <UTable :data="filteredCerts" :columns="certColumns" class="scrollbar w-full">
           <template #learner-cell="{ row }">

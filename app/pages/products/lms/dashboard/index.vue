@@ -83,7 +83,6 @@ const completionByCategory = [
       <UCard
         v-for="kpi in kpiCards"
         :key="kpi.label"
-        :ui="{ root: 'shadow-sm', body: 'sm:p-4' }"
       >
         <div class="flex items-center justify-between mb-3">
           <div :class="['size-9 rounded-lg flex items-center justify-center', kpi.bg]">
@@ -99,11 +98,13 @@ const completionByCategory = [
     <!-- Main content row -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <!-- Recent Activity (2/3 width) -->
-      <UCard :ui="{ root: 'shadow-sm lg:col-span-2', body: 'p-0 sm:p-0' }">
-        <div class="flex items-center justify-between px-5 py-4 border-b border-default">
-          <h2 class="font-semibold text-highlighted">Recent Activity</h2>
-          <UButton label="View all" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" />
-        </div>
+      <UCard :ui="{ body: 'p-0 sm:p-0' }" class="lg:col-span-2">
+        <template #header>
+          <div class="flex items-center justify-between">
+            <h2 class="font-semibold text-highlighted">Recent Activity</h2>
+            <UButton label="View all" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" />
+          </div>
+        </template>
         <div class="divide-y divide-default">
           <div
             v-for="item in recentActivity"
@@ -125,16 +126,15 @@ const completionByCategory = [
       <!-- Right column -->
       <div class="space-y-6">
         <!-- Quick Actions -->
-        <UCard :ui="{ root: 'shadow-sm' }">
-          <h2 class="font-semibold text-highlighted">Quick Actions</h2>
-          <div class="grid grid-cols-2 gap-2 mt-4 sm:mt-6">
+        <UCard title="Quick Actions">
+          <div class="grid grid-cols-2 gap-3">
             <NuxtLink
               v-for="link in quickLinks"
               :key="link.label"
               :to="link.to"
-              :class="['flex flex-col items-center gap-2 p-3 rounded-lg transition-all hover:scale-105', link.bg]"
+              :class="['flex flex-col items-center gap-2 p-3 rounded-xl transition-colors hover:bg-muted/50', link.bg]"
             >
-              <div :class="['size-8 rounded-md flex items-center justify-center', link.bg]">
+              <div :class="['size-10 rounded-xl flex items-center justify-center', link.bg]">
                 <UIcon :name="link.icon" :class="['size-5', link.color]" />
               </div>
               <span :class="['text-xs font-medium text-center', link.color]">{{ link.label }}</span>
@@ -143,9 +143,8 @@ const completionByCategory = [
         </UCard>
 
         <!-- Upcoming Events -->
-        <UCard :ui="{ root: 'shadow-sm' }">
-          <h2 class="font-semibold text-highlighted">Upcoming</h2>
-          <div class="space-y-3 mt-4 sm:mt-6">
+        <UCard title="Upcoming Events">
+          <div class="space-y-3">
             <div
               v-for="event in upcomingEvents"
               :key="event.label"
@@ -163,12 +162,14 @@ const completionByCategory = [
     </div>
 
     <!-- Course Completion by Category -->
-    <UCard :ui="{ root: 'shadow-sm' }">
-      <div class="flex items-center justify-between">
-        <h2 class="font-semibold text-highlighted">Completion Rate by Category</h2>
-        <UButton label="Full Analytics" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" to="/products/lms/dashboard/analytics" />
-      </div>
-      <div class="space-y-3 mt-4 sm:mt-6">
+    <UCard>
+      <template #header>
+        <div class="flex items-center justify-between">
+          <h2 class="font-semibold text-highlighted">Completion Rate by Category</h2>
+          <UButton label="Full Analytics" variant="ghost" size="xs" color="neutral" trailing-icon="i-lucide-arrow-right" to="/products/lms/dashboard/analytics" />
+        </div>
+      </template>
+      <div class="space-y-3">
         <div v-for="cat in completionByCategory" :key="cat.cat" class="flex items-center gap-4">
           <span class="text-sm text-muted w-24 flex-shrink-0">{{ cat.cat }}</span>
           <UProgress :model-value="cat.pct" class="flex-1" />
