@@ -4,7 +4,7 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 
 const route = useRoute()
 const currentProduct = computed(() => {
-  const match = route.path.match(/^\/products\/(cms|lms|hris|dms|ams|ilsp|aissp|eis|fms|hkas)/)
+  const match = route.path.match(/^\/products\/(cms|lms|hris|dms|ams|ilsp|aissp|eis|fms|hkas|elib|irs)/)
   return match?.[1] || 'hris'
 })
 
@@ -20,6 +20,8 @@ const dashboardConfig = computed(() => {
     case 'eis': return useEisDashboard()
     case 'fms': return useFmsDashboard()
     case 'hkas': return useHkasDashboard()
+    case 'elib': return useElibDashboard()
+    case 'irs': return useIrsDashboard()
     default: return useHrisDashboard()
   }
 })

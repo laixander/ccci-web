@@ -28,7 +28,7 @@ const stats = [
   { target: 6, suffix: '', label: 'Enterprise Products', decimals: 0 },
 ]
 
-type ProductColor = 'green' | 'violet' | 'amber' | 'sky' | 'slate' | 'rose' | 'teal' | 'indigo' | 'blue' | 'red'
+type ProductColor = 'green' | 'violet' | 'amber' | 'sky' | 'slate' | 'rose' | 'teal' | 'indigo' | 'blue' | 'red' | 'purple' | 'orange'
 
 interface Product {
   id: string
@@ -214,6 +214,40 @@ const products: Product[] = [
     ],
     ctaLabel: 'Explore HKAS',
   },
+  {
+    id: 'elib',
+    name: 'eLib',
+    fullName: 'Electronic Library System',
+    tagline: 'Digitize your library, delight every reader',
+    description: 'Manage your entire library in the cloud — catalog books, track circulation, handle member accounts, and empower readers with a modern OPAC. Built for schools, universities, and public libraries.',
+    icon: 'i-lucide-library',
+    to: '/products/elib',
+    color: 'purple',
+    features: [
+      'Smart Catalog & OPAC',
+      'Circulation & Returns',
+      'Member & Fine Management',
+      'Analytics & Usage Reports',
+    ],
+    ctaLabel: 'Explore eLib',
+  },
+  {
+    id: 'irs',
+    name: 'IRS',
+    fullName: 'Incident Reporting System',
+    tagline: 'Report, track, and prevent every workplace hazard',
+    description: 'Log accidents, near-misses, and safety hazards in real time from any device. SafeReport keeps your workforce protected, investigations on track, and regulators satisfied.',
+    icon: 'i-lucide-triangle-alert',
+    to: '/products/irs',
+    color: 'orange',
+    features: [
+      'One-Tap Mobile Incident Logging',
+      'Root Cause Analysis & CAPA',
+      'Safety Analytics & Heatmaps',
+      'DOLE & ISO 45001 Compliance',
+    ],
+    ctaLabel: 'Explore IRS',
+  },
 ]
 
 const whyFeatures = [
@@ -375,6 +409,20 @@ const productColorMap: Record<ProductColor, { bg: string, text: string, border: 
     border: 'border-red-200 dark:border-red-800',
     badge: 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300',
     icon: 'bg-red-500',
+  },
+  purple: {
+    bg: 'bg-purple-50 dark:bg-purple-950/30',
+    text: 'text-purple-600 dark:text-purple-400',
+    border: 'border-purple-200 dark:border-purple-800',
+    badge: 'bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300',
+    icon: 'bg-purple-500',
+  },
+  orange: {
+    bg: 'bg-orange-50 dark:bg-orange-950/30',
+    text: 'text-orange-600 dark:text-orange-400',
+    border: 'border-orange-200 dark:border-orange-800',
+    badge: 'bg-orange-100 text-orange-700 dark:bg-orange-900/50 dark:text-orange-300',
+    icon: 'bg-orange-500',
   },
 }
 

@@ -129,6 +129,28 @@ export function useProductLanding(product: string): { description: string, prima
         { label: 'Legal', children: commonLinks.legal }
       ],
       social: ['linkedin', 'x', 'facebook', 'youtube']
+    },
+    elib: {
+      description: 'The modern digital library platform helping schools, universities, and public libraries manage collections, streamline circulation, and empower readers everywhere.',
+      primaryButton: { label: 'Request Demo', icon: 'i-lucide-calendar' },
+      footerLinks: [
+        { label: 'Product', children: commonLinks.product },
+        { label: 'Solutions', children: [{ label: 'School Libraries', to: '#' }, { label: 'University Libraries', to: '#' }, { label: 'Public Libraries', to: '#' }, { label: 'Corporate Libraries', to: '#' }] },
+        { label: 'Resources', children: commonLinks.resources },
+        { label: 'Legal', children: commonLinks.legal }
+      ],
+      social: ['linkedin', 'x', 'facebook']
+    },
+    irs: {
+      description: 'The mobile-first incident reporting and safety management platform helping organizations log, track, and prevent workplace hazards in real time.',
+      primaryButton: { label: 'Request Demo', icon: 'i-lucide-calendar' },
+      footerLinks: [
+        { label: 'Product', children: commonLinks.product },
+        { label: 'Solutions', children: [{ label: 'Manufacturing & Plants', to: '#' }, { label: 'Construction & Field', to: '#' }, { label: 'Logistics & Warehousing', to: '#' }, { label: 'Corporate & Facilities', to: '#' }] },
+        { label: 'Resources', children: commonLinks.resources },
+        { label: 'Legal', children: commonLinks.legal }
+      ],
+      social: ['linkedin', 'x', 'facebook']
     }
   }
 

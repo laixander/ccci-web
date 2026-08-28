@@ -134,6 +134,32 @@
   --color-hkas-900: #7f1d1d;
   --color-hkas-950: #450a0a;
 
+  /* for elib, deep purple as base */
+  --color-elib-50: #faf5ff;
+  --color-elib-100: #f3e8ff;
+  --color-elib-200: #e9d5ff;
+  --color-elib-300: #d8b4fe;
+  --color-elib-400: #c084fc;
+  --color-elib-500: #a855f7;
+  --color-elib-600: #9333ea;
+  --color-elib-700: #7e22ce;
+  --color-elib-800: #6b21a8;
+  --color-elib-900: #581c87;
+  --color-elib-950: #3b0764;
+
+  /* for irs, orange as base */
+  --color-irs-50: #fff7ed;
+  --color-irs-100: #ffedd5;
+  --color-irs-200: #fed7aa;
+  --color-irs-300: #fdba74;
+  --color-irs-400: #fb923c;
+  --color-irs-500: #f97316;
+  --color-irs-600: #ea580c;
+  --color-irs-700: #c2410c;
+  --color-irs-800: #9a3412;
+  --color-irs-900: #7c2d12;
+  --color-irs-950: #431407;
+
   --color-brand-50: #f2f5ff;
   --color-brand-100: #e3e9ff;
   --color-brand-200: #ccd8ff;
@@ -185,6 +211,14 @@
 
 .theme-hkas {
   --ui-primary: var(--color-hkas-500);
+}
+
+.theme-elib {
+  --ui-primary: var(--color-elib-500);
+}
+
+.theme-irs {
+  --ui-primary: var(--color-irs-500);
 }
 
 html {

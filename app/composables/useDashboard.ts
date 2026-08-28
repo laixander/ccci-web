@@ -507,3 +507,129 @@ export function useFmsDashboard() {
     navGroups
   }
 }
+
+export function useElibDashboard() {
+  const meta = {
+    themeClass: 'theme-elib',
+    appIcon: 'i-lucide-library',
+    appNamePrefix: 'Biblio',
+    appNameHighlight: 'Core'
+  }
+
+  const navGroups: { label?: string; items: NavigationMenuItem[] }[] = [
+    {
+      items: [
+        {
+          label: 'Dashboard',
+          icon: 'i-lucide-layout-dashboard',
+          to: '/products/elib/dashboard',
+        },
+      ],
+    },
+    {
+      label: 'Catalog',
+      items: [
+        { label: 'Browse Collection', icon: 'i-lucide-book-open', to: '/products/elib/dashboard/browse' },
+        { label: 'New Arrivals', icon: 'i-lucide-sparkles', to: '/products/elib/dashboard/new-arrivals' },
+        { label: 'Search & Discovery', icon: 'i-lucide-search', to: '/products/elib/dashboard/search' },
+      ],
+    },
+    {
+      label: 'Circulation',
+      items: [
+        { label: 'Borrowed Books', icon: 'i-lucide-bookmark', to: '/products/elib/dashboard/borrowed' },
+        { label: 'Reservations', icon: 'i-lucide-calendar-clock', to: '/products/elib/dashboard/reservations' },
+        { label: 'Returns & Overdue', icon: 'i-lucide-undo-2', to: '/products/elib/dashboard/returns' },
+      ],
+    },
+    {
+      label: 'Members',
+      items: [
+        { label: 'Patrons', icon: 'i-lucide-users', to: '/products/elib/dashboard/patrons' },
+        { label: 'Memberships', icon: 'i-lucide-id-card', to: '/products/elib/dashboard/memberships' },
+        { label: 'Fines & Fees', icon: 'i-lucide-receipt', to: '/products/elib/dashboard/fines' },
+      ],
+    },
+    {
+      label: 'Insights',
+      items: [
+        { label: 'Analytics', icon: 'i-lucide-bar-chart-2', to: '/products/elib/dashboard/analytics' },
+        { label: 'Reports', icon: 'i-lucide-file-bar-chart', to: '/products/elib/dashboard/reports' },
+      ],
+    },
+    {
+      label: 'Admin',
+      items: [
+        { label: 'Notifications', icon: 'i-lucide-bell', to: '/products/elib/dashboard/notifications' },
+        { label: 'Settings', icon: 'i-lucide-settings', to: '/products/elib/dashboard/settings' },
+      ],
+    },
+  ]
+
+  return {
+    ...meta,
+    navGroups
+  }
+}
+
+export function useIrsDashboard() {
+  const meta = {
+    themeClass: 'theme-irs',
+    appIcon: 'i-lucide-triangle-alert',
+    appNamePrefix: 'Safe',
+    appNameHighlight: 'Report'
+  }
+
+  const navGroups: { label?: string; items: NavigationMenuItem[] }[] = [
+    {
+      items: [
+        {
+          label: 'Dashboard',
+          icon: 'i-lucide-layout-dashboard',
+          to: '/products/irs/dashboard',
+        },
+      ],
+    },
+    {
+      label: 'Incident Management',
+      items: [
+        { label: 'All Incidents', icon: 'i-lucide-triangle-alert', to: '/products/irs/dashboard/incidents' },
+        { label: 'Report Incident', icon: 'i-lucide-plus-circle', to: '/products/irs/dashboard/report' },
+        { label: 'Near-Misses', icon: 'i-lucide-alert-circle', to: '/products/irs/dashboard/near-misses' },
+      ],
+    },
+    {
+      label: 'Investigation & Actions',
+      items: [
+        { label: 'Root Cause Analysis', icon: 'i-lucide-search', to: '/products/irs/dashboard/rca' },
+        { label: 'CAPA Tracking', icon: 'i-lucide-clipboard-check', to: '/products/irs/dashboard/capa' },
+      ],
+    },
+    {
+      label: 'Safety & Compliance',
+      items: [
+        { label: 'Safety Audits', icon: 'i-lucide-shield-check', to: '/products/irs/dashboard/audits' },
+        { label: 'DOLE & ISO Reports', icon: 'i-lucide-file-text', to: '/products/irs/dashboard/compliance' },
+      ],
+    },
+    {
+      label: 'Insights',
+      items: [
+        { label: 'Analytics & Heatmaps', icon: 'i-lucide-bar-chart-2', to: '/products/irs/dashboard/analytics' },
+        { label: 'Trend Reports', icon: 'i-lucide-trending-up', to: '/products/irs/dashboard/reports' },
+      ],
+    },
+    {
+      label: 'Admin',
+      items: [
+        { label: 'Notifications & Alerts', icon: 'i-lucide-bell', to: '/products/irs/dashboard/notifications' },
+        { label: 'Settings', icon: 'i-lucide-settings', to: '/products/irs/dashboard/settings' },
+      ],
+    },
+  ]
+
+  return {
+    ...meta,
+    navGroups
+  }
+}
