@@ -1,36 +1,31 @@
 <script setup lang="ts">
+import { MockupScreenHrisPayroll, MockupScreenHrisAnalytics, MockupScreenHrisEmployees } from '#components'
 definePageMeta({ layout: 'product' })
-const features = [
+const standouts = [
   {
-    title: 'Smart Payroll',
-    description: 'Automate payroll calculations, tax filings, and statutory compliance with pinpoint accuracy. Zero errors, every cycle.',
-    icon: 'i-lucide-banknote',
+    title: 'Employee-Centered Design',
+    description: 'Built for people, not just systems — our HRIS ensures ease, clarity, and quick adoption across every team.',
+    icon: 'i-lucide-users',
+    orientation: 'vertical' as const
   },
   {
-    title: 'Time & Attendance',
-    description: 'Real-time tracking with biometric support, geo-fencing, and flexible shift scheduling for any work model.',
-    icon: 'i-lucide-clock',
+    title: 'Integrated & Flexible',
+    description: 'Integrates all core HR functions into one adaptable system, providing a fully customizable experience.',
+    icon: 'i-lucide-layers',
+    orientation: 'vertical' as const
   },
   {
-    title: 'Talent Acquisition',
-    description: 'Manage the full recruitment pipeline from job posting to seamless day-one onboarding, all in one place.',
-    icon: 'i-lucide-user-plus',
+    title: 'Tailored for SMEs',
+    description: 'Makes powerful HR tools accessible — combining world-class standards with affordable, practical solutions.',
+    icon: 'i-lucide-building-2',
+    orientation: 'vertical' as const
   },
   {
-    title: 'Performance Management',
-    description: 'Set OKRs, run 360° reviews, identify top performers, and build high-performing teams systematically.',
-    icon: 'i-lucide-trending-up',
-  },
-  {
-    title: 'Employee Self-Service',
-    description: 'Empower employees to manage leave, view payslips, and update their profiles from anywhere, any device.',
-    icon: 'i-lucide-user-cog',
-  },
-  {
-    title: 'HR Analytics',
-    description: 'Data-driven insights with real-time dashboards, custom reports, and predictive workforce analytics.',
-    icon: 'i-lucide-bar-chart-2',
-  },
+    title: 'Smart Automation',
+    description: 'Combines automation, geolocation, and real-time data to cut errors and free HR for strategic priorities.',
+    icon: 'i-lucide-settings',
+    orientation: 'vertical' as const
+  }
 ]
 
 const stats = [
@@ -109,6 +104,12 @@ const heroLinks = [
   { label: 'Watch Demo', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-play-circle', size: 'xl' as const },
 ]
 
+const checklist = [
+  'Tailored for SMEs',
+  'Geo-tagged timekeeping',
+  'PH-compliant payroll'
+]
+
 const ctaLinks = [
   { label: 'Start Free Trial', icon: 'i-lucide-rocket', size: 'lg' as const },
   { label: 'Schedule a Demo', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-calendar', size: 'lg' as const },
@@ -122,17 +123,154 @@ const logoIcons = [
   { name: 'i-simple-icons-airbnb', label: 'Airbnb' },
   { name: 'i-simple-icons-slack', label: 'Slack' },
 ]
+
+const modules = [
+  { title: 'Employee records', icon: 'i-lucide-check' },
+  { title: 'Recruitment', icon: 'i-lucide-check' },
+  { title: 'Self-service', icon: 'i-lucide-check' },
+  { title: 'Learning & development', icon: 'i-lucide-check' },
+  { title: 'Payroll', icon: 'i-lucide-check' },
+  { title: 'Timekeeping', icon: 'i-lucide-check' },
+  { title: 'Reports & analytics', icon: 'i-lucide-check' },
+  { title: 'Performance', icon: 'i-lucide-check' },
+]
+
+const hubModules = [
+  { label: 'Employee Records', icon: 'i-lucide-users'       },
+  { label: 'Recruitment',      icon: 'i-lucide-user-plus'   },
+  { label: 'Payroll',          icon: 'i-lucide-banknote'    },
+  { label: 'Timekeeping',      icon: 'i-lucide-clock'       },
+  { label: 'Reports',          icon: 'i-lucide-bar-chart-2' },
+  { label: 'Performance',      icon: 'i-lucide-trending-up' },
+  { label: 'Self-Service',     icon: 'i-lucide-smartphone'  },
+  { label: 'Learning',         icon: 'i-lucide-book-open'   },
+]
+
+const featureDetails = [
+  {
+    title: 'Employee Information',
+    description: 'The single source of truth that powers smarter HR decisions.',
+    features: [
+      { title: 'A centralized record keeping all employee data accurate, consistent, and accessible.', icon: 'i-lucide-users' },
+      { title: 'Securely stores documents, licenses, and certifications with expiry reminders.', icon: 'i-lucide-file-text' },
+      { title: 'Dynamic charts give instant visibility of roles across departments.', icon: 'i-lucide-bar-chart-4' },
+    ],
+    orientation: 'horizontal' as const,
+    component: MockupScreenHrisEmployees
+  },
+  {
+    title: 'Timekeeping',
+    description: 'Making every second count for your workforce.',
+    features: [
+      { title: 'Attendance tracking with biometric, mobile, and web-based clock-ins for on-site and remote teams.', icon: 'i-lucide-clock' },
+      { title: 'Geo-tagged clock-ins verify when and where employees start and end their workday.', icon: 'i-lucide-map-pin' },
+      { title: 'Smart scheduling, automated leave management, and real-time notifications keep workflows compliant.', icon: 'i-lucide-calendar' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: true,
+    component: MockupScreenHrisAnalytics
+  },
+  {
+    title: 'Payroll',
+    description: 'Less time on payroll, more time on people.',
+    features: [
+      { title: 'Automated salary computation that integrates directly with attendance and leave data.', icon: 'i-lucide-calculator' },
+      { title: 'Employees get digital payslips; HR gains audit-ready records and real-time insights.', icon: 'i-lucide-receipt-text' },
+      { title: 'Accurate tax and government-contribution compliance with support for multiple pay structures.', icon: 'i-lucide-check-circle' },
+    ],
+    orientation: 'horizontal' as const,
+    component: MockupScreenHrisPayroll
+  },
+  {
+    title: 'Recruitment & Onboarding',
+    description: 'The right talent, the right start, the right tools.',
+    features: [
+      { title: 'Streamlines the hiring journey — from job postings and AI-powered candidate matching to digital, paperless contracts.', icon: 'i-lucide-sparkles' },
+      { title: 'Hired applicants flow straight into Employee Information, eliminating duplicate data entry.', icon: 'i-lucide-user-check' },
+      { title: 'Plug-and-play with the Learning Management System for structured training from day one.', icon: 'i-lucide-book-open' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: true,
+    component: MockupScreenHrisAnalytics
+  },
+  {
+    title: 'Learning & Development',
+    description: 'Build the foundation, scale with LMS.',
+    features: [
+      { title: 'A central hub for training records — track employee skills, training history, and development needs.', icon: 'i-lucide-globe' },
+      { title: 'Works standalone as a streamlined monitoring tool for every program.', icon: 'i-lucide-shield-cog-corner' },
+      { title: 'Integrates with the LMS to unlock certification management, progress tracking, online activities, and exams.', icon: 'i-lucide-award' },
+    ],
+    orientation: 'horizontal' as const,
+    component: MockupScreenHrisPayroll
+  },
+  {
+    title: 'Performance Management',
+    description: 'Performance that scales with you.',
+    features: [
+      { title: 'Starts with the essentials — goal tracking, structured reviews, and performance records for a clear, consistent process.', icon: 'i-lucide-bar-chart-4' },
+      { title: 'Grows into a full ecosystem with continuous feedback, skill frameworks, and analytics.', icon: 'i-lucide-trending-up' },
+      { title: 'Integrates seamlessly with Learning & Development for targeted employee growth.', icon: 'i-lucide-file-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: true,
+    component: MockupScreenHrisAnalytics
+  },
+  {
+    title: 'Employee Self-Service',
+    description: 'The freedom to manage your HR needs.',
+    features: [
+      { title: 'Puts HR in every employee’s pocket — direct access to payslips, leave balances, schedules, and personal info.', icon: 'i-lucide-smartphone' },
+      { title: 'Every update flows back into the centralized record, ensuring one single source of truth.', icon: 'i-lucide-pencil' },
+      { title: 'File requests, update records, or download documents in a few clicks — less manual workload for HR.', icon: 'i-lucide-file-text' },
+    ],
+    orientation: 'horizontal' as const,
+    component: MockupScreenHrisPayroll
+  },
+  {
+    title: 'Reports & Analytics',
+    description: 'Turn HR data into business strategy.',
+    features: [
+      { title: 'Turns everyday HR data into clear, actionable insights.', icon: 'i-lucide-bar-chart-4' },
+      { title: 'Real-time dashboards, customizable reports, and predictive trends to spot patterns and plan ahead.', icon: 'i-lucide-hourglass' },
+      { title: 'From compliance reporting to linking payroll, attendance, and performance in one view.', icon: 'i-lucide-link-2' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: true,
+    component: MockupScreenHrisAnalytics
+  }
+]
 </script>
 
 <template>
   <!-- Hero -->
   <UPageHero
     headline="Introducing PeopleCore 2.0"
-    title="HR Management, Reimagined for Modern Teams"
-    description="Streamline every aspect of your workforce — payroll, attendance, recruitment, and performance — in one intelligent platform trusted by 1,200+ companies."
-    :links="heroLinks"
+    title="Your workforce, finally unified."
+    description="One unified cloud platform that connects payroll, attendance, recruitment, learning and performance — for the way modern SME teams work."
     orientation="horizontal"
   >
+    <template #footer>
+      <div class="flex flex-wrap gap-x-6 gap-y-3">
+        <UButton
+          v-for="(link, index) in heroLinks"
+          :key="index"
+          v-bind="link"
+        />
+      </div>
+
+      <ul class="mt-6 sm:mt-12 flex flex-wrap gap-x-6 gap-y-2">
+        <li
+          v-for="item in checklist"
+          :key="item"
+          class="flex items-center gap-2 text-sm text-muted"
+        >
+          <UIcon name="i-lucide-check" class="size-4 text-primary shrink-0" />
+          {{ item }}
+        </li>
+      </ul>
+    </template>
+
     <MockupScreenHrisDashboard />
   </UPageHero>
 
@@ -157,29 +295,39 @@ const logoIcons = [
   <!-- Core features grid -->
   <UPageSection
     id="features"
-    headline="Features"
-    title="Everything your HR team needs"
-    description="From day-one onboarding to final paycheck — manage the complete employee lifecycle in one unified platform."
-    :features="features"
+    headline="Why Choose Us"
+    title="Why our HRIS stands out"
+    description="A human resource platform engineered around your people, your compliance, and your growth."
+    :features="standouts"
+    :ui="{ features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10' }"
   />
 
-  <!-- Feature detail: Payroll -->
+  <!-- Modules Structure -->
   <UPageSection
-    title="Payroll that runs itself"
-    description="Say goodbye to spreadsheets and manual calculations. PeopleCore automates every step of your payroll cycle — from time tracking to tax submissions — with zero errors, every time. Multi-currency support, automated compliance filings, and instant payslip delivery included."
+    headline="The Platform"
+    title="Eight modules. One connected record."
+    description="Unified platform that collects and stores data across every HR function — from applicant tracking to payroll, training, deployment, and reporting. Nothing lives in a spreadsheet, and nothing gets entered twice."
     orientation="horizontal"
+    :features="modules"
+    :ui="{ features: 'grid grid-cols-2 gap-4' }"
   >
-    <MockupScreenHrisPayroll />
+    <HubDiagram center-label="HR CORE" :nodes="hubModules" />
   </UPageSection>
 
-  <!-- Feature detail: Analytics -->
+  <!-- Feature details -->
   <UPageSection
-    title="Analytics that drive smarter decisions"
-    description="Turn your HR data into strategic insights. Real-time dashboards give you full visibility into headcount costs, turnover risks, and performance trends. Spot issues before they become problems and plan hiring with confidence."
-    orientation="horizontal"
-    reverse
+    v-for="(feature, index) in featureDetails"
+    :key="index"
+    :title="feature.title"
+    :description="feature.description"
+    :features="feature.features"
+    :orientation="feature.orientation"
+    :reverse="feature.reverse"
+    :ui="{
+      description: 'text-primary'
+    }"
   >
-    <MockupScreenHrisAnalytics />
+    <component :is="feature.component" />
   </UPageSection>
 
   <!-- Stats banner -->

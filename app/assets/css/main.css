@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
-/* @source inline("{group-hover:,,}{bg,text,ring,border,to,from}-{red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose}-{50,100,200,300,400,500,600,700,800,900,950}{,,/5,/10,/20,/30,/40,/50}"); */
+@source inline("{group-hover:,,}{bg,text,ring,border,to,from}-{red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose}-{50,100,200,300,400,500,600,700,800,900,950}{,,/5,/10,/20,/30,/40,/50}");
 
 @theme {
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -175,50 +175,182 @@
 
 .theme-lms {
   --ui-primary: var(--color-lms-500);
+  --ui-color-primary-50: var(--color-lms-50);
+  --ui-color-primary-100: var(--color-lms-100);
+  --ui-color-primary-200: var(--color-lms-200);
+  --ui-color-primary-300: var(--color-lms-300);
+  --ui-color-primary-400: var(--color-lms-400);
+  --ui-color-primary-500: var(--color-lms-500);
+  --ui-color-primary-600: var(--color-lms-600);
+  --ui-color-primary-700: var(--color-lms-700);
+  --ui-color-primary-800: var(--color-lms-800);
+  --ui-color-primary-900: var(--color-lms-900);
+  --ui-color-primary-950: var(--color-lms-950);
 }
 
 .theme-hris {
   --ui-primary: var(--color-hris-500);
+  --ui-color-primary-50: var(--color-hris-50);
+  --ui-color-primary-100: var(--color-hris-100);
+  --ui-color-primary-200: var(--color-hris-200);
+  --ui-color-primary-300: var(--color-hris-300);
+  --ui-color-primary-400: var(--color-hris-400);
+  --ui-color-primary-500: var(--color-hris-500);
+  --ui-color-primary-600: var(--color-hris-600);
+  --ui-color-primary-700: var(--color-hris-700);
+  --ui-color-primary-800: var(--color-hris-800);
+  --ui-color-primary-900: var(--color-hris-900);
+  --ui-color-primary-950: var(--color-hris-950);
 }
 
 .theme-cms {
   --ui-primary: var(--color-cms-500);
+  --ui-color-primary-50: var(--color-cms-50);
+  --ui-color-primary-100: var(--color-cms-100);
+  --ui-color-primary-200: var(--color-cms-200);
+  --ui-color-primary-300: var(--color-cms-300);
+  --ui-color-primary-400: var(--color-cms-400);
+  --ui-color-primary-500: var(--color-cms-500);
+  --ui-color-primary-600: var(--color-cms-600);
+  --ui-color-primary-700: var(--color-cms-700);
+  --ui-color-primary-800: var(--color-cms-800);
+  --ui-color-primary-900: var(--color-cms-900);
+  --ui-color-primary-950: var(--color-cms-950);
 }
 
 .theme-ams {
   --ui-primary: var(--color-ams-500);
+  --ui-color-primary-50: var(--color-ams-50);
+  --ui-color-primary-100: var(--color-ams-100);
+  --ui-color-primary-200: var(--color-ams-200);
+  --ui-color-primary-300: var(--color-ams-300);
+  --ui-color-primary-400: var(--color-ams-400);
+  --ui-color-primary-500: var(--color-ams-500);
+  --ui-color-primary-600: var(--color-ams-600);
+  --ui-color-primary-700: var(--color-ams-700);
+  --ui-color-primary-800: var(--color-ams-800);
+  --ui-color-primary-900: var(--color-ams-900);
+  --ui-color-primary-950: var(--color-ams-950);
 }
 
 .theme-dms {
   --ui-primary: var(--color-dms-500);
+  --ui-color-primary-50: var(--color-dms-50);
+  --ui-color-primary-100: var(--color-dms-100);
+  --ui-color-primary-200: var(--color-dms-200);
+  --ui-color-primary-300: var(--color-dms-300);
+  --ui-color-primary-400: var(--color-dms-400);
+  --ui-color-primary-500: var(--color-dms-500);
+  --ui-color-primary-600: var(--color-dms-600);
+  --ui-color-primary-700: var(--color-dms-700);
+  --ui-color-primary-800: var(--color-dms-800);
+  --ui-color-primary-900: var(--color-dms-900);
+  --ui-color-primary-950: var(--color-dms-950);
 }
 
 .theme-ilsp {
   --ui-primary: var(--color-ilsp-500);
+  --ui-color-primary-50: var(--color-ilsp-50);
+  --ui-color-primary-100: var(--color-ilsp-100);
+  --ui-color-primary-200: var(--color-ilsp-200);
+  --ui-color-primary-300: var(--color-ilsp-300);
+  --ui-color-primary-400: var(--color-ilsp-400);
+  --ui-color-primary-500: var(--color-ilsp-500);
+  --ui-color-primary-600: var(--color-ilsp-600);
+  --ui-color-primary-700: var(--color-ilsp-700);
+  --ui-color-primary-800: var(--color-ilsp-800);
+  --ui-color-primary-900: var(--color-ilsp-900);
+  --ui-color-primary-950: var(--color-ilsp-950);
 }
 
 .theme-aissp {
   --ui-primary: var(--color-aissp-500);
+  --ui-color-primary-50: var(--color-aissp-50);
+  --ui-color-primary-100: var(--color-aissp-100);
+  --ui-color-primary-200: var(--color-aissp-200);
+  --ui-color-primary-300: var(--color-aissp-300);
+  --ui-color-primary-400: var(--color-aissp-400);
+  --ui-color-primary-500: var(--color-aissp-500);
+  --ui-color-primary-600: var(--color-aissp-600);
+  --ui-color-primary-700: var(--color-aissp-700);
+  --ui-color-primary-800: var(--color-aissp-800);
+  --ui-color-primary-900: var(--color-aissp-900);
+  --ui-color-primary-950: var(--color-aissp-950);
 }
 
 .theme-eis {
   --ui-primary: var(--color-eis-500);
+  --ui-color-primary-50: var(--color-eis-50);
+  --ui-color-primary-100: var(--color-eis-100);
+  --ui-color-primary-200: var(--color-eis-200);
+  --ui-color-primary-300: var(--color-eis-300);
+  --ui-color-primary-400: var(--color-eis-400);
+  --ui-color-primary-500: var(--color-eis-500);
+  --ui-color-primary-600: var(--color-eis-600);
+  --ui-color-primary-700: var(--color-eis-700);
+  --ui-color-primary-800: var(--color-eis-800);
+  --ui-color-primary-900: var(--color-eis-900);
+  --ui-color-primary-950: var(--color-eis-950);
 }
 
 .theme-fms {
   --ui-primary: var(--color-fms-500);
+  --ui-color-primary-50: var(--color-fms-50);
+  --ui-color-primary-100: var(--color-fms-100);
+  --ui-color-primary-200: var(--color-fms-200);
+  --ui-color-primary-300: var(--color-fms-300);
+  --ui-color-primary-400: var(--color-fms-400);
+  --ui-color-primary-500: var(--color-fms-500);
+  --ui-color-primary-600: var(--color-fms-600);
+  --ui-color-primary-700: var(--color-fms-700);
+  --ui-color-primary-800: var(--color-fms-800);
+  --ui-color-primary-900: var(--color-fms-900);
+  --ui-color-primary-950: var(--color-fms-950);
 }
 
 .theme-hkas {
   --ui-primary: var(--color-hkas-500);
+  --ui-color-primary-50: var(--color-hkas-50);
+  --ui-color-primary-100: var(--color-hkas-100);
+  --ui-color-primary-200: var(--color-hkas-200);
+  --ui-color-primary-300: var(--color-hkas-300);
+  --ui-color-primary-400: var(--color-hkas-400);
+  --ui-color-primary-500: var(--color-hkas-500);
+  --ui-color-primary-600: var(--color-hkas-600);
+  --ui-color-primary-700: var(--color-hkas-700);
+  --ui-color-primary-800: var(--color-hkas-800);
+  --ui-color-primary-900: var(--color-hkas-900);
+  --ui-color-primary-950: var(--color-hkas-950);
 }
 
 .theme-elib {
   --ui-primary: var(--color-elib-500);
+  --ui-color-primary-50: var(--color-elib-50);
+  --ui-color-primary-100: var(--color-elib-100);
+  --ui-color-primary-200: var(--color-elib-200);
+  --ui-color-primary-300: var(--color-elib-300);
+  --ui-color-primary-400: var(--color-elib-400);
+  --ui-color-primary-500: var(--color-elib-500);
+  --ui-color-primary-600: var(--color-elib-600);
+  --ui-color-primary-700: var(--color-elib-700);
+  --ui-color-primary-800: var(--color-elib-800);
+  --ui-color-primary-900: var(--color-elib-900);
+  --ui-color-primary-950: var(--color-elib-950);
 }
 
 .theme-irs {
   --ui-primary: var(--color-irs-500);
+  --ui-color-primary-50: var(--color-irs-50);
+  --ui-color-primary-100: var(--color-irs-100);
+  --ui-color-primary-200: var(--color-irs-200);
+  --ui-color-primary-300: var(--color-irs-300);
+  --ui-color-primary-400: var(--color-irs-400);
+  --ui-color-primary-500: var(--color-irs-500);
+  --ui-color-primary-600: var(--color-irs-600);
+  --ui-color-primary-700: var(--color-irs-700);
+  --ui-color-primary-800: var(--color-irs-800);
+  --ui-color-primary-900: var(--color-irs-900);
+  --ui-color-primary-950: var(--color-irs-950);
 }
 
 html {

@@ -33,6 +33,11 @@ export default defineAppConfig({
       mauve: 'mauve',
       mist: 'mist',
       olive: 'olive',
+    },
+    pageSection: {
+      slots: {
+        root: 'relative isolate even:bg-muted/50'
+      }
     }
   }
 })
