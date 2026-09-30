@@ -21,15 +21,16 @@ export function useHrisDashboard() {
     {
       label: 'Core HR',
       items: [
-        { label: 'Employees', icon: 'i-lucide-users', to: '/products/hris/dashboard/employees' },
-        { label: 'Attendance', icon: 'i-lucide-clock', to: '/products/hris/dashboard/attendance' },
+        { label: 'Employees',   icon: 'i-lucide-users',    to: '/products/hris/dashboard/employees'   },
+        { label: 'Timekeeping', icon: 'i-lucide-clock',    to: '/products/hris/dashboard/timekeeping' },
         { label: 'Smart Payroll', icon: 'i-lucide-banknote', to: '/products/hris/dashboard/payroll' },
       ],
     },
     {
       label: 'Talent',
       items: [
-        { label: 'Recruitment', icon: 'i-lucide-user-plus', to: '/products/hris/dashboard/recruitment' },
+        { label: 'Recruitment & Onboarding', icon: 'i-lucide-user-plus',  to: '/products/hris/dashboard/recruitment' },
+        { label: 'Learning & Development',    icon: 'i-lucide-book-open',  to: '/products/hris/dashboard/learning'    },
         { label: 'Performance', icon: 'i-lucide-trending-up', to: '/products/hris/dashboard/performance' },
       ],
     },

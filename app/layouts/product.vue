@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useWindowScroll, useWindowSize } from '@vueuse/core'
 import type { NavigationMenuItem } from '@nuxt/ui'
 
 const route = useRoute()
@@ -43,11 +44,19 @@ const navItems = computed<NavigationMenuItem[]>(() => [
   { label: 'Pricing', to: '#pricing' },
   { label: 'Testimonials', to: '#testimonials' },
 ])
+
+const { y } = useWindowScroll()
+const { height } = useWindowSize()
+const scrollProgress = computed(() => {
+  const docHeight = document?.documentElement?.scrollHeight ?? height.value
+  const scrollable = docHeight - height.value
+  return scrollable > 0 ? Math.min((y.value / scrollable) * 100, 100) : 0
+})
 </script>
 
 <template>
   <div :class="themeClass">
-    <UHeader>
+    <UHeader :ui="{ container: 'max-w-full' }">
       <template #title>
         <div class="flex items-center gap-2.5">
           <div class="size-8 rounded-lg bg-primary flex items-center justify-center shadow-sm">
@@ -76,6 +85,14 @@ const navItems = computed<NavigationMenuItem[]>(() => [
         </div>
       </template>
     </UHeader>
+
+    <!-- Scroll progress indicator -->
+    <div class="scroll-indicator-track">
+      <div
+        class="scroll-indicator-bar"
+        :style="{ width: `${scrollProgress}%` }"
+      />
+    </div>
 
     <UMain>
       <slot />
@@ -157,3 +174,44 @@ const navItems = computed<NavigationMenuItem[]>(() => [
     </UFooter>
   </div>
 </template>
+
+<style scoped>
+.scroll-indicator-track {
+  position: fixed;
+  top: var(--ui-header-height);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: 3px;
+  background: transparent;
+  pointer-events: none;
+}
+
+.scroll-indicator-bar {
+  position: relative;
+  height: 100%;
+  background: linear-gradient(to right, var(--ui-color-primary-400), var(--ui-color-primary-600));
+  border-radius: 0 9999px 9999px 0;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px 1px var(--ui-color-primary-500);
+  overflow: hidden;
+}
+
+.scroll-indicator-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150px;
+  height: 100%;
+  background: linear-gradient(to right, transparent, white, transparent);
+  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+  animation: scroll-shine 2.5s ease-out infinite;
+}
+
+@keyframes scroll-shine {
+  0% { transform: translateX(-300px); opacity: 0; }
+  40% { opacity: 0.8; }
+  100% { transform: translateX(150px); opacity: 0; }
+}
+</style>

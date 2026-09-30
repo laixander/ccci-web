@@ -135,14 +135,15 @@
 
 <script setup lang="ts">
 const sidebarItems = [
-  { label: 'Dashboard',   icon: 'i-lucide-layout-dashboard', active: false },
-  { label: 'Employees',   icon: 'i-lucide-users',            active: true  },
-  { label: 'Payroll',     icon: 'i-lucide-banknote',         active: false },
-  { label: 'Time & Att.', icon: 'i-lucide-clock',            active: false },
-  { label: 'Recruitment', icon: 'i-lucide-user-plus',        active: false },
-  { label: 'Performance', icon: 'i-lucide-trending-up',      active: false },
-  { label: 'Analytics',   icon: 'i-lucide-bar-chart-2',      active: false },
-  { label: 'Settings',    icon: 'i-lucide-settings',         active: false },
+  { label: 'Dashboard',    icon: 'i-lucide-layout-dashboard', active: false },
+  { label: 'Employees',    icon: 'i-lucide-users',            active: true  },
+  { label: 'Timekeeping',  icon: 'i-lucide-clock',            active: false },
+  { label: 'Payroll',      icon: 'i-lucide-banknote',         active: false },
+  { label: 'Recruitment',  icon: 'i-lucide-user-plus',        active: false },
+  { label: 'Learning',     icon: 'i-lucide-book-open',        active: false },
+  { label: 'Performance',  icon: 'i-lucide-trending-up',      active: false },
+  { label: 'Self-Service', icon: 'i-lucide-user-cog',         active: false },
+  { label: 'Analytics',    icon: 'i-lucide-bar-chart-2',      active: false },
 ]
 
 const statCards = [
