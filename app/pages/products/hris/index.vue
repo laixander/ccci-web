@@ -101,8 +101,8 @@ const plans = [
 ]
 
 const heroLinks = [
-    { label: 'Start Free Trial', to: '#pricing', icon: 'i-lucide-rocket', size: 'xl' as const },
-    { label: 'Watch Demo', color: 'neutral' as const, variant: 'soft' as const, trailingIcon: 'i-lucide-play-circle', size: 'xl' as const },
+  { label: 'Start Free Trial', to: '#pricing', icon: 'i-lucide-rocket', size: 'xl' as const,  ui: { base: 'sm:py-4 sm:px-6 sm:rounded-xl font-semibold', leadingIcon: 'sm:size-5' } },
+  { label: 'Watch Demo', color: 'neutral' as const, variant: 'soft' as const, trailingIcon: 'i-lucide-play-circle', size: 'xl' as const, ui: { base: 'sm:py-4 sm:px-6 sm:rounded-xl font-semibold', trailingIcon: 'sm:size-5' } },
 ]
 
 const checklist = [
@@ -112,7 +112,7 @@ const checklist = [
 ]
 
 const ctaLinks = [
-    { label: 'Start Free Trial', color: 'neutral' as const, variant: 'solid' as const, icon: 'i-lucide-rocket', size: 'lg' as const },
+    { label: 'Start Free Trial', color: 'neutral' as const, icon: 'i-lucide-rocket', size: 'lg' as const },
     { label: 'Schedule a Demo', color: 'neutral' as const, variant: 'outline' as const, trailingIcon: 'i-lucide-calendar', size: 'lg' as const },
 ]
 
@@ -126,25 +126,14 @@ const logoIcons = [
 ]
 
 const modules = [
-    { title: 'Employee records', icon: 'i-lucide-check', to: '#employee-records' },
-    { title: 'Recruitment', icon: 'i-lucide-check', to: '#recruitment' },
-    { title: 'Self-service', icon: 'i-lucide-check', to: '#self-service' },
-    { title: 'Learning & development', icon: 'i-lucide-check', to: '#learning' },
-    { title: 'Payroll', icon: 'i-lucide-check', to: '#payroll' },
-    { title: 'Timekeeping', icon: 'i-lucide-check', to: '#timekeeping' },
-    { title: 'Reports & analytics', icon: 'i-lucide-check', to: '#reports' },
-    { title: 'Performance', icon: 'i-lucide-check', to: '#performance' },
-]
-
-const hubModules = [
-    { label: 'Employee Records', icon: 'i-lucide-users', to: '#employee-records' },
-    { label: 'Recruitment', icon: 'i-lucide-user-plus', to: '#recruitment' },
-    { label: 'Payroll', icon: 'i-lucide-banknote', to: '#payroll' },
-    { label: 'Timekeeping', icon: 'i-lucide-clock', to: '#timekeeping' },
-    { label: 'Reports', icon: 'i-lucide-bar-chart-2', to: '#reports' },
-    { label: 'Performance', icon: 'i-lucide-trending-up', to: '#performance' },
-    { label: 'Self-Service', icon: 'i-lucide-smartphone', to: '#self-service' },
-    { label: 'Learning', icon: 'i-lucide-book-open', to: '#learning' },
+    { title: 'Employee Records', icon: 'i-lucide-users', to: '#employee-records' },
+    { title: 'Recruitment', icon: 'i-lucide-user-plus', to: '#recruitment' },
+    { title: 'Payroll', icon: 'i-lucide-banknote', to: '#payroll' },
+    { title: 'Timekeeping', icon: 'i-lucide-clock', to: '#timekeeping' },
+    { title: 'Reports', icon: 'i-lucide-bar-chart-2', to: '#reports' },
+    { title: 'Performance', icon: 'i-lucide-trending-up', to: '#performance' },
+    { title: 'Self-Service', icon: 'i-lucide-smartphone', to: '#self-service' },
+    { title: 'Learning', icon: 'i-lucide-book-open', to: '#learning' },
 ]
 
 const featureDetails = [
@@ -153,9 +142,9 @@ const featureDetails = [
         title: 'Employee Information',
         description: 'The single source of truth that powers smarter HR decisions.',
         features: [
-            { description: 'A centralized record keeping all employee data accurate, consistent, and accessible.', icon: 'i-lucide-users' },
-            { description: 'Securely stores documents, licenses, and certifications with expiry reminders.', icon: 'i-lucide-file-text' },
-            { description: 'Dynamic charts give instant visibility of roles across departments.', icon: 'i-lucide-bar-chart-4' },
+            { description: 'A centralized record keeping all employee data accurate, consistent, and accessible.', icon: 'i-lucide-check' },
+            { description: 'Securely stores documents, licenses, and certifications with expiry reminders.', icon: 'i-lucide-check' },
+            { description: 'Dynamic charts give instant visibility of roles across departments.', icon: 'i-lucide-check' },
         ],
         orientation: 'horizontal' as const,
         component: MockupScreenHrisEmployees
@@ -165,9 +154,9 @@ const featureDetails = [
         title: 'Timekeeping',
         description: 'Making every second count for your workforce.',
         features: [
-            { description: 'Attendance tracking with biometric, mobile, and web-based clock-ins for on-site and remote teams.', icon: 'i-lucide-clock' },
-            { description: 'Geo-tagged clock-ins verify when and where employees start and end their workday.', icon: 'i-lucide-map-pin' },
-            { description: 'Smart scheduling, automated leave management, and real-time notifications keep workflows compliant.', icon: 'i-lucide-calendar' },
+            { description: 'Attendance tracking with biometric, mobile, and web-based clock-ins for on-site and remote teams.', icon: 'i-lucide-check' },
+            { description: 'Geo-tagged clock-ins verify when and where employees start and end their workday.', icon: 'i-lucide-check' },
+            { description: 'Smart scheduling, automated leave management, and real-time notifications keep workflows compliant.', icon: 'i-lucide-check' },
         ],
         orientation: 'horizontal' as const,
         reverse: true,
@@ -178,9 +167,9 @@ const featureDetails = [
         title: 'Payroll',
         description: 'Less time on payroll, more time on people.',
         features: [
-            { description: 'Automated salary computation that integrates directly with attendance and leave data.', icon: 'i-lucide-calculator' },
-            { description: 'Employees get digital payslips; HR gains audit-ready records and real-time insights.', icon: 'i-lucide-receipt-text' },
-            { description: 'Accurate tax and government-contribution compliance with support for multiple pay structures.', icon: 'i-lucide-check-circle' },
+            { description: 'Automated salary computation that integrates directly with attendance and leave data.', icon: 'i-lucide-check' },
+            { description: 'Employees get digital payslips; HR gains audit-ready records and real-time insights.', icon: 'i-lucide-check' },
+            { description: 'Accurate tax and government-contribution compliance with support for multiple pay structures.', icon: 'i-lucide-check' },
         ],
         orientation: 'horizontal' as const,
         component: MockupScreenHrisPayroll
@@ -190,9 +179,9 @@ const featureDetails = [
         title: 'Recruitment & Onboarding',
         description: 'The right talent, the right start, the right tools.',
         features: [
-            { description: 'Streamlines the hiring journey — from job postings and AI-powered candidate matching to digital, paperless contracts.', icon: 'i-lucide-sparkles' },
-            { description: 'Hired applicants flow straight into Employee Information, eliminating duplicate data entry.', icon: 'i-lucide-user-check' },
-            { description: 'Plug-and-play with the Learning Management System for structured training from day one.', icon: 'i-lucide-book-open' },
+            { description: 'Streamlines the hiring journey — from job postings and AI-powered candidate matching to digital, paperless contracts.', icon: 'i-lucide-check' },
+            { description: 'Hired applicants flow straight into Employee Information, eliminating duplicate data entry.', icon: 'i-lucide-check' },
+            { description: 'Plug-and-play with the Learning Management System for structured training from day one.', icon: 'i-lucide-check' },
         ],
         orientation: 'horizontal' as const,
         reverse: true,
@@ -203,9 +192,9 @@ const featureDetails = [
         title: 'Learning & Development',
         description: 'Build the foundation, scale with LMS.',
         features: [
-            { description: 'A central hub for training records — track employee skills, training history, and development needs.', icon: 'i-lucide-globe' },
-            { description: 'Works standalone as a streamlined monitoring tool for every program.', icon: 'i-lucide-shield-cog-corner' },
-            { description: 'Integrates with the LMS to unlock certification management, progress tracking, online activities, and exams.', icon: 'i-lucide-award' },
+            { description: 'A central hub for training records — track employee skills, training history, and development needs.', icon: 'i-lucide-check' },
+            { description: 'Works standalone as a streamlined monitoring tool for every program.', icon: 'i-lucide-check' },
+            { description: 'Integrates with the LMS to unlock certification management, progress tracking, online activities, and exams.', icon: 'i-lucide-check' },
         ],
         orientation: 'horizontal' as const,
         component: MockupScreenHrisLearning
@@ -215,9 +204,9 @@ const featureDetails = [
         title: 'Performance Management',
         description: 'Performance that scales with you.',
         features: [
-            { description: 'Starts with the essentials — goal tracking, structured reviews, and performance records for a clear, consistent process.', icon: 'i-lucide-bar-chart-4' },
-            { description: 'Grows into a full ecosystem with continuous feedback, skill frameworks, and analytics.', icon: 'i-lucide-trending-up' },
-            { description: 'Integrates seamlessly with Learning & Development for targeted employee growth.', icon: 'i-lucide-file-check' },
+            { description: 'Starts with the essentials — goal tracking, structured reviews, and performance records for a clear, consistent process.', icon: 'i-lucide-check' },
+            { description: 'Grows into a full ecosystem with continuous feedback, skill frameworks, and analytics.', icon: 'i-lucide-check' },
+            { description: 'Integrates seamlessly with Learning & Development for targeted employee growth.', icon: 'i-lucide-check' },
         ],
         orientation: 'horizontal' as const,
         reverse: true,
@@ -228,9 +217,9 @@ const featureDetails = [
         title: 'Employee Self-Service',
         description: 'The freedom to manage your HR needs.',
         features: [
-            { description: 'Puts HR in every employee’s pocket — direct access to payslips, leave balances, schedules, and personal info.', icon: 'i-lucide-smartphone' },
-            { description: 'Every update flows back into the centralized record, ensuring one single source of truth.', icon: 'i-lucide-pencil' },
-            { description: 'File requests, update records, or download documents in a few clicks — less manual workload for HR.', icon: 'i-lucide-file-text' },
+            { description: 'Puts HR in every employee’s pocket — direct access to payslips, leave balances, schedules, and personal info.', icon: 'i-lucide-check' },
+            { description: 'Every update flows back into the centralized record, ensuring one single source of truth.', icon: 'i-lucide-check' },
+            { description: 'File requests, update records, or download documents in a few clicks — less manual workload for HR.', icon: 'i-lucide-check' },
         ],
         orientation: 'horizontal' as const,
         component: MockupScreenHrisSelfService
@@ -240,9 +229,9 @@ const featureDetails = [
         title: 'Reports & Analytics',
         description: 'Turn HR data into business strategy.',
         features: [
-            { description: 'Turns everyday HR data into clear, actionable insights.', icon: 'i-lucide-bar-chart-4' },
-            { description: 'Real-time dashboards, customizable reports, and predictive trends to spot patterns and plan ahead.', icon: 'i-lucide-hourglass' },
-            { description: 'From compliance reporting to linking payroll, attendance, and performance in one view.', icon: 'i-lucide-link-2' },
+            { description: 'Turns everyday HR data into clear, actionable insights.', icon: 'i-lucide-check' },
+            { description: 'Real-time dashboards, customizable reports, and predictive trends to spot patterns and plan ahead.', icon: 'i-lucide-check' },
+            { description: 'From compliance reporting to linking payroll, attendance, and performance in one view.', icon: 'i-lucide-check' },
         ],
         orientation: 'horizontal' as const,
         reverse: true,
@@ -285,7 +274,8 @@ const { y } = useWindowScroll()
         description="One unified cloud platform that connects payroll, attendance, recruitment, learning and performance — for the way modern SME teams work."
         orientation="horizontal" :ui="{
             root: 'relative overflow-hidden min-h-[calc(100vh-var(--ui-header-height))] pb-14 flex flex-col justify-center',
-            container: 'max-w-full'
+            container: 'max-w-full',
+            description: 'dark:text-toned'
         }">
         <template #title>
             Your workforce,<br>finally unified.
@@ -308,8 +298,23 @@ const { y } = useWindowScroll()
                     backgroundImage: 'url(\'/New_hire_welcomed_by_teammates_2K_20260930122452.jpg\')',
                     transform: `translateY(${y * 0.4}px)`
                 }" />
-            <!-- Adaptive overlay -->
-            <div class="absolute inset-0 -z-10 bg-white/80 dark:bg-black/80" />
+            <!-- Adaptive overlays -->
+            <div class="absolute inset-0 -z-10 bg-gradient-to-r from-white/90 to-transparent to-90% dark:from-black/90" />
+            
+            <!-- Grid texture -->
+            <div class="absolute inset-y-0 left-0 w-2/3 -z-10 pointer-events-none [mask-image:linear-gradient(to_right,black,transparent)]">
+                <svg class="absolute inset-0 h-full w-full text-primary-500/20 dark:text-primary-400/20" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="hero-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+                            <path d="M 32 0 L 0 0 0 32" fill="none" stroke="currentColor" stroke-width="1" />
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#hero-grid)" />
+                </svg>
+            </div>
+
+            <!-- Primary color overlay -->
+            <div class="absolute inset-0 -z-10 bg-gradient-to-r from-primary/20 to-transparent to-45%" />
         </template>
 
         <template #footer>
@@ -327,13 +332,13 @@ const { y } = useWindowScroll()
 
         <!-- Ticker at bottom of hero -->
         <div
-            class="absolute bottom-0 inset-x-0 border-t border-default bg-white/50 dark:bg-gray-900/50 backdrop-blur-md overflow-hidden flex py-4 z-10">
+            class="absolute bottom-0 inset-x-0 border-t border-default bg-white/50 dark:bg-neutral-900/50 backdrop-blur-md overflow-hidden flex py-4 z-10">
             <div class="flex whitespace-nowrap animate-ticker w-max hover:animation-paused">
                 <div class="flex items-center gap-16 pr-16 shrink-0" v-for="i in 4" :key="`ticker-group-${i}`">
-                    <NuxtLink v-for="mod in hubModules" :key="mod.label" :to="mod.to"
+                    <NuxtLink v-for="mod in modules" :key="mod.title" :to="mod.to"
                         class="flex items-center gap-2 text-sm font-bold text-toned uppercase tracking-wider hover:text-primary transition-colors">
                         <UIcon :name="mod.icon" class="size-5 text-primary" />
-                        {{ mod.label }}
+                        {{ mod.title }}
                     </NuxtLink>
                 </div>
             </div>
@@ -361,8 +366,11 @@ const { y } = useWindowScroll()
     <!-- Modules Structure -->
     <UPageSection headline="The Platform" title="Eight modules. One connected record."
         description="Unified platform that collects and stores data across every HR function — from applicant tracking to payroll, training, deployment, and reporting. Nothing lives in a spreadsheet, and nothing gets entered twice."
-        orientation="horizontal" :features="modules" :ui="{ features: 'grid grid-cols-2 gap-4' }">
-        <HubDiagram center-label="HR CORE" :nodes="hubModules" />
+        orientation="horizontal" :ui="{ features: 'grid grid-cols-2 gap-4' }">
+        <template #features>
+            <UPageFeature v-for="(module, index) in modules" :key="index" :title="module.title" icon="i-lucide-check" />
+        </template>
+        <HubDiagram center-label="HR CORE" :nodes="modules" />
     </UPageSection>
 
     <!-- Feature details -->

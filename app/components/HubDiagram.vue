@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+
 interface HubNode {
-    label: string
+    title: string
     icon: string
+    to?: string
 }
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
     centerLabel: string
     centerSubLabel?: string
     nodes: HubNode[]
@@ -12,17 +15,28 @@ withDefaults(defineProps<{
     centerSubLabel: '',
 })
 
-// Fixed 8-node positions (clockwise from top), matching SVG line endpoints
-const positions = [
-    { left: '50%', top: '13.3%' }, // top
-    { left: '75.9%', top: '24.1%' }, // top-right
-    { left: '86.7%', top: '50%' }, // right
-    { left: '75.9%', top: '75.9%' }, // bottom-right
-    { left: '50%', top: '86.7%' }, // bottom
-    { left: '24.1%', top: '75.9%' }, // bottom-left
-    { left: '13.3%', top: '50%' }, // left
-    { left: '24.1%', top: '24.1%' }, // top-left
-]
+// Calculate positions and connector lines dynamically based on number of nodes
+const layoutData = computed(() => {
+    const n = props.nodes.length
+    const radius = 220
+    const center = 300
+    
+    return props.nodes.map((_, i) => {
+        // Start from top (-90 degrees or -PI/2 radians)
+        const angle = -Math.PI / 2 + (i * 2 * Math.PI / n)
+        
+        const x = center + radius * Math.cos(angle)
+        const y = center + radius * Math.sin(angle)
+        
+        return {
+            line: { x2: x, y2: y },
+            style: { 
+                left: `${(x / 600) * 100}%`, 
+                top: `${(y / 600) * 100}%` 
+            }
+        }
+    })
+})
 </script>
 
 <template>
@@ -30,18 +44,7 @@ const positions = [
 
         <!-- SVG connector lines -->
         <svg class="absolute inset-0 size-full text-muted z-0" viewBox="0 0 600 600" preserveAspectRatio="none">
-            <line x1="300" y1="300" x2="300" y2="80" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.5" />
-            <line x1="300" y1="300" x2="455.6" y2="144.4" stroke="currentColor" stroke-opacity="0.35"
-                stroke-width="1.5" />
-            <line x1="300" y1="300" x2="520" y2="300" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.5" />
-            <line x1="300" y1="300" x2="455.6" y2="455.6" stroke="currentColor" stroke-opacity="0.35"
-                stroke-width="1.5" />
-            <line x1="300" y1="300" x2="300" y2="520" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.5" />
-            <line x1="300" y1="300" x2="144.4" y2="455.6" stroke="currentColor" stroke-opacity="0.35"
-                stroke-width="1.5" />
-            <line x1="300" y1="300" x2="80" y2="300" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.5" />
-            <line x1="300" y1="300" x2="144.4" y2="144.4" stroke="currentColor" stroke-opacity="0.35"
-                stroke-width="1.5" />
+            <line v-for="(data, i) in layoutData" :key="`line-${i}`" x1="300" y1="300" :x2="data.line.x2" :y2="data.line.y2" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.5" />
         </svg>
 
         <!-- Center hub -->
@@ -54,13 +57,19 @@ const positions = [
         </div>
 
         <!-- Module nodes: outer div = position + width; inner div = appearance + hover -->
-        <div v-for="(node, i) in nodes.slice(0, 8)" :key="node.label" :style="positions[i]"
+        <div v-for="(node, i) in nodes" :key="node.title" :style="layoutData[i]?.style"
             class="absolute w-[22%] -translate-x-1/2 -translate-y-1/2 z-[1]">
-            <div
+            <NuxtLink v-if="node.to" :to="node.to"
+                class="w-full aspect-square rounded-full bg-default border border-default shadow-md flex flex-col items-center justify-center gap-[5px] text-center p-1.5 transition-all duration-200 hover:border-primary hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1 cursor-pointer">
+                <UIcon :name="node.icon" class="size-6 text-primary shrink-0 flex" />
+                <span class="text-[clamp(.62rem,1.5vw,.82rem)] font-semibold text-highlighted leading-tight px-1">{{
+                    node.title }}</span>
+            </NuxtLink>
+            <div v-else
                 class="w-full aspect-square rounded-full bg-default border border-default shadow-md flex flex-col items-center justify-center gap-[5px] text-center p-1.5 transition-all duration-200 hover:border-primary hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1 cursor-default">
                 <UIcon :name="node.icon" class="size-6 text-primary shrink-0 flex" />
                 <span class="text-[clamp(.62rem,1.5vw,.82rem)] font-semibold text-highlighted leading-tight px-1">{{
-                    node.label }}</span>
+                    node.title }}</span>
             </div>
         </div>
 
