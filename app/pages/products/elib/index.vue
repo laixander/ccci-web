@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { useWindowScroll } from '@vueuse/core'
 definePageMeta({ layout: 'product' })
+
+const { y } = useWindowScroll()
 
 useSeoMeta({
   title: 'eLib — Electronic Library System | BiblioCore',
@@ -8,35 +11,29 @@ useSeoMeta({
 
 const features = [
   {
-    title: 'Smart Catalog & OPAC',
-    description: 'Digitize your entire collection with ISBN auto-fill, cover art, subject tags, and a modern Online Public Access Catalog your readers will love.',
-    icon: 'i-lucide-book-open',
+    title: 'Quick Online Access',
+    description: 'Students reach books, magazines, catalogs, journals and other materials online — better, faster learning from anywhere.',
+    icon: 'i-lucide-search',
+    orientation: 'vertical' as const
   },
   {
-    title: 'Circulation Management',
-    description: 'Streamline checkouts, returns, and renewals at the desk or self-service kiosk. Track loan periods, late returns, and holds in real time.',
-    icon: 'i-lucide-bookmark',
+    title: 'Automated Library Tasks',
+    description: 'Inventory, cataloguing, serial management, circulation and reference are automated, improving day-to-day efficiency.',
+    icon: 'i-lucide-layers',
+    orientation: 'vertical' as const
   },
   {
-    title: 'E-Resources & Digital Lending',
-    description: 'Extend your collection with e-books, journals, and digital resources. Set concurrent loan limits and let patrons borrow anywhere, anytime.',
-    icon: 'i-lucide-tablet',
+    title: 'Member Data Management',
+    description: 'Store and manage member data in one database, maintain each account, and collect membership payments with ease.',
+    icon: 'i-lucide-users',
+    orientation: 'vertical' as const
   },
   {
-    title: 'Member & Fine Management',
-    description: 'Manage patron registrations, membership tiers, borrowing history, and outstanding fines — all in one unified member portal.',
-    icon: 'i-lucide-id-card',
-  },
-  {
-    title: 'Reservations & Holds',
-    description: 'Allow patrons to place holds on popular titles. Automatic hold notifications via email or SMS when the item becomes available.',
-    icon: 'i-lucide-calendar-clock',
-  },
-  {
-    title: 'Analytics & Reporting',
-    description: 'Measure collection usage, peak borrowing hours, most popular titles, and generate CHED-compliant library utilization reports automatically.',
-    icon: 'i-lucide-bar-chart-2',
-  },
+    title: 'Automatic Fines',
+    description: 'Fines and penalties for late returns are assessed and calculated automatically — no manual computation needed.',
+    icon: 'i-lucide-wallet',
+    orientation: 'vertical' as const
+  }
 ]
 
 const stats = [
@@ -128,22 +125,105 @@ const logoIcons = [
   { name: 'i-simple-icons-meta', label: 'Meta' },
   { name: 'i-simple-icons-unesco', label: 'UNESCO' },
 ]
+
+const checklist = [
+    'Self check-in & check-out',
+    'Barcode circulation',
+    'Mobile app access'
+]
+
+const modules = [
+    { title: 'Admission', icon: 'i-lucide-door-open', to: '#admission' },
+    { title: 'Enrollment', icon: 'i-lucide-clipboard-list', to: '#enrollment' },
+    { title: 'Registrar', icon: 'i-lucide-book-open', to: '#registrar' },
+    { title: 'Billing', icon: 'i-lucide-receipt-text', to: '#billing' },
+    { title: 'Grades', icon: 'i-lucide-graduation-cap', to: '#grades' },
+    { title: 'Student', icon: 'i-lucide-user-round', to: '#student' },
+    { title: 'Security', icon: 'i-lucide-shield-check', to: '#security' },
+    { title: 'Scheduling', icon: 'i-lucide-calendar-clock', to: '#scheduling' },
+]
 </script>
 
 <template>
   <!-- Hero -->
-  <UPageHero
-    headline="Introducing BiblioCore 2.0"
-    title="Your Entire Library — Digitized, Streamlined, and Always Open"
-    description="From catalog management to circulation, e-resources to analytics — BiblioCore gives your library a complete digital backbone. Built for schools, universities, and public libraries in the Philippines."
-    :links="heroLinks"
-    orientation="horizontal"
-  >
-    <MockupScreenElibDashboard />
-  </UPageHero>
+    <UPageHero
+        orientation="horizontal" :ui="{
+            root: 'relative overflow-hidden min-h-[calc(100vh-var(--ui-header-height))] pb-14 flex flex-col justify-center',
+            container: 'max-w-full',
+            description: 'dark:text-toned'
+        }">
+        <template #headline>
+            <UBadge variant="subtle" :ui="{ base: 'pr-2.5 gap-2' }" class="rounded-full mb-4">
+                <span class="relative flex size-2">
+                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-400 opacity-75"></span>
+                    <span class="relative inline-flex size-2 rounded-full bg-primary-500"></span>
+                </span>
+                Introducing CampusCore 2.0
+            </UBadge>
+        </template>
+        <template #title>
+            Knowledge,<br>always within reach.
+        </template>
+        <template #description>
+            The <strong>eLibrary System</strong> gives students quick online access to books, magazines, catalogs, journals and more — while automating inventory, cataloguing, serial management, circulation and reference for librarians. Built by Centralized Cloud Computing International.
+        </template>
+
+        <template #top>
+            <!-- Background image with true parallax -->
+            <div class="absolute -inset-y-[25%] inset-x-0 -z-20 bg-cover bg-center bg-no-repeat will-change-transform"
+                :style="{
+                    backgroundImage: 'url(\'/Students_studying_in_library_2K_20261007165233.jpg\')',
+                    transform: `translateY(${y * 0.4}px)`
+                }" />
+            <!-- Adaptive overlays -->
+            <div class="absolute inset-0 -z-10 bg-gradient-to-r from-white/90 to-transparent to-90% dark:from-black/90" />
+            
+            <!-- Grid texture -->
+            <div class="absolute inset-y-0 left-0 w-2/3 -z-10 pointer-events-none [mask-image:linear-gradient(to_right,black,transparent)]">
+                <svg class="absolute inset-0 h-full w-full text-primary-500/20 dark:text-primary-400/20" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="hero-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+                            <path d="M 32 0 L 0 0 0 32" fill="none" stroke="currentColor" stroke-width="1" />
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#hero-grid)" />
+                </svg>
+            </div>
+
+            <!-- Primary color overlay -->
+            <div class="absolute inset-0 -z-10 bg-gradient-to-r from-primary/20 to-transparent to-45%" />
+        </template>
+
+        <template #footer>
+            <div class="flex flex-wrap gap-x-6 gap-y-3">
+                <UButton v-for="(link, index) in heroLinks" :key="index" v-bind="link" />
+            </div>
+
+            <ul class="mt-6 sm:mt-12 flex flex-wrap gap-x-6 gap-y-2">
+                <li v-for="item in checklist" :key="item" class="flex items-center gap-2 text-sm text-toned">
+                    <UIcon name="i-lucide-check" class="size-4 text-primary shrink-0" />
+                    {{ item }}
+                </li>
+            </ul>
+        </template>
+
+        <!-- Ticker at bottom of hero -->
+        <div
+            class="absolute bottom-0 inset-x-0 border-t border-default bg-white/50 dark:bg-neutral-900/50 backdrop-blur-md overflow-hidden flex py-4 z-10">
+            <div class="flex whitespace-nowrap animate-ticker w-max hover:animation-paused">
+                <div class="flex items-center gap-16 pr-16 shrink-0" v-for="i in 4" :key="`ticker-group-${i}`">
+                    <NuxtLink v-for="mod in modules" :key="mod.title" :to="mod.to"
+                        class="flex items-center gap-2 text-sm font-bold text-toned uppercase tracking-wider hover:text-primary transition-colors">
+                        <UIcon :name="mod.icon" class="size-5 text-primary" />
+                        {{ mod.title }}
+                    </NuxtLink>
+                </div>
+            </div>
+        </div>
+    </UPageHero>
 
   <!-- Social proof -->
-  <div class="border-y border-default bg-muted/50 py-10">
+  <!-- <div class="border-y border-default bg-muted/50 py-10">
     <UContainer>
       <p class="text-center text-dimmed text-xs font-semibold uppercase tracking-widest mb-8">
         Trusted by leading schools, universities, and public libraries
@@ -158,7 +238,17 @@ const logoIcons = [
         />
       </div>
     </UContainer>
-  </div>
+  </div> -->
+
+  <!-- Core features grid -->
+  <UPageSection
+    id="features"
+    headline="Why Choose Us"
+    title="An essential role in every campus"
+    description="The eLibrary System empowers librarians and authorized staff to keep proper records of every book — author, edition, copies, issue and return dates — while helping students learn better through quick online access."
+    :features="features"
+    :ui="{ features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10' }"
+  />
 
   <!-- Core features grid -->
   <UPageSection
@@ -245,3 +335,35 @@ const logoIcons = [
     :links="ctaLinks"
   />
 </template>
+
+<style scoped>
+@keyframes ticker {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-25%);
+    }
+}
+
+.animate-ticker {
+    animation: ticker 40s linear infinite;
+}
+
+.hover\:animation-paused:hover {
+    animation-play-state: paused;
+}
+
+.cta-grid-texture {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    -webkit-mask-image: radial-gradient(ellipse 160% 110% at 50% -5%, black 50%, transparent 75%);
+    mask-image: radial-gradient(ellipse 160% 110% at 50% -5%, black 50%, transparent 75%);
+}
+</style>

@@ -112,8 +112,8 @@ const checklist = [
 ]
 
 const ctaLinks = [
-    { label: 'Start Free Trial', color: 'neutral' as const, icon: 'i-lucide-rocket', size: 'lg' as const },
-    { label: 'Schedule a Demo', color: 'neutral' as const, variant: 'outline' as const, trailingIcon: 'i-lucide-calendar', size: 'lg' as const },
+    { label: 'Start Free Trial', icon: 'i-lucide-rocket', size: 'lg' as const, ui: { base: 'sm:py-4 sm:px-6 sm:rounded-xl font-semibold', leadingIcon: 'sm:size-5' } },
+    { label: 'Schedule a Demo', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-phone', size: 'lg' as const, ui: { base: 'sm:py-4 sm:px-6 sm:rounded-xl font-semibold', trailingIcon: 'sm:size-5' } },
 ]
 
 const logoIcons = [
@@ -346,7 +346,7 @@ const { y } = useWindowScroll()
     </UPageHero>
 
     <!-- Social proof -->
-    <div class="border-y border-default bg-muted/50 py-10">
+    <!-- <div class="border-y border-default bg-muted/50 py-10">
         <UContainer>
             <p class="text-center text-dimmed text-xs font-semibold uppercase tracking-widest mb-8">
                 Trusted by innovative companies worldwide
@@ -356,7 +356,7 @@ const { y } = useWindowScroll()
                     class="size-7 text-muted" />
             </div>
         </UContainer>
-    </div>
+    </div> -->
 
     <!-- Core features grid -->
     <UPageSection id="features" headline="Why Choose Us" title="Why our HRIS stands out"

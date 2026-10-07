@@ -159,11 +159,11 @@ const checklist = [
 ]
 
 const modules = [
-    { title: 'Management', icon: 'i-lucide-shield-check', to: '#employee-records' },
-    { title: 'Student', icon: 'i-lucide-circle-user-round', to: '#recruitment' },
-    { title: 'AI Tutor', icon: 'i-lucide-sparkles', to: '#payroll' },
-    { title: 'Professor', icon: 'i-lucide-user-check', to: '#timekeeping' },
-    { title: 'Parent', icon: 'i-lucide-heart-handshake', to: '#reports' },
+    { title: 'Management', icon: 'i-lucide-shield-check', to: '#management-portal' },
+    { title: 'Student', icon: 'i-lucide-circle-user-round', to: '#student-portal' },
+    { title: 'AI Tutor', icon: 'i-lucide-sparkles', to: '#ai-features' },
+    { title: 'Professor', icon: 'i-lucide-user-check', to: '#professor-portal' },
+    { title: 'Parent', icon: 'i-lucide-heart-handshake', to: '#parents-portal' },
 ]
 
 const featureDetails = [
@@ -249,7 +249,7 @@ const featureDetails = [
             <!-- Background image with true parallax -->
             <div class="absolute -inset-y-[25%] inset-x-0 -z-20 bg-cover bg-center bg-no-repeat will-change-transform"
                 :style="{
-                    backgroundImage: 'url(\'/Student_learning_on_tablet_2K_20261005122406.jpg\')',
+                    backgroundImage: 'url(\'/Woman_studying_at_desk_2K_20261007084457.jpg\')',
                     transform: `translateY(${y * 0.4}px)`
                 }" />
             <!-- Adaptive overlays -->
@@ -353,6 +353,7 @@ const featureDetails = [
 
   <!-- AI-Powered Tutorial -->
   <UPageSection
+    id="ai-features"
     orientation="horizontal"
     headline="Flagship Module"
     title="AI-Powered Tutorial"
