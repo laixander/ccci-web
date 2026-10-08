@@ -1,32 +1,82 @@
 <script setup lang="ts">
-import { MockupScreenHrisPayroll, MockupScreenHrisAnalytics, MockupScreenHrisEmployees, MockupScreenHrisTimekeeping, MockupScreenHrisRecruitment, MockupScreenHrisLearning, MockupScreenHrisPerformance, MockupScreenHrisSelfService } from '#components'
-import { useWindowScroll } from '@vueuse/core'
+// ─── Imports ──────────────────────────────────────────────────────────────────
+import {
+    MockupScreenHrisPayroll,
+    MockupScreenHrisAnalytics,
+    MockupScreenHrisEmployees,
+    MockupScreenHrisTimekeeping,
+    MockupScreenHrisRecruitment,
+    MockupScreenHrisLearning,
+    MockupScreenHrisPerformance,
+    MockupScreenHrisSelfService,
+} from '#components'
+
+// ─── Page Meta ────────────────────────────────────────────────────────────────
 definePageMeta({ layout: 'product' })
-const standouts = [
+
+// ─── Navigation & UI Data ─────────────────────────────────────────────────────
+const heroLinks = [
+    { label: 'Start Free Trial', trailingIcon: 'i-lucide-arrow-right', class: 'hero-cta-shadow' },
+    { label: 'Watch Demo', icon: 'i-lucide-play-circle', color: 'neutral' as const, variant: 'soft' as const },
+]
+
+const ctaLinks = [
+    { label: 'Start Free Trial', trailingIcon: 'i-lucide-arrow-right', class: 'bg-primary-800 hover:bg-primary-700 dark:bg-primary dark:hover:bg-primary/75' },
+    { label: 'Schedule a Demo', color: 'neutral' as const, variant: 'soft' as const, icon: 'i-lucide-calendar-check' },
+]
+
+const logoIcons = [
+    { name: 'i-simple-icons-google', label: 'Google' },
+    { name: 'i-simple-icons-microsoft', label: 'Microsoft' },
+    { name: 'i-simple-icons-shopify', label: 'Shopify' },
+    { name: 'i-simple-icons-stripe', label: 'Stripe' },
+    { name: 'i-simple-icons-airbnb', label: 'Airbnb' },
+    { name: 'i-simple-icons-slack', label: 'Slack' },
+]
+
+const modules = [
+    { title: 'Employee Records', icon: 'i-lucide-users', to: '#employee-records' },
+    { title: 'Recruitment', icon: 'i-lucide-user-plus', to: '#recruitment' },
+    { title: 'Payroll', icon: 'i-lucide-banknote', to: '#payroll' },
+    { title: 'Timekeeping', icon: 'i-lucide-clock', to: '#timekeeping' },
+    { title: 'Reports', icon: 'i-lucide-bar-chart-2', to: '#reports' },
+    { title: 'Performance', icon: 'i-lucide-trending-up', to: '#performance' },
+    { title: 'Self-Service', icon: 'i-lucide-smartphone', to: '#self-service' },
+    { title: 'Learning', icon: 'i-lucide-book-open', to: '#learning' },
+]
+
+const checklist = [
+    'Tailored for SMEs',
+    'Geo-tagged timekeeping',
+    'PH-compliant payroll',
+]
+
+// ─── Page Content Data ────────────────────────────────────────────────────────
+const features = [
     {
         title: 'Employee-Centered Design',
         description: 'Built for people, not just systems — our HRIS ensures ease, clarity, and quick adoption across every team.',
         icon: 'i-lucide-users',
-        orientation: 'vertical' as const
+        orientation: 'vertical' as const,
     },
     {
         title: 'Integrated & Flexible',
         description: 'Integrates all core HR functions into one adaptable system, providing a fully customizable experience.',
         icon: 'i-lucide-layers',
-        orientation: 'vertical' as const
+        orientation: 'vertical' as const,
     },
     {
         title: 'Tailored for SMEs',
         description: 'Makes powerful HR tools accessible — combining world-class standards with affordable, practical solutions.',
         icon: 'i-lucide-building-2',
-        orientation: 'vertical' as const
+        orientation: 'vertical' as const,
     },
     {
         title: 'Smart Automation',
         description: 'Combines automation, geolocation, and real-time data to cut errors and free HR for strategic priorities.',
         icon: 'i-lucide-settings',
-        orientation: 'vertical' as const
-    }
+        orientation: 'vertical' as const,
+    },
 ]
 
 const stats = [
@@ -100,42 +150,6 @@ const plans = [
     },
 ]
 
-const heroLinks = [
-  { label: 'Start Free Trial', to: '#pricing', icon: 'i-lucide-rocket', size: 'xl' as const,  ui: { base: 'sm:py-4 sm:px-6 sm:rounded-xl font-semibold', leadingIcon: 'sm:size-5' } },
-  { label: 'Watch Demo', color: 'neutral' as const, variant: 'soft' as const, trailingIcon: 'i-lucide-play-circle', size: 'xl' as const, ui: { base: 'sm:py-4 sm:px-6 sm:rounded-xl font-semibold', trailingIcon: 'sm:size-5' } },
-]
-
-const checklist = [
-    'Tailored for SMEs',
-    'Geo-tagged timekeeping',
-    'PH-compliant payroll'
-]
-
-const ctaLinks = [
-    { label: 'Start Free Trial', icon: 'i-lucide-rocket', size: 'lg' as const, ui: { base: 'sm:py-4 sm:px-6 sm:rounded-xl font-semibold', leadingIcon: 'sm:size-5' } },
-    { label: 'Schedule a Demo', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-phone', size: 'lg' as const, ui: { base: 'sm:py-4 sm:px-6 sm:rounded-xl font-semibold', trailingIcon: 'sm:size-5' } },
-]
-
-const logoIcons = [
-    { name: 'i-simple-icons-google', label: 'Google' },
-    { name: 'i-simple-icons-microsoft', label: 'Microsoft' },
-    { name: 'i-simple-icons-shopify', label: 'Shopify' },
-    { name: 'i-simple-icons-stripe', label: 'Stripe' },
-    { name: 'i-simple-icons-airbnb', label: 'Airbnb' },
-    { name: 'i-simple-icons-slack', label: 'Slack' },
-]
-
-const modules = [
-    { title: 'Employee Records', icon: 'i-lucide-users', to: '#employee-records' },
-    { title: 'Recruitment', icon: 'i-lucide-user-plus', to: '#recruitment' },
-    { title: 'Payroll', icon: 'i-lucide-banknote', to: '#payroll' },
-    { title: 'Timekeeping', icon: 'i-lucide-clock', to: '#timekeeping' },
-    { title: 'Reports', icon: 'i-lucide-bar-chart-2', to: '#reports' },
-    { title: 'Performance', icon: 'i-lucide-trending-up', to: '#performance' },
-    { title: 'Self-Service', icon: 'i-lucide-smartphone', to: '#self-service' },
-    { title: 'Learning', icon: 'i-lucide-book-open', to: '#learning' },
-]
-
 const featureDetails = [
     {
         id: 'employee-records',
@@ -147,7 +161,7 @@ const featureDetails = [
             { description: 'Dynamic charts give instant visibility of roles across departments.', icon: 'i-lucide-check' },
         ],
         orientation: 'horizontal' as const,
-        component: MockupScreenHrisEmployees
+        component: MockupScreenHrisEmployees,
     },
     {
         id: 'timekeeping',
@@ -160,7 +174,7 @@ const featureDetails = [
         ],
         orientation: 'horizontal' as const,
         reverse: true,
-        component: MockupScreenHrisTimekeeping
+        component: MockupScreenHrisTimekeeping,
     },
     {
         id: 'payroll',
@@ -172,7 +186,7 @@ const featureDetails = [
             { description: 'Accurate tax and government-contribution compliance with support for multiple pay structures.', icon: 'i-lucide-check' },
         ],
         orientation: 'horizontal' as const,
-        component: MockupScreenHrisPayroll
+        component: MockupScreenHrisPayroll,
     },
     {
         id: 'recruitment',
@@ -185,7 +199,7 @@ const featureDetails = [
         ],
         orientation: 'horizontal' as const,
         reverse: true,
-        component: MockupScreenHrisRecruitment
+        component: MockupScreenHrisRecruitment,
     },
     {
         id: 'learning',
@@ -197,7 +211,7 @@ const featureDetails = [
             { description: 'Integrates with the LMS to unlock certification management, progress tracking, online activities, and exams.', icon: 'i-lucide-check' },
         ],
         orientation: 'horizontal' as const,
-        component: MockupScreenHrisLearning
+        component: MockupScreenHrisLearning,
     },
     {
         id: 'performance',
@@ -210,19 +224,19 @@ const featureDetails = [
         ],
         orientation: 'horizontal' as const,
         reverse: true,
-        component: MockupScreenHrisPerformance
+        component: MockupScreenHrisPerformance,
     },
     {
         id: 'self-service',
         title: 'Employee Self-Service',
         description: 'The freedom to manage your HR needs.',
         features: [
-            { description: 'Puts HR in every employee’s pocket — direct access to payslips, leave balances, schedules, and personal info.', icon: 'i-lucide-check' },
+            { description: 'Puts HR in every employee\'s pocket — direct access to payslips, leave balances, schedules, and personal info.', icon: 'i-lucide-check' },
             { description: 'Every update flows back into the centralized record, ensuring one single source of truth.', icon: 'i-lucide-check' },
             { description: 'File requests, update records, or download documents in a few clicks — less manual workload for HR.', icon: 'i-lucide-check' },
         ],
         orientation: 'horizontal' as const,
-        component: MockupScreenHrisSelfService
+        component: MockupScreenHrisSelfService,
     },
     {
         id: 'reports',
@@ -235,115 +249,38 @@ const featureDetails = [
         ],
         orientation: 'horizontal' as const,
         reverse: true,
-        component: MockupScreenHrisAnalytics
-    }
-]
-
-const addOnModules = [
-    {
-        label: 'Loans',
-        icon: 'i-lucide-banknote',
-        headline: 'Add-on Module',
-        title: 'Loans',
-        description: 'Seamless loan management for your workforce — from application to full repayment, all inside the HRIS.',
-        features: [
-            { title: 'Loan Application', description: 'Employees apply via HRIS, entering loan amount, term, and reason.', icon: 'i-lucide-file-text' },
-            { title: 'Approval Process', description: 'Supervisor and HR review and approve the request in a guided workflow.', icon: 'i-lucide-shield-check' },
-            { title: 'Disbursement', description: 'Approved loans are disbursed via payroll or direct bank transfer.', icon: 'i-lucide-landmark' },
-            { title: 'Repayment', description: 'Monthly deductions from salary continue automatically until fully paid.', icon: 'i-lucide-clock' },
-            { title: 'Tracking & Reports', description: 'Employees and HR can monitor loan status and full history any time.', icon: 'i-lucide-bar-chart-2' },
-        ]
+        component: MockupScreenHrisAnalytics,
     },
-    {
-        label: 'More to come',
-        icon: 'i-lucide-sparkles',
-        // headline: 'Brewing Soon',
-        // title: 'More powerful add-ons on the way',
-        // description: 'We are constantly working on new specialized modules to help you manage your workforce better. Stay tuned for what\'s next!',
-        isTeaser: true,
-    }
 ]
 
-const activeAddOn = ref('0')
-const { y } = useWindowScroll()
+const addOnModule = {
+    headline: 'Add-on Module',
+    title: 'Employee Loan Management',
+    description: 'Seamless loan management for your workforce — from application to full repayment, all inside the HRIS.',
+    features: [
+        { title: 'Loan Application', description: 'Employees apply via HRIS, entering loan amount, term, and reason.', icon: 'i-lucide-file-text' },
+        { title: 'Approval Process', description: 'Supervisor and HR review and approve the request in a guided workflow.', icon: 'i-lucide-shield-check' },
+        { title: 'Disbursement', description: 'Approved loans are disbursed via payroll or direct bank transfer.', icon: 'i-lucide-landmark' },
+        { title: 'Repayment', description: 'Monthly deductions from salary continue automatically until fully paid.', icon: 'i-lucide-clock' },
+        { title: 'Tracking & Reports', description: 'Employees and HR can monitor loan status and full history any time.', icon: 'i-lucide-bar-chart-2' },
+    ],
+}
+
 </script>
 
 <template>
     <!-- Hero -->
-    <UPageHero
+    <ProductHero
+        badge="Introducing PeopleCore 2.0"
         description="One unified cloud platform that connects payroll, attendance, recruitment, learning and performance — for the way modern SME teams work."
-        orientation="horizontal" :ui="{
-            root: 'relative overflow-hidden min-h-[calc(100vh-var(--ui-header-height))] pb-14 flex flex-col justify-center',
-            container: 'max-w-full',
-            description: 'dark:text-toned'
-        }">
+        background-image="/New_hire_welcomed_by_teammates_2K_20260930122452.jpg"
+        :links="heroLinks"
+        :checklist="checklist"
+        :modules="modules">
         <template #title>
             Your workforce,<br>finally unified.
         </template>
-        <template #headline>
-            <UBadge variant="subtle" :ui="{ base: 'pr-2.5 gap-2' }" class="rounded-full mb-4">
-                <span class="relative flex size-2">
-                    <span
-                        class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-400 opacity-75"></span>
-                    <span class="relative inline-flex size-2 rounded-full bg-primary-500"></span>
-                </span>
-                Introducing PeopleCore 2.0
-            </UBadge>
-        </template>
-
-        <template #top>
-            <!-- Background image with true parallax -->
-            <div class="absolute -inset-y-[25%] inset-x-0 -z-20 bg-cover bg-center bg-no-repeat will-change-transform"
-                :style="{
-                    backgroundImage: 'url(\'/New_hire_welcomed_by_teammates_2K_20260930122452.jpg\')',
-                    transform: `translateY(${y * 0.4}px)`
-                }" />
-            <!-- Adaptive overlays -->
-            <div class="absolute inset-0 -z-10 bg-gradient-to-r from-white/90 to-transparent to-90% dark:from-black/90" />
-            
-            <!-- Grid texture -->
-            <div class="absolute inset-y-0 left-0 w-2/3 -z-10 pointer-events-none [mask-image:linear-gradient(to_right,black,transparent)]">
-                <svg class="absolute inset-0 h-full w-full text-primary-500/20 dark:text-primary-400/20" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <pattern id="hero-grid" width="32" height="32" patternUnits="userSpaceOnUse">
-                            <path d="M 32 0 L 0 0 0 32" fill="none" stroke="currentColor" stroke-width="1" />
-                        </pattern>
-                    </defs>
-                    <rect width="100%" height="100%" fill="url(#hero-grid)" />
-                </svg>
-            </div>
-
-            <!-- Primary color overlay -->
-            <div class="absolute inset-0 -z-10 bg-gradient-to-r from-primary/20 to-transparent to-45%" />
-        </template>
-
-        <template #footer>
-            <div class="flex flex-wrap gap-x-6 gap-y-3">
-                <UButton v-for="(link, index) in heroLinks" :key="index" v-bind="link" />
-            </div>
-
-            <ul class="mt-6 sm:mt-12 flex flex-wrap gap-x-6 gap-y-2">
-                <li v-for="item in checklist" :key="item" class="flex items-center gap-2 text-sm text-toned">
-                    <UIcon name="i-lucide-check" class="size-4 text-primary shrink-0" />
-                    {{ item }}
-                </li>
-            </ul>
-        </template>
-
-        <!-- Ticker at bottom of hero -->
-        <div
-            class="absolute bottom-0 inset-x-0 border-t border-default bg-white/50 dark:bg-neutral-900/50 backdrop-blur-md overflow-hidden flex py-4 z-10">
-            <div class="flex whitespace-nowrap animate-ticker w-max hover:animation-paused">
-                <div class="flex items-center gap-16 pr-16 shrink-0" v-for="i in 4" :key="`ticker-group-${i}`">
-                    <NuxtLink v-for="mod in modules" :key="mod.title" :to="mod.to"
-                        class="flex items-center gap-2 text-sm font-bold text-toned uppercase tracking-wider hover:text-primary transition-colors">
-                        <UIcon :name="mod.icon" class="size-5 text-primary" />
-                        {{ mod.title }}
-                    </NuxtLink>
-                </div>
-            </div>
-        </div>
-    </UPageHero>
+    </ProductHero>
 
     <!-- Social proof -->
     <!-- <div class="border-y border-default bg-muted/50 py-10">
@@ -361,7 +298,7 @@ const { y } = useWindowScroll()
     <!-- Core features grid -->
     <UPageSection id="features" headline="Why Choose Us" title="Why our HRIS stands out"
         description="A human resource platform engineered around your people, your compliance, and your growth."
-        :features="standouts" :ui="{ features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10' }" />
+        :features="features" :ui="{ features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10' }" />
 
     <!-- Modules Structure -->
     <UPageSection headline="The Platform" title="Eight modules. One connected record."
@@ -383,44 +320,25 @@ const { y } = useWindowScroll()
     </UPageSection>
 
     <!-- Add-on Modules -->
-    <UPageSection headline="Extend Your HRIS" title="Powerful add-on modules"
-        description="Unlock specialized capabilities that grow with your business. Each add-on integrates directly into your core HRIS — no separate logins, no silos.">
-        <div class="w-full">
-            <UTabs v-model="activeAddOn"
-                :items="addOnModules.map((m, i) => ({ label: m.label, icon: m.icon, slot: String(i), value: String(i) }))"
-                :ui="{ list: 'justify-center' }">
-                <template v-for="(mod, i) in addOnModules" :key="i" #[String(i)]>
-                    <div class="mt-4">
-                        <UPageHeader :headline="mod.headline" :title="mod.title" :description="mod.description" :ui="{
-                            root: 'p-0 border-none',
-                        }" />
-                        <UPageGrid v-if="!mod.isTeaser" class="sm:grid-cols-2 lg:grid-cols-5 gap-4 mt-6">
-                            <UPageCard v-for="feat in mod.features" :key="feat.title" :title="feat.title"
-                                :description="feat.description" spotlight spotlight-color="primary">
-                                <template #leading>
-                                    <div
-                                        class="size-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                                        <UIcon :name="feat.icon" class="size-5 text-primary" />
-                                    </div>
-                                </template>
-                            </UPageCard>
-                        </UPageGrid>
-                        <UEmpty v-else title="We're brewing something great"
-                            description="Our team is working on new tools to extend your HRIS capabilities even further. Have a specific request?"
-                            :actions="[{ label: 'Let us know', color: 'neutral', variant: 'outline' }]"
-                            class="py-16 border border-dashed border-default rounded-xl bg-muted/10 mt-8" :ui="{
-                                title: 'text-xl font-bold text-highlighted mb-2',
-                                description: 'text-muted max-w-md',
-                                actions: 'mt-6'
-                            }">
-                            <template #leading>
-                                <UIcon name="i-lucide-beaker" class="size-12 text-primary/60 mb-4" />
-                            </template>
-                        </UEmpty>
+    <UPageSection
+        :headline="addOnModule.headline"
+        :title="addOnModule.title"
+        :description="addOnModule.description">
+        <UPageGrid class="sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            <UPageCard
+                v-for="feat in addOnModule.features"
+                :key="feat.title"
+                :title="feat.title"
+                :description="feat.description"
+                spotlight
+                spotlight-color="primary">
+                <template #leading>
+                    <div class="size-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                        <UIcon :name="feat.icon" class="size-5 text-primary" />
                     </div>
                 </template>
-            </UTabs>
-        </div>
+            </UPageCard>
+        </UPageGrid>
     </UPageSection>
 
     <!-- Stats banner -->
@@ -474,45 +392,9 @@ const { y } = useWindowScroll()
   </div> -->
 
     <!-- CTA -->
-    <div class="relative bg-primary dark:bg-primary/50 py-10 overflow-hidden">
-        <div class="cta-grid-texture" />
-        <UPageCTA title="Ready to transform your HR operations?"
-            description="Join 1,200+ companies using PeopleCore to build better workplaces. Start your free 30-day trial — no credit card required."
-            variant="naked" :links="ctaLinks" :ui="{
-                title: 'text-white',
-                description: 'text-white/60'
-            }" />
-    </div>
+    <ProductCTA
+        title="Ready to transform your HR operations?"
+        description="Join 1,200+ companies using PeopleCore to build better workplaces. Start your free 30-day trial — no credit card required."
+        :links="ctaLinks"
+    />
 </template>
-
-<style scoped>
-@keyframes ticker {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(-25%);
-    }
-}
-
-.animate-ticker {
-    animation: ticker 40s linear infinite;
-}
-
-.hover\:animation-paused:hover {
-    animation-play-state: paused;
-}
-
-.cta-grid-texture {
-    position: absolute;
-    inset: 0;
-    background-image:
-        linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    -webkit-mask-image: radial-gradient(ellipse 160% 110% at 50% -5%, black 50%, transparent 75%);
-    mask-image: radial-gradient(ellipse 160% 110% at 50% -5%, black 50%, transparent 75%);
-}
-</style>

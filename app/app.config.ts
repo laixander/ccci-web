@@ -36,7 +36,8 @@ export default defineAppConfig({
     },
     pageSection: {
       slots: {
-        root: 'relative isolate even:bg-muted/50'
+        root: 'relative isolate even:bg-elevated/60 dark:even:bg-muted/50',
+        headline: 'flex items-center gap-2 before:content-[\'\'] before:w-1.5 before:h-1.5 before:rounded-full before:bg-primary uppercase tracking-widest text-xs font-semibold text-primary'
       }
     }
   }

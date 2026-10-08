@@ -15,7 +15,7 @@
 
       <div class="p-5 flex-1 flex flex-col gap-6">
         <!-- Stats Banner -->
-        <UCard variant="soft" :ui="{ body: 'sm:p-5 text-white flex items-center justify-around' }" class="bg-gradient-to-r from-primary-500 to-primary-900 rounded-2xl">
+        <UCard variant="soft" :ui="{ body: 'sm:p-5 text-white flex items-center justify-around' }" class="bg-gradient-to-r from-primary-600 to-primary-900 rounded-2xl">
           <div v-for="stat in stats" :key="stat.label" class="text-center">
             <p class="text-[22px] font-black leading-none mb-1.5">{{ stat.value }}</p>
             <p class="text-[10px] text-white/70 tracking-wide font-mono">{{ stat.label }}</p>
