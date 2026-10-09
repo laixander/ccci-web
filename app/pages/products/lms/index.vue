@@ -225,17 +225,15 @@ const featureDetails = [
 
 <template>
     <!-- Hero -->
-    <ProductHero
-        badge="Introducing LearnCore 2.0"
-        background-image="/Mother_and_child_using_tablet_2K_20261008163356.jpg"
-        :links="heroLinks"
-        :checklist="checklist"
-        :modules="modules">
+    <ProductHero badge="Introducing LearnCore 2.0" background-image="/hero-lms-bg.jpg" :links="heroLinks"
+        :checklist="checklist" :modules="modules">
         <template #title>
             Digital Learning,<br>Reimagined.
         </template>
         <template #description>
-            A cloud <strong>Learning Management System</strong> that lets learners access content anytime, anywhere — while educators track development through grades, reports, and submissions. Built by Centralized Cloud Computing International.
+            A cloud <strong>Learning Management System</strong> that lets learners access content anytime, anywhere —
+            while educators track development through grades, reports, and submissions. Built by Centralized Cloud
+            Computing International.
         </template>
     </ProductHero>
 
@@ -277,20 +275,11 @@ const featureDetails = [
     </UPageSection>
 
     <!-- AI-Powered Tutorial -->
-    <UPageSection
-        id="ai-features"
-        orientation="horizontal"
-        headline="Flagship Module"
-        title="AI-Powered Tutorial"
+    <UPageSection id="ai-features" orientation="horizontal" headline="Flagship Module" title="AI-Powered Tutorial"
         description="A highly personalized experience that dynamically adapts content to each learner's knowledge, skills, and goals — increasing engagement, accelerating skill acquisition, and reducing cognitive load at scale.">
         <UPageGrid class="lg:grid-cols-2">
-            <UPageCard
-                v-for="(feature, index) in aiFeatures"
-                :key="index"
-                v-bind="feature"
-                :ui="{ leadingIcon: 'text-primary p-2 rounded-lg size-8' }"
-                spotlight
-            />
+            <UPageCard v-for="(feature, index) in aiFeatures" :key="index" v-bind="feature"
+                :ui="{ leadingIcon: 'text-primary p-2 rounded-lg size-8' }" spotlight />
         </UPageGrid>
     </UPageSection>
 
@@ -352,9 +341,7 @@ const featureDetails = [
   /> -->
 
     <!-- CTA -->
-    <ProductCTA
-        title="Ready to elevate your learning programs?"
+    <ProductCTA title="Ready to elevate your learning programs?"
         description="Join thousands of organizations using LearnCore to deliver better education and training."
-        :links="ctaLinks"
-    />
+        :links="ctaLinks" />
 </template>

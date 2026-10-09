@@ -270,13 +270,9 @@ const addOnModule = {
 
 <template>
     <!-- Hero -->
-    <ProductHero
-        badge="Introducing PeopleCore 2.0"
+    <ProductHero badge="Introducing PeopleCore 2.0"
         description="One unified cloud platform that connects payroll, attendance, recruitment, learning and performance — for the way modern SME teams work."
-        background-image="/New_hire_welcomed_by_teammates_2K_20260930122452.jpg"
-        :links="heroLinks"
-        :checklist="checklist"
-        :modules="modules">
+        background-image="/hero-hris-bg.jpg" :links="heroLinks" :checklist="checklist" :modules="modules">
         <template #title>
             Your workforce,<br>finally unified.
         </template>
@@ -320,18 +316,10 @@ const addOnModule = {
     </UPageSection>
 
     <!-- Add-on Modules -->
-    <UPageSection
-        :headline="addOnModule.headline"
-        :title="addOnModule.title"
-        :description="addOnModule.description">
+    <UPageSection :headline="addOnModule.headline" :title="addOnModule.title" :description="addOnModule.description">
         <UPageGrid class="sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            <UPageCard
-                v-for="feat in addOnModule.features"
-                :key="feat.title"
-                :title="feat.title"
-                :description="feat.description"
-                spotlight
-                spotlight-color="primary">
+            <UPageCard v-for="feat in addOnModule.features" :key="feat.title" :title="feat.title"
+                :description="feat.description" spotlight spotlight-color="primary">
                 <template #leading>
                     <div class="size-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                         <UIcon :name="feat.icon" class="size-5 text-primary" />
@@ -392,9 +380,7 @@ const addOnModule = {
   </div> -->
 
     <!-- CTA -->
-    <ProductCTA
-        title="Ready to transform your HR operations?"
+    <ProductCTA title="Ready to transform your HR operations?"
         description="Join 1,200+ companies using PeopleCore to build better workplaces. Start your free 30-day trial — no credit card required."
-        :links="ctaLinks"
-    />
+        :links="ctaLinks" />
 </template>
