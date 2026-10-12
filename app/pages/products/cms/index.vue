@@ -280,7 +280,7 @@ const paymentProviders = ['GCash', 'VISA', 'Mastercard']
     <!-- Hero -->
     <ProductHero
         badge="Introducing CampusCore 2.0"
-        background-image="/Student_learning_on_tablet_2K_20261005122406.jpg"
+        background-image="/hero-cms-bg.jpg"
         :links="heroLinks"
         :checklist="checklist"
         :modules="modules">

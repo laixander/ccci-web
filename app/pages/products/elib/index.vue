@@ -4,6 +4,7 @@ import {
     MockupScreenElibCatalog,
     MockupScreenElibCirculation,
     MockupScreenElibDashboard,
+    MockupScreenElibMobile,
 } from '#components'
 
 // ─── Page Meta ────────────────────────────────────────────────────────────────
@@ -106,34 +107,47 @@ const featureDetails = [
         orientation: 'horizontal' as const,
         component: MockupScreenElibDashboard,
     },
+    {
+        id: 'mobile',
+        title: 'Mobile Apps',
+        description: 'Reserve, borrow, scan and search — right from your phone.',
+        features: [
+            { description: 'Access the eLibrary through mobile apps for reservation, borrowing, scanning or searching for books.', icon: 'i-lucide-check' },
+            { description: 'File complaints or make reports directly from the app — cost-effective and user-friendly software.', icon: 'i-lucide-check' },
+            { description: "Librarians manage inventory through the dashboard, tracking location and availability of every resource.", icon: 'i-lucide-check' },
+        ],
+        orientation: 'horizontal' as const,
+        reverse: true,
+        component: MockupScreenElibMobile,
+    },
 ]
 
-const mobileFeatures = [
-    {
-        title: 'Reserve & Borrow',
-        description: 'Access the eLibrary through mobile apps for reservation, borrowing, scanning or searching for books.',
-        icon: 'i-lucide-book-marked',
-        orientation: 'vertical' as const,
-    },
-    {
-        title: 'In-App Reports',
-        description: 'File complaints or make reports directly from the app — cost-effective and user-friendly software.',
-        icon: 'i-lucide-file-text',
-        orientation: 'vertical' as const,
-    },
-    {
-        title: 'Inventory Dashboard',
-        description: 'Librarians manage inventory through the dashboard, tracking location and availability of every resource.',
-        icon: 'i-lucide-layout-dashboard',
-        orientation: 'vertical' as const,
-    },
-    {
-        title: 'Scan to Reserve',
-        description: "Students scan a book's barcode from their phone to instantly reserve it — no counter visit required.",
-        icon: 'i-lucide-scan',
-        orientation: 'vertical' as const,
-    },
-]
+// const mobileFeatures = [
+//     {
+//         title: 'Reserve & Borrow',
+//         description: 'Access the eLibrary through mobile apps for reservation, borrowing, scanning or searching for books.',
+//         icon: 'i-lucide-book-marked',
+//         orientation: 'vertical' as const,
+//     },
+//     {
+//         title: 'In-App Reports',
+//         description: 'File complaints or make reports directly from the app — cost-effective and user-friendly software.',
+//         icon: 'i-lucide-file-text',
+//         orientation: 'vertical' as const,
+//     },
+//     {
+//         title: 'Inventory Dashboard',
+//         description: 'Librarians manage inventory through the dashboard, tracking location and availability of every resource.',
+//         icon: 'i-lucide-layout-dashboard',
+//         orientation: 'vertical' as const,
+//     },
+//     {
+//         title: 'Scan to Reserve',
+//         description: "Students scan a book's barcode from their phone to instantly reserve it — no counter visit required.",
+//         icon: 'i-lucide-scan',
+//         orientation: 'vertical' as const,
+//     },
+// ]
 
 const platformFeatures = [
     {
@@ -235,25 +249,23 @@ const stats = [
     </UPageSection>
 
     <!-- Mobile Apps -->
-    <UPageSection id="mobile-apps" headline="Mobile Apps"
+    <!-- <UPageSection id="mobile-apps" headline="Mobile Apps"
         title="Reserve, borrow, scan and search — right from your phone."
         description="Access the eLibrary through mobile apps for reservation, borrowing, scanning or searching for books. File complaints or make reports directly from the app — cost-effective and user-friendly software."
         :features="mobileFeatures" :ui="{
             features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10',
             description: 'text-primary',
-        }" />
+        }" /> -->
 
     <!-- Stats banner -->
-    <div class="border-y border-default bg-muted/50 py-16">
-        <UContainer>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
-                <div v-for="stat in stats" :key="stat.label">
-                    <p class="text-4xl lg:text-5xl font-extrabold text-primary">{{ stat.value }}</p>
-                    <p class="text-muted mt-2 text-sm lg:text-base font-medium">{{ stat.label }}</p>
-                </div>
+    <UPageSection>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
+            <div v-for="stat in stats" :key="stat.label">
+                <p class="text-4xl lg:text-5xl font-extrabold text-primary">{{ stat.value }}</p>
+                <p class="text-muted mt-2 text-sm lg:text-base font-medium">{{ stat.label }}</p>
             </div>
-        </UContainer>
-    </div>
+        </div>
+    </UPageSection>
 
     <!-- CTA -->
     <ProductCTA title="Ready to bring your library online?"
