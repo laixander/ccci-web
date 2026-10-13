@@ -380,7 +380,9 @@ const addOnModule = {
   </div> -->
 
     <!-- CTA -->
-    <ProductCTA title="Ready to transform your HR operations?"
-        description="Join 1,200+ companies using PeopleCore to build better workplaces. Start your free 30-day trial — no credit card required."
-        :links="ctaLinks" />
+    <UPageSection>
+        <ProductCTA title="Ready to transform your HR operations?"
+            description="Join 1,200+ companies using PeopleCore to build better workplaces. Start your free 30-day trial — no credit card required."
+            :links="ctaLinks" />
+    </UPageSection>
 </template>

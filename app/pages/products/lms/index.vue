@@ -341,7 +341,9 @@ const featureDetails = [
   /> -->
 
     <!-- CTA -->
-    <ProductCTA title="Ready to elevate your learning programs?"
-        description="Join thousands of organizations using LearnCore to deliver better education and training."
-        :links="ctaLinks" />
+    <UPageSection>
+        <ProductCTA title="Ready to elevate your learning programs?"
+            description="Join thousands of organizations using LearnCore to deliver better education and training."
+            :links="ctaLinks" />
+    </UPageSection>
 </template>

@@ -17,7 +17,7 @@ useSeoMeta({
 
 // ─── Navigation & UI Data ─────────────────────────────────────────────────────
 const heroLinks = [
-    { label: 'Open Your eLibrary', to: '#features', trailingIcon: 'i-lucide-arrow-right', class: 'hero-cta-shadow' },
+    { label: 'Open Your eLibrary', trailingIcon: 'i-lucide-arrow-right', class: 'hero-cta-shadow' },
     { label: 'Explore Features', color: 'neutral' as const, variant: 'soft' as const, icon: 'i-lucide-play-circle' },
 ]
 
@@ -258,17 +258,19 @@ const stats = [
         }" /> -->
 
     <!-- Stats banner -->
-    <UPageSection>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
+    <!-- <UPageSection>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center pb-12 sm:pb-24 lg:px-16 lg:pb-24">
             <div v-for="stat in stats" :key="stat.label">
                 <p class="text-4xl lg:text-5xl font-extrabold text-primary">{{ stat.value }}</p>
                 <p class="text-muted mt-2 text-sm lg:text-base font-medium">{{ stat.label }}</p>
             </div>
         </div>
-    </UPageSection>
+    </UPageSection> -->
 
     <!-- CTA -->
-    <ProductCTA title="Ready to bring your library online?"
-        description="Give students self-service borrowing and give librarians automated cataloguing, circulation and analytics. See the eLibrary System in action."
-        :links="ctaLinks" />
+    <UPageSection>
+        <ProductCTA title="Ready to bring your library online?"
+            description="Give students self-service borrowing and give librarians automated cataloguing, circulation and analytics. See the eLibrary System in action."
+            :links="ctaLinks" />
+    </UPageSection>
 </template>

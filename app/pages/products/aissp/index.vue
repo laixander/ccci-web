@@ -1,8 +1,16 @@
 <script setup lang="ts">
-definePageMeta({
-  title: 'AISSP by CCCI',
-  layout: 'product',
-})
+// ─── Imports ──────────────────────────────────────────────────────────────────
+import {
+    MockupScreenAisspDeliverables,
+    MockupScreenAisspProductivity,
+    MockupScreenAisspPrototyping,
+    MockupScreenAisspReordering,
+    MockupScreenAisspReporting,
+    MockupScreenAisspSecurity,
+} from '#components'
+
+// ─── Page Meta ────────────────────────────────────────────────────────────────
+definePageMeta({ layout: 'product' })
 
 useSeoMeta({
   title: 'AISSP — Automated Information Systems Strategic Plan',
@@ -11,35 +19,112 @@ useSeoMeta({
 
 const features = [
   {
-    title: 'Strategic ICT Alignment',
-    description: 'Ensure every IT project supports your core mandate. Map systems to strategic objectives and track progress in real-time.',
+    title: 'DICT-Ready Documents',
+    description: 'Auto-format and generate printable ISSP documents with dynamic layouts that follow DICT reporting requirements.',
+    icon: 'i-lucide-award',
+    orientation: 'vertical' as const,
+  },
+  {
+    title: 'Plan Before You Spend',
+    description: 'Prototype multiple configuration scenarios and project budgets before committing a single peso.',
     icon: 'i-lucide-target',
+    orientation: 'vertical' as const,
   },
   {
-    title: 'Resource & Budget Tracking',
-    description: 'Manage procurement timelines, allocate budgets effectively, and prevent overspending on redundant systems.',
-    icon: 'i-lucide-wallet',
+    title: 'One Source for IT Needs',
+    description: 'Consolidate the IT requirements of every department into a single, reorderable strategic plan.',
+    icon: 'i-lucide-layers',
+    orientation: 'vertical' as const,
   },
   {
-    title: 'System Lifecycle Management',
-    description: 'Track the status of all automated information systems from proposal and development to deployment and retirement.',
-    icon: 'i-lucide-monitor',
-  },
-  {
-    title: 'Compliance & Audit Trails',
-    description: 'Stay compliant with government mandates (e.g., DICT requirements). Maintain an audit trail for every ICT investment.',
+    title: 'Secure & Multi-Entity',
+    description: 'Role-based access, single sign-on, and separate credentials per campus — approved plans are tagged and locked.',
     icon: 'i-lucide-shield-check',
-  },
-  {
-    title: 'Risk Management',
-    description: 'Identify potential risks in your IT infrastructure and projects before they impact your organization.',
-    icon: 'i-lucide-alert-triangle',
-  },
-  {
-    title: 'Executive Dashboards',
-    description: 'Provide stakeholders and executives with a high-level view of IT performance, budget utilization, and strategic alignment.',
-    icon: 'i-lucide-pie-chart',
-  },
+    orientation: 'vertical' as const,
+  }
+]
+
+const featureDetails = [
+    {
+        id: 'system-reordering',
+        title: 'System Reordering & Formatting',
+        description: 'Reorder by cost or priority — the document rebuilds itself.',
+        features: [
+            { description: 'Input and manage information about various systems in one module.', icon: 'i-lucide-check' },
+            { description: 'Dynamically reorder systems based on cost or priority with drag-and-drop.', icon: 'i-lucide-check' },
+            { description: 'Automate the formatting and generation of printable Word/PDF documents.', icon: 'i-lucide-check' },
+            { description: 'Allow dynamic layout changes to the ISSP document per DICT requirements.', icon: 'i-lucide-check' },
+        ],
+        orientation: 'horizontal' as const,
+        component: MockupScreenAisspReordering,
+    },
+    {
+        id: 'office-productivity',
+        title: 'Office Productivity Management',
+        description: "Every department's IT needs, consolidated and deployable.",
+        features: [
+            { description: 'Consolidate IT needs across all university departments.', icon: 'i-lucide-check' },
+            { description: 'Build a deployment section listing end users and their specific needs, with item selection (laptops, desktops, printers).', icon: 'i-lucide-check' },
+            { description: 'Upload pictures / diagrams and export the ISSP in Word/PDF, or the Summary of Investments in xls/xlsx/csv.', icon: 'i-lucide-check' },
+            { description: 'Multi-entity support with unique credentials; approved documents are tagged, locked and edit-restricted.', icon: 'i-lucide-check' },
+        ],
+        orientation: 'horizontal' as const,
+        reverse: true,
+        component: MockupScreenAisspProductivity,
+    },
+    {
+        id: 'prototyping-planning',
+        title: 'Prototyping & Planning',
+        description: 'Model the budget before you commit it.',
+        features: [
+            { description: 'Input and save multiple configuration scenarios for partners.', icon: 'i-lucide-check' },
+            { description: 'Project budget allocations across items (laptops, printers, supplies).', icon: 'i-lucide-check' },
+            { description: 'Auto-adjust and summarize cost breakdowns under MOOE and Capital Outlay headings.', icon: 'i-lucide-check' },
+            { description: 'Add or remove items with automatic recalculations, and upload data via flat file (CSV) for offline use.', icon: 'i-lucide-check' },
+        ],
+        orientation: 'horizontal' as const,
+        component: MockupScreenAisspPrototyping,
+    },
+    {
+        id: 'reporting-investments',
+        title: 'Reporting & Investments',
+        description: 'The Summary of Investments, always up to date.',
+        features: [
+            { description: 'Generate the Summary of investments and export to xls/xlsx/csv.', icon: 'i-lucide-check' },
+            { description: 'Produce print-ready ISSP outputs in Word and PDF.', icon: 'i-lucide-check' },
+            { description: 'Dynamic data modeling and reporting keep every figure consistent across the plan.', icon: 'i-lucide-check' },
+        ],
+        orientation: 'horizontal' as const,
+        reverse: true,
+        component: MockupScreenAisspReporting,
+    },
+    {
+        id: 'deliverables',
+        title: 'Deliverables',
+        description: 'From interface to training — the whole package.',
+        features: [
+            { description: 'A user-friendly interface for system monitoring and document generation.', icon: 'i-lucide-check' },
+            { description: 'A consolidated IT-needs database with an ISSP approval-tracking function.', icon: 'i-lucide-check' },
+            { description: 'A prototyping tool for efficient planning and configuration management.', icon: 'i-lucide-check' },
+            { description: 'Documentation and training materials for end users and administrators.', icon: 'i-lucide-check' },
+        ],
+        orientation: 'horizontal' as const,
+        component: MockupScreenAisspDeliverables,
+    },
+    {
+        id: 'technical-security',
+        title: 'Technical & Security',
+        description: 'Cloud-native, secure, and ready to integrate.',
+        features: [
+            { description: 'Role-based access control and Single Sign-On with existing systems.', icon: 'i-lucide-check' },
+            { description: 'Cloud-based platform with a portable app for offline access, synching when a connection is available.', icon: 'i-lucide-check' },
+            { description: 'Microservice architecture using containerization (Docker, Containerd), web-responsive and mobile-viewable.', icon: 'i-lucide-check' },
+            { description: 'Open to Financial Management System and Asset Management System integration.', icon: 'i-lucide-check' },
+        ],
+        orientation: 'horizontal' as const,
+        reverse: true,
+        component: MockupScreenAisspSecurity,
+    },
 ]
 
 const stats = [
@@ -111,13 +196,28 @@ const plans = [
 ]
 
 const heroLinks = [
-  { label: 'Request a Demo', to: '#pricing', icon: 'i-lucide-calendar', size: 'xl' as const },
-  { label: 'Explore Features', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-arrow-right', size: 'xl' as const },
+  { label: 'Request a Demo', trailingIcon: 'i-lucide-calendar', class: 'hero-cta-shadow' },
+  { label: 'Explore Features', color: 'neutral' as const, variant: 'soft' as const, trailingIcon: 'i-lucide-arrow-right' },
 ]
 
 const ctaLinks = [
   { label: 'Request a Demo', icon: 'i-lucide-calendar', size: 'lg' as const },
   { label: 'Contact Sales', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-phone', size: 'lg' as const },
+]
+
+const modules = [
+    { title: 'System Reordering & Formatting', icon: 'i-lucide-layers', to: '#system-reordering' },
+    { title: 'Office Productivity Management', icon: 'i-lucide-monitor', to: '#office-productivity' },
+    { title: 'Prototyping & Planning', icon: 'i-lucide-target', to: '#prototyping-planning' },
+    { title: 'Reporting & Investments', icon: 'i-lucide-bar-chart-3', to: '#reporting-investments' },
+    { title: 'Deliverables', icon: 'i-lucide-file-text', to: '#deliverables' },
+    { title: 'Technical & Security', icon: 'i-lucide-shield-check', to: '#technical-security' },
+]
+
+const checklist = [
+    'Word / PDF export',
+    'MOOE & Capital Outlay',
+    'Cloud + offline sync',
 ]
 
 const logoIcons = [
@@ -128,11 +228,66 @@ const logoIcons = [
   { name: 'i-simple-icons-cisco', label: 'Cisco' },
   { name: 'i-simple-icons-oracle', label: 'Oracle' },
 ]
+
+const howItWorks = {
+    headline: 'How it works',
+    title: 'From needs to approved plan',
+    description: 'Five guided steps take an institution from scattered IT requests to a locked, DICT-compliant strategic plan.',
+}
+
+const howItWorksSteps = [
+    {
+        value: 'consolidate',
+        step: '01',
+        phase: 'Intake',
+        title: 'Consolidate',
+        description: 'Gather IT needs from every department into one centralized database.',
+        icon: 'i-lucide-database',
+        deliverable: 'Central IT Needs',
+    },
+    {
+        value: 'prototype',
+        step: '02',
+        phase: 'Simulation',
+        title: 'Prototype',
+        description: 'Model budget scenarios across MOOE and Capital Outlay.',
+        icon: 'i-lucide-calculator',
+        deliverable: 'Scenario Models',
+    },
+    {
+        value: 'reorder',
+        step: '03',
+        phase: 'Prioritization',
+        title: 'Reorder',
+        description: 'Rank systems by cost or priority with live recalculation.',
+        icon: 'i-lucide-arrow-down-up',
+        deliverable: 'Ranked Priority',
+    },
+    {
+        value: 'generate',
+        step: '04',
+        phase: 'Automation',
+        title: 'Generate',
+        description: 'Produce the DICT-formatted ISSP in Word or PDF.',
+        icon: 'i-lucide-file-text',
+        deliverable: 'DICT Documents',
+    },
+    {
+        value: 'approve',
+        step: '05',
+        phase: 'Governance',
+        title: 'Approve',
+        description: 'Route for sign-off — approved plans are tagged and locked.',
+        icon: 'i-lucide-shield-check',
+        deliverable: 'Locked & Sealed Plan',
+    },
+]
+
 </script>
 
 <template>
   <!-- Hero -->
-  <UPageHero
+  <!-- <UPageHero
     headline="Introducing AISSP"
     title="Automated Information Systems Strategic Plan"
     description="Align your organization's ICT projects with strategic goals. Track systems, budgets, and compliance effortlessly."
@@ -140,10 +295,20 @@ const logoIcons = [
     orientation="horizontal"
   >
     <MockupScreenAisspDashboard />
-  </UPageHero>
+  </UPageHero> -->
+  <!-- Hero -->
+  <ProductHero badge="DICT-aligned · Automated ISSP Creator" background-image="/hero-elib-bg.jpg"
+      :links="heroLinks" :checklist="checklist" :modules="modules">
+      <template #title>
+          Strategic planning,<br> on autopilot.
+      </template>
+      <template #description>
+          An Automated Information Systems Strategic Plan creator that consolidates IT needs, reorders systems by cost or priority and generates print-ready ISSP documents — built by <strong>Centralized Cloud Computing International</strong> to meet DICT requirements.
+      </template>
+  </ProductHero>
 
   <!-- Social proof -->
-  <div class="border-y border-default bg-muted/50 py-10">
+  <!-- <div class="border-y border-default bg-muted/50 py-10">
     <UContainer>
       <p class="text-center text-dimmed text-xs font-semibold uppercase tracking-widest mb-8">
         Trusted by organizations worldwide for ICT Governance
@@ -158,38 +323,44 @@ const logoIcons = [
         />
       </div>
     </UContainer>
-  </div>
+  </div> -->
 
   <!-- Core features grid -->
   <UPageSection
     id="features"
-    headline="Features"
-    title="Everything you need for Strategic IT Planning"
-    description="From managing budgets to ensuring compliance — handle the entire ICT lifecycle."
+    headline="Why choose us"
+    title="Why our AISSP stands out"
+    description="A strategic-planning platform engineered around compliance, cost control and the way institutions actually plan their IT."
     :features="features"
+    :ui="{ features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10' }"
   />
 
-  <!-- Feature detail: Projects -->
-  <UPageSection
-    title="Track every ICT system from proposal to retirement"
-    description="Maintain a complete registry of all automated information systems across your organization. Monitor procurement timelines, development phases, and deployment status in a single unified view — no more spreadsheets."
-    orientation="horizontal"
-  >
-    <MockupScreenAisspProjects />
+  <!-- Modules Structure -->
+  <UPageSection headline="The Platform" title="Six areas. One connected plan."
+      description="A unified ISSP creator that links every planning function — system reordering, office productivity, prototyping, reporting, deliverables and the technical platform. One IT-needs database drives every export, kept in sync across campuses."
+      orientation="horizontal" :ui="{ features: 'grid grid-cols-2 gap-4' }">
+      <template #features>
+          <UPageFeature v-for="(module, index) in modules" :key="index" :title="module.title" icon="i-lucide-check" />
+      </template>
+      <HubDiagram center-label="ISSP CORE" :nodes="modules" />
   </UPageSection>
 
-  <!-- Feature detail: Compliance -->
-  <UPageSection
-    title="DICT compliance, always audit-ready"
-    description="Stay ahead of government mandates with built-in ISSP compliance checklists, automated audit trails for every ICT investment, and one-click report generation for DICT submission. Never scramble at deadline time again."
-    orientation="horizontal"
-    reverse
-  >
-    <MockupScreenAisspCompliance />
+  <!-- Feature details -->
+  <UPageSection v-for="(feature, index) in featureDetails" :key="index" :id="feature.id" :title="feature.title"
+      :description="feature.description" :features="feature.features.map(f => ({ ...f, ui: { leading: 'p-0' } }))"
+      :orientation="feature.orientation" :reverse="feature.reverse" :ui="{
+          description: 'text-primary',
+      }">
+      <component :is="feature.component" />
+  </UPageSection>
+
+  <!-- How it works -->
+  <UPageSection :headline="howItWorks.headline" :title="howItWorks.title" :description="howItWorks.description">
+      <ProductTimeline :items="howItWorksSteps" />
   </UPageSection>
 
   <!-- Stats banner -->
-  <div class="bg-primary dark:bg-primary/50 py-20">
+  <!-- <div class="bg-primary dark:bg-primary/50 py-20">
     <UContainer>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
         <div v-for="stat in stats" :key="stat.label">
@@ -198,10 +369,10 @@ const logoIcons = [
         </div>
       </div>
     </UContainer>
-  </div>
+  </div> -->
 
   <!-- Testimonials -->
-  <UPageSection
+  <!-- <UPageSection
     id="testimonials"
     headline="Customer Stories"
     title="Loved by IT Leaders"
@@ -224,10 +395,10 @@ const logoIcons = [
         </div>
       </UCard>
     </UPageGrid>
-  </UPageSection>
+  </UPageSection> -->
 
   <!-- Pricing -->
-  <div class="bg-muted/30">
+  <!-- <div class="bg-muted/30">
     <UPageSection
       id="pricing"
       headline="Pricing"
@@ -236,12 +407,14 @@ const logoIcons = [
     >
       <UPricingPlans :plans="plans" />
     </UPageSection>
-  </div>
+  </div> -->
 
   <!-- CTA -->
-  <UPageCTA
-    title="Ready to align your IT strategy?"
-    description="Join leading institutions using AISSP to manage their ICT investments."
-    :links="ctaLinks"
-  />
+  <UPageSection>
+    <ProductCTA
+      title="Ready to align your IT strategy?"
+      description="Join leading institutions using AISSP to manage their ICT investments."
+      :links="ctaLinks"
+    />
+  </UPageSection>
 </template>

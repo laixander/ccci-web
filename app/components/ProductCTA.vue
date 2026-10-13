@@ -15,21 +15,20 @@ defineProps<{
     links?: CtaLink[]
 }>()
 </script>
-
 <template>
-    <div class="relative bg-primary dark:bg-primary/50 py-10 overflow-hidden">
-        <!-- Grid texture overlay -->
-        <div class="cta-grid-texture" />
-
+    <UContainer>
         <UPageCTA
             :title="title"
             :description="description"
-            variant="naked"
-            :ui="{
-                title: 'text-white',
-                description: 'text-white/80 dark:text-white/60',
-            }"
+            variant="soft"
+            class="shadow-xl"
+            :links="[{ label: 'Get started', color: 'neutral' }]"
+            :ui="{ root: 'relative bg-primary dark:bg-primary/50 overflow-hidden', title: 'text-white',
+                description: 'text-white/80 dark:text-white/60', }"
         >
+            <template #top>
+                <div class="cta-grid-texture" />
+            </template>
             <!-- Render buttons here so we can bake in the shared size + ui config -->
             <template v-if="links?.length" #links>
                 <UButton
@@ -46,13 +45,14 @@ defineProps<{
                 />
             </template>
         </UPageCTA>
-    </div>
+    </UContainer>
 </template>
-
 <style scoped>
 .cta-grid-texture {
     position: absolute;
     inset: 0;
+    z-index: -10;
+    pointer-events: none;
     background-image:
         linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px);

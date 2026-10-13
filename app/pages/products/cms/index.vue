@@ -460,9 +460,11 @@ const paymentProviders = ['GCash', 'VISA', 'Mastercard']
   </div> -->
 
     <!-- CTA -->
-    <ProductCTA
-        title="Ready to modernize your campus operations?"
-        description="Join 200+ schools using CampusCore to reduce admin workload and improve the student experience. Book a free demo with our team today."
-        :links="ctaLinks"
-    />
+    <UPageSection>
+        <ProductCTA
+            title="Ready to modernize your campus operations?"
+            description="Join 200+ schools using CampusCore to reduce admin workload and improve the student experience. Book a free demo with our team today."
+            :links="ctaLinks"
+        />
+    </UPageSection>
 </template>
