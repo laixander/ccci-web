@@ -14,6 +14,11 @@ import {
 // ─── Page Meta ────────────────────────────────────────────────────────────────
 definePageMeta({ layout: 'product' })
 
+// ─── Scroll Reveal ────────────────────────────────────────────────────────────
+const { el: featuresEl, isVisible: featuresVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: modulesEl, isVisible: modulesVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: addOnsEl, isVisible: addOnsVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+
 // ─── Navigation & UI Data ─────────────────────────────────────────────────────
 const heroLinks = [
     { label: 'Start Free Trial', trailingIcon: 'i-lucide-arrow-right', class: 'hero-cta-shadow' },
@@ -23,15 +28,6 @@ const heroLinks = [
 const ctaLinks = [
     { label: 'Start Free Trial', trailingIcon: 'i-lucide-arrow-right', class: 'bg-primary-800 hover:bg-primary-700 dark:bg-primary dark:hover:bg-primary/75' },
     { label: 'Schedule a Demo', color: 'neutral' as const, variant: 'soft' as const, icon: 'i-lucide-calendar-check' },
-]
-
-const logoIcons = [
-    { name: 'i-simple-icons-google', label: 'Google' },
-    { name: 'i-simple-icons-microsoft', label: 'Microsoft' },
-    { name: 'i-simple-icons-shopify', label: 'Shopify' },
-    { name: 'i-simple-icons-stripe', label: 'Stripe' },
-    { name: 'i-simple-icons-airbnb', label: 'Airbnb' },
-    { name: 'i-simple-icons-slack', label: 'Slack' },
 ]
 
 const modules = [
@@ -76,77 +72,6 @@ const features = [
         description: 'Combines automation, geolocation, and real-time data to cut errors and free HR for strategic priorities.',
         icon: 'i-lucide-settings',
         orientation: 'vertical' as const,
-    },
-]
-
-const stats = [
-    { value: '50,000+', label: 'Employees Managed' },
-    { value: '1,200+', label: 'Companies Trust Us' },
-    { value: '99.99%', label: 'Uptime SLA' },
-    { value: '60%', label: 'Less HR Admin Time' },
-]
-
-const testimonials = [
-    {
-        quote: 'PeopleCore transformed how we manage our 300-person team. Payroll that used to take 3 days now takes 30 minutes. The ROI was immediate.',
-        author: 'Sarah Chen',
-        role: 'VP of HR, TechGrowth Inc.',
-        initials: 'SC',
-    },
-    {
-        quote: "From onboarding to annual reviews, everything just works. Our HR team finally has time for what matters — our people.",
-        author: 'Marcus Rivera',
-        role: 'COO, Launchpad Ventures',
-        initials: 'MR',
-    },
-    {
-        quote: 'The analytics dashboard alone saved us 20 hours a week. We can see turnover risks, costs, and hiring plans — all in real time.',
-        author: 'Aisha Patel',
-        role: 'HR Director, GlobalRetail Asia',
-        initials: 'AP',
-    },
-]
-
-const plans = [
-    {
-        title: 'Starter',
-        description: 'Perfect for small teams getting started with modern HR.',
-        price: '$4',
-        features: [
-            'Up to 50 employees',
-            'Core payroll & attendance',
-            'Leave management',
-            'Employee self-service portal',
-            'Email support',
-        ],
-    },
-    {
-        title: 'Growth',
-        description: 'For scaling teams that need the full HR toolkit.',
-        price: '$8',
-        badge: 'Most Popular',
-        highlight: true,
-        features: [
-            'Up to 500 employees',
-            'Everything in Starter',
-            'Recruitment & onboarding',
-            '360° performance reviews',
-            'Advanced analytics & reports',
-            'Priority support',
-        ],
-    },
-    {
-        title: 'Enterprise',
-        description: 'Custom solutions for large-scale HR operations.',
-        price: 'Custom',
-        features: [
-            'Unlimited employees',
-            'Everything in Growth',
-            'Custom integrations & API access',
-            'Dedicated account manager',
-            'On-premise deployment option',
-            '99.99% uptime SLA guarantee',
-        ],
     },
 ]
 
@@ -265,7 +190,6 @@ const addOnModule = {
         { title: 'Tracking & Reports', description: 'Employees and HR can monitor loan status and full history any time.', icon: 'i-lucide-bar-chart-2' },
     ],
 }
-
 </script>
 
 <template>
@@ -278,48 +202,76 @@ const addOnModule = {
         </template>
     </ProductHero>
 
-    <!-- Social proof -->
-    <!-- <div class="border-y border-default bg-muted/50 py-10">
-        <UContainer>
-            <p class="text-center text-dimmed text-xs font-semibold uppercase tracking-widest mb-8">
-                Trusted by innovative companies worldwide
-            </p>
-            <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
-                <UIcon v-for="logo in logoIcons" :key="logo.name" :name="logo.name" :aria-label="logo.label"
-                    class="size-7 text-muted" />
-            </div>
-        </UContainer>
-    </div> -->
-
     <!-- Core features grid -->
-    <UPageSection id="features" headline="Why Choose Us" title="Why our HRIS stands out"
+    <UPageSection id="features" ref="featuresEl" class="section-reveal" :class="{ 'is-visible': featuresVisible }" headline="Why Choose Us" title="Why our HRIS stands out"
         description="A human resource platform engineered around your people, your compliance, and your growth."
-        :features="features" :ui="{ features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10' }" />
+        :ui="{
+            root: 'min-h-screen flex flex-col justify-center',
+            features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10',
+            headline: 'reveal-down',
+            title: 'reveal-up reveal-delay-150',
+            description: 'reveal-up reveal-delay-300',
+        }">
+        <template #features>
+            <UPageFeature v-for="(feature, i) in features" :key="feature.title" v-bind="feature"
+                class="reveal-up" :style="{ animationDelay: `${400 + i * 100}ms` }" />
+        </template>
+    </UPageSection>
 
     <!-- Modules Structure -->
-    <UPageSection headline="The Platform" title="Eight modules. One connected record."
+    <UPageSection ref="modulesEl" class="section-reveal" :class="{ 'is-visible': modulesVisible }" headline="The Platform" title="Eight modules. One connected record."
         description="Unified platform that collects and stores data across every HR function — from applicant tracking to payroll, training, deployment, and reporting. Nothing lives in a spreadsheet, and nothing gets entered twice."
-        orientation="horizontal" :ui="{ features: 'grid grid-cols-2 gap-4' }">
+        orientation="horizontal" :ui="{
+            root: 'min-h-screen flex flex-col justify-center',
+            features: 'grid grid-cols-2 gap-4',
+            headline: 'reveal-down',
+            title: 'reveal-up reveal-delay-150',
+            description: 'reveal-up reveal-delay-300',
+        }">
         <template #features>
-            <UPageFeature v-for="(module, index) in modules" :key="index" :title="module.title" icon="i-lucide-check" />
+            <UPageFeature v-for="(module, index) in modules" :key="index" :title="module.title" icon="i-lucide-check"
+                class="reveal-up" :style="{ animationDelay: `${400 + index * 60}ms` }" />
         </template>
-        <HubDiagram center-label="HR CORE" :nodes="modules" />
+        <HubDiagram center-label="HR CORE" :nodes="modules" class="reveal-right reveal-delay-400" />
     </UPageSection>
 
     <!-- Feature details -->
-    <UPageSection v-for="(feature, index) in featureDetails" :key="index" :id="feature.id" :title="feature.title"
-        :description="feature.description" :features="feature.features.map(f => ({ ...f, ui: { leading: 'p-0' } }))"
-        :orientation="feature.orientation" :reverse="feature.reverse" :ui="{
-            description: 'text-primary',
-        }">
+    <ProductFeature
+        v-for="(feature, index) in featureDetails"
+        :key="index"
+        :id="feature.id"
+        :title="feature.title"
+        :description="feature.description"
+        :features="feature.features"
+        :orientation="feature.orientation"
+        :reverse="feature.reverse">
         <component :is="feature.component" />
-    </UPageSection>
+    </ProductFeature>
 
     <!-- Add-on Modules -->
-    <UPageSection :headline="addOnModule.headline" :title="addOnModule.title" :description="addOnModule.description">
+    <UPageSection
+        ref="addOnsEl"
+        class="section-reveal"
+        :class="{ 'is-visible': addOnsVisible }"
+        :headline="addOnModule.headline"
+        :title="addOnModule.title"
+        :description="addOnModule.description"
+        :ui="{
+            root: 'min-h-screen flex flex-col justify-center',
+            headline: 'reveal-down',
+            title: 'reveal-up reveal-delay-150',
+            description: 'reveal-up reveal-delay-300',
+        }">
         <UPageGrid class="sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            <UPageCard v-for="feat in addOnModule.features" :key="feat.title" :title="feat.title"
-                :description="feat.description" spotlight spotlight-color="primary">
+            <UPageCard
+                v-for="(feat, index) in addOnModule.features"
+                :key="feat.title"
+                :title="feat.title"
+                :description="feat.description"
+                spotlight
+                spotlight-color="primary"
+                class="reveal-up"
+                :style="{ animationDelay: `${400 + index * 80}ms` }">
                 <template #leading>
                     <div class="size-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                         <UIcon :name="feat.icon" class="size-5 text-primary" />
@@ -328,56 +280,6 @@ const addOnModule = {
             </UPageCard>
         </UPageGrid>
     </UPageSection>
-
-    <!-- Stats banner -->
-    <!-- <div class="bg-primary dark:bg-primary/50 py-20">
-    <UContainer>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
-        <div v-for="stat in stats" :key="stat.label">
-          <p class="text-4xl lg:text-5xl font-extrabold text-white">{{ stat.value }}</p>
-          <p class="text-white/70 mt-2 text-sm lg:text-base font-medium">{{ stat.label }}</p>
-        </div>
-      </div>
-    </UContainer>
-  </div> -->
-
-    <!-- Testimonials -->
-    <!-- <UPageSection
-    id="testimonials"
-    headline="Customer Stories"
-    title="Loved by HR teams everywhere"
-    description="Don't just take our word for it — hear from the HR leaders who trust PeopleCore every day."
-  >
-    <UPageGrid>
-      <UCard v-for="t in testimonials" :key="t.author">
-        <div class="flex flex-col h-full">
-          <div class="flex gap-0.5 mb-5">
-            <UIcon v-for="i in 5" :key="i" name="i-lucide-star" class="size-4 text-warning" />
-          </div>
-          <p class="text-muted italic leading-relaxed flex-1">"{{ t.quote }}"</p>
-          <div class="flex items-center gap-3 mt-6 pt-6 border-t border-default">
-            <UAvatar :text="t.initials" size="md" color="primary" />
-            <div>
-              <p class="font-semibold text-highlighted text-sm">{{ t.author }}</p>
-              <p class="text-dimmed text-xs">{{ t.role }}</p>
-            </div>
-          </div>
-        </div>
-      </UCard>
-    </UPageGrid>
-  </UPageSection> -->
-
-    <!-- Pricing -->
-    <!-- <div class="bg-muted/30">
-    <UPageSection
-      id="pricing"
-      headline="Pricing"
-      title="Simple, transparent pricing"
-      description="No hidden fees. No surprises. Start free and scale as your team grows. Every plan includes a 30-day free trial."
-    >
-      <UPricingPlans :plans="plans" />
-    </UPageSection>
-  </div> -->
 
     <!-- CTA -->
     <UPageSection>

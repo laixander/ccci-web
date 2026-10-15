@@ -1,239 +1,326 @@
 <script setup lang="ts">
-definePageMeta({
-  title: 'FMS by CCCI',
-  layout: 'product',
-})
+// ─── Imports ──────────────────────────────────────────────────────────────────
+import {
+    MockupScreenFmsBudgeting,
+    MockupScreenFmsMasterfile,
+    MockupScreenFmsInventory,
+    MockupScreenFmsProperty,
+    MockupScreenFmsDisbursements,
+    MockupScreenFmsCollections,
+    MockupScreenFmsLedger,
+    MockupScreenFmsTax,
+} from '#components'
 
+// ─── Page Meta ────────────────────────────────────────────────────────────────
+definePageMeta({ layout: 'product' })
+
+// ─── SEO ──────────────────────────────────────────────────────────────────────
 useSeoMeta({
-  title: 'FMS — Financial Management System',
-  description: 'Manage income, expenses, budgets, and compliance. Ensure financial stability and profitability across your organization.',
+    title: 'FMS — Financial Management System',
+    description: 'One end-to-end financial platform connecting procurement, inventory, budgeting, assets, payables and collections to a live general ledger — built by Centralized Cloud Computing International.',
 })
 
-const features = [
-  {
-    title: 'General Ledger & Accounting',
-    description: 'Keep your books perfectly balanced. Manage accounts payable and receivable with automated journal entries.',
-    icon: 'i-lucide-book',
-  },
-  {
-    title: 'Budgeting & Forecasting',
-    description: 'Plan your financial future. Allocate budgets across departments and track actuals vs. planned spend in real-time.',
-    icon: 'i-lucide-pie-chart',
-  },
-  {
-    title: 'Cash Flow Management',
-    description: 'Never lose sight of your liquidity. Monitor cash inflows and outflows to ensure operational stability.',
-    icon: 'i-lucide-banknote',
-  },
-  {
-    title: 'Financial Reporting',
-    description: 'Generate standard financial statements (Income Statement, Balance Sheet, Cash Flow) with a single click.',
-    icon: 'i-lucide-file-text',
-  },
-  {
-    title: 'Asset & Depreciation Management',
-    description: 'Track the lifecycle and value of fixed assets. Automatically calculate and post depreciation expenses.',
-    icon: 'i-lucide-building',
-  },
-  {
-    title: 'Bank Reconciliation',
-    description: 'Connect directly to your banks via secure APIs to auto-match transactions and streamline the reconciliation process.',
-    icon: 'i-lucide-arrow-left-right',
-  },
-]
+// ─── Scroll Reveal ────────────────────────────────────────────────────────────
+const { el: featuresEl, isVisible: featuresVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: modulesEl, isVisible: modulesVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: cycleEl, isVisible: cycleVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
 
-const stats = [
-  { value: '3x', label: 'Faster Month-End Close' },
-  { value: '100%', label: 'Audit Trail Coverage' },
-  { value: '0', label: 'Manual Entry Errors' },
-  { value: '24/7', label: 'Financial Visibility' },
-]
-
-const testimonials = [
-  {
-    quote: 'FMS has drastically reduced the time it takes us to close the books at month-end. The automated bank reconciliation is a lifesaver.',
-    author: 'Maria Santos',
-    role: 'Chief Financial Officer, Delta Manufacturing',
-    initials: 'MS',
-  },
-  {
-    quote: 'We used to struggle with tracking departmental budgets in spreadsheets. FMS gave us real-time visibility into who is spending what, instantly.',
-    author: 'Robert Lee',
-    role: 'VP of Finance, Global Logistics Co.',
-    initials: 'RL',
-  },
-  {
-    quote: 'The financial reporting module is incredibly powerful yet easy to use. I can generate a consolidated balance sheet for all our subsidiaries in seconds.',
-    author: 'Anna Chua',
-    role: 'Director of Accounting, Prime Holdings',
-    initials: 'AC',
-  },
-]
-
-const plans = [
-  {
-    title: 'Essential',
-    description: 'Core accounting for small to medium businesses.',
-    price: '₱20,000',
-    interval: 'mo',
-    features: [
-      'General Ledger (AP/AR)',
-      'Basic Financial Reporting',
-      'Up to 5 Users',
-      'Email Support',
-    ],
-  },
-  {
-    title: 'Professional',
-    description: 'Advanced financial management for growing organizations.',
-    price: '₱50,000',
-    interval: 'mo',
-    highlight: true,
-    features: [
-      'Budgeting & Forecasting',
-      'Automated Bank Reconciliation',
-      'Asset Depreciation',
-      'Up to 20 Users',
-      'Priority Support',
-    ],
-  },
-  {
-    title: 'Enterprise',
-    description: 'Comprehensive financial control for large enterprises.',
-    price: 'Custom',
-    features: [
-      'Multi-entity consolidation',
-      'Custom ERP API integrations',
-      'Unlimited Users',
-      'Dedicated Account Manager',
-    ],
-  },
-]
-
+// ─── Navigation & UI Data ─────────────────────────────────────────────────────
 const heroLinks = [
-  { label: 'Request a Demo', to: '#pricing', icon: 'i-lucide-calendar', size: 'xl' as const },
-  { label: 'Explore Features', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-arrow-right', size: 'xl' as const },
+    { label: 'Request a Demo', trailingIcon: 'i-lucide-calendar', class: 'hero-cta-shadow' },
+    { label: 'Watch Demo', color: 'neutral' as const, variant: 'soft' as const, leadingIcon: 'i-lucide-play' },
 ]
 
 const ctaLinks = [
-  { label: 'Request a Demo', icon: 'i-lucide-calendar', size: 'lg' as const },
-  { label: 'Contact Sales', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-phone', size: 'lg' as const },
+    { label: 'Request a Demo', icon: 'i-lucide-calendar', size: 'lg' as const },
+    { label: 'Talk to Sales', color: 'neutral' as const, variant: 'soft' as const, trailingIcon: 'i-lucide-phone', size: 'lg' as const },
 ]
 
-const logoIcons = [
-  { name: 'i-simple-icons-visa', label: 'Visa' },
-  { name: 'i-simple-icons-mastercard', label: 'Mastercard' },
-  { name: 'i-simple-icons-stripe', label: 'Stripe' },
-  { name: 'i-simple-icons-paypal', label: 'PayPal' },
+const modules = [
+    { title: 'Masterfile Setup', icon: 'i-lucide-database', to: '#masterfile-setup' },
+    { title: 'Procurement & Inventory', icon: 'i-lucide-shopping-cart', to: '#procurement-inventory' },
+    { title: 'Budget', icon: 'i-lucide-pie-chart', to: '#budget' },
+    { title: 'Property & Fixed Assets', icon: 'i-lucide-building-2', to: '#property-fixed-assets' },
+    { title: 'Payables & Disbursements', icon: 'i-lucide-banknote', to: '#payables-disbursements' },
+    { title: 'Revenues & Collections', icon: 'i-lucide-trending-up', to: '#revenues-collections' },
+    { title: 'General Ledger & Accounting', icon: 'i-lucide-book-open', to: '#general-ledger' },
+    { title: 'Tax Management & Compliance', icon: 'i-lucide-file-text', to: '#tax-management' },
+]
+
+const checklist = [
+    'Auto accounting entries',
+    'Multi-currency ready',
+    'BIR-compliant tax reports',
+]
+
+// ─── Page Content Data ────────────────────────────────────────────────────────
+const features = [
+    {
+        title: 'Truly End-to-End',
+        description: 'Integrated modules perform every major business process — from a purchase request all the way to a posted journal entry.',
+        icon: 'i-lucide-link',
+        orientation: 'vertical' as const,
+    },
+    {
+        title: 'Automated Accounting',
+        description: 'Transactions auto-generate the corresponding accounting entries, so books stay accurate without double encoding.',
+        icon: 'i-lucide-zap',
+        orientation: 'vertical' as const,
+    },
+    {
+        title: 'Compliant by Design',
+        description: 'BIR-ready books of accounts, withholding tax, VAT and SLSP reporting aligned to Philippine reportorial standards.',
+        icon: 'i-lucide-shield-check',
+        orientation: 'vertical' as const,
+    },
+    {
+        title: 'Web-based & Scalable',
+        description: 'A PHP/Laravel platform that is database-agnostic, cloud or on-premise, and integrates via REST APIs.',
+        icon: 'i-lucide-globe',
+        orientation: 'vertical' as const,
+    },
+]
+
+const featureDetails = [
+    {
+        id: 'masterfile-setup',
+        title: 'Masterfile Setup',
+        description: 'Clean masterfiles are the foundation of clean books.',
+        features: [
+            { description: 'Set up customer, supplier and employee masters with TIN, address, contact, billing and tax info.', icon: 'i-lucide-check' },
+            { description: 'Assign groups, currencies, payment terms, withholding-tax and VAT types per record.', icon: 'i-lucide-check' },
+            { description: 'Migrate chart of accounts and subsidiaries in bulk through masterfile upload.', icon: 'i-lucide-check' },
+        ],
+        orientation: 'horizontal' as const,
+        component: MockupScreenFmsMasterfile,
+    },
+    {
+        id: 'procurement-inventory',
+        title: 'Procurement & Inventory',
+        description: 'From requisition to receipt, in one connected flow.',
+        features: [
+            { description: 'Raise Purchase Requisitions, invite bids via RFQ, and compare suppliers with side-by-side canvassing.', icon: 'i-lucide-check' },
+            { description: 'Approve Purchase Orders and record Receiving Reports that auto-post the accounting entries.', icon: 'i-lucide-check' },
+            { description: 'Track item masters, unit-of-measure, stock levels, issuances, returns and warehouse transfers.', icon: 'i-lucide-check' },
+        ],
+        orientation: 'horizontal' as const,
+        reverse: true,
+        component: MockupScreenFmsInventory,
+    },
+    {
+        id: 'budget',
+        title: 'Budget',
+        description: 'Plan with intent, spend with control.',
+        features: [
+            { description: 'Create monthly or annual budgets per activity or department, routed to authorized signatories for approval.', icon: 'i-lucide-check' },
+            { description: 'Realign and reclassify budget across activities or departments with a full approval trail.', icon: 'i-lucide-check' },
+            { description: 'Record Requests for Appropriation (RFA) and Requests for Payment (RFP) against the approved budget.', icon: 'i-lucide-check' },
+        ],
+        orientation: 'horizontal' as const,
+        component: MockupScreenFmsBudgeting,
+    },
+    {
+        id: 'property-fixed-assets',
+        title: 'Property & Fixed Assets',
+        description: 'Know every asset, and who holds it.',
+        features: [
+            { description: 'Capture asset group, description, model, serial number, cost and full acquisition history.', icon: 'i-lucide-check' },
+            { description: 'Monitor accountability — track the location, custodian employee and department of each item.', icon: 'i-lucide-check' },
+            { description: 'Issue fixed assets to a requesting department or authorized employee with receiver details.', icon: 'i-lucide-check' },
+        ],
+        orientation: 'horizontal' as const,
+        reverse: true,
+        component: MockupScreenFmsProperty,
+    },
+    {
+        id: 'payables-disbursements',
+        title: 'Payables & Disbursements',
+        description: 'Settle obligations, keep the books auto-balanced.',
+        features: [
+            { description: 'Prepare AP vouchers from receiving reports that automatically generate the accounting entries.', icon: 'i-lucide-check' },
+            { description: 'Issue checks and check vouchers, with BIR Form 2307 generated for withholding tax.', icon: 'i-lucide-check' },
+            { description: 'Monitor the check registry — on-hand, released, cancelled or stale — plus fund replenishments and liquidations.', icon: 'i-lucide-check' },
+        ],
+        orientation: 'horizontal' as const,
+        component: MockupScreenFmsDisbursements,
+    },
+    {
+        id: 'revenues-collections',
+        title: 'Revenues & Collections',
+        description: 'From sales order to official receipt, real-time.',
+        features: [
+            { description: 'Create sales orders / job orders and track delivery commitments and fulfillments.', icon: 'i-lucide-check' },
+            { description: 'Generate sales invoices and statements of accounts to manage receivables and credit terms.', icon: 'i-lucide-check' },
+            { description: "Issue Official Receipts and apply collections to invoices for live visibility of what's uncollected.", icon: 'i-lucide-check' },
+        ],
+        orientation: 'horizontal' as const,
+        reverse: true,
+        component: MockupScreenFmsCollections,
+    },
+    {
+        id: 'general-ledger',
+        title: 'General Ledger & Accounting',
+        description: 'Every transaction, one true ledger.',
+        features: [
+            { description: 'Define a summarized or detailed Chart of Accounts across balance-sheet and income-statement classes.', icon: 'i-lucide-check' },
+            { description: 'Maintain BIR-compliant books of accounts, journal vouchers and beginning balances by cut-off date.', icon: 'i-lucide-check' },
+            { description: 'Generate multi-dimension P&L, trial balance, balance sheet and ledgers — with multi-currency support.', icon: 'i-lucide-check' },
+        ],
+        orientation: 'horizontal' as const,
+        component: MockupScreenFmsLedger,
+    },
+    {
+        id: 'tax-management',
+        title: 'Tax Management & Compliance',
+        description: 'Compliance calculated, not chased.',
+        features: [
+            { description: 'Set up sales-tax and withholding-tax rates mapped to ATC codes and GL accounts.', icon: 'i-lucide-check' },
+            { description: 'Automatically compute VAT and withholding-tax obligations on every transaction.', icon: 'i-lucide-check' },
+            { description: 'Produce Summary List of Sales & Purchases (SLSP) and expanded/creditable withholding reports.', icon: 'i-lucide-check' },
+        ],
+        orientation: 'horizontal' as const,
+        reverse: true,
+        component: MockupScreenFmsTax,
+    },
+]
+
+const financialCycle = {
+    headline: 'One connected flow',
+    title: 'The financial cycle',
+    description: 'Each step auto-generates its accounting entries — so the books close themselves as the business runs.',
+}
+
+const financialCycleSteps = [
+    {
+        value: 'procure',
+        step: '01',
+        phase: 'Procurement',
+        title: 'Procure',
+        description: 'Requisition, RFQ, canvass and approve purchase orders.',
+        icon: 'i-lucide-layers',
+        deliverable: 'Approved POs',
+    },
+    {
+        value: 'receive',
+        step: '02',
+        phase: 'Inventory',
+        title: 'Receive',
+        description: 'Record receiving reports that auto-post to inventory.',
+        icon: 'i-lucide-package-check',
+        deliverable: 'Stock Updates',
+    },
+    {
+        value: 'pay',
+        step: '03',
+        phase: 'Disbursements',
+        title: 'Pay',
+        description: 'Prepare vouchers, issue checks, withhold and disburse.',
+        icon: 'i-lucide-banknote',
+        deliverable: 'AP Vouchers',
+    },
+    {
+        value: 'collect',
+        step: '04',
+        phase: 'Collections',
+        title: 'Collect',
+        description: 'Invoice customers and apply official-receipt collections.',
+        icon: 'i-lucide-trending-up',
+        deliverable: 'Official Receipts',
+    },
+    {
+        value: 'report',
+        step: '05',
+        phase: 'Reporting',
+        title: 'Report',
+        description: 'Everything flows to a live, BIR-compliant general ledger.',
+        icon: 'i-lucide-book-open',
+        deliverable: 'Live Ledger',
+    },
 ]
 </script>
 
 <template>
-  <!-- Hero -->
-  <UPageHero
-    headline="Introducing FMS"
-    title="Financial Management System"
-    description="Manage income, expenses, budgets, and compliance. Ensure financial stability and profitability across your organization."
-    :links="heroLinks"
-    orientation="horizontal"
-  >
-    <MockupScreenFmsDashboard />
-  </UPageHero>
+    <!-- Hero -->
+    <ProductHero badge="DIGITAL ERP · Business Resource Manager — FMS"
+        background-image="/Asset_manager_walking_through_st…_2K_20261014151959.jpg" :links="heroLinks"
+        :checklist="checklist" :modules="modules">
+        <template #title>
+            Every peso,<br>fully accounted.
+        </template>
+        <template #description>
+            One end-to-end financial platform that connects procurement, inventory, budgeting, assets, payables and
+            collections to a live general ledger — built by <strong>Centralized Cloud Computing International</strong>
+            to run the full business cycle.
+        </template>
+    </ProductHero>
 
-  <!-- Social proof -->
-  <div class="border-y border-default bg-muted/50 py-10">
-    <UContainer>
-      <p class="text-center text-dimmed text-xs font-semibold uppercase tracking-widest mb-8">
-        Trusted by finance teams nationwide
-      </p>
-      <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
-        <UIcon v-for="logo in logoIcons" :key="logo.name" :name="logo.name" :aria-label="logo.label" class="size-10 text-muted" />
-      </div>
-    </UContainer>
-  </div>
-
-  <!-- Core features grid -->
-  <UPageSection
-    id="features"
-    headline="Features"
-    title="Everything you need for financial control"
-    description="From daily ledger entries to annual financial reports — manage the entire financial lifecycle."
-    :features="features"
-  />
-
-  <!-- Feature detail: Budgeting -->
-  <UPageSection
-    title="Budget tracking that keeps you in control"
-    description="Allocate budgets across departments, monitor actuals vs. planned spend in real-time, and get instant alerts before any team goes over. FMS gives every manager full visibility into their financial position without the spreadsheet chaos."
-    orientation="horizontal"
-  >
-    <MockupScreenFmsBudgeting />
-  </UPageSection>
-
-  <!-- Feature detail: Reports -->
-  <UPageSection
-    title="Financial reports generated in seconds"
-    description="Generate GAAP-compliant Income Statements, Balance Sheets, and Cash Flow reports with a single click. Schedule automated delivery to stakeholders and export in PDF or Excel — your auditors will thank you."
-    orientation="horizontal"
-    reverse
-  >
-    <MockupScreenFmsReports />
-  </UPageSection>
-
-  <!-- Stats banner -->
-  <div class="bg-primary dark:bg-primary/50 py-20">
-    <UContainer>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
-        <div v-for="stat in stats" :key="stat.label">
-          <p class="text-4xl lg:text-5xl font-extrabold text-white">{{ stat.value }}</p>
-          <p class="text-white/70 mt-2 text-sm lg:text-base font-medium">{{ stat.label }}</p>
-        </div>
-      </div>
-    </UContainer>
-  </div>
-
-  <!-- Testimonials -->
-  <UPageSection
-    id="testimonials"
-    headline="Customer Stories"
-    title="Loved by Finance Leaders"
-    description="Hear how FMS has helped organizations streamline their accounting and boost profitability."
-  >
-    <UPageGrid>
-      <UCard v-for="t in testimonials" :key="t.author">
-        <div class="flex flex-col h-full">
-          <div class="flex gap-0.5 mb-5">
-            <UIcon v-for="i in 5" :key="i" name="i-lucide-star" class="size-4 text-warning" />
-          </div>
-          <p class="text-muted italic leading-relaxed flex-1">"{{ t.quote }}"</p>
-          <div class="flex items-center gap-3 mt-6 pt-6 border-t border-default">
-            <UAvatar :text="t.initials" size="md" color="primary" />
-            <div>
-              <p class="font-semibold text-highlighted text-sm">{{ t.author }}</p>
-              <p class="text-dimmed text-xs">{{ t.role }}</p>
-            </div>
-          </div>
-        </div>
-      </UCard>
-    </UPageGrid>
-  </UPageSection>
-
-  <!-- Pricing -->
-  <div class="bg-muted/30">
-    <UPageSection
-      id="pricing"
-      headline="Pricing"
-      title="Transparent pricing for any scale"
-      description="Choose the plan that matches your financial operations."
-    >
-      <UPricingPlans :plans="plans" />
+    <!-- Why Choose Us -->
+    <UPageSection id="features" ref="featuresEl" class="section-reveal" :class="{ 'is-visible': featuresVisible }"
+        headline="Why choose us" title="Why our FMS stands out"
+        description="A Business Resource Manager engineered to control operations, transactions and finances in a single source of truth."
+        :ui="{
+            root: 'min-h-screen flex flex-col justify-center',
+            features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10',
+            headline: 'reveal-down',
+            title: 'reveal-up reveal-delay-150',
+            description: 'reveal-up reveal-delay-300',
+        }">
+        <template #features>
+            <UPageFeature v-for="(feature, i) in features" :key="feature.title" v-bind="feature"
+                class="reveal-up" :style="{ animationDelay: `${400 + i * 100}ms` }" />
+        </template>
     </UPageSection>
-  </div>
 
-  <!-- CTA -->
-  <UPageCTA
-    title="Ready to take control of your finances?"
-    description="Join leading organizations using FMS for their core accounting needs."
-    :links="ctaLinks"
-  />
+    <!-- The Platform -->
+    <UPageSection ref="modulesEl" class="section-reveal" :class="{ 'is-visible': modulesVisible }"
+        headline="The platform" title="Introducing Digital ERP"
+        description="The Business Resource Manager is an end-to-end solution composed of integrated modules designed to perform a client's major business processes — enabling business owners to manage and control operations and transactions from procurement to the financial statements."
+        orientation="horizontal" :ui="{
+            root: 'min-h-screen flex flex-col justify-center',
+            features: 'grid grid-cols-2 gap-4',
+            headline: 'reveal-down',
+            title: 'reveal-up reveal-delay-150',
+            description: 'reveal-up reveal-delay-300',
+        }">
+        <template #features>
+            <UPageFeature v-for="(module, index) in modules" :key="index" :title="module.title" icon="i-lucide-check"
+                class="reveal-up" :style="{ animationDelay: `${400 + index * 60}ms` }" />
+        </template>
+        <HubDiagram center-label="BRM" :nodes="modules" class="reveal-right reveal-delay-400" />
+    </UPageSection>
+
+    <!-- Module Feature Details -->
+    <ProductFeature
+        v-for="(feature, index) in featureDetails"
+        :key="index"
+        :id="feature.id"
+        :title="feature.title"
+        :description="feature.description"
+        :features="feature.features"
+        :orientation="feature.orientation"
+        :reverse="feature.reverse">
+        <component :is="feature.component" />
+    </ProductFeature>
+
+    <!-- Financial Cycle -->
+    <UPageSection ref="cycleEl" class="section-reveal" :class="{ 'is-visible': cycleVisible }"
+        :headline="financialCycle.headline" :title="financialCycle.title"
+        :description="financialCycle.description"
+        :ui="{
+            root: 'min-h-screen flex flex-col justify-center',
+            headline: 'reveal-down',
+            title: 'reveal-up reveal-delay-150',
+            description: 'reveal-up reveal-delay-300',
+        }">
+        <div>
+            <ProductTimeline :items="financialCycleSteps" />
+        </div>
+    </UPageSection>
+
+    <!-- CTA -->
+    <UPageSection>
+        <ProductCTA title="Ready to run your entire business cycle?"
+            description="Bring procurement, inventory, payables, collections and the general ledger into one intelligent Digital ERP. See FMS in action."
+            :links="ctaLinks" />
+    </UPageSection>
 </template>

@@ -10,6 +10,11 @@ import {
 // ─── Page Meta ────────────────────────────────────────────────────────────────
 definePageMeta({ layout: 'product' })
 
+// ─── Scroll Reveal ────────────────────────────────────────────────────────────
+const { el: featuresEl, isVisible: featuresVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: modulesEl, isVisible: modulesVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: aiEl, isVisible: aiVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+
 // ─── Navigation & UI Data ─────────────────────────────────────────────────────
 const heroLinks = [
     { label: 'Start Free Trial', to: '#pricing', trailingIcon: 'i-lucide-arrow-right', class: 'hero-cta-shadow' },
@@ -18,16 +23,7 @@ const heroLinks = [
 
 const ctaLinks = [
     { label: 'Get Started Today', icon: 'i-lucide-rocket', class: 'bg-primary-800 hover:bg-primary-700 dark:bg-primary dark:hover:bg-primary/75' },
-    { label: 'Talk to Sales', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-phone' },
-]
-
-const logoIcons = [
-    { name: 'i-simple-icons-coursera', label: 'Coursera' },
-    { name: 'i-simple-icons-udemy', label: 'Udemy' },
-    { name: 'i-simple-icons-edx', label: 'edX' },
-    { name: 'i-simple-icons-khanacademy', label: 'Khan Academy' },
-    { name: 'i-simple-icons-skillshare', label: 'Skillshare' },
-    { name: 'i-simple-icons-duolingo', label: 'Duolingo' },
+    { label: 'Talk to Sales', color: 'neutral' as const, variant: 'soft' as const, trailingIcon: 'i-lucide-phone' },
 ]
 
 const modules = [
@@ -99,76 +95,6 @@ const aiFeatures = [
     },
 ]
 
-const stats = [
-    { value: '2M+', label: 'Active Learners' },
-    { value: '500+', label: 'Institutions' },
-    { value: '99.9%', label: 'Uptime SLA' },
-    { value: '85%', label: 'Higher Completion' },
-]
-
-const testimonials = [
-    {
-        quote: 'LearnCore revolutionized our corporate training. Onboarding time is cut in half, and employee engagement with compliance training is at an all-time high.',
-        author: 'David Wright',
-        role: 'Director of L&D, TechNova',
-        initials: 'DW',
-    },
-    {
-        quote: "Our university switched to LearnCore last year. The faculty loves the intuitive grading tools, and students appreciate the mobile-first design.",
-        author: 'Elena Rostova',
-        role: 'Dean of E-Learning, State University',
-        initials: 'ER',
-    },
-    {
-        quote: 'The analytics give us incredible insight into how students interact with the material. We can continuously improve our courses based on real data.',
-        author: 'Michael Chang',
-        role: 'Founder, CodeCamp Online',
-        initials: 'MC',
-    },
-]
-
-const plans = [
-    {
-        title: 'Basic',
-        description: 'Perfect for independent instructors and small teams.',
-        price: '$99',
-        features: [
-            'Up to 250 active learners',
-            'Unlimited courses',
-            'Basic analytics',
-            'Email support',
-        ],
-    },
-    {
-        title: 'Pro',
-        description: 'For growing organizations needing advanced features.',
-        price: '$299',
-        badge: 'Most Popular',
-        highlight: true,
-        features: [
-            'Up to 1,000 active learners',
-            'Everything in Basic',
-            'Custom domains & branding',
-            'Live classroom integrations',
-            'Advanced reporting',
-            'Priority support',
-        ],
-    },
-    {
-        title: 'Enterprise',
-        description: 'Custom solutions for large universities and corporations.',
-        price: 'Custom',
-        features: [
-            'Unlimited learners',
-            'Everything in Pro',
-            'Custom API integrations',
-            'Dedicated success manager',
-            'Single Sign-On (SSO)',
-            'SLA guarantee',
-        ],
-    },
-]
-
 const featureDetails = [
     {
         id: 'management-portal',
@@ -237,108 +163,72 @@ const featureDetails = [
         </template>
     </ProductHero>
 
-    <!-- Social proof -->
-    <!-- <div class="border-y border-default bg-muted/50 py-10">
-        <UContainer>
-            <p class="text-center text-dimmed text-xs font-semibold uppercase tracking-widest mb-8">
-                Trusted by leading educational organizations
-            </p>
-            <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
-                <UIcon v-for="logo in logoIcons" :key="logo.name" :name="logo.name" :aria-label="logo.label"
-                    class="size-7 text-muted" />
-            </div>
-        </UContainer>
-    </div> -->
-
     <!-- Core features grid -->
-    <UPageSection id="features" headline="Digital learning" title="A foundation for enhanced e-learning"
+    <UPageSection id="features" ref="featuresEl" class="section-reveal" :class="{ 'is-visible': featuresVisible }"
+        headline="Digital learning" title="A foundation for enhanced e-learning"
         description="As education digitalizes, our LMS gives students and academic professionals a structured, effective way to teach, learn, and grow."
-        :features="features" :ui="{ features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10' }" />
+        :ui="{
+            root: 'min-h-screen flex flex-col justify-center',
+            features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10',
+            headline: 'reveal-down',
+            title: 'reveal-up reveal-delay-150',
+            description: 'reveal-up reveal-delay-300',
+        }">
+        <template #features>
+            <UPageFeature v-for="(feature, i) in features" :key="feature.title" v-bind="feature"
+                class="reveal-up" :style="{ animationDelay: `${400 + i * 100}ms` }" />
+        </template>
+    </UPageSection>
 
     <!-- Modules Structure -->
-    <UPageSection headline="The Platform" title="Five connected portals, one platform"
+    <UPageSection ref="modulesEl" class="section-reveal" :class="{ 'is-visible': modulesVisible }"
+        headline="The Platform" title="Five connected portals, one platform"
         description="LearnCore connects every seat at the table — administrators, faculty, students, and parents — inside a single cloud platform, layered with an AI tutor that personalizes the path for every learner."
-        orientation="horizontal" :ui="{ features: 'grid grid-cols-2 gap-4' }">
+        orientation="horizontal" :ui="{
+            root: 'min-h-screen flex flex-col justify-center',
+            features: 'grid grid-cols-2 gap-4',
+            headline: 'reveal-down',
+            title: 'reveal-up reveal-delay-150',
+            description: 'reveal-up reveal-delay-300',
+        }">
         <template #features>
-            <UPageFeature v-for="(module, index) in modules" :key="index" :title="module.title" icon="i-lucide-check" />
+            <UPageFeature v-for="(module, index) in modules" :key="index" :title="module.title" icon="i-lucide-check"
+                class="reveal-up" :style="{ animationDelay: `${400 + index * 60}ms` }" />
         </template>
-        <HubDiagram center-label="LMS CORE" :nodes="modules" />
+        <HubDiagram center-label="LMS CORE" :nodes="modules" class="reveal-right reveal-delay-400" />
     </UPageSection>
 
     <!-- Feature details -->
-    <UPageSection v-for="(feature, index) in featureDetails" :key="index" :id="feature.id" :title="feature.title"
-        :description="feature.description" :features="feature.features.map(f => ({ ...f, ui: { leading: 'p-0' } }))"
-        :orientation="feature.orientation" :reverse="feature.reverse" :ui="{
-            description: 'text-primary',
-        }">
+    <ProductFeature
+        v-for="(feature, index) in featureDetails"
+        :key="index"
+        :id="feature.id"
+        :title="feature.title"
+        :description="feature.description"
+        :features="feature.features"
+        :orientation="feature.orientation"
+        :reverse="feature.reverse">
         <component :is="feature.component" />
-    </UPageSection>
+    </ProductFeature>
 
     <!-- AI-Powered Tutorial -->
-    <UPageSection id="ai-features" orientation="horizontal" headline="Flagship Module" title="AI-Powered Tutorial"
-        description="A highly personalized experience that dynamically adapts content to each learner's knowledge, skills, and goals — increasing engagement, accelerating skill acquisition, and reducing cognitive load at scale.">
+    <UPageSection ref="aiEl" class="section-reveal" :class="{ 'is-visible': aiVisible }"
+        id="ai-features" orientation="horizontal" headline="Flagship Module" title="AI-Powered Tutorial"
+        description="A highly personalized experience that dynamically adapts content to each learner's knowledge, skills, and goals — increasing engagement, accelerating skill acquisition, and reducing cognitive load at scale."
+        :ui="{
+            root: 'min-h-screen flex flex-col justify-center',
+            headline: 'reveal-down',
+            title: 'reveal-up reveal-delay-150',
+            description: 'reveal-up reveal-delay-300',
+        }">
         <UPageGrid class="lg:grid-cols-2">
             <UPageCard v-for="(feature, index) in aiFeatures" :key="index" v-bind="feature"
-                :ui="{ leadingIcon: 'text-primary p-2 rounded-lg size-8' }" spotlight />
+                :ui="{ leadingIcon: 'text-primary p-2 rounded-lg size-8' }"
+                class="reveal-up"
+                :style="{ animationDelay: `${400 + index * 80}ms` }"
+                spotlight />
         </UPageGrid>
     </UPageSection>
-
-    <!-- Stats banner -->
-    <!-- <div class="bg-primary dark:bg-primary/50 py-20">
-    <UContainer>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
-        <div v-for="stat in stats" :key="stat.label">
-          <p class="text-4xl lg:text-5xl font-extrabold text-white">{{ stat.value }}</p>
-          <p class="text-white/70 mt-2 text-sm lg:text-base font-medium">{{ stat.label }}</p>
-        </div>
-      </div>
-    </UContainer>
-  </div> -->
-
-    <!-- Testimonials -->
-    <!-- <UPageSection
-    id="testimonials"
-    headline="Success Stories"
-    title="Empowering educators everywhere"
-    description="Hear from schools and businesses that have transformed their learning programs with LearnCore."
-  >
-    <UPageGrid>
-      <UCard v-for="t in testimonials" :key="t.author">
-        <div class="flex flex-col h-full">
-          <div class="flex gap-0.5 mb-5">
-            <UIcon v-for="i in 5" :key="i" name="i-lucide-star" class="size-4 text-warning" />
-          </div>
-          <p class="text-muted italic leading-relaxed flex-1">"{{ t.quote }}"</p>
-          <div class="flex items-center gap-3 mt-6 pt-6 border-t border-default">
-            <UAvatar :text="t.initials" size="md" color="primary" />
-            <div>
-              <p class="font-semibold text-highlighted text-sm">{{ t.author }}</p>
-              <p class="text-dimmed text-xs">{{ t.role }}</p>
-            </div>
-          </div>
-        </div>
-      </UCard>
-    </UPageGrid>
-  </UPageSection> -->
-
-    <!-- Pricing -->
-    <!-- <div class="bg-muted/30">
-    <UPageSection
-      id="pricing"
-      headline="Pricing"
-      title="Simple, transparent pricing"
-      description="Start small and scale up as your learning community grows. All plans include a 14-day free trial."
-    >
-      <UPricingPlans :plans="plans" />
-    </UPageSection>
-  </div> -->
-
-    <!-- CTA -->
-    <!-- <UPageCTA
-    title="Ready to elevate your learning programs?"
-    description="Join thousands of organizations using LearnCore to deliver better education and training."
-    :links="ctaLinks"
-  /> -->
 
     <!-- CTA -->
     <UPageSection>

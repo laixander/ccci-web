@@ -13,6 +13,12 @@ import {
 // ─── Page Meta ────────────────────────────────────────────────────────────────
 definePageMeta({ layout: 'product' })
 
+// ─── Scroll Reveal ────────────────────────────────────────────────────────────
+const { el: featuresEl, isVisible: featuresVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: modulesEl, isVisible: modulesVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: securityEl, isVisible: securityVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: portalEl, isVisible: portalVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+
 // ─── Navigation & UI Data ─────────────────────────────────────────────────────
 const heroLinks = [
     { label: 'Request a Demo', to: '#pricing', trailingIcon: 'i-lucide-calendar', class: 'hero-cta-shadow' },
@@ -22,15 +28,6 @@ const heroLinks = [
 const ctaLinks = [
     { label: 'Request a Demo', icon: 'i-lucide-calendar', class: 'bg-primary-800 hover:bg-primary-700 dark:bg-primary dark:hover:bg-primary/75' },
     { label: 'Contact Sales', color: 'neutral' as const, variant: 'soft' as const, trailingIcon: 'i-lucide-phone' },
-]
-
-const logoIcons = [
-    { name: 'i-simple-icons-google', label: 'Google' },
-    { name: 'i-simple-icons-microsoft', label: 'Microsoft' },
-    { name: 'i-simple-icons-oracle', label: 'Oracle' },
-    { name: 'i-simple-icons-stripe', label: 'Stripe' },
-    { name: 'i-simple-icons-cisco', label: 'Cisco' },
-    { name: 'i-simple-icons-slack', label: 'Slack' },
 ]
 
 const modules = [
@@ -75,77 +72,6 @@ const features = [
         description: 'User access rights, audit trails, and account locking keep every transaction and record protected across modules.',
         icon: 'i-lucide-shield-check',
         orientation: 'vertical' as const,
-    },
-]
-
-const stats = [
-    { value: '200+', label: 'Schools & Universities' },
-    { value: '500k+', label: 'Students Managed' },
-    { value: '99.9%', label: 'Uptime SLA' },
-    { value: '70%', label: 'Less Admin Workload' },
-]
-
-const testimonials = [
-    {
-        quote: 'CampusCore transformed our enrollment process. What used to take our registrar\'s office 3 weeks of chaos now runs in 3 days — fully online, zero queues, zero paper.',
-        author: 'Dr. Maria Concepcion Bautista',
-        role: 'Registrar, St. Luke\'s College',
-        initials: 'MB',
-    },
-    {
-        quote: 'Our faculty can now encode grades directly from their phones. The system computes GPA, flags at-risk students, and notifies advisers automatically. It\'s been a game-changer.',
-        author: 'Prof. Ramon Villanueva',
-        role: 'Academic VP, Colegio de San Juan',
-        initials: 'RV',
-    },
-    {
-        quote: 'CHED accreditation used to stress us out every cycle. With CampusCore\'s reporting tools, all our compliance data is ready in minutes. We passed with flying colors.',
-        author: 'Engr. Liza Hernandez',
-        role: 'Dean of Engineering, TechVoc Institute',
-        initials: 'LH',
-    },
-]
-
-const plans = [
-    {
-        title: 'Starter',
-        description: 'For small schools and community colleges.',
-        price: '₱4,999',
-        features: [
-            'Up to 1,000 students',
-            'Online enrollment module',
-            'Student records & grading',
-            'Basic reporting',
-            'Email & chat support',
-        ],
-    },
-    {
-        title: 'Professional',
-        description: 'For growing universities and multi-campus schools.',
-        price: '₱12,999',
-        badge: 'Most Popular',
-        highlight: true,
-        features: [
-            'Up to 10,000 students',
-            'Everything in Starter',
-            'Finance & billing integration',
-            'Faculty & curriculum tools',
-            'Advanced analytics & dashboards',
-            'Priority support',
-        ],
-    },
-    {
-        title: 'Enterprise',
-        description: 'For large universities and multi-campus systems.',
-        price: 'Custom',
-        features: [
-            'Unlimited students',
-            'Everything in Professional',
-            'Multi-campus management',
-            'Custom integrations & API',
-            'CHED compliance reporting',
-            'Dedicated account manager',
-        ],
     },
 ]
 
@@ -292,52 +218,72 @@ const paymentProviders = ['GCash', 'VISA', 'Mastercard']
         </template>
     </ProductHero>
 
-    <!-- Social proof -->
-    <!-- <div class="border-y border-default bg-muted/50 py-10">
-        <UContainer>
-            <p class="text-center text-dimmed text-xs font-semibold uppercase tracking-widest mb-8">
-                Trusted by schools, colleges, and universities across the Philippines
-            </p>
-            <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
-                <UIcon v-for="logo in logoIcons" :key="logo.name" :name="logo.name" :aria-label="logo.label"
-                    class="size-7 text-muted" />
-            </div>
-        </UContainer>
-    </div> -->
-
     <!-- Core features grid -->
-    <UPageSection id="features" headline="Why Choose Us" title="The digital campus, without the growing pains."
+    <UPageSection id="features" ref="featuresEl" class="section-reveal" :class="{ 'is-visible': featuresVisible }"
+        headline="Why Choose Us" title="The digital campus, without the growing pains."
         description="Every facet of education is leaning towards technology. With more enrollees, more records, and repeated processes, manual operation simply can't keep up. The Digital Campus gives your school the best academic environment and most engaging experience."
-        :features="features" :ui="{ features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10' }" />
+        :ui="{
+            root: 'min-h-screen flex flex-col justify-center',
+            features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10',
+            headline: 'reveal-down',
+            title: 'reveal-up reveal-delay-150',
+            description: 'reveal-up reveal-delay-300',
+        }">
+        <template #features>
+            <UPageFeature v-for="(feature, i) in features" :key="feature.title" v-bind="feature"
+                class="reveal-up" :style="{ animationDelay: `${400 + i * 100}ms` }" />
+        </template>
+    </UPageSection>
 
     <!-- Modules Structure -->
-    <UPageSection headline="The Platform" title="Every campus operation, one platform."
+    <UPageSection ref="modulesEl" class="section-reveal" :class="{ 'is-visible': modulesVisible }"
+        headline="The Platform" title="Every campus operation, one platform."
         description="From an applicant's first admission exam to an alumnus's profile — all cross-linked, all in the cloud, all in a single system dashboard."
-        orientation="horizontal" :ui="{ features: 'grid grid-cols-2 gap-4' }">
+        orientation="horizontal" :ui="{
+            root: 'min-h-screen flex flex-col justify-center',
+            features: 'grid grid-cols-2 gap-4',
+            headline: 'reveal-down',
+            title: 'reveal-up reveal-delay-150',
+            description: 'reveal-up reveal-delay-300',
+        }">
         <template #features>
-            <UPageFeature v-for="(module, index) in modules" :key="index" :title="module.title" icon="i-lucide-check" />
+            <UPageFeature v-for="(module, index) in modules" :key="index" :title="module.title" icon="i-lucide-check"
+                class="reveal-up" :style="{ animationDelay: `${400 + index * 60}ms` }" />
         </template>
-        <HubDiagram center-label="CMS CORE" :nodes="modules" />
+        <HubDiagram center-label="CMS CORE" :nodes="modules" class="reveal-right reveal-delay-400" />
     </UPageSection>
 
     <!-- Feature details -->
-    <UPageSection v-for="(feature, index) in featureDetails" :key="index" :id="feature.id" :title="feature.title"
-        :description="feature.description" :features="feature.features.map(f => ({ ...f, ui: { leading: 'p-0' } }))"
-        :orientation="feature.orientation" :reverse="feature.reverse" :ui="{
-            description: 'text-primary',
-        }">
+    <ProductFeature
+        v-for="(feature, index) in featureDetails"
+        :key="index"
+        :id="feature.id"
+        :title="feature.title"
+        :description="feature.description"
+        :features="feature.features"
+        :orientation="feature.orientation"
+        :reverse="feature.reverse">
         <component :is="feature.component" />
-    </UPageSection>
+    </ProductFeature>
 
     <!-- Security and Settings details -->
     <UPageSection
+        ref="securityEl"
+        class="section-reveal"
+        :class="{ 'is-visible': securityVisible }"
         id="security-settings"
         orientation="horizontal"
         headline="Security & system settings"
         title="In charge of every transaction"
-        description="The Security module maintains all modules and transactions, while System Settings collate functions into one dashboard — semester definitions, grade systems, academic year, schedule templates, graduation dates, and application settings.">
+        description="The Security module maintains all modules and transactions, while System Settings collate functions into one dashboard — semester definitions, grade systems, academic year, schedule templates, graduation dates, and application settings."
+        :ui="{
+            root: 'min-h-screen flex flex-col justify-center',
+            headline: 'reveal-down',
+            title: 'reveal-up reveal-delay-150',
+            description: 'reveal-up reveal-delay-300',
+        }">
         <template #features>
-            <div class="flex flex-wrap gap-2">
+            <div class="flex flex-wrap gap-2 reveal-up reveal-delay-400">
                 <UBadge
                     v-for="setting in ['Semester Definition', 'Grade System', 'Academic Year', 'School Information', 'Schedule Templates', 'Graduation Dates', 'Logo & Signature', 'Auto-Lapse Control']"
                     :key="setting"
@@ -354,6 +300,8 @@ const paymentProviders = ['GCash', 'VISA', 'Mastercard']
                 :key="index"
                 v-bind="feature"
                 :ui="{ leadingIcon: 'text-primary p-2 rounded-lg size-8' }"
+                class="reveal-up"
+                :style="{ animationDelay: `${400 + index * 80}ms` }"
                 spotlight
             />
         </UPageGrid>
@@ -361,11 +309,17 @@ const paymentProviders = ['GCash', 'VISA', 'Mastercard']
 
     <!-- Student Admission Portal & Payment Gateway -->
     <UPageSection
+        ref="portalEl"
+        class="section-reveal"
+        :class="{ 'is-visible': portalVisible }"
         headline="Extend Your Platform"
         title="Portal access and online payment, built in."
         description="CampusCore goes beyond the back office — giving students a direct portal to apply and enroll online, and a secure payment gateway to settle fees without ever queuing."
         :ui="{
-            headline: 'flex items-center gap-2 before:content-[\'\'] before:w-1.5 before:h-1.5 before:rounded-full before:bg-primary uppercase tracking-widest text-xs font-semibold text-primary'
+            root: 'min-h-screen flex flex-col justify-center',
+            headline: 'reveal-down',
+            title: 'reveal-up reveal-delay-150',
+            description: 'reveal-up reveal-delay-300',
         }">
         <UPageGrid class="lg:grid-cols-2">
             <!-- Student Admission Portal -->
@@ -374,6 +328,7 @@ const paymentProviders = ['GCash', 'VISA', 'Mastercard']
                 description="Aspiring students submit applications for University admission, with duplicate-applicant verification and automatic course filtering when a GWA falls below the minimum requirement."
                 icon="i-lucide-door-open"
                 spotlight
+                class="reveal-up reveal-delay-400"
                 :ui="{
                     title: 'text-xl',
                     leadingIcon: 'text-primary size-10'
@@ -392,6 +347,7 @@ const paymentProviders = ['GCash', 'VISA', 'Mastercard']
                 description="Students pay tuition, laboratory, and other fees anytime, anywhere — no queues, no cash handling. Payments post straight to the student ledger."
                 icon="i-lucide-credit-card"
                 spotlight
+                class="reveal-up reveal-delay-500"
                 :ui="{
                     root: 'bg-gradient-to-br from-primary-100 to-primary-200 dark:from-primary-600 dark:to-primary-900 ring-primary-300/50 dark:ring-primary-500/30',
                     title: 'text-primary-900 dark:text-white text-xl',
@@ -408,56 +364,6 @@ const paymentProviders = ['GCash', 'VISA', 'Mastercard']
             </UPageCard>
         </UPageGrid>
     </UPageSection>
-
-    <!-- Stats banner -->
-    <!-- <div class="bg-primary dark:bg-primary/50 py-20">
-    <UContainer>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
-        <div v-for="stat in stats" :key="stat.label">
-          <p class="text-4xl lg:text-5xl font-extrabold text-white">{{ stat.value }}</p>
-          <p class="text-white/70 mt-2 text-sm lg:text-base font-medium">{{ stat.label }}</p>
-        </div>
-      </div>
-    </UContainer>
-  </div> -->
-
-    <!-- Testimonials -->
-    <!-- <UPageSection
-    id="testimonials"
-    headline="Customer Stories"
-    title="Loved by registrars, faculty, and administrators"
-    description="Don't just take our word for it — hear from the school leaders who trust CampusCore to run their institutions every day."
-  >
-    <UPageGrid>
-      <UCard v-for="t in testimonials" :key="t.author">
-        <div class="flex flex-col h-full">
-          <div class="flex gap-0.5 mb-5">
-            <UIcon v-for="i in 5" :key="i" name="i-lucide-star" class="size-4 text-warning" />
-          </div>
-          <p class="text-muted italic leading-relaxed flex-1">"{{ t.quote }}"</p>
-          <div class="flex items-center gap-3 mt-6 pt-6 border-t border-default">
-            <UAvatar :text="t.initials" size="md" color="primary" />
-            <div>
-              <p class="font-semibold text-highlighted text-sm">{{ t.author }}</p>
-              <p class="text-dimmed text-xs">{{ t.role }}</p>
-            </div>
-          </div>
-        </div>
-      </UCard>
-    </UPageGrid>
-  </UPageSection> -->
-
-    <!-- Pricing -->
-    <!-- <div class="bg-muted/30">
-    <UPageSection
-      id="pricing"
-      headline="Pricing"
-      title="Straightforward pricing for every school size"
-      description="No hidden fees. No per-module add-ons. All plans include onboarding support and a 30-day pilot period so you can see the impact before committing."
-    >
-      <UPricingPlans :plans="plans" />
-    </UPageSection>
-  </div> -->
 
     <!-- CTA -->
     <UPageSection>

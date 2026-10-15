@@ -35,17 +35,23 @@ const props = defineProps<{
 
 // ─── Composables ──────────────────────────────────────────────────────────────
 const { y } = useWindowScroll()
+
+// ─── Page-load hero reveal ────────────────────────────────────────────────────
+const heroVisible = ref(false)
+onMounted(() => {
+    requestAnimationFrame(() => { heroVisible.value = true })
+})
 </script>
 
 <template>
     <UPageHero orientation="horizontal" :description="description" :ui="{
         root: 'relative overflow-hidden min-h-[calc(100vh-var(--ui-header-height))] pb-14 flex flex-col justify-center',
         container: 'max-w-full',
-        description: 'dark:text-toned',
-    }">
+        description: 'dark:text-toned reveal-up reveal-delay-300',
+    }" class="section-reveal" :class="{ 'is-visible': heroVisible }">
         <!-- ── Badge headline ──────────────────────────────────────────────── -->
         <template #headline>
-            <UBadge variant="subtle" :ui="{ base: 'pr-2.5 gap-2' }" class="rounded-full mb-4">
+            <UBadge variant="subtle" :ui="{ base: 'pr-2.5 gap-2' }" class="rounded-full mb-4 reveal-down">
                 <span class="relative flex size-2">
                     <span
                         class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-400 opacity-75" />
@@ -57,7 +63,9 @@ const { y } = useWindowScroll()
 
         <!-- ── Title (pass-through slot) ──────────────────────────────────── -->
         <template v-if="$slots.title" #title>
-            <slot name="title" />
+            <span class="reveal-up reveal-delay-150">
+                <slot name="title" />
+            </span>
         </template>
 
         <!-- ── Description (pass-through slot for rich HTML) ─────────────── -->
@@ -69,7 +77,8 @@ const { y } = useWindowScroll()
         <template #top>
             <!-- Parallax background image -->
             <div
-                class="absolute -inset-y-[10%] inset-x-0 -z-20 bg-cover bg-center bg-no-repeat will-change-transform"
+                class="absolute -inset-y-[10%] inset-x-0 -z-20 bg-cover bg-center bg-no-repeat will-change-transform hero-bg-reveal"
+                :class="{ 'hero-bg-visible': heroVisible }"
                 :style="{
                     backgroundImage: `url('${backgroundImage}')`,
                     transform: `translateY(${y * 0.4}px)`,
@@ -98,13 +107,13 @@ const { y } = useWindowScroll()
 
         <!-- ── CTA footer ─────────────────────────────────────────────────── -->
         <template v-if="links?.length || checklist?.length" #footer>
-            <div v-if="links?.length" class="flex flex-wrap gap-x-6 gap-y-3">
+            <div v-if="links?.length" class="flex flex-wrap gap-x-6 gap-y-3 reveal-up reveal-delay-400">
                 <UButton v-for="(link, index) in links" :key="index" v-bind="link"
                     size="xl" :ui="{ base: 'sm:py-4 sm:px-6 sm:rounded-xl font-semibold', trailingIcon: 'sm:size-5', leadingIcon: 'sm:size-5' }"
                 />
             </div>
 
-            <ul v-if="checklist?.length" class="mt-6 sm:mt-12 flex flex-wrap gap-x-6 gap-y-2">
+            <ul v-if="checklist?.length" class="mt-6 sm:mt-12 flex flex-wrap gap-x-6 gap-y-2 reveal-up reveal-delay-500">
                 <li v-for="item in checklist" :key="item" class="flex items-center gap-2 text-sm text-toned">
                     <UIcon name="i-lucide-check" class="size-4 text-primary shrink-0" />
                     {{ item }}
@@ -114,7 +123,7 @@ const { y } = useWindowScroll()
 
         <!-- ── Scrolling module ticker ────────────────────────────────────── -->
         <div v-if="modules?.length"
-            class="absolute bottom-0 inset-x-0 border-t border-default bg-white/50 dark:bg-neutral-900/50 backdrop-blur-md overflow-hidden flex py-4 z-10">
+            class="absolute bottom-0 inset-x-0 border-t border-default bg-white/50 dark:bg-neutral-900/50 backdrop-blur-md overflow-hidden flex py-4 z-10 reveal-up reveal-delay-600">
             <div class="flex whitespace-nowrap animate-product-ticker w-max hover:animation-paused">
                 <div v-for="i in 4" :key="`ticker-group-${i}`" class="flex items-center gap-16 pr-16 shrink-0">
                     <NuxtLink v-for="mod in modules" :key="mod.title" :to="mod.to"
@@ -142,10 +151,18 @@ const { y } = useWindowScroll()
     animation-play-state: paused;
 }
 
-/* CTA primary button glow — applied via class prop on the link object */
-.hero-cta-shadow {
-    box-shadow:
-        0 8px 20px -6px color-mix(in srgb, var(--ui-primary) 85%, transparent),
-        0 20px 48px -10px color-mix(in srgb, var(--ui-primary) 45%, transparent);
+/* ── Hero background fade-in + subtle scale ─────────────────────────────── */
+.hero-bg-reveal {
+    opacity: 0;
+    transform-origin: center center;
+    scale: 1.04;
+    transition:
+        opacity 1.6s cubic-bezier(0.4, 0, 0.2, 1),
+        scale 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-bg-visible {
+    opacity: 1;
+    scale: 1;
 }
 </style>

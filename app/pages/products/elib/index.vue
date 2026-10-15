@@ -10,10 +10,16 @@ import {
 // ─── Page Meta ────────────────────────────────────────────────────────────────
 definePageMeta({ layout: 'product' })
 
+// ─── SEO ──────────────────────────────────────────────────────────────────────
 useSeoMeta({
     title: 'eLibrary System — Cloud Library for Schools & Universities | CCCI',
     description: 'Give students quick online access to books, magazines, catalogs, journals and more — while automating inventory, cataloguing, barcode circulation and analytics for librarians. Built by Centralized Cloud Computing International.',
 })
+
+// ─── Scroll Reveal ────────────────────────────────────────────────────────────
+const { el: featuresEl, isVisible: featuresVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: modulesEl, isVisible: modulesVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: platformEl, isVisible: platformVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
 
 // ─── Navigation & UI Data ─────────────────────────────────────────────────────
 const heroLinks = [
@@ -122,33 +128,6 @@ const featureDetails = [
     },
 ]
 
-// const mobileFeatures = [
-//     {
-//         title: 'Reserve & Borrow',
-//         description: 'Access the eLibrary through mobile apps for reservation, borrowing, scanning or searching for books.',
-//         icon: 'i-lucide-book-marked',
-//         orientation: 'vertical' as const,
-//     },
-//     {
-//         title: 'In-App Reports',
-//         description: 'File complaints or make reports directly from the app — cost-effective and user-friendly software.',
-//         icon: 'i-lucide-file-text',
-//         orientation: 'vertical' as const,
-//     },
-//     {
-//         title: 'Inventory Dashboard',
-//         description: 'Librarians manage inventory through the dashboard, tracking location and availability of every resource.',
-//         icon: 'i-lucide-layout-dashboard',
-//         orientation: 'vertical' as const,
-//     },
-//     {
-//         title: 'Scan to Reserve',
-//         description: "Students scan a book's barcode from their phone to instantly reserve it — no counter visit required.",
-//         icon: 'i-lucide-scan',
-//         orientation: 'vertical' as const,
-//     },
-// ]
-
 const platformFeatures = [
     {
         title: 'Role-Based Access',
@@ -184,13 +163,6 @@ const platformTags = [
     'CMS API',
     'Multi-cloud',
 ]
-
-const stats = [
-    { value: '100%', label: 'Self-service borrowing' },
-    { value: '1', label: 'Barcode per book' },
-    { value: '24/7', label: 'Mobile access' },
-    { value: '1', label: 'Cloud database' },
-]
 </script>
 
 <template>
@@ -208,35 +180,66 @@ const stats = [
     </ProductHero>
 
     <!-- Core features grid -->
-    <UPageSection id="features" headline="eLibrary System" title="An essential role in every campus"
+    <UPageSection id="features" ref="featuresEl" class="section-reveal" :class="{ 'is-visible': featuresVisible }"
+        headline="eLibrary System" title="An essential role in every campus"
         description="The eLibrary System empowers librarians and authorized staff to keep proper records of every book — author, edition, copies, issue and return dates — while helping students learn better through quick online access."
-        :features="features" :ui="{ features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10' }" />
+        :ui="{
+            root: 'min-h-screen flex flex-col justify-center',
+            features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10',
+            headline: 'reveal-down',
+            title: 'reveal-up reveal-delay-150',
+            description: 'reveal-up reveal-delay-300',
+        }">
+        <template #features>
+            <UPageFeature v-for="(feature, i) in features" :key="feature.title" v-bind="feature"
+                class="reveal-up" :style="{ animationDelay: `${400 + i * 100}ms` }" />
+        </template>
+    </UPageSection>
 
     <!-- Modules Structure -->
-    <UPageSection headline="What's inside" title="Everything a modern library needs"
+    <UPageSection ref="modulesEl" class="section-reveal" :class="{ 'is-visible': modulesVisible }"
+        headline="What's inside" title="Everything a modern library needs"
         description="From self-service borrowing to analytics — all in one cloud platform students and librarians actually enjoy using."
-        orientation="horizontal" :ui="{ features: 'grid grid-cols-2 gap-4' }">
+        orientation="horizontal" :ui="{
+            root: 'min-h-screen flex flex-col justify-center',
+            features: 'grid grid-cols-2 gap-4',
+            headline: 'reveal-down',
+            title: 'reveal-up reveal-delay-150',
+            description: 'reveal-up reveal-delay-300',
+        }">
         <template #features>
-            <UPageFeature v-for="(module, index) in modules" :key="index" :title="module.title" icon="i-lucide-check" />
+            <UPageFeature v-for="(module, index) in modules" :key="index" :title="module.title" icon="i-lucide-check"
+                class="reveal-up" :style="{ animationDelay: `${400 + index * 60}ms` }" />
         </template>
-        <HubDiagram center-label="eLIB CORE" :nodes="modules" />
+        <HubDiagram center-label="eLIB CORE" :nodes="modules" class="reveal-right reveal-delay-400" />
     </UPageSection>
 
     <!-- Feature details -->
-    <UPageSection v-for="(feature, index) in featureDetails" :key="index" :id="feature.id" :title="feature.title"
-        :description="feature.description" :features="feature.features.map(f => ({ ...f, ui: { leading: 'p-0' } }))"
-        :orientation="feature.orientation" :reverse="feature.reverse" :ui="{
-            description: 'text-primary',
-        }">
+    <ProductFeature
+        v-for="(feature, index) in featureDetails"
+        :key="index"
+        :id="feature.id"
+        :title="feature.title"
+        :description="feature.description"
+        :features="feature.features"
+        :orientation="feature.orientation"
+        :reverse="feature.reverse">
         <component :is="feature.component" />
-    </UPageSection>
+    </ProductFeature>
 
     <!-- Platform Section -->
-    <UPageSection id="platform" headline="Secure & connected" title="Built on an open, secure platform"
+    <UPageSection ref="platformEl" class="section-reveal" :class="{ 'is-visible': platformVisible }"
+        id="platform" headline="Secure & connected" title="Built on an open, secure platform"
         description="Security features include role-based authentication and access control, so you can granularly set up rights and permissions for every created user — ensuring only authorized people get in. Underneath, it's open-source, Postgres-backed, and cloud-native."
-        orientation="horizontal">
+        orientation="horizontal"
+        :ui="{
+            root: 'min-h-screen flex flex-col justify-center',
+            headline: 'reveal-down',
+            title: 'reveal-up reveal-delay-150',
+            description: 'reveal-up reveal-delay-300',
+        }">
         <template #features>
-            <div class="flex flex-wrap gap-2">
+            <div class="flex flex-wrap gap-2 reveal-up reveal-delay-400">
                 <UBadge v-for="tag in platformTags" :key="tag" variant="soft" color="primary" size="lg">
                     {{ tag }}
                 </UBadge>
@@ -244,28 +247,12 @@ const stats = [
         </template>
         <UPageGrid class="lg:grid-cols-2">
             <UPageCard v-for="(feat, index) in platformFeatures" :key="index" v-bind="feat"
-                :ui="{ leadingIcon: 'text-primary p-2 rounded-lg size-8' }" spotlight />
+                :ui="{ leadingIcon: 'text-primary p-2 rounded-lg size-8' }"
+                class="reveal-up"
+                :style="{ animationDelay: `${400 + index * 80}ms` }"
+                spotlight />
         </UPageGrid>
     </UPageSection>
-
-    <!-- Mobile Apps -->
-    <!-- <UPageSection id="mobile-apps" headline="Mobile Apps"
-        title="Reserve, borrow, scan and search — right from your phone."
-        description="Access the eLibrary through mobile apps for reservation, borrowing, scanning or searching for books. File complaints or make reports directly from the app — cost-effective and user-friendly software."
-        :features="mobileFeatures" :ui="{
-            features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10',
-            description: 'text-primary',
-        }" /> -->
-
-    <!-- Stats banner -->
-    <!-- <UPageSection>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center pb-12 sm:pb-24 lg:px-16 lg:pb-24">
-            <div v-for="stat in stats" :key="stat.label">
-                <p class="text-4xl lg:text-5xl font-extrabold text-primary">{{ stat.value }}</p>
-                <p class="text-muted mt-2 text-sm lg:text-base font-medium">{{ stat.label }}</p>
-            </div>
-        </div>
-    </UPageSection> -->
 
     <!-- CTA -->
     <UPageSection>

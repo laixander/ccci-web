@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-
+// ─── Types ────────────────────────────────────────────────────────────────────
 interface HubNode {
     title: string
     icon: string
     to?: string
 }
 
+// ─── Props ────────────────────────────────────────────────────────────────────
 const props = withDefaults(defineProps<{
     centerLabel: string
     centerSubLabel?: string
@@ -15,28 +15,36 @@ const props = withDefaults(defineProps<{
     centerSubLabel: '',
 })
 
-// Calculate positions and connector lines dynamically based on number of nodes
+// ─── Layout ───────────────────────────────────────────────────────────────────
+// Positions and connector-line endpoints are derived from the node count.
+// Starting angle is -90° (top of circle) so the first node always sits at 12 o'clock.
 const layoutData = computed(() => {
     const n = props.nodes.length
     const radius = 220
     const center = 300
-    
+
     return props.nodes.map((_, i) => {
-        // Start from top (-90 degrees or -PI/2 radians)
         const angle = -Math.PI / 2 + (i * 2 * Math.PI / n)
-        
         const x = center + radius * Math.cos(angle)
         const y = center + radius * Math.sin(angle)
-        
+
         return {
             line: { x2: x, y2: y },
-            style: { 
-                left: `${(x / 600) * 100}%`, 
-                top: `${(y / 600) * 100}%` 
-            }
+            style: {
+                left: `${(x / 600) * 100}%`,
+                top: `${(y / 600) * 100}%`,
+            },
         }
     })
 })
+
+// ─── Shared node classes ──────────────────────────────────────────────────────
+// Extracted to avoid duplicating the full class list between NuxtLink and div variants.
+const nodeClass = [
+    'w-full aspect-square rounded-full bg-default border border-default shadow-md',
+    'flex flex-col items-center justify-center gap-[5px] text-center p-1.5',
+    'transition-all duration-200 hover:border-primary hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1',
+].join(' ')
 </script>
 
 <template>
@@ -108,20 +116,20 @@ const layoutData = computed(() => {
             </div>
         </div>
 
-        <!-- Module nodes: outer div = position + width; inner div = appearance + hover -->
-        <div v-for="(node, i) in nodes" :key="node.title" :style="layoutData[i]?.style"
-            class="absolute w-[22%] -translate-x-1/2 -translate-y-1/2 z-[1]">
-            <NuxtLink v-if="node.to" :to="node.to"
-                class="w-full aspect-square rounded-full bg-default border border-default shadow-md flex flex-col items-center justify-center gap-[5px] text-center p-1.5 transition-all duration-200 hover:border-primary hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1 cursor-pointer">
+        <!-- Module nodes: outer div = position anchor; inner element = appearance + hover -->
+        <div
+            v-for="(node, i) in nodes"
+            :key="node.title"
+            :style="layoutData[i]?.style"
+            class="absolute w-[22%] -translate-x-1/2 -translate-y-1/2 z-[1]"
+        >
+            <NuxtLink v-if="node.to" :to="node.to" :class="[nodeClass, 'cursor-pointer']">
                 <UIcon :name="node.icon" class="size-6 text-primary shrink-0 flex" />
-                <span class="text-[clamp(.62rem,1.5vw,.82rem)] font-semibold text-highlighted leading-tight px-1">{{
-                    node.title }}</span>
+                <span class="text-[clamp(.62rem,1.5vw,.82rem)] font-semibold text-highlighted leading-tight px-1">{{ node.title }}</span>
             </NuxtLink>
-            <div v-else
-                class="w-full aspect-square rounded-full bg-default border border-default shadow-md flex flex-col items-center justify-center gap-[5px] text-center p-1.5 transition-all duration-200 hover:border-primary hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1 cursor-default">
+            <div v-else :class="[nodeClass, 'cursor-default']">
                 <UIcon :name="node.icon" class="size-6 text-primary shrink-0 flex" />
-                <span class="text-[clamp(.62rem,1.5vw,.82rem)] font-semibold text-highlighted leading-tight px-1">{{
-                    node.title }}</span>
+                <span class="text-[clamp(.62rem,1.5vw,.82rem)] font-semibold text-highlighted leading-tight px-1">{{ node.title }}</span>
             </div>
         </div>
 
