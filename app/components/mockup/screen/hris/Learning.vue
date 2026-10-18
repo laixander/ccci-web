@@ -1,50 +1,36 @@
 <template>
-  <MockupBrowserFrame url="app.peoplecore.io/learning">
-    <!-- Main content -->
-    <main class="flex-1 bg-default flex flex-col">
-      <!-- App Header -->
-      <div class="flex items-center justify-between px-5 py-3 border-b border-default">
-        <div class="flex items-center gap-3">
-          <div class="size-7 rounded-md bg-primary flex items-center justify-center">
-            <span class="text-white font-bold text-[12px]">C</span>
+  <MockupBrowserFrame url="app.peoplecore.io/learning" title="Training Programs">
+    <div class="p-5 flex-1 flex flex-col gap-4">
+      <!-- Stat Cards -->
+      <div class="grid grid-cols-4 gap-3">
+        <UCard v-for="stat in stats" :key="stat.label" variant="outline" :ui="{ body: 'sm:p-3 flex flex-col items-center gap-0.5' }" class="rounded-xl shadow-sm">
+          <p class="text-[22px] font-black text-highlighted leading-none">{{ stat.value }}</p>
+          <p class="text-[10px] text-muted">{{ stat.label }}</p>
+        </UCard>
+      </div>
+
+      <!-- Training Grid -->
+      <div class="grid grid-cols-3 gap-4">
+        <UCard
+          v-for="program in programs"
+          :key="program.title + program.status"
+          variant="outline"
+          :ui="{ body: 'sm:p-0 flex flex-col overflow-hidden' }"
+          class="rounded-xl shadow-sm overflow-hidden p-0"
+        >
+          <!-- Banner -->
+          <div class="relative h-20 flex-shrink-0" :class="program.bannerClass">
+            <!-- <UBadge :label="program.status" color="primary" variant="outline" size="xs" class="absolute top-2 left-2 font-semibold text-primary rounded-full" /> -->
           </div>
-          <span class="font-bold text-[14px] text-highlighted">Training Programs</span>
-        </div>
-        <span class="text-[10px] text-muted tracking-widest uppercase">CCCI</span>
+          <!-- Info -->
+          <div class="p-3 flex flex-col gap-1.5">
+            <span class="font-bold text-[13px] text-highlighted">{{ program.title }}</span>
+            <span class="text-[10px] text-muted font-mono">{{ program.location }}</span>
+            <UBadge :label="program.date" :color="program.dateColor" variant="subtle" size="xs" class="w-fit px-2" />
+          </div>
+        </UCard>
       </div>
-
-      <div class="p-5 flex-1 flex flex-col gap-4">
-        <!-- Stat Cards -->
-        <div class="grid grid-cols-4 gap-3">
-          <UCard v-for="stat in stats" :key="stat.label" variant="outline" :ui="{ body: 'sm:p-3 flex flex-col items-center gap-0.5' }" class="rounded-xl shadow-sm">
-            <p class="text-[22px] font-black text-highlighted leading-none">{{ stat.value }}</p>
-            <p class="text-[10px] text-muted">{{ stat.label }}</p>
-          </UCard>
-        </div>
-
-        <!-- Training Grid -->
-        <div class="grid grid-cols-3 gap-4">
-          <UCard
-            v-for="program in programs"
-            :key="program.title + program.status"
-            variant="outline"
-            :ui="{ body: 'sm:p-0 flex flex-col overflow-hidden' }"
-            class="rounded-xl shadow-sm overflow-hidden p-0"
-          >
-            <!-- Banner -->
-            <div class="relative h-20 flex-shrink-0" :class="program.bannerClass">
-              <!-- <UBadge :label="program.status" color="primary" variant="outline" size="xs" class="absolute top-2 left-2 font-semibold text-primary rounded-full" /> -->
-            </div>
-            <!-- Info -->
-            <div class="p-3 flex flex-col gap-1.5">
-              <span class="font-bold text-[13px] text-highlighted">{{ program.title }}</span>
-              <span class="text-[10px] text-muted font-mono">{{ program.location }}</span>
-              <UBadge :label="program.date" :color="program.dateColor" variant="subtle" size="xs" class="w-fit px-2" />
-            </div>
-          </UCard>
-        </div>
-      </div>
-    </main>
+    </div>
   </MockupBrowserFrame>
 </template>
 

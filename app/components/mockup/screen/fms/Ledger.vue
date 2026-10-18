@@ -1,43 +1,29 @@
 <template>
-  <MockupBrowserFrame url="app.fms.ccci.com.ph/trial-balance">
-    <!-- Main content -->
-    <main class="flex-1 bg-default flex flex-col font-sans select-none">
-      <!-- App Header -->
-      <div class="flex items-center justify-between px-5 py-3 border-b border-default">
-        <div class="flex items-center gap-3">
-          <div class="size-7 rounded-md bg-primary flex items-center justify-center shadow-2xs">
-            <span class="text-white font-bold text-[13px] leading-none">C</span>
-          </div>
-          <span class="font-bold text-[14px] text-highlighted">Trial Balance</span>
-        </div>
-        <span class="text-[10px] text-muted tracking-widest uppercase font-semibold">CCCI</span>
-      </div>
+  <MockupBrowserFrame url="app.fms.ccci.com.ph/trial-balance" title="Trial Balance">
+    <div class="p-5 flex-1 flex flex-col justify-between gap-5">
+      <!-- Trial Balance Table using UTable -->
+      <UTable
+        :data="ledgerEntries"
+        :columns="columns"
+        :ui="tableUi"
+      />
 
-      <div class="p-5 flex-1 flex flex-col justify-between gap-5">
-        <!-- Trial Balance Table using UTable -->
-        <UTable
-          :data="ledgerEntries"
-          :columns="columns"
-          :ui="tableUi"
-        />
-
-        <!-- Balanced Status Banner -->
-        <div class="rounded-xl bg-primary/10 border border-primary/20 px-4 py-3 sm:py-3.5 flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <UIcon
-              name="i-lucide-check"
-              class="size-4 text-primary"
-            />
-            <span class="font-mono text-xs font-semibold text-primary tracking-wide">
-              Balanced
-            </span>
-          </div>
-          <span class="font-mono text-base font-bold text-primary tracking-tight">
-            ₱6,012,000 = ₱6,012,000
+      <!-- Balanced Status Banner -->
+      <div class="rounded-xl bg-primary/10 border border-primary/20 px-4 py-3 sm:py-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <UIcon
+            name="i-lucide-check"
+            class="size-4 text-primary"
+          />
+          <span class="font-mono text-xs font-semibold text-primary tracking-wide">
+            Balanced
           </span>
         </div>
+        <span class="font-mono text-base font-bold text-primary tracking-tight">
+          ₱6,012,000 = ₱6,012,000
+        </span>
       </div>
-    </main>
+    </div>
   </MockupBrowserFrame>
 </template>
 

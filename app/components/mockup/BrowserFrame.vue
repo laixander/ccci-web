@@ -1,3 +1,12 @@
+<script setup lang="ts">
+defineProps<{
+  url?: string
+  title?: string
+  logoLetter?: string
+  icon?: string
+  // brand?: string
+}>()
+</script>
 <template>
   <div class="w-full rounded-xl overflow-hidden shadow-2xl ring-1 ring-default bg-default font-sans text-xs select-none flex flex-col">
     <!-- Title bar -->
@@ -11,13 +20,26 @@
       </div>
     </div>
 
+    <!-- App Header -->
+    <div v-if="title || $slots.header" class="flex items-center justify-between px-5 py-3 border-b border-default flex-shrink-0">
+      <slot name="header">
+        <div class="flex items-center gap-3">
+          <slot name="logo">
+            <div class="size-7 rounded-md bg-primary flex items-center justify-center">
+              <UIcon v-if="icon" :name="icon" class="size-3.5 text-white" />
+              <span v-else class="text-white font-bold text-[12px]">{{ logoLetter || 'C' }}</span>
+            </div>
+          </slot>
+          <span class="font-bold text-[14px] text-highlighted">{{ title }}</span>
+        </div>
+        <UButton square icon="i-lucide-ellipsis-vertical" size="sm" color="neutral" variant="ghost" />
+        <!-- <slot name="brand">
+          <span class="text-[10px] text-muted tracking-widest uppercase font-semibold">{{ brand || 'CCCI' }}</span>
+        </slot> -->
+      </slot>
+    </div>
+
     <!-- Main content -->
     <slot />
   </div>
 </template>
-
-<script setup lang="ts">
-defineProps<{
-  url?: string
-}>()
-</script>

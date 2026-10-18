@@ -1,44 +1,30 @@
 <template>
-  <MockupBrowserFrame url="app.fms.ccci.com.ph/withholding-tax">
-    <!-- Main content -->
-    <main class="flex-1 bg-default flex flex-col font-sans select-none">
-      <!-- App Header -->
-      <div class="flex items-center justify-between px-5 py-3 border-b border-default">
-        <div class="flex items-center gap-3">
-          <div class="size-7 rounded-md bg-primary flex items-center justify-center shadow-2xs">
-            <span class="text-white font-bold text-[13px] leading-none">C</span>
-          </div>
-          <span class="font-bold text-[14px] text-highlighted">Withholding Tax Rates</span>
-        </div>
-        <span class="text-[10px] text-muted tracking-widest uppercase font-semibold">CCCI</span>
-      </div>
+  <MockupBrowserFrame url="app.fms.ccci.com.ph/withholding-tax" title="Withholding Tax Rates">
+    <div class="p-5 flex-1 flex flex-col justify-between gap-5">
+      <!-- Tax Rates Table using UTable -->
+      <UTable
+        :data="taxRates"
+        :columns="columns"
+        :ui="tableUi"
+      />
 
-      <div class="p-5 flex-1 flex flex-col justify-between gap-5">
-        <!-- Tax Rates Table using UTable -->
-        <UTable
-          :data="taxRates"
-          :columns="columns"
-          :ui="tableUi"
+      <!-- Bottom Action Buttons -->
+      <div class="flex items-center gap-2.5 pt-1">
+        <UButton
+          label="Extract"
+          color="primary"
+          size="sm"
+          class="px-5 font-mono text-xs font-semibold rounded-lg shadow-2xs"
         />
-
-        <!-- Bottom Action Buttons -->
-        <div class="flex items-center gap-2.5 pt-1">
-          <UButton
-            label="Extract"
-            color="primary"
-            size="sm"
-            class="px-5 font-mono text-xs font-semibold rounded-lg shadow-2xs"
-          />
-          <UButton
-            label="SLSP Export"
-            color="neutral"
-            variant="outline"
-            size="sm"
-            class="px-4 font-mono text-xs text-muted hover:text-highlighted rounded-lg"
-          />
-        </div>
+        <UButton
+          label="SLSP Export"
+          color="neutral"
+          variant="outline"
+          size="sm"
+          class="px-4 font-mono text-xs text-muted hover:text-highlighted rounded-lg"
+        />
       </div>
-    </main>
+    </div>
   </MockupBrowserFrame>
 </template>
 

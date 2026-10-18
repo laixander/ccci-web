@@ -1,72 +1,58 @@
 <template>
-  <MockupBrowserFrame url="app.fms.ccci.com.ph/payable-voucher">
-    <!-- Main content -->
-    <main class="flex-1 bg-default flex flex-col font-sans select-none">
-      <!-- App Header -->
-      <div class="flex items-center justify-between px-5 py-3 border-b border-default">
-        <div class="flex items-center gap-3">
-          <div class="size-7 rounded-md bg-primary flex items-center justify-center shadow-2xs">
-            <span class="text-white font-bold text-[13px] leading-none">C</span>
-          </div>
-          <span class="font-bold text-[14px] text-highlighted">Payable Voucher</span>
+  <MockupBrowserFrame url="app.fms.ccci.com.ph/payable-voucher" title="Payable Voucher">
+    <div class="p-5 flex-1 flex flex-col justify-between gap-5">
+      <!-- Voucher Title & Meta -->
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="font-mono text-[11px] text-muted font-medium">
+            APV#000111 · 03/08/2022
+          </p>
+          <h3 class="text-base font-bold text-highlighted mt-0.5">
+            APL Merchandising
+          </h3>
         </div>
-        <span class="text-[10px] text-muted tracking-widest uppercase font-semibold">CCCI</span>
+        <UBadge
+          label="POSTED"
+          color="success"
+          variant="subtle"
+          size="sm"
+          class="font-mono font-bold tracking-wider px-2.5 rounded-md"
+        />
       </div>
 
-      <div class="p-5 flex-1 flex flex-col justify-between gap-5">
-        <!-- Voucher Title & Meta -->
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="font-mono text-[11px] text-muted font-medium">
-              APV#000111 · 03/08/2022
-            </p>
-            <h3 class="text-base font-bold text-highlighted mt-0.5">
-              APL Merchandising
-            </h3>
-          </div>
-          <UBadge
-            label="POSTED"
-            color="success"
-            variant="subtle"
-            size="sm"
-            class="font-mono font-bold tracking-wider px-2.5 rounded-md"
-          />
-        </div>
-
-        <!-- Voucher Lines Cards -->
-        <div
-          v-if="lines?.length"
-          class="flex flex-col gap-3"
+      <!-- Voucher Lines Cards -->
+      <div
+        v-if="lines?.length"
+        class="flex flex-col gap-3"
+      >
+        <UCard
+          v-for="line in lines"
+          :key="line.account"
+          variant="outline"
+          :ui="{ body: 'px-4 py-2.5 sm:px-4 sm:py-3 flex items-center justify-between' }"
+          class="rounded-xl shadow-2xs hover:bg-elevated/40 transition-colors"
         >
-          <UCard
-            v-for="line in lines"
-            :key="line.account"
-            variant="outline"
-            :ui="{ body: 'px-4 py-2.5 sm:px-4 sm:py-3 flex items-center justify-between' }"
-            class="rounded-xl shadow-2xs hover:bg-elevated/40 transition-colors"
-          >
-            <!-- Account Name -->
-            <span class="font-bold text-[13.5px] text-highlighted">
-              {{ line.account }}
-            </span>
+          <!-- Account Name -->
+          <span class="font-bold text-[13.5px] text-highlighted">
+            {{ line.account }}
+          </span>
 
-            <!-- Debit/Credit Badge & Amount -->
-            <div class="flex items-center gap-3">
-              <UBadge
-                :label="line.type"
-                :color="line.badgeColor"
-                variant="subtle"
-                size="sm"
-                class="font-mono font-bold tracking-wider px-2.5 rounded-md uppercase"
-              />
-              <span class="font-mono text-[13px] text-highlighted font-medium min-w-[85px] text-right">
-                {{ line.amount }}
-              </span>
-            </div>
-          </UCard>
-        </div>
+          <!-- Debit/Credit Badge & Amount -->
+          <div class="flex items-center gap-3">
+            <UBadge
+              :label="line.type"
+              :color="line.badgeColor"
+              variant="subtle"
+              size="sm"
+              class="font-mono font-bold tracking-wider px-2.5 rounded-md uppercase"
+            />
+            <span class="font-mono text-[13px] text-highlighted font-medium min-w-[85px] text-right">
+              {{ line.amount }}
+            </span>
+          </div>
+        </UCard>
       </div>
-    </main>
+    </div>
   </MockupBrowserFrame>
 </template>
 

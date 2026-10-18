@@ -1,240 +1,370 @@
 <script setup lang="ts">
+// ─── Imports ──────────────────────────────────────────────────────────────────
+import {
+  MockupScreenAmsDashboard,
+  MockupScreenAmsRequisition,
+  MockupScreenAmsInventory,
+  MockupScreenAmsMaintenance,
+  MockupScreenAmsReports,
+  MockupScreenAmsActivities,
+  MockupScreenAmsOrganization,
+  MockupScreenAmsSettings,
+} from '#components'
+
+// ─── Page Meta ────────────────────────────────────────────────────────────────
 definePageMeta({ layout: 'product' })
-const features = [
-  {
-    title: 'Asset Tracking',
-    description: 'Real-time tracking of all corporate assets. Know where your equipment is at all times.',
-    icon: 'i-lucide-box',
-  },
-  {
-    title: 'Maintenance Scheduling',
-    description: 'Automated maintenance scheduling and alerts to prevent costly downtime.',
-    icon: 'i-lucide-calendar-clock',
-  },
-  {
-    title: 'Depreciation Calculation',
-    description: 'Automatically calculate asset depreciation over time with multiple standard methods.',
-    icon: 'i-lucide-trending-down',
-  },
-  {
-    title: 'Inventory Management',
-    description: 'Comprehensive inventory control and auditing capabilities to ensure accurate records.',
-    icon: 'i-lucide-clipboard-list',
-  },
-  {
-    title: 'Barcode Scanning',
-    description: 'Integrated barcode and QR code scanning for quick lookups and updates via mobile.',
-    icon: 'i-lucide-scan-line',
-  },
-  {
-    title: 'Reporting & Analytics',
-    description: 'Detailed reports on asset utilization, lifecycle costs, and procurement planning.',
-    icon: 'i-lucide-bar-chart-3',
-  },
-]
 
-const stats = [
-  { value: '1M+', label: 'Assets Tracked' },
-  { value: '5k+', label: 'Active Users' },
-  { value: '99.9%', label: 'Uptime SLA' },
-  { value: 'Enterprise', label: 'Security Grade' },
-]
+// ─── SEO ──────────────────────────────────────────────────────────────────────
+useSeoMeta({
+  title: 'AMS — Asset Management System | CCCI',
+  description: 'Tag, assign, and maintain every asset from request to retirement on desktop or mobile — built by Centralized Cloud Computing International.',
+})
 
-const testimonials = [
-  {
-    quote: 'AssetCore gave us complete visibility into our hardware inventory. We saved thousands by reallocating unused equipment instead of buying new.',
-    author: 'David Wright',
-    role: 'IT Director, GlobalTech',
-    initials: 'DW',
-  },
-  {
-    quote: 'The automated maintenance schedules have reduced our equipment downtime by 40%. It essentially pays for itself.',
-    author: 'Sarah Jenkins',
-    role: 'Operations Manager, BuildCorp',
-    initials: 'SJ',
-  },
-  {
-    quote: 'Depreciation calculations used to take weeks of spreadsheet wrangling. Now it is just a click of a button at month-end.',
-    author: 'Michael Chen',
-    role: 'CFO, Vertex Innovations',
-    initials: 'MC',
-  },
-]
+// ─── Scroll Reveal ────────────────────────────────────────────────────────────
+const { el: featuresEl, isVisible: featuresVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: modulesEl, isVisible: modulesVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: lifecycleEl, isVisible: lifecycleVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
 
-const plans = [
-  {
-    title: 'Starter',
-    description: 'For small businesses managing up to 1,000 assets.',
-    price: '₱2,999',
-    features: [
-      'Up to 5 users',
-      '1,000 Assets',
-      'Basic reporting',
-      'Standard email support',
-    ],
-  },
-  {
-    title: 'Professional',
-    description: 'For growing companies with complex tracking needs.',
-    price: '₱7,999',
-    badge: 'Most Popular',
-    highlight: true,
-    features: [
-      'Up to 25 users',
-      '10,000 Assets',
-      'Barcode/QR code scanning',
-      'Maintenance scheduling',
-      'Depreciation tracking',
-      'Priority support',
-    ],
-  },
-  {
-    title: 'Enterprise',
-    description: 'For large organizations with extensive asset portfolios.',
-    price: 'Custom',
-    features: [
-      'Unlimited users',
-      'Unlimited Assets',
-      'Advanced API integrations',
-      'Custom workflows',
-      'Dedicated success manager',
-      'On-premise deployment option',
-    ],
-  },
-]
-
+// ─── Navigation & UI Data ─────────────────────────────────────────────────────
 const heroLinks = [
-  { label: 'Request a Demo', to: '#pricing', icon: 'i-lucide-calendar', size: 'xl' as const },
-  { label: 'Explore Features', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-arrow-right', size: 'xl' as const },
+  { label: 'Request a Demo', trailingIcon: 'i-lucide-calendar', class: 'hero-cta-shadow' },
+  { label: 'Explore Modules', color: 'neutral' as const, variant: 'soft' as const, leadingIcon: 'i-lucide-play' },
 ]
 
 const ctaLinks = [
-  { label: 'Request a Demo', icon: 'i-lucide-calendar', size: 'lg' as const },
-  { label: 'Contact Sales', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-phone', size: 'lg' as const },
+  { label: 'Request a Demo', icon: 'i-lucide-calendar', class: 'bg-primary-800 hover:bg-primary-700 dark:bg-primary dark:hover:bg-primary/75', size: 'lg' as const },
+  { label: 'Talk to Sales', color: 'neutral' as const, variant: 'soft' as const, trailingIcon: 'i-lucide-phone', size: 'lg' as const },
 ]
 
-const logoIcons = [
-  { name: 'i-simple-icons-microsoft', label: 'Microsoft' },
-  { name: 'i-simple-icons-google', label: 'Google' },
-  { name: 'i-simple-icons-amazon', label: 'Amazon' },
-  { name: 'i-simple-icons-apple', label: 'Apple' },
-  { name: 'i-simple-icons-accenture', label: 'Accenture' },
-  { name: 'i-simple-icons-salesforce', label: 'Salesforce' },
+const modules = [
+  { title: 'Dashboard', icon: 'i-lucide-layout-dashboard', to: '#dashboard' },
+  { title: 'Requisition', icon: 'i-lucide-shopping-cart', to: '#requisition' },
+  { title: 'Asset Inventory', icon: 'i-lucide-boxes', to: '#inventory' },
+  { title: 'Maintenance', icon: 'i-lucide-wrench', to: '#maintenance' },
+  { title: 'Reports', icon: 'i-lucide-bar-chart-3', to: '#reports' },
+  { title: 'Activities', icon: 'i-lucide-arrow-left-right', to: '#activities' },
+  { title: 'Organization', icon: 'i-lucide-building-2', to: '#organization' },
+  { title: 'Settings', icon: 'i-lucide-settings', to: '#settings' },
+]
+
+const checklist = [
+  'Barcode & QR tagging',
+  'SSO with HRIS and CMS',
+  'Mobile app included',
+]
+
+// ─── Page Content Data ────────────────────────────────────────────────────────
+const features = [
+  {
+    title: 'Single Connected Record',
+    description: 'Tracks every asset from request to retirement — requisition, inventory, maintenance, and reporting without spreadsheets.',
+    icon: 'i-lucide-link',
+    orientation: 'vertical' as const,
+  },
+  {
+    title: 'Barcode & QR Scanning',
+    description: 'Instant lookup and physical verification via mobile or desktop camera scanning, ensuring accurate custody tracking.',
+    icon: 'i-lucide-qr-code',
+    orientation: 'vertical' as const,
+  },
+  {
+    title: 'Proactive Maintenance',
+    description: 'Automated repair schedules, condition checklists, and warranty alerts keep critical campus infrastructure running.',
+    icon: 'i-lucide-wrench',
+    orientation: 'vertical' as const,
+  },
+  {
+    title: 'Campus-wide Integration',
+    description: 'Built-in SSO and automated sync with HRIS personnel, CMS departments, and Finance procurement workflows.',
+    icon: 'i-lucide-network',
+    orientation: 'vertical' as const,
+  },
+]
+
+const featureDetails = [
+  {
+    id: 'dashboard',
+    title: 'Dashboard',
+    description: 'See what needs action, right now.',
+    features: [
+      { description: 'Acceptance and release checklists with real-time status.', icon: 'i-lucide-check' },
+      { description: 'Automated alerts for maintenance and upcoming repairs.', icon: 'i-lucide-check' },
+      { description: 'Daily, weekly, and monthly reservation schedules in one unified view.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: false,
+    component: MockupScreenAmsDashboard,
+  },
+  {
+    id: 'requisition',
+    title: 'Requisition',
+    description: 'Request what you need, in one place.',
+    features: [
+      { description: 'Request equipment, office supplies, and vehicle service in seconds.', icon: 'i-lucide-check' },
+      { description: 'Reserve shared assets with clear availability calendars.', icon: 'i-lucide-check' },
+      { description: 'Live status updates as requests progress through approval routing.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: true,
+    component: MockupScreenAmsRequisition,
+  },
+  {
+    id: 'inventory',
+    title: 'Asset Inventory',
+    description: 'Every asset, tagged and searchable.',
+    features: [
+      { description: 'Barcode, QR code, or serial-number tagging follows each asset across its lifecycle.', icon: 'i-lucide-check' },
+      { description: 'Instant search by location, condition, assignee, or serial number.', icon: 'i-lucide-check' },
+      { description: 'Groupings, software license tracking, and low-stock threshold alerts.', icon: 'i-lucide-check' },
+      { description: 'Fast bulk data migration via Excel spreadsheets or flat files.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: false,
+    component: MockupScreenAmsInventory,
+  },
+  {
+    id: 'maintenance',
+    title: 'Maintenance',
+    description: 'Fix it before it fails.',
+    features: [
+      { description: 'Complete maintenance, calibration, and repair history per asset.', icon: 'i-lucide-check' },
+      { description: 'Automated notifications by email, in-app alerts, and chatbot.', icon: 'i-lucide-check' },
+      { description: 'Assigned technician, vendor warranties, and live repair status.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: true,
+    component: MockupScreenAmsMaintenance,
+  },
+  {
+    id: 'reports',
+    title: 'Reports',
+    description: 'Numbers management can act on.',
+    features: [
+      { description: 'Automated depreciation calculations and book value monitoring for every asset.', icon: 'i-lucide-check' },
+      { description: 'Asset utilization metrics and shared equipment reservation analytics.', icon: 'i-lucide-check' },
+      { description: 'Actionable analytics to support budget planning and top management decisions.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: false,
+    component: MockupScreenAmsReports,
+  },
+  {
+    id: 'activities',
+    title: 'Activities',
+    description: 'Know who has what, with proof.',
+    features: [
+      { description: 'Real-time tracking of assets waiting to be accepted or released.', icon: 'i-lucide-check' },
+      { description: 'Photo and video attachments provide verifiable proof of physical condition.', icon: 'i-lucide-check' },
+      { description: 'Live status notices: in transit, accepted, returned, or relocated.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: true,
+    component: MockupScreenAmsActivities,
+  },
+  {
+    id: 'organization',
+    title: 'Organization',
+    description: 'Mirror how your campus is organized.',
+    features: [
+      { description: 'Map divisions and departments to streamline searches and assignments.', icon: 'i-lucide-check' },
+      { description: 'Define user roles and administrator permissions per campus group.', icon: 'i-lucide-check' },
+      { description: 'HRIS triggers automatically update asset custodian records on staff changes.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: false,
+    component: MockupScreenAmsOrganization,
+  },
+  {
+    id: 'settings',
+    title: 'Settings',
+    description: 'Roles, branding, and defaults.',
+    features: [
+      { description: 'Granular role-based rights for administrators, custodians, and staff.', icon: 'i-lucide-check' },
+      { description: 'Flexible email or username sign-in with optional 2FA and Campus SSO.', icon: 'i-lucide-check' },
+      { description: 'Full custom branding with your organization logo, colors, and symbol.', icon: 'i-lucide-check' },
+      { description: 'Dynamic custom fields and automated notification rules.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: true,
+    component: MockupScreenAmsSettings,
+  },
+]
+
+// ─── Lifecycle Timeline Data ──────────────────────────────────────────────────
+const assetLifecycle = {
+  headline: 'From Request to Retirement',
+  title: 'The complete asset lifecycle',
+  description: 'Every physical and digital asset moves through an automated, auditable lifecycle — tracked every step of the way without spreadsheets.',
+}
+
+const assetLifecycleSteps = [
+  {
+    value: 'request',
+    step: '01',
+    phase: 'Requisition',
+    title: 'Request & Approve',
+    description: 'Staff submit requisitions for supplies, equipment, or service with multi-level approval routing.',
+    icon: 'i-lucide-shopping-cart',
+    deliverable: 'Approved Requisition',
+  },
+  {
+    value: 'tag',
+    step: '02',
+    phase: 'Registry',
+    title: 'Tag & Catalog',
+    description: 'Assets receive unique Barcode or QR labels and are logged with serial number, category, and warranty.',
+    icon: 'i-lucide-qr-code',
+    deliverable: 'Registered Asset Tag',
+  },
+  {
+    value: 'deploy',
+    step: '03',
+    phase: 'Custody',
+    title: 'Release & Handover',
+    description: 'Custodians sign off on receipt with attached photo or video verification of physical condition.',
+    icon: 'i-lucide-arrow-left-right',
+    deliverable: 'Signed Handover',
+  },
+  {
+    value: 'maintain',
+    step: '04',
+    phase: 'Maintenance',
+    title: 'Maintain & Calibrate',
+    description: 'Automated schedules trigger preventive maintenance, repairs, and vendor warranty service before failures occur.',
+    icon: 'i-lucide-wrench',
+    deliverable: 'Service Record',
+  },
+  {
+    value: 'depreciate',
+    step: '05',
+    phase: 'Reporting',
+    title: 'Depreciate & Retire',
+    description: 'Automated depreciation calculations, utilization reports, and verified disposal or replacement sign-offs.',
+    icon: 'i-lucide-bar-chart-3',
+    deliverable: 'Lifecycle Audit',
+  },
 ]
 </script>
 
 <template>
   <!-- Hero -->
-  <UPageHero
-    headline="Introducing AssetCore"
-    title="Intelligent Asset Management System"
-    description="Track, manage, and optimize your organization's physical and digital assets in one unified platform."
+  <ProductHero
+    badge="AMS · Asset Management System"
+    background-image="/hero-cms-bg.jpg"
     :links="heroLinks"
-    orientation="horizontal"
+    :checklist="checklist"
+    :modules="modules"
   >
-    <MockupScreenAmsDashboard />
-  </UPageHero>
-
-  <!-- Social proof -->
-  <div class="border-y border-default bg-muted/50 py-10">
-    <UContainer>
-      <p class="text-center text-dimmed text-xs font-semibold uppercase tracking-widest mb-8">
-        Trusted by organizations worldwide for intelligent asset tracking
-      </p>
-      <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
-        <UIcon
-          v-for="logo in logoIcons"
-          :key="logo.name"
-          :name="logo.name"
-          :aria-label="logo.label"
-          class="size-7 text-muted"
-        />
-      </div>
-    </UContainer>
-  </div>
+    <template #title>
+      Every asset you own,<br>tracked in one place.
+    </template>
+    <template #description>
+      Tag, assign, and maintain every asset from one dashboard — on desktop or mobile — built by <strong>Centralized Cloud Computing International</strong>.
+    </template>
+  </ProductHero>
 
   <!-- Core features grid -->
   <UPageSection
     id="features"
-    headline="Features"
-    title="Everything you need for asset control"
-    description="From procurement to disposal — manage the entire asset lifecycle efficiently."
-    :features="features"
-  />
+    ref="featuresEl"
+    class="section-reveal"
+    :class="{ 'is-visible': featuresVisible }"
+    headline="Why Choose Us"
+    title="Engineered for complete asset control"
+    description="Stop losing track of campus equipment. AMS unites procurement, inventory, maintenance, and accounting into one living record."
+    :ui="{
+      root: 'min-h-screen flex flex-col justify-center',
+      features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10',
+      headline: 'reveal-down',
+      title: 'reveal-up reveal-delay-150',
+      description: 'reveal-up reveal-delay-300',
+    }"
+  >
+    <template #features>
+      <UPageFeature
+        v-for="(feature, i) in features"
+        :key="feature.title"
+        v-bind="feature"
+        class="reveal-up"
+        :style="{ animationDelay: `${400 + i * 100}ms` }"
+      />
+    </template>
+  </UPageSection>
 
-  <!-- Feature detail: Asset Tracking -->
+  <!-- Hub diagram: The Platform -->
   <UPageSection
-    title="One place for every asset you own"
-    description="Stop losing track of equipment across departments. AssetCore gives you a single searchable registry of every physical and digital asset — with real-time location, assignment history, and lifecycle status visible at a glance."
+    ref="modulesEl"
+    class="section-reveal"
+    :class="{ 'is-visible': modulesVisible }"
+    headline="The Platform"
+    title="Eight modules. One connected record."
+    description="AMS is a single platform that tracks every asset from request to retirement — requisition, inventory, maintenance, and reporting, all connected. Nothing lives in a spreadsheet, and nothing gets entered twice."
     orientation="horizontal"
+    :ui="{
+      root: 'min-h-screen flex flex-col justify-center',
+      features: 'grid grid-cols-2 gap-4',
+      headline: 'reveal-down',
+      title: 'reveal-up reveal-delay-150',
+      description: 'reveal-up reveal-delay-300',
+    }"
   >
-    <MockupScreenAmsAssets />
+    <template #features>
+      <UPageFeature
+        v-for="(module, index) in modules"
+        :key="index"
+        :title="module.title"
+        icon="i-lucide-check"
+        class="reveal-up"
+        :style="{ animationDelay: `${400 + index * 60}ms` }"
+      />
+    </template>
+    <HubDiagram
+      center-label="AMS CORE"
+      :nodes="modules"
+      class="reveal-right reveal-delay-400"
+    />
   </UPageSection>
 
-  <!-- Feature detail: Analytics -->
+  <!-- Feature details: 8 Modules -->
+  <ProductFeature
+    v-for="(feature, index) in featureDetails"
+    :key="index"
+    :id="feature.id"
+    :title="feature.title"
+    :description="feature.description"
+    :features="feature.features"
+    :orientation="feature.orientation"
+    :reverse="feature.reverse"
+  >
+    <component :is="feature.component" />
+  </ProductFeature>
+
+  <!-- Asset Lifecycle Timeline -->
   <UPageSection
-    title="Analytics that drive smarter procurement"
-    description="Turn your asset data into strategic insights. Track utilization rates, depreciation schedules, and total cost of ownership across your entire portfolio. Spot underused assets and make data-driven decisions on when to repair, retire, or replace."
-    orientation="horizontal"
-    reverse
+    ref="lifecycleEl"
+    class="section-reveal"
+    :class="{ 'is-visible': lifecycleVisible }"
+    :headline="assetLifecycle.headline"
+    :title="assetLifecycle.title"
+    :description="assetLifecycle.description"
+    :ui="{
+      root: 'min-h-screen flex flex-col justify-center',
+      headline: 'reveal-down',
+      title: 'reveal-up reveal-delay-150',
+      description: 'reveal-up reveal-delay-300',
+    }"
   >
-    <MockupScreenAmsAnalytics />
+    <div>
+      <ProductTimeline :items="assetLifecycleSteps" />
+    </div>
   </UPageSection>
-
-  <!-- Stats banner -->
-  <div class="bg-primary dark:bg-primary/50 py-20">
-    <UContainer>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
-        <div v-for="stat in stats" :key="stat.label">
-          <p class="text-4xl lg:text-5xl font-extrabold text-white">{{ stat.value }}</p>
-          <p class="text-white/70 mt-2 text-sm lg:text-base font-medium">{{ stat.label }}</p>
-        </div>
-      </div>
-    </UContainer>
-  </div>
-
-  <!-- Testimonials -->
-  <UPageSection
-    id="testimonials"
-    headline="Customer Stories"
-    title="Loved by teams across industries"
-    description="Hear how AssetCore has helped organizations eliminate waste, reduce downtime, and ensure accurate tracking."
-  >
-    <UPageGrid>
-      <UCard v-for="t in testimonials" :key="t.author">
-        <div class="flex flex-col h-full">
-          <div class="flex gap-0.5 mb-5">
-            <UIcon v-for="i in 5" :key="i" name="i-lucide-star" class="size-4 text-warning" />
-          </div>
-          <p class="text-muted italic leading-relaxed flex-1">"{{ t.quote }}"</p>
-          <div class="flex items-center gap-3 mt-6 pt-6 border-t border-default">
-            <UAvatar :text="t.initials" size="md" color="primary" />
-            <div>
-              <p class="font-semibold text-highlighted text-sm">{{ t.author }}</p>
-              <p class="text-dimmed text-xs">{{ t.role }}</p>
-            </div>
-          </div>
-        </div>
-      </UCard>
-    </UPageGrid>
-  </UPageSection>
-
-  <!-- Pricing -->
-  <div class="bg-muted/30">
-    <UPageSection
-      id="pricing"
-      headline="Pricing"
-      title="Straightforward pricing for every team"
-      description="Choose the plan that fits your organization's asset management needs."
-    >
-      <UPricingPlans :plans="plans" />
-    </UPageSection>
-  </div>
 
   <!-- CTA -->
-  <UPageCTA
-    title="Ready to take control of your assets?"
-    description="Join thousands of organizations using AssetCore to optimize their resources and improve tracking."
-    :links="ctaLinks"
-  />
+  <UPageSection>
+    <ProductCTA
+      title="Ready to take complete control of your assets?"
+      description="Join leading institutions and enterprises tracking thousands of assets with zero spreadsheet headaches. See AMS in action today."
+      :links="ctaLinks"
+    />
+  </UPageSection>
 </template>

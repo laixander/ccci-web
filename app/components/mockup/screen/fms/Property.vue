@@ -1,41 +1,27 @@
 <template>
-  <MockupBrowserFrame url="app.fms.ccci.com.ph/asset-master">
-    <!-- Main content -->
-    <main class="flex-1 bg-default flex flex-col font-sans select-none">
-      <!-- App Header -->
-      <div class="flex items-center justify-between px-5 py-3 border-b border-default">
-        <div class="flex items-center gap-3">
-          <div class="size-7 rounded-md bg-primary flex items-center justify-center shadow-2xs">
-            <span class="text-white font-bold text-[13px] leading-none">C</span>
-          </div>
-          <span class="font-bold text-[14px] text-highlighted">Asset Master</span>
-        </div>
-        <span class="text-[10px] text-muted tracking-widest uppercase font-semibold">CCCI</span>
-      </div>
+  <MockupBrowserFrame url="app.fms.ccci.com.ph/asset-master" title="Asset Master">
+    <div class="p-5 flex-1 flex flex-col justify-between gap-5">
+      <!-- Asset Master Table using UTable -->
+      <UTable
+        :data="assets"
+        :columns="columns"
+        :ui="tableUi"
+      />
 
-      <div class="p-5 flex-1 flex flex-col justify-between gap-5">
-        <!-- Asset Master Table using UTable -->
-        <UTable
-          :data="assets"
-          :columns="columns"
-          :ui="tableUi"
+      <!-- Asset Classification & Status Banner -->
+      <div class="rounded-xl border border-default bg-elevated/40 px-4 py-3 sm:py-3.5 flex items-center justify-between">
+        <span class="font-mono text-[11.5px] text-muted">
+          Depreciable · Serialized
+        </span>
+        <UBadge
+          label="ISSUED"
+          color="primary"
+          variant="subtle"
+          size="sm"
+          class="font-mono font-bold tracking-wider px-2.5 rounded-md"
         />
-
-        <!-- Asset Classification & Status Banner -->
-        <div class="rounded-xl border border-default bg-elevated/40 px-4 py-3 sm:py-3.5 flex items-center justify-between">
-          <span class="font-mono text-[11.5px] text-muted">
-            Depreciable · Serialized
-          </span>
-          <UBadge
-            label="ISSUED"
-            color="primary"
-            variant="subtle"
-            size="sm"
-            class="font-mono font-bold tracking-wider px-2.5 rounded-md"
-          />
-        </div>
       </div>
-    </main>
+    </div>
   </MockupBrowserFrame>
 </template>
 

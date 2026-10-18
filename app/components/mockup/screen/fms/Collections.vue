@@ -1,44 +1,30 @@
 <template>
-  <MockupBrowserFrame url="app.fms.ccci.com.ph/accounts-receivable">
-    <!-- Main content -->
-    <main class="flex-1 bg-default flex flex-col font-sans select-none">
-      <!-- App Header -->
-      <div class="flex items-center justify-between px-5 py-3 border-b border-default">
-        <div class="flex items-center gap-3">
-          <div class="size-7 rounded-md bg-primary flex items-center justify-center shadow-2xs">
-            <span class="text-white font-bold text-[13px] leading-none">C</span>
+  <MockupBrowserFrame url="app.fms.ccci.com.ph/accounts-receivable" title="Accounts Receivable">
+    <div class="p-5 flex-1 flex flex-col justify-between gap-5">
+      <!-- Summary Stats Banner -->
+       <UCard variant="soft" class="bg-linear-to-r from-primary to-primary-800"
+       :ui="{ body: 'flex items-center justify-around sm:p-4' }">
+          <div
+            v-for="stat in summaryStats"
+            :key="stat.label"
+            class="flex flex-col items-center justify-center px-2"
+          >
+            <span class="text-xl font-mono font-bold tracking-tight leading-none text-white">
+              {{ stat.value }}
+            </span>
+            <span class="text-[11px] text-white/80 mt-1.5">
+              {{ stat.label }}
+            </span>
           </div>
-          <span class="font-bold text-[14px] text-highlighted">Accounts Receivable</span>
-        </div>
-        <span class="text-[10px] text-muted tracking-widest uppercase font-semibold">CCCI</span>
-      </div>
+       </UCard>
 
-      <div class="p-5 flex-1 flex flex-col justify-between gap-5">
-        <!-- Summary Stats Banner -->
-         <UCard variant="soft" class="bg-linear-to-r from-primary to-primary-800"
-         :ui="{ body: 'flex items-center justify-around sm:p-4' }">
-            <div
-              v-for="stat in summaryStats"
-              :key="stat.label"
-              class="flex flex-col items-center justify-center px-2"
-            >
-              <span class="text-xl font-mono font-bold tracking-tight leading-none text-white">
-                {{ stat.value }}
-              </span>
-              <span class="text-[11px] text-white/80 mt-1.5">
-                {{ stat.label }}
-              </span>
-            </div>
-         </UCard>
-
-        <!-- Collections Table using UTable -->
-        <UTable
-          :data="collections"
-          :columns="columns"
-          :ui="tableUi"
-        />
-      </div>
-    </main>
+      <!-- Collections Table using UTable -->
+      <UTable
+        :data="collections"
+        :columns="columns"
+        :ui="tableUi"
+      />
+    </div>
   </MockupBrowserFrame>
 </template>
 
