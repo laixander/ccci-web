@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.fms.ccci.com.ph/purchase-requests" title="Purchase Request">
+  <MockupBrowserFrame url="app.fms.ccci.com.ph/purchase-requests" title="Purchase Request" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col justify-between gap-5">
       <!-- Request Title & Meta -->
       <div class="flex items-center justify-between">
@@ -41,6 +41,7 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
 import type { TableColumn } from '@nuxt/ui'
 
 interface InventoryItem {
@@ -76,6 +77,33 @@ const columns: TableColumn<InventoryItem>[] = [
     accessorKey: 'qty',
     header: 'QTY',
     meta: { class: { td: 'font-mono text-highlighted' } }
+  }
+]
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'pr-new',
+    title: 'New Request',
+    subtitle: 'RS#000022 · Pending',
+    icon: 'i-lucide-file-plus',
+    color: 'primary',
+    badge: { label: 'NEW', color: 'primary' }
+  },
+  {
+    id: 'pr-total',
+    title: 'PR Amount',
+    subtitle: '₱75,000 Total',
+    icon: 'i-lucide-shopping-cart',
+    color: 'info',
+    pulse: true
+  },
+  {
+    id: 'items-count',
+    title: '4 Line Items',
+    subtitle: 'Office Goods · 03/08/2022',
+    icon: 'i-lucide-package',
+    color: 'neutral',
+    badge: { label: '4 ITEMS', color: 'neutral' }
   }
 ]
 

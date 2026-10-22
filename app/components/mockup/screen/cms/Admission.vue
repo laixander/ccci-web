@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.learncore.edu/admissions" title="Admissions">
+  <MockupBrowserFrame url="app.learncore.edu/admissions" title="Admissions" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-5">
       <!-- Tabs -->
       <div class="flex items-center gap-2">
@@ -32,6 +32,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'passed',
+    title: 'Maria Santos',
+    subtitle: 'BSN · Admission Passed',
+    icon: 'i-lucide-circle-check-big',
+    color: 'success',
+    badge: { label: 'PASSED', color: 'success' }
+  },
+  {
+    id: 'for-exam',
+    title: 'Jose Rivera',
+    subtitle: 'BSCS · Awaiting Exam',
+    icon: 'i-lucide-clipboard-list',
+    color: 'warning',
+    pulse: true
+  },
+  {
+    id: 'pending',
+    title: 'Ana Lim',
+    subtitle: 'BSA · Application Pending',
+    icon: 'i-lucide-clock',
+    color: 'error',
+    badge: { label: 'PENDING', color: 'error' }
+  }
+]
+
 const admissions = [
   { name: 'Maria Santos', course: 'BSN',  status: 'Passed',   color: 'success' as const, avatarClass: 'bg-gradient-to-br from-primary-200 to-primary-500' },
   { name: 'Jose Rivera',  course: 'BSCS', status: 'For Exam', color: 'warning' as const, avatarClass: 'bg-gradient-to-br from-primary-400 to-primary-700' },

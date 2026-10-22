@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.peoplecore.io/payroll" title="Payroll">
+  <MockupBrowserFrame url="app.peoplecore.io/payroll" title="Payroll" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-4">
       <!-- Section heading -->
       <div class="flex items-center justify-between">
@@ -26,6 +26,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'payroll-generated',
+    title: 'Payroll Generated',
+    subtitle: 'Oct 01–30, 2024',
+    icon: 'i-lucide-circle-dollar-sign',
+    color: 'success',
+    badge: { label: 'APPROVED', color: 'success' }
+  },
+  {
+    id: 'for-review',
+    title: 'For Review',
+    subtitle: '1 Payroll Pending',
+    icon: 'i-lucide-clock',
+    color: 'info',
+    pulse: true
+  },
+  {
+    id: 'denied',
+    title: 'Denied Entry',
+    subtitle: 'Oct 01–30 · Action Needed',
+    icon: 'i-lucide-x-circle',
+    color: 'error',
+    badge: { label: 'DENIED', color: 'error' }
+  }
+]
+
 const payrolls = [
   { label: 'General Payroll', status: 'Generated',  period: 'Oct 01 – Oct 30, 2024', color: 'success' as const },
   { label: 'General Payroll', status: 'For Review', period: 'Oct 01 – Oct 30, 2024', color: 'info'    as const },

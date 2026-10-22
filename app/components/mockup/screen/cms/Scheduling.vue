@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.learncore.edu/scheduling" title="Master Schedule">
+  <MockupBrowserFrame url="app.learncore.edu/scheduling" title="Master Schedule" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-6">
       <!-- Grid Header (Rooms) -->
       <div class="flex items-center">
@@ -39,6 +39,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'utilization',
+    title: '88% Utilization',
+    subtitle: 'Rm 201 · Rm 202 · Lab A',
+    icon: 'i-lucide-layout-grid',
+    color: 'primary',
+    badge: { label: '88%', color: 'primary' }
+  },
+  {
+    id: 'no-conflicts',
+    title: 'No Conflicts',
+    subtitle: '0 Overlaps Detected',
+    icon: 'i-lucide-shield-check',
+    color: 'success',
+    pulse: true
+  },
+  {
+    id: 'subjects',
+    title: 'Active Subjects',
+    subtitle: 'CS204 · PHY1 · MA201',
+    icon: 'i-lucide-calendar-days',
+    color: 'info',
+    badge: { label: '3 SUBJ', color: 'info' }
+  }
+]
+
 const rooms = ['Rm 201', 'Rm 202', 'Lab A']
 
 const schedule = [

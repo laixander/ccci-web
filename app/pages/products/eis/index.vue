@@ -1,241 +1,339 @@
 <script setup lang="ts">
-definePageMeta({
-  title: 'ExecIS by CCCI',
-  layout: 'product',
-})
+// ─── Imports ──────────────────────────────────────────────────────────────────
+import {
+  MockupScreenEisSources,
+  MockupScreenEisReports,
+  MockupScreenEisModel,
+  MockupScreenEisShare,
+  MockupScreenEisThemes,
+  MockupScreenEisEtl,
+} from '#components'
 
+// ─── Page Meta ────────────────────────────────────────────────────────────────
+definePageMeta({ layout: 'product' })
+
+// ─── SEO ──────────────────────────────────────────────────────────────────────
 useSeoMeta({
-  title: 'ExecIS — Executive Information System',
-  description: 'Give executives a real-time, consolidated view of your organization\'s performance — KPIs, forecasts, and critical alerts in one premium dashboard.',
+  title: 'EIS — Executive Information System | CCCI',
+  description: 'Query and report across every system you run, in one dashboard — built for campus and enterprise leadership by Centralized Cloud Computing International.',
 })
 
-const features = [
-  {
-    title: 'Consolidated KPI Dashboard',
-    description: 'See the entire organization\'s performance in a single view. Monitor critical KPIs across HR, Finance, Campus, and Operations in real time.',
-    icon: 'i-lucide-layout-dashboard',
-  },
-  {
-    title: 'Cross-Module Data Aggregation',
-    description: 'Pull data from HRIS, LMS, CMS, DMS, and AMS into one unified executive view, eliminating information silos.',
-    icon: 'i-lucide-layers',
-  },
-  {
-    title: 'Predictive Forecasting',
-    description: 'AI-powered trend analysis to project headcount, budget utilization, student enrollment, and revenue for the next quarter or fiscal year.',
-    icon: 'i-lucide-trending-up',
-  },
-  {
-    title: 'Executive Reports',
-    description: 'Generate one-click board-ready reports in PDF or Excel. Schedule automated email delivery to stakeholders.',
-    icon: 'i-lucide-file-bar-chart',
-  },
-  {
-    title: 'Critical Alerts & Thresholds',
-    description: 'Set thresholds for key metrics and receive instant alerts when KPIs fall below target — before small issues become major problems.',
-    icon: 'i-lucide-bell',
-  },
-  {
-    title: 'Secure & Role-Based Access',
-    description: 'Ensure sensitive organizational data is only visible to authorized executives and board members with granular role-based access control.',
-    icon: 'i-lucide-shield-check',
-  },
-]
+// ─── Scroll Reveal ────────────────────────────────────────────────────────────
+const { el: featuresEl,  isVisible: featuresVisible  } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: modulesEl,   isVisible: modulesVisible   } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: pipelinesEl, isVisible: pipelinesVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
 
-const stats = [
-  { value: '80%', label: 'Faster Decision Making' },
-  { value: '1 View', label: 'For All Modules' },
-  { value: '99.9%', label: 'Data Accuracy' },
-  { value: '< 5s', label: 'Dashboard Load Time' },
-]
-
-const testimonials = [
-  {
-    quote: 'ExecIS changed how our board prepares for meetings. Instead of compiling reports from five different systems, everything is in one screen. The forecasting module alone has paid for itself.',
-    author: 'Emmanuel Torres',
-    role: 'President, Apex University System',
-    initials: 'ET',
-  },
-  {
-    quote: 'As a CEO overseeing multiple subsidiaries, I need instant visibility into everything. ExecIS gives me exactly that — real-time KPIs and intelligent alerts the moment something goes off track.',
-    author: 'Patricia Lim',
-    role: 'CEO, NovaCorp Holdings',
-    initials: 'PL',
-  },
-  {
-    quote: 'The cross-module reporting is a game changer. I can drill down from a headline HR metric all the way to individual department-level data in seconds. Incredible product.',
-    author: 'Dr. Jose Reyes',
-    role: 'Executive Vice President, Metro Health Group',
-    initials: 'JR',
-  },
-]
-
-const plans = [
-  {
-    title: 'Professional',
-    description: 'For organizations with up to 3 integrated modules.',
-    price: '₱45,000',
-    interval: 'mo',
-    features: [
-      'Up to 3 module integrations',
-      'Standard KPI dashboards',
-      'Monthly executive reports',
-      'Email alerts',
-    ],
-  },
-  {
-    title: 'Enterprise',
-    description: 'Full integration across all CCCI modules.',
-    price: '₱90,000',
-    interval: 'mo',
-    highlight: true,
-    features: [
-      'Unlimited module integrations',
-      'AI Forecasting',
-      'Custom KPI builder',
-      'Board-ready report templates',
-      'Priority support',
-    ],
-  },
-  {
-    title: 'Custom',
-    description: 'Tailored for large corporations and multi-campus systems.',
-    price: 'Custom',
-    features: [
-      'Multi-entity consolidation',
-      'Custom data connectors',
-      'Dedicated analyst support',
-      'On-premise deployment option',
-    ],
-  },
-]
-
+// ─── Navigation & UI Data ─────────────────────────────────────────────────────
 const heroLinks = [
-  { label: 'Request a Demo', to: '#pricing', icon: 'i-lucide-calendar', size: 'xl' as const },
-  { label: 'Explore Features', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-arrow-right', size: 'xl' as const },
+  {
+    label: 'Request a Demo',
+    trailingIcon: 'i-lucide-calendar',
+    class: 'hero-cta-shadow',
+  },
+  {
+    label: 'Explore Modules',
+    to: '#platform',
+    color: 'neutral' as const,
+    variant: 'soft' as const,
+    icon: 'i-lucide-play-circle',
+  },
 ]
 
 const ctaLinks = [
-  { label: 'Request a Demo', icon: 'i-lucide-calendar', size: 'lg' as const },
-  { label: 'Contact Sales', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-phone', size: 'lg' as const },
+  {
+    label: 'Request a Demo',
+    icon: 'i-lucide-calendar',
+    class: 'bg-primary-800 hover:bg-primary-700 dark:bg-primary dark:hover:bg-primary/75',
+    size: 'lg' as const,
+  },
+  {
+    label: 'Contact Leadership Sales',
+    color: 'neutral' as const,
+    variant: 'soft' as const,
+    trailingIcon: 'i-lucide-phone',
+    size: 'lg' as const,
+  },
 ]
 
-const logoIcons = [
-  { name: 'i-simple-icons-microsoft', label: 'Microsoft' },
-  { name: 'i-simple-icons-google', label: 'Google' },
-  { name: 'i-simple-icons-amazon', label: 'Amazon' },
-  { name: 'i-simple-icons-ibm', label: 'IBM' },
-  { name: 'i-simple-icons-cisco', label: 'Cisco' },
-  { name: 'i-simple-icons-oracle', label: 'Oracle' },
+const modules = [
+  { title: 'Data Sources',           icon: 'i-lucide-database',       to: '#data-sources' },
+  { title: 'Reporting',              icon: 'i-lucide-file-bar-chart', to: '#reporting' },
+  { title: 'Data Modeling',          icon: 'i-lucide-network',        to: '#data-modeling' },
+  { title: 'Sharing & Collaboration', icon: 'i-lucide-share-2',       to: '#sharing-collaboration' },
+  { title: 'Customization',          icon: 'i-lucide-palette',        to: '#customization' },
+  { title: 'ETL Integration',        icon: 'i-lucide-workflow',       to: '#etl-integration' },
+]
+
+const checklist = [
+  'Connects to any data source',
+  'Role-based dashboards',
+  'Built-in ETL',
+]
+
+// ─── Page Content Data ────────────────────────────────────────────────────────
+const features = [
+  {
+    title: 'Universal Data Connectivity',
+    description: 'Seamlessly connect SQL databases, cloud ERP, REST APIs, and flat files into one source of truth without manual data exports.',
+    icon: 'i-lucide-database',
+  },
+  {
+    title: 'Role-Based Governance',
+    description: 'Ensure institutional governance with fine-grained access control so board members, deans, and finance heads access precisely what they need.',
+    icon: 'i-lucide-shield-check',
+  },
+  {
+    title: 'Visual Relational Modeling',
+    description: 'Link datasets across campus departments with an intuitive graphical schema editor — zero hand-crafted SQL joins required.',
+    icon: 'i-lucide-network',
+  },
+  {
+    title: 'Automated Pipeline Orchestration',
+    description: 'Schedule recurring ingestion and data transformation jobs with a visual ETL builder, auto-retries, and real-time failure alerts.',
+    icon: 'i-lucide-workflow',
+  },
+]
+
+const featureDetails = [
+  {
+    id: 'data-sources',
+    title: 'Data Sources',
+    description: 'Connect everything you already run.',
+    features: [
+      { description: 'Databases and cloud services connected directly via high-speed native drivers.', icon: 'i-lucide-check' },
+      { description: 'Excel files, CSVs, and other flat files uploaded and indexed effortlessly.', icon: 'i-lucide-check' },
+      { description: 'Web services and REST APIs synchronized with automated authentication.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: false,
+    component: MockupScreenEisSources,
+  },
+  {
+    id: 'reporting',
+    title: 'Reporting',
+    description: 'The right report for the right role.',
+    features: [
+      { description: 'Role-based reports and dashboards tailored to executive and departmental needs.', icon: 'i-lucide-check' },
+      { description: 'Granular access controls over sensitive student, financial, and salary metrics.', icon: 'i-lucide-check' },
+      { description: 'Define user-specific actions from read-only auditing to executive annotations.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: true,
+    component: MockupScreenEisReports,
+  },
+  {
+    id: 'data-modeling',
+    title: 'Data Modeling',
+    description: 'Complex data, made simple to work with.',
+    features: [
+      { description: 'Build and validate cross-system data models with a graphical interface.', icon: 'i-lucide-check' },
+      { description: 'Simplify complex data structures across disparate institutional silos.', icon: 'i-lucide-check' },
+      { description: 'Enhance data analysis capabilities with visual cardinality and join mapping.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: false,
+    component: MockupScreenEisModel,
+  },
+  {
+    id: 'sharing-collaboration',
+    title: 'Sharing & Collaboration',
+    description: 'Share the insight, not the raw data.',
+    features: [
+      { description: 'Publish and distribute executive reports with end-to-end encryption.', icon: 'i-lucide-check' },
+      { description: 'Facilitate leadership alignment and cross-departmental collaboration.', icon: 'i-lucide-check' },
+      { description: 'Ensure full data privacy and governance with complete audit logging.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: true,
+    component: MockupScreenEisShare,
+  },
+  {
+    id: 'customization',
+    title: 'Customization',
+    description: 'Reports that look like yours.',
+    features: [
+      { description: 'Incorporate custom visuals, themes, crest watermarks, and brand palettes.', icon: 'i-lucide-check' },
+      { description: 'Personalize the leadership user experience across tablets and desktops.', icon: 'i-lucide-check' },
+      { description: 'Enhance presentation aesthetics with interactive funnel and waterfall charts.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: false,
+    component: MockupScreenEisThemes,
+  },
+  {
+    id: 'etl-integration',
+    title: 'ETL Integration',
+    description: 'Pipelines your team can actually build.',
+    features: [
+      { description: 'GUI for intuitive interaction that dramatically reduces the learning curve.', icon: 'i-lucide-check' },
+      { description: 'Dynamic pipeline creation as institutional requirements evolve.', icon: 'i-lucide-check' },
+      { description: 'Automate data movement, scheduled ingestion, and self-healing retries.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: true,
+    component: MockupScreenEisEtl,
+  },
+]
+
+// ─── Bonus Section: Data Pipelines ───────────────────────────────────────────
+const pipelineFeatures = [
+  {
+    title: 'GUI, not code',
+    description: 'An intuitive interface that simplifies ETL and reduces the learning curve for analytics teams.',
+    icon: 'i-lucide-mouse-pointer-click',
+    label: 'Interface',
+  },
+  {
+    title: 'Built dynamically',
+    description: 'Create pipelines on the fly as institutional and enterprise data requirements change.',
+    icon: 'i-lucide-sliders',
+    label: 'Pipelines',
+  },
+  {
+    title: 'Workflows that run themselves',
+    description: 'Automate recurring data movement, transformations, and dependency triggers between sources.',
+    icon: 'i-lucide-zap',
+    label: 'Automation',
+  },
 ]
 </script>
 
 <template>
-  <!-- Hero -->
-  <UPageHero
-    headline="Introducing ExecIS"
-    title="Executive Information System"
-    description="Give executives a real-time, consolidated view of your organization's performance — KPIs, forecasts, and critical alerts in one premium dashboard."
+  <!-- Hero (self-contained reveal) -->
+  <ProductHero
+    badge="EIS · Executive Information System"
+    background-image="/hero-eis-bg.jpg"
     :links="heroLinks"
-    orientation="horizontal"
+    :checklist="checklist"
+    :modules="modules"
   >
-    <MockupScreenEisDashboard />
-  </UPageHero>
-
-  <!-- Social proof -->
-  <div class="border-y border-default bg-muted/50 py-10">
-    <UContainer>
-      <p class="text-center text-dimmed text-xs font-semibold uppercase tracking-widest mb-8">
-        Trusted by executive leadership worldwide
-      </p>
-      <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
-        <UIcon v-for="logo in logoIcons" :key="logo.name" :name="logo.name" :aria-label="logo.label" class="size-7 text-muted" />
-      </div>
-    </UContainer>
-  </div>
+    <template #title>
+      Insight, without<br>waiting on IT.
+    </template>
+    <template #description>
+      Query and report across every system you run, in one dashboard — built for campus and enterprise leadership by
+      <strong>Centralized Cloud Computing International</strong>.
+    </template>
+  </ProductHero>
 
   <!-- Core features grid -->
   <UPageSection
-    id="features"
-    headline="Features"
-    title="Everything a top executive needs"
-    description="From real-time KPIs to AI-powered forecasting — make strategic decisions backed by data."
-    :features="features"
-  />
-
-  <!-- Feature detail: Forecasting -->
-  <UPageSection
-    title="AI-powered forecasting for smarter strategy"
-    description="Stop reacting to yesterday's data. ExecIS uses AI to project your next quarter's revenue, headcount, and budget utilization with over 90% confidence. Get ahead of problems before they surface and plan with precision."
-    orientation="horizontal"
+    id="why-choose-us"
+    ref="featuresEl"
+    class="section-reveal"
+    :class="{ 'is-visible': featuresVisible }"
+    headline="Why Choose Us"
+    title="Built on cloud services, modern data platforms, and tools you already use"
+    description="EIS connects every data source you run into a single executive interface — modeling, reporting, sharing, and automated pipelines, all together without disconnected spreadsheets."
+    :ui="{
+      root: 'min-h-screen flex flex-col justify-center',
+      features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10',
+      headline: 'reveal-down',
+      title: 'reveal-up reveal-delay-150',
+      description: 'reveal-up reveal-delay-300',
+    }"
   >
-    <MockupScreenEisForecasting />
+    <template #features>
+      <UPageFeature
+        v-for="(feature, i) in features"
+        :key="feature.title"
+        v-bind="feature"
+        class="reveal-up"
+        :style="{ animationDelay: `${400 + i * 100}ms` }"
+      />
+    </template>
   </UPageSection>
 
-  <!-- Feature detail: Reports -->
+  <!-- Hub diagram: The Platform -->
   <UPageSection
-    title="Board-ready reports, delivered automatically"
-    description="Generate consolidated executive reports across all CCCI modules in seconds. Schedule automated delivery to board members and stakeholders — with custom branding, drill-down KPIs, and export to PDF or Excel."
+    id="platform"
+    ref="modulesEl"
+    class="section-reveal"
+    :class="{ 'is-visible': modulesVisible }"
+    headline="The Platform"
+    title="Six capabilities. One data platform."
+    description="EIS is a single platform that connects every data source you run into one place — modeling, reporting, sharing, and pipelines, all together. Nothing lives in a disconnected spreadsheet, and nothing gets exported twice."
     orientation="horizontal"
-    reverse
+    :ui="{
+      root: 'min-h-screen flex flex-col justify-center',
+      features: 'grid grid-cols-2 gap-4',
+      headline: 'reveal-down',
+      title: 'reveal-up reveal-delay-150',
+      description: 'reveal-up reveal-delay-300',
+    }"
   >
-    <MockupScreenEisReports />
+    <template #features>
+      <UPageFeature
+        v-for="(module, index) in modules"
+        :key="index"
+        :title="module.title"
+        icon="i-lucide-check"
+        class="reveal-up"
+        :style="{ animationDelay: `${400 + index * 60}ms` }"
+      />
+    </template>
+    <HubDiagram
+      center-label="EIS CORE"
+      :nodes="modules"
+      class="reveal-right reveal-delay-400"
+    />
   </UPageSection>
 
-  <!-- Stats banner -->
-  <div class="bg-primary dark:bg-primary/50 py-20">
-    <UContainer>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
-        <div v-for="stat in stats" :key="stat.label">
-          <p class="text-4xl lg:text-5xl font-extrabold text-white">{{ stat.value }}</p>
-          <p class="text-white/70 mt-2 text-sm lg:text-base font-medium">{{ stat.label }}</p>
-        </div>
-      </div>
-    </UContainer>
-  </div>
-
-  <!-- Testimonials -->
-  <UPageSection
-    id="testimonials"
-    headline="Customer Stories"
-    title="Loved by leaders everywhere"
-    description="Hear how ExecIS has transformed executive decision-making across industries."
+  <!-- Feature details (self-contained reveal via ProductFeature) -->
+  <ProductFeature
+    v-for="(feature, index) in featureDetails"
+    :key="index"
+    :id="feature.id"
+    :title="feature.title"
+    :description="feature.description"
+    :features="feature.features"
+    :orientation="feature.orientation"
+    :reverse="feature.reverse"
   >
-    <UPageGrid>
-      <UCard v-for="t in testimonials" :key="t.author">
-        <div class="flex flex-col h-full">
-          <div class="flex gap-0.5 mb-5">
-            <UIcon v-for="i in 5" :key="i" name="i-lucide-star" class="size-4 text-warning" />
-          </div>
-          <p class="text-muted italic leading-relaxed flex-1">"{{ t.quote }}"</p>
-          <div class="flex items-center gap-3 mt-6 pt-6 border-t border-default">
-            <UAvatar :text="t.initials" size="md" color="primary" />
-            <div>
-              <p class="font-semibold text-highlighted text-sm">{{ t.author }}</p>
-              <p class="text-dimmed text-xs">{{ t.role }}</p>
-            </div>
-          </div>
-        </div>
-      </UCard>
+    <component :is="feature.component" />
+  </ProductFeature>
+
+  <!-- Bonus Section: Data Pipelines -->
+  <UPageSection
+    id="pipelines"
+    ref="pipelinesEl"
+    class="section-reveal"
+    :class="{ 'is-visible': pipelinesVisible }"
+    headline="Pipeline Architecture"
+    title="Pipelines your team can actually build"
+    description="Automate data movement between sources with an intuitive graphical ETL engine. No custom cron jobs, no manual imports, and no fragile scripts."
+    :ui="{
+      root: 'min-h-screen flex flex-col justify-center',
+      headline: 'reveal-down',
+      title: 'reveal-up reveal-delay-150',
+      description: 'reveal-up reveal-delay-300',
+    }"
+  >
+    <UPageGrid class="lg:grid-cols-3">
+      <UPageCard
+        v-for="(feat, index) in pipelineFeatures"
+        :key="feat.title"
+        :title="feat.title"
+        :description="feat.description"
+        :icon="feat.icon"
+        :ui="{ leadingIcon: 'text-primary p-2 rounded-lg size-8' }"
+        spotlight
+        class="reveal-up"
+        :style="{ animationDelay: `${400 + index * 80}ms` }"
+      >
+        <template #headline>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-muted">{{ feat.label }}</span>
+        </template>
+      </UPageCard>
     </UPageGrid>
   </UPageSection>
 
-  <!-- Pricing -->
-  <div class="bg-muted/30">
-    <UPageSection
-      id="pricing"
-      headline="Pricing"
-      title="Investment-grade plans for every leadership team"
-      description="Choose the plan that matches the scale of your organization."
-    >
-      <UPricingPlans :plans="plans" />
-    </UPageSection>
-  </div>
-
-  <!-- CTA -->
-  <UPageCTA
-    title="Ready to lead with data?"
-    description="Join leading organizations using ExecIS for strategic intelligence and executive decision-making."
-    :links="ctaLinks"
-  />
+  <!-- CTA (self-contained reveal via ProductCTA) -->
+  <UPageSection>
+    <ProductCTA
+      title="Ready to lead with real-time insight?"
+      description="Query and report across every system you run in one unified dashboard. Join institutions and organizations modernizing their executive intelligence with CCCI."
+      :links="ctaLinks"
+    />
+  </UPageSection>
 </template>

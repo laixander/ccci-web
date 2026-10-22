@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.fms.ccci.com.ph/budget-vs-actual" title="Budget vs. Actual">
+  <MockupBrowserFrame url="app.fms.ccci.com.ph/budget-vs-actual" title="Budget vs. Actual" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col justify-between gap-5">
       <!-- Section Title & Meta -->
       <div class="flex items-center justify-between">
@@ -62,6 +62,7 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
 interface BudgetLine {
   label: string
   value: number
@@ -72,6 +73,33 @@ interface SummaryCard {
   label: string
   value: string
 }
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'variance-alert',
+    title: 'Under Budget',
+    subtitle: '₱0.3M Variance',
+    icon: 'i-lucide-trending-down',
+    color: 'success',
+    badge: { label: '+25%', color: 'success' }
+  },
+  {
+    id: 'utilization',
+    title: 'Fund Utilization',
+    subtitle: '75% of FY Budget',
+    icon: 'i-lucide-pie-chart',
+    color: 'primary',
+    pulse: true
+  },
+  {
+    id: 'fiscal-period',
+    title: 'Fiscal Year 2022',
+    subtitle: 'G&A · 8900C',
+    icon: 'i-lucide-calendar-check',
+    color: 'info',
+    badge: { label: 'ACTIVE', color: 'info' }
+  }
+]
 
 const budgetLines: BudgetLine[] = [
   { label: 'Salaries', value: 88, color: 'success' },

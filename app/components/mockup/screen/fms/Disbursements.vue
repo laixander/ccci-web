@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.fms.ccci.com.ph/payable-voucher" title="Payable Voucher">
+  <MockupBrowserFrame url="app.fms.ccci.com.ph/payable-voucher" title="Payable Voucher" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col justify-between gap-5">
       <!-- Voucher Title & Meta -->
       <div class="flex items-center justify-between">
@@ -57,12 +57,40 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
 interface VoucherLine {
   account: string
   type: 'Debit' | 'Credit'
   badgeColor: 'info' | 'error'
   amount: string
 }
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'voucher-posted',
+    title: 'APV Posted',
+    subtitle: 'APV#000111 · 03/08/2022',
+    icon: 'i-lucide-check-circle-2',
+    color: 'success',
+    badge: { label: 'POSTED', color: 'success' }
+  },
+  {
+    id: 'wh-tax',
+    title: 'WH Tax Applied',
+    subtitle: '₱2,000 Withheld',
+    icon: 'i-lucide-receipt-text',
+    color: 'warning',
+    pulse: true
+  },
+  {
+    id: 'net-check',
+    title: 'Net Check Release',
+    subtitle: '₱122,000 Disbursed',
+    icon: 'i-lucide-banknote',
+    color: 'primary',
+    badge: { label: 'CLEARED', color: 'primary' }
+  }
+]
 
 const lines: VoucherLine[] = [
   { account: 'Payable', type: 'Debit', badgeColor: 'info', amount: '112,000.00' },

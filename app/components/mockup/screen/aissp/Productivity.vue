@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.aissp.ccci.com.ph/deployment" title="Deployment · End Users">
+  <MockupBrowserFrame url="app.aissp.ccci.com.ph/deployment" title="Deployment · End Users" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col justify-between gap-6">
       <!-- Deployment Table using UTable -->
       <UTable
@@ -45,6 +45,34 @@
 
 <script setup lang="ts">
 import type { TableColumn } from '@nuxt/ui'
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'fms-sync',
+    title: 'PPMP Linked',
+    subtitle: 'Auto-reconciled with FMS',
+    icon: 'i-lucide-refresh-cw',
+    color: 'success',
+    badge: { label: 'SYNCED', color: 'success' }
+  },
+  {
+    id: 'devices',
+    title: '7 Devices Deployed',
+    subtitle: '4 Departments Assigned',
+    icon: 'i-lucide-laptop',
+    color: 'primary',
+    badge: { label: 'ALLOCATED', color: 'primary' }
+  },
+  {
+    id: 'par',
+    title: 'Property Ack. Receipt',
+    subtitle: 'PAR auto-generated',
+    icon: 'i-lucide-file-text',
+    color: 'info',
+    pulse: true
+  }
+]
 
 interface DeploymentItem {
   user: string

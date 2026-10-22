@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.fms.ccci.com.ph/asset-master" title="Asset Master">
+  <MockupBrowserFrame url="app.fms.ccci.com.ph/asset-master" title="Asset Master" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col justify-between gap-5">
       <!-- Asset Master Table using UTable -->
       <UTable
@@ -26,6 +26,7 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
 import type { TableColumn } from '@nuxt/ui'
 
 interface AssetRecord {
@@ -61,6 +62,33 @@ const columns: TableColumn<AssetRecord>[] = [
     accessorKey: 'custodian',
     header: 'CUSTODIAN',
     meta: { class: { td: 'text-muted' } }
+  }
+]
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'issued-asset',
+    title: 'Asset Issued',
+    subtitle: '4 Items · Serialized',
+    icon: 'i-lucide-box',
+    color: 'primary',
+    badge: { label: 'ISSUED', color: 'primary' }
+  },
+  {
+    id: 'depreciable',
+    title: 'Depreciable',
+    subtitle: '₱584,846 Net Book Value',
+    icon: 'i-lucide-trending-down',
+    color: 'warning',
+    pulse: true
+  },
+  {
+    id: 'custodian',
+    title: 'Custodian',
+    subtitle: 'A. Ubaldo · RMS Dept.',
+    icon: 'i-lucide-user-check',
+    color: 'success',
+    badge: { label: 'ACTIVE', color: 'success' }
   }
 ]
 

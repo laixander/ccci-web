@@ -1,240 +1,318 @@
 <script setup lang="ts">
+// ─── Imports ──────────────────────────────────────────────────────────────────
+import {
+  MockupScreenDmsSearch,
+  MockupScreenDmsOcr,
+  MockupScreenDmsSignature,
+  MockupScreenDmsVersioning,
+  MockupScreenDmsWorkflow,
+  MockupScreenDmsSecurity,
+} from '#components'
+
+// ─── Page Meta ────────────────────────────────────────────────────────────────
 definePageMeta({ layout: 'product' })
+
+// ─── SEO ──────────────────────────────────────────────────────────────────────
+useSeoMeta({
+  title: 'DMS — Document Management System | CCCI',
+  description: 'A centralized repository that scans, indexes, and manages your files — with real-time status, OCR, digital signatures, and full version history.',
+})
+
+// ─── Scroll Reveal ────────────────────────────────────────────────────────────
+const { el: featuresEl, isVisible: featuresVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: modulesEl, isVisible: modulesVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: deploymentEl, isVisible: deploymentVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+
+// ─── Navigation & UI Data ─────────────────────────────────────────────────────
+const heroLinks = [
+  { label: 'Request a Demo', trailingIcon: 'i-lucide-calendar', class: 'hero-cta-shadow' },
+  { label: 'Explore Modules', color: 'neutral' as const, variant: 'soft' as const, icon: 'i-lucide-play-circle' },
+]
+
+const ctaLinks = [
+  { label: 'Request a Demo', icon: 'i-lucide-calendar', class: 'bg-primary-800 hover:bg-primary-700 dark:bg-primary dark:hover:bg-primary/75' },
+  { label: 'Contact Sales', color: 'neutral' as const, variant: 'soft' as const, trailingIcon: 'i-lucide-phone' },
+]
+
+const modules = [
+  { title: 'Search', icon: 'i-lucide-search', to: '#search' },
+  { title: 'OCR Transcribing', icon: 'i-lucide-scan-text', to: '#ocr-transcribing' },
+  { title: 'Digital Signature', icon: 'i-lucide-pen-tool', to: '#digital-signature' },
+  { title: 'Versioning', icon: 'i-lucide-history', to: '#versioning' },
+  { title: 'Workflow', icon: 'i-lucide-workflow', to: '#workflow' },
+  { title: 'Security', icon: 'i-lucide-shield-check', to: '#security' },
+]
+
+const checklist = [
+  'OCR in any language',
+  'SSO, LDAP-ready',
+  'Cloud or on-premise',
+]
+
+// ─── Page Content Data ────────────────────────────────────────────────────────
 const features = [
   {
-    title: 'Centralized Document Repository',
-    description: 'Store, organize, and manage all your files in one secure, accessible location. Eliminate the chaos of scattered documents and version control issues.',
+    title: 'Centralized Repository',
+    description: 'One secure home for every file — scanned, indexed, and instantly accessible by anyone with the right permissions.',
     icon: 'i-lucide-server',
   },
   {
-    title: 'Advanced Search & Retrieval',
-    description: 'Find exactly what you need in seconds with powerful full-text search, custom metadata tags, and intelligent OCR (Optical Character Recognition) for scanned documents.',
+    title: 'OCR & Full-Text Search',
+    description: 'Find any document in seconds across keywords, metadata, content, and file attributes — even inside scanned images.',
     icon: 'i-lucide-search',
   },
   {
     title: 'Automated Workflows',
-    description: 'Streamline your business processes with custom approval routing, document review cycles, and automated notifications for deadlines and renewals.',
+    description: 'Routing rules trigger automatically as documents change state — no reminders, no manual hand-offs.',
     icon: 'i-lucide-workflow',
   },
   {
-    title: 'Version Control & History',
-    description: 'Never lose track of changes. Maintain a complete audit trail of document revisions, access logs, and modification history to ensure compliance.',
-    icon: 'i-lucide-history',
-  },
-  {
-    title: 'Granular Access Control',
-    description: 'Protect sensitive information with role-based permissions, secure sharing links, and detailed access tracking for both internal teams and external partners.',
+    title: 'Enterprise Security',
+    description: 'Role-based access, SSO/LDAP, cryptographic signatures, redaction, and a full audit trail of every action.',
     icon: 'i-lucide-shield-check',
   },
+]
+
+const deploymentFeatures = [
   {
-    title: 'Electronic Signatures',
-    description: 'Accelerate approvals with integrated e-signatures. Send, track, and securely sign documents without ever leaving the platform.',
-    icon: 'i-lucide-pen-tool',
+    title: 'Any backend you choose',
+    description: 'File system, S3-compatible cloud storage, or on-premise Minio.',
+    icon: 'i-lucide-hard-drive',
+    label: 'Storage',
+  },
+  {
+    title: 'Bare metal to single-board',
+    description: 'Virtual machine, public or private cloud, or a single board computer.',
+    icon: 'i-lucide-server',
+    label: 'Environment',
+  },
+  {
+    title: 'Docker & Kubernetes',
+    description: 'Deployed on Digital Ocean, Google Cloud, Azure, and IBM Cloud.',
+    icon: 'i-lucide-boxes',
+    label: 'Scale',
   },
 ]
 
-const stats = [
-  { value: '50M+', label: 'Documents Managed' },
-  { value: '10k+', label: 'Active Users' },
-  { value: '99.9%', label: 'Uptime SLA' },
-  { value: 'Bank-Grade', label: 'Security Encryption' },
-]
-
-const testimonials = [
+const featureDetails = [
   {
-    quote: 'DocuCore completely transformed our HR department. Finding employee records used to take hours of digging through filing cabinets. Now it takes three clicks.',
-    author: 'Sarah Jenkins',
-    role: 'HR Director, TechFlow Solutions',
-    initials: 'SJ',
-  },
-  {
-    quote: 'The automated approval workflows have reduced our contract turnaround time by 60%. We can track exactly whose desk a document is sitting on.',
-    author: 'Michael Chen',
-    role: 'Operations Manager, Vertex Logistics',
-    initials: 'MC',
-  },
-  {
-    quote: 'During our recent ISO audit, DocuCore made compiling evidence a breeze. The auditors were impressed by the version control and access logs.',
-    author: 'Elena Rodriguez',
-    role: 'Compliance Officer, MedCorp',
-    initials: 'ER',
-  },
-]
-
-const plans = [
-  {
-    title: 'Starter',
-    description: 'For small teams needing basic document control.',
-    price: '₱2,999',
+    id: 'search',
+    title: 'Search',
+    description: 'Find any document in seconds.',
     features: [
-      'Up to 10 users',
-      '500GB Storage',
-      'Basic search and version control',
-      'Standard email support',
+      { description: 'Multiple search engines supported for maximum coverage.', icon: 'i-lucide-check' },
+      { description: 'Keyword, metadata, and full-text search across all file types.', icon: 'i-lucide-check' },
+      { description: 'LibreOffice-based preview of Word, Sheet, and Slide files.', icon: 'i-lucide-check' },
     ],
+    orientation: 'horizontal' as const,
+    reverse: false,
+    component: MockupScreenDmsSearch,
   },
   {
-    title: 'Professional',
-    description: 'For growing businesses with complex workflows.',
-    price: '₱7,999',
-    badge: 'Most Popular',
-    highlight: true,
+    id: 'ocr-transcribing',
+    title: 'OCR Transcribing',
+    description: 'Turn paper into searchable text.',
     features: [
-      'Up to 50 users',
-      '2TB Storage',
-      'Advanced search & OCR',
-      'Automated approval workflows',
-      'Integrated e-signatures (100/mo)',
-      'Priority support',
+      { description: 'Language detection routes each document to a compatible OCR engine.', icon: 'i-lucide-check' },
+      { description: 'Transcription load distributed across engines for availability.', icon: 'i-lucide-check' },
+      { description: 'Multi-page PDF, office, and TIFF support out of the box.', icon: 'i-lucide-check' },
     ],
+    orientation: 'horizontal' as const,
+    reverse: true,
+    component: MockupScreenDmsOcr,
   },
   {
-    title: 'Enterprise',
-    description: 'For large organizations needing maximum compliance.',
-    price: 'Custom',
+    id: 'digital-signature',
+    title: 'Digital Signature',
+    description: 'Authentic documents, signed anywhere.',
     features: [
-      'Unlimited users',
-      'Unlimited Storage',
-      'Advanced API access & integrations',
-      'Custom metadata & reporting',
-      'Dedicated success manager',
-      'On-premise deployment option',
+      { description: 'Verifies embedded cryptographic signatures with full PKI chain.', icon: 'i-lucide-check' },
+      { description: 'Captures and digitizes handwritten signatures for storage.', icon: 'i-lucide-check' },
+      { description: 'Remote contract signing for secure online transactions.', icon: 'i-lucide-check' },
     ],
+    orientation: 'horizontal' as const,
+    reverse: false,
+    component: MockupScreenDmsSignature,
   },
-]
-
-const heroLinks = [
-  { label: 'Request a Demo', to: '#pricing', icon: 'i-lucide-calendar', size: 'xl' as const },
-  { label: 'Explore Features', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-arrow-right', size: 'xl' as const },
-]
-
-const ctaLinks = [
-  { label: 'Request a Demo', icon: 'i-lucide-calendar', size: 'lg' as const },
-  { label: 'Contact Sales', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-phone', size: 'lg' as const },
-]
-
-const logoIcons = [
-  { name: 'i-simple-icons-microsoft', label: 'Microsoft' },
-  { name: 'i-simple-icons-google', label: 'Google' },
-  { name: 'i-simple-icons-amazon', label: 'Amazon' },
-  { name: 'i-simple-icons-apple', label: 'Apple' },
-  { name: 'i-simple-icons-accenture', label: 'Accenture' },
-  { name: 'i-simple-icons-salesforce', label: 'Salesforce' },
+  {
+    id: 'versioning',
+    title: 'Versioning',
+    description: 'Nothing gets lost or overwritten.',
+    features: [
+      { description: 'Non-destructive page mapping and reordering on every edit.', icon: 'i-lucide-check' },
+      { description: 'Compare, download, or revert to any previous version.', icon: 'i-lucide-check' },
+      { description: 'Comments, discussion threads, and color coding per version.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: true,
+    component: MockupScreenDmsVersioning,
+  },
+  {
+    id: 'workflow',
+    title: 'Workflow',
+    description: 'Documents move on rules, not reminders.',
+    features: [
+      { description: 'Routing rules and conditions set once, triggered automatically.', icon: 'i-lucide-check' },
+      { description: 'Escalation and automatic state expiration keep things moving.', icon: 'i-lucide-check' },
+      { description: 'Duplicate detection by file and label prevents double submissions.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: false,
+    component: MockupScreenDmsWorkflow,
+  },
+  {
+    id: 'security',
+    title: 'Security',
+    description: 'Access controlled down to the action.',
+    features: [
+      { description: 'Role-based access and granular permissions on every atomic operation.', icon: 'i-lucide-check' },
+      { description: 'SSO, LDAP, and email or username sign-in with multi-factor support.', icon: 'i-lucide-check' },
+      { description: 'Full audit trail of user activity, document access, and redactions.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: true,
+    component: MockupScreenDmsSecurity,
+  },
 ]
 </script>
 
 <template>
   <!-- Hero -->
-  <UPageHero
-    headline="Introducing DocuCore"
-    title="Intelligent Document Management"
-    description="Digitize, organize, and automate your document workflows in a single secure platform. Say goodbye to paper trails and hello to efficiency."
+  <ProductHero
+    badge="DMS · Document Management System"
+    background-image="/Team_reviewing_documents_on_laptop_2K_20261021131926.jpg"
     :links="heroLinks"
-    orientation="horizontal"
+    :checklist="checklist"
+    :modules="modules"
   >
-    <MockupScreenDmsDashboard />
-  </UPageHero>
+    <template #title>
+      Every document,<br>findable, trackable, secure.
+    </template>
+    <template #description>
+      The <strong>Document Management System</strong> is a centralized repository that scans, indexes, and manages
+      your files — with real-time status, OCR, digital signatures, and full version history — built by
+      <strong>Centralized Cloud Computing International</strong>.
+    </template>
+  </ProductHero>
 
-  <!-- Social proof -->
-  <div class="border-y border-default bg-muted/50 py-10">
-    <UContainer>
-      <p class="text-center text-dimmed text-xs font-semibold uppercase tracking-widest mb-8">
-        Trusted by organizations worldwide for secure document handling
-      </p>
-      <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
-        <UIcon
-          v-for="logo in logoIcons"
-          :key="logo.name"
-          :name="logo.name"
-          :aria-label="logo.label"
-          class="size-7 text-muted"
-        />
-      </div>
-    </UContainer>
-  </div>
-
-  <!-- Core features grid -->
+  <!-- Why Choose Us -->
   <UPageSection
-    id="features"
-    headline="Features"
-    title="Everything you need for document control"
-    description="From secure storage to automated approvals — handle the complete document lifecycle with ease."
-    :features="features"
-  />
-
-  <!-- Feature detail: Document Repository -->
-  <UPageSection
-    title="A single home for every document"
-    description="Stop hunting through email threads and shared drives. DocuCore gives your entire organization one centralized, searchable repository. Powerful full-text search and OCR scanning mean any document — even scanned PDFs — can be found in seconds."
-    orientation="horizontal"
+    id="why-choose-us"
+    ref="featuresEl"
+    class="section-reveal"
+    :class="{ 'is-visible': featuresVisible }"
+    headline="Why Choose Us"
+    title="Six modules. One document record."
+    description="DMS manages every document from upload to archive — search, OCR, signatures, versions, and workflow, all connected. Nothing lives in a folder on someone's desktop."
+    :ui="{
+      root: 'min-h-screen flex flex-col justify-center',
+      features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10',
+      headline: 'reveal-down',
+      title: 'reveal-up reveal-delay-150',
+      description: 'reveal-up reveal-delay-300',
+    }"
   >
-    <MockupScreenDmsDocuments />
+    <template #features>
+      <UPageFeature
+        v-for="(feature, i) in features"
+        :key="feature.title"
+        v-bind="feature"
+        class="reveal-up"
+        :style="{ animationDelay: `${400 + i * 100}ms` }"
+      />
+    </template>
   </UPageSection>
 
-  <!-- Feature detail: Approvals -->
+  <!-- The Platform -->
   <UPageSection
-    title="Workflows that move at the speed of business"
-    description="Route documents to the right approvers automatically. Track every step of the review cycle in real time, get instant notifications, and never let a deadline slip through the cracks. Average approval time reduced by 60%."
+    id="platform"
+    ref="modulesEl"
+    class="section-reveal"
+    :class="{ 'is-visible': modulesVisible }"
+    headline="The Platform"
+    title="Six modules. One document record."
+    description="DMS is a single platform that manages every document from upload to archive — search, OCR, signatures, versions, and workflow, all connected."
     orientation="horizontal"
-    reverse
+    :ui="{
+      root: 'min-h-screen flex flex-col justify-center',
+      features: 'grid grid-cols-2 gap-4',
+      headline: 'reveal-down',
+      title: 'reveal-up reveal-delay-150',
+      description: 'reveal-up reveal-delay-300',
+    }"
   >
-    <MockupScreenDmsApprovals />
+    <template #features>
+      <UPageFeature
+        v-for="(module, index) in modules"
+        :key="index"
+        :title="module.title"
+        icon="i-lucide-check"
+        class="reveal-up"
+        :style="{ animationDelay: `${400 + index * 60}ms` }"
+      />
+    </template>
+    <HubDiagram
+      center-label="DMS CORE"
+      :nodes="modules"
+      class="reveal-right reveal-delay-400"
+    />
   </UPageSection>
 
-  <!-- Stats banner -->
-  <div class="bg-primary dark:bg-primary/50 py-20">
-    <UContainer>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
-        <div v-for="stat in stats" :key="stat.label">
-          <p class="text-4xl lg:text-5xl font-extrabold text-white">{{ stat.value }}</p>
-          <p class="text-white/70 mt-2 text-sm lg:text-base font-medium">{{ stat.label }}</p>
-        </div>
-      </div>
-    </UContainer>
-  </div>
-
-  <!-- Testimonials -->
-  <UPageSection
-    id="testimonials"
-    headline="Customer Stories"
-    title="Loved by teams across industries"
-    description="Hear how DocuCore has helped organizations eliminate paper, speed up processes, and ensure compliance."
+  <!-- Module Feature Details -->
+  <ProductFeature
+    v-for="(feature, index) in featureDetails"
+    :key="index"
+    :id="feature.id"
+    :title="feature.title"
+    :description="feature.description"
+    :features="feature.features"
+    :orientation="feature.orientation"
+    :reverse="feature.reverse"
   >
-    <UPageGrid>
-      <UCard v-for="t in testimonials" :key="t.author">
-        <div class="flex flex-col h-full">
-          <div class="flex gap-0.5 mb-5">
-            <UIcon v-for="i in 5" :key="i" name="i-lucide-star" class="size-4 text-warning" />
-          </div>
-          <p class="text-muted italic leading-relaxed flex-1">"{{ t.quote }}"</p>
-          <div class="flex items-center gap-3 mt-6 pt-6 border-t border-default">
-            <UAvatar :text="t.initials" size="md" color="primary" />
-            <div>
-              <p class="font-semibold text-highlighted text-sm">{{ t.author }}</p>
-              <p class="text-dimmed text-xs">{{ t.role }}</p>
-            </div>
-          </div>
-        </div>
-      </UCard>
+    <component :is="feature.component" />
+  </ProductFeature>
+
+  <!-- Deployment -->
+  <UPageSection
+    id="deployment"
+    ref="deploymentEl"
+    class="section-reveal"
+    :class="{ 'is-visible': deploymentVisible }"
+    headline="Deployment"
+    title="Runs where your infrastructure already is"
+    description="DMS adapts to your environment — choose any storage backend, any compute target, and any cloud or on-premise setup."
+    :ui="{
+      root: 'min-h-screen flex flex-col justify-center',
+      headline: 'reveal-down',
+      title: 'reveal-up reveal-delay-150',
+      description: 'reveal-up reveal-delay-300',
+    }"
+  >
+    <UPageGrid class="lg:grid-cols-3">
+      <UPageCard
+        v-for="(feat, index) in deploymentFeatures"
+        :key="feat.title"
+        :title="feat.title"
+        :description="feat.description"
+        :icon="feat.icon"
+        :ui="{ leadingIcon: 'text-primary p-2 rounded-lg size-8' }"
+        spotlight
+        class="reveal-up"
+        :style="{ animationDelay: `${400 + index * 80}ms` }"
+      >
+        <template #headline>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-muted">{{ feat.label }}</span>
+        </template>
+      </UPageCard>
     </UPageGrid>
   </UPageSection>
 
-  <!-- Pricing -->
-  <div class="bg-muted/30">
-    <UPageSection
-      id="pricing"
-      headline="Pricing"
-      title="Straightforward pricing for every team"
-      description="Choose the plan that fits your organization's document management needs."
-    >
-      <UPricingPlans :plans="plans" />
-    </UPageSection>
-  </div>
-
   <!-- CTA -->
-  <UPageCTA
-    title="Ready to take control of your documents?"
-    description="Join thousands of organizations using DocuCore to streamline their workflows and protect their data."
-    :links="ctaLinks"
-  />
+  <UPageSection>
+    <ProductCTA
+      title="Ready to take control of your documents?"
+      description="Join organizations using DMS to eliminate paper, speed up approvals, and secure every file — from upload to archive."
+      :links="ctaLinks"
+    />
+  </UPageSection>
 </template>

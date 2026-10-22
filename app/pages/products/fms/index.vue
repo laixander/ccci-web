@@ -242,7 +242,7 @@ const financialCycleSteps = [
 <template>
     <!-- Hero -->
     <ProductHero badge="DIGITAL ERP · Business Resource Manager — FMS"
-        background-image="/Asset_manager_walking_through_st…_2K_20261014151959.jpg" :links="heroLinks"
+        background-image="/hero-fms-bg.jpg" :links="heroLinks"
         :checklist="checklist" :modules="modules">
         <template #title>
             Every peso,<br>fully accounted.
@@ -255,7 +255,7 @@ const financialCycleSteps = [
     </ProductHero>
 
     <!-- Why Choose Us -->
-    <UPageSection id="features" ref="featuresEl" class="section-reveal" :class="{ 'is-visible': featuresVisible }"
+    <UPageSection id="why-choose-us" ref="featuresEl" class="section-reveal" :class="{ 'is-visible': featuresVisible }"
         headline="Why choose us" title="Why our FMS stands out"
         description="A Business Resource Manager engineered to control operations, transactions and finances in a single source of truth."
         :ui="{
@@ -272,7 +272,7 @@ const financialCycleSteps = [
     </UPageSection>
 
     <!-- The Platform -->
-    <UPageSection ref="modulesEl" class="section-reveal" :class="{ 'is-visible': modulesVisible }"
+    <UPageSection id="platform" ref="modulesEl" class="section-reveal" :class="{ 'is-visible': modulesVisible }"
         headline="The platform" title="Introducing Digital ERP"
         description="The Business Resource Manager is an end-to-end solution composed of integrated modules designed to perform a client's major business processes — enabling business owners to manage and control operations and transactions from procurement to the financial statements."
         orientation="horizontal" :ui="{
@@ -303,7 +303,7 @@ const financialCycleSteps = [
     </ProductFeature>
 
     <!-- Financial Cycle -->
-    <UPageSection ref="cycleEl" class="section-reveal" :class="{ 'is-visible': cycleVisible }"
+    <UPageSection id="cycle" ref="cycleEl" class="section-reveal" :class="{ 'is-visible': cycleVisible }"
         :headline="financialCycle.headline" :title="financialCycle.title"
         :description="financialCycle.description"
         :ui="{

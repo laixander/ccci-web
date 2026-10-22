@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.peoplecore.io/learning" title="Training Programs">
+  <MockupBrowserFrame url="app.peoplecore.io/learning" title="Training Programs" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-4">
       <!-- Stat Cards -->
       <div class="grid grid-cols-4 gap-3">
@@ -35,6 +35,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'upcoming-training',
+    title: 'Leadership Bootcamp',
+    subtitle: 'Upcoming · Oct 21 · Makati',
+    icon: 'i-lucide-graduation-cap',
+    color: 'primary',
+    badge: { label: 'OCT 21', color: 'primary' }
+  },
+  {
+    id: 'ongoing-training',
+    title: 'Data Privacy 101',
+    subtitle: 'Ongoing · BGC, PH',
+    icon: 'i-lucide-shield',
+    color: 'warning',
+    pulse: true
+  },
+  {
+    id: 'completed',
+    title: '2 Completed',
+    subtitle: 'Safety & Health · Sep 30',
+    icon: 'i-lucide-circle-check-big',
+    color: 'success',
+    badge: { label: 'DONE', color: 'success' }
+  }
+]
+
 const stats = [
   { label: 'Total',    value: '4' },
   { label: 'Upcoming', value: '1' },

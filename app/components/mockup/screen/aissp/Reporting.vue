@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.aissp.ccci.com.ph/summary-of-investments" title="Summary of Investments">
+  <MockupBrowserFrame url="app.aissp.ccci.com.ph/summary-of-investments" title="Summary of Investments" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col justify-between gap-5">
       <!-- Summary of Investments Table using UTable -->
       <UTable
@@ -54,6 +54,34 @@
 
 <script setup lang="ts">
 import type { TableColumn } from '@nuxt/ui'
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'grand-total',
+    title: 'Grand Total ₱12.4M',
+    subtitle: '3-Year ISSP Roadmap',
+    icon: 'i-lucide-wallet',
+    color: 'primary',
+    badge: { label: '₱12.4M', color: 'primary' }
+  },
+  {
+    id: 'dbm-export',
+    title: 'Export Ready',
+    subtitle: 'XLSX · Official DBM Template',
+    icon: 'i-lucide-file-spreadsheet',
+    color: 'success',
+    badge: { label: 'DBM FORMAT', color: 'success' }
+  },
+  {
+    id: 'sis-allocation',
+    title: 'SIS Allocation',
+    subtitle: '₱4.2M · High Priority',
+    icon: 'i-lucide-trending-up',
+    color: 'info',
+    pulse: true
+  }
+]
 
 interface InvestmentItem {
   system: string

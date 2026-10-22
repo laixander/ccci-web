@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.aissp.ccci.com.ph/approval-tracking" title="Approval Tracking">
+  <MockupBrowserFrame url="app.aissp.ccci.com.ph/approval-tracking" title="Approval Tracking" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col justify-center gap-3.5">
       <!-- Steps List -->
       <div v-if="steps?.length" class="flex flex-col gap-3">
@@ -43,6 +43,36 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'approval',
+    title: 'President Approval',
+    subtitle: 'Stage 4 of 4 · Final Sign-off',
+    icon: 'i-lucide-file-signature',
+    color: 'warning',
+    badge: { label: 'PENDING', color: 'warning' },
+    pulse: true
+  },
+  {
+    id: 'endorsed',
+    title: 'VP Endorsed',
+    subtitle: 'Routing to President Office',
+    icon: 'i-lucide-check-circle-2',
+    color: 'success',
+    badge: { label: 'ENDORSED', color: 'success' }
+  },
+  {
+    id: 'compliance',
+    title: 'Audit Trail',
+    subtitle: 'ISO 27001 & DICT Format',
+    icon: 'i-lucide-shield-check',
+    color: 'info',
+    badge: { label: 'COMPLIANT', color: 'info' }
+  }
+]
+
 interface ApprovalStep {
   title: string
   role: string

@@ -1,160 +1,184 @@
 <template>
-  <!-- Phone frame mockup -->
-  <div class="mx-auto w-[260px] select-none">
-    <!-- Phone shell -->
-    <div class="relative bg-zinc-900 rounded-[36px] p-[10px] shadow-2xl ring-1 ring-white/10">
-      <!-- Dynamic island -->
-      <div class="mx-auto mb-2 w-20 h-6 bg-zinc-950 rounded-full flex items-center justify-center gap-1.5">
-        <div class="size-2.5 rounded-full bg-zinc-800 ring-1 ring-white/5" />
-        <div class="size-1.5 rounded-full bg-zinc-700" />
+  <MockupBrowserFrame
+    url="irs.ccci.com.ph/dashboard"
+    title="Response dashboard"
+    icon="i-lucide-layout-dashboard"
+    :floating-tags="floatingTags"
+  >
+    <div class="p-5 flex-1 flex flex-col gap-4">
+      <!-- Screen Header -->
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="font-bold text-[14px] text-highlighted">Response dashboard</span>
+          <p class="text-[10px] text-muted mt-0.5">Campus-wide · Live Emergency Oversight</p>
+        </div>
+        <UBadge
+          label="Live Monitor"
+          color="success"
+          variant="subtle"
+          size="xs"
+          class="font-bold tracking-wider uppercase"
+        />
       </div>
 
-      <!-- Screen -->
-      <div class="rounded-[28px] overflow-hidden bg-zinc-950 h-[500px] flex flex-col text-[10px]">
-        <!-- Status bar -->
-        <div class="flex items-center justify-between px-4 pt-1 pb-0.5 text-[9px] text-white/50">
-          <span>9:41</span>
-          <div class="flex items-center gap-1">
-            <UIcon name="i-lucide-signal" class="size-2.5" />
-            <UIcon name="i-lucide-wifi" class="size-2.5" />
-            <UIcon name="i-lucide-battery" class="size-3" />
-          </div>
-        </div>
+      <!-- Stat tiles (2) -->
+      <div class="grid grid-cols-2 gap-3">
+        <UCard
+          v-for="stat in statTiles"
+          :key="stat.label"
+          variant="outline"
+          :ui="{ body: 'p-3 sm:p-3.5 flex flex-col items-center justify-center gap-1' }"
+          class="rounded-xl shadow-xs"
+        >
+          <span class="text-[10px] font-mono text-muted uppercase">{{ stat.label }}</span>
+          <span :class="['text-2xl font-black font-mono leading-none tracking-tight', stat.valueColor]">{{ stat.value }}</span>
+          <span class="text-[9px] text-muted">{{ stat.subLabel }}</span>
+        </UCard>
+      </div>
 
-        <!-- App header -->
-        <div class="px-4 pt-2 pb-3">
-          <div class="flex items-center justify-between">
+      <!-- Live reports list header -->
+      <div class="flex items-center justify-between">
+        <span class="font-bold text-[12px] text-highlighted">Live reports</span>
+        <UButton
+          label="View all"
+          color="primary"
+          variant="ghost"
+          size="xs"
+          trailing-icon="i-lucide-chevron-right"
+        />
+      </div>
+
+      <!-- Live reports items -->
+      <div v-if="liveReports?.length" class="flex flex-col gap-2">
+        <UCard
+          v-for="report in liveReports"
+          :key="report.report"
+          variant="outline"
+          :ui="{ body: 'px-4 py-2.5 sm:px-4 sm:py-3 flex items-center justify-between' }"
+          class="rounded-xl shadow-2xs hover:bg-elevated/40 transition-colors"
+        >
+          <div class="flex items-center gap-3">
+            <div :class="['size-7 rounded-lg flex items-center justify-center shrink-0', report.iconBg]">
+              <UIcon :name="report.icon" :class="['size-3.5', report.iconColor]" />
+            </div>
             <div>
-              <p class="text-white/40 text-[9px] font-medium uppercase tracking-widest">IRS SafeReport</p>
-              <p class="text-white text-[13px] font-bold leading-tight mt-0.5">Incident Dashboard</p>
-            </div>
-            <div class="relative">
-              <div class="size-8 rounded-full bg-red-500/20 ring-1 ring-red-500/30 flex items-center justify-center">
-                <UIcon name="i-lucide-bell" class="size-3.5 text-red-400" />
-              </div>
-              <span class="absolute -top-0.5 -right-0.5 size-2.5 rounded-full bg-red-500 text-white text-[7px] flex items-center justify-center font-bold">3</span>
+              <p class="font-semibold text-[12px] text-highlighted">{{ report.report }}</p>
+              <p class="text-[10px] text-muted font-mono">{{ report.time }}</p>
             </div>
           </div>
-        </div>
+          <UBadge
+            :label="report.status"
+            :color="report.color"
+            variant="subtle"
+            size="xs"
+            class="font-bold tracking-wider uppercase"
+          />
+        </UCard>
+      </div>
 
-        <!-- KPI strip -->
-        <div class="px-3 mb-3">
-          <div class="grid grid-cols-3 gap-1.5">
-            <div v-for="kpi in kpis" :key="kpi.label" :class="['rounded-xl p-2 border', kpi.bg, kpi.border]">
-              <UIcon :name="kpi.icon" :class="['size-3.5 mb-1', kpi.color]" />
-              <p :class="['text-[13px] font-extrabold leading-none', kpi.value === '3' ? 'text-red-400' : 'text-white']">{{ kpi.value }}</p>
-              <p class="text-white/40 text-[8px] mt-0.5 leading-tight">{{ kpi.label }}</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Report button -->
-        <div class="px-3 mb-3">
-          <button class="w-full bg-red-500 rounded-xl py-2.5 flex items-center justify-center gap-1.5 shadow-lg shadow-red-500/30">
-            <UIcon name="i-lucide-triangle-alert" class="size-3.5 text-white" />
-            <span class="text-white text-[11px] font-bold">Report New Incident</span>
-          </button>
-        </div>
-
-        <!-- Recent incidents -->
-        <div class="px-3 flex-1 overflow-hidden">
-          <p class="text-white/50 text-[9px] font-semibold uppercase tracking-widest mb-2">Recent Incidents</p>
-          <div class="space-y-1.5">
-            <div
-              v-for="incident in incidents"
-              :key="incident.id"
-              class="bg-white/5 rounded-xl p-2.5 border border-white/8 flex items-start gap-2.5"
-            >
-              <div :class="['size-6 rounded-lg flex-shrink-0 flex items-center justify-center', incident.iconBg]">
-                <UIcon :name="incident.icon" :class="['size-3', incident.iconColor]" />
-              </div>
-              <div class="flex-1 min-w-0">
-                <p class="text-white text-[9px] font-semibold truncate">{{ incident.title }}</p>
-                <p class="text-white/40 text-[8px]">{{ incident.location }} · {{ incident.time }}</p>
-              </div>
-              <span :class="['text-[7px] px-1.5 py-0.5 rounded-full font-bold flex-shrink-0', incident.statusColor]">
-                {{ incident.status }}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Bottom nav -->
-        <div class="px-4 py-2 border-t border-white/8 flex items-center justify-around mt-2">
-          <div v-for="nav in bottomNav" :key="nav.label" :class="['flex flex-col items-center gap-0.5', nav.active ? 'text-red-400' : 'text-white/30']">
-            <UIcon :name="nav.icon" class="size-3.5" />
-            <span class="text-[7px] font-medium">{{ nav.label }}</span>
-          </div>
-        </div>
-
-        <!-- Home indicator -->
-        <div class="flex justify-center pb-1">
-          <div class="w-16 h-1 bg-white/20 rounded-full" />
-        </div>
+      <!-- Footer Info -->
+      <div class="flex items-center justify-between pt-1 border-t border-default/50 text-[10px] text-muted font-mono">
+        <span class="flex items-center gap-1.5">
+          <UIcon name="i-lucide-activity" class="size-3.5 text-success" />
+          Synchronized with 3 Campus Stations
+        </span>
+        <span>Auto-refresh 5s</span>
       </div>
     </div>
-  </div>
+  </MockupBrowserFrame>
 </template>
 
 <script setup lang="ts">
-const kpis = [
-  { label: 'Open', value: '12', icon: 'i-lucide-circle-dot', color: 'text-orange-400', bg: 'bg-orange-500/10', border: 'border-orange-500/20' },
-  { label: 'Critical', value: '3', icon: 'i-lucide-flame', color: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/20' },
-  { label: 'Resolved', value: '48', icon: 'i-lucide-check-circle', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
-]
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
 
-const incidents = [
+// ─── Floating Tags ────────────────────────────────────────────────────────────
+const floatingTags: MockupFloatingTag[] = [
   {
-    id: 1,
-    title: 'Forklift Near-Miss — Bay 3',
-    location: 'Warehouse A',
-    time: '2h ago',
-    status: 'OPEN',
-    icon: 'i-lucide-truck',
-    iconBg: 'bg-orange-500/20',
-    iconColor: 'text-orange-400',
-    statusColor: 'bg-orange-500/20 text-orange-300',
+    id: 'command-center',
+    title: 'Command Center',
+    subtitle: 'Campus-wide Real Time',
+    icon: 'i-lucide-activity',
+    color: 'success',
+    pulse: true,
   },
   {
-    id: 2,
-    title: 'Chemical Spill — Lab 2',
-    location: 'R&D Building',
-    time: '5h ago',
-    status: 'CRITICAL',
-    icon: 'i-lucide-flask-conical',
-    iconBg: 'bg-red-500/20',
-    iconColor: 'text-red-400',
-    statusColor: 'bg-red-500/20 text-red-300',
+    id: 'open-incidents',
+    title: 'Active Reports',
+    subtitle: '3 Open · 1 Urgent',
+    icon: 'i-lucide-alert-triangle',
+    color: 'error',
+    badge: { label: 'URGENT', color: 'error' },
   },
   {
-    id: 3,
-    title: 'Slip & Fall — Lobby',
-    location: 'Main Entrance',
-    time: '1d ago',
-    status: 'IN REVIEW',
-    icon: 'i-lucide-person-standing',
-    iconBg: 'bg-yellow-500/20',
-    iconColor: 'text-yellow-400',
-    statusColor: 'bg-yellow-500/20 text-yellow-300',
-  },
-  {
-    id: 4,
-    title: 'Electrical Hazard Reported',
-    location: 'Floor 4, Rm 401',
-    time: '2d ago',
-    status: 'RESOLVED',
-    icon: 'i-lucide-zap',
-    iconBg: 'bg-emerald-500/20',
-    iconColor: 'text-emerald-400',
-    statusColor: 'bg-emerald-500/20 text-emerald-300',
+    id: 'patrol-online',
+    title: 'Duty Roster',
+    subtitle: '12 Officers Active',
+    icon: 'i-lucide-shield-check',
+    color: 'primary',
+    badge: { label: 'ACTIVE', color: 'primary' },
   },
 ]
 
-const bottomNav = [
-  { label: 'Home', icon: 'i-lucide-layout-dashboard', active: true },
-  { label: 'Report', icon: 'i-lucide-plus-circle', active: false },
-  { label: 'Incidents', icon: 'i-lucide-list', active: false },
-  { label: 'Analytics', icon: 'i-lucide-bar-chart-2', active: false },
-  { label: 'Profile', icon: 'i-lucide-user', active: false },
+// ─── Data Interface ───────────────────────────────────────────────────────────
+interface StatTile {
+  label: string
+  value: string
+  subLabel: string
+  valueColor: string
+}
+
+interface LiveReport {
+  status: string
+  report: string
+  time: string
+  icon: string
+  iconBg: string
+  iconColor: string
+  color: 'success' | 'info' | 'warning' | 'error' | 'primary' | 'neutral'
+}
+
+const statTiles: StatTile[] = [
+  {
+    label: 'Open',
+    value: '3',
+    subLabel: '1 urgent',
+    valueColor: 'text-error',
+  },
+  {
+    label: 'Resolved today',
+    value: '4',
+    subLabel: 'On track',
+    valueColor: 'text-success',
+  },
+]
+
+const liveReports: LiveReport[] = [
+  {
+    status: 'Urgent',
+    report: 'Medical emergency — Library Bldg',
+    time: 'Now',
+    icon: 'i-lucide-heart-pulse',
+    iconBg: 'bg-error/10',
+    iconColor: 'text-error',
+    color: 'error',
+  },
+  {
+    status: 'In progress',
+    report: 'Suspicious person — Lot C',
+    time: '6m ago',
+    icon: 'i-lucide-user-x',
+    iconBg: 'bg-warning/10',
+    iconColor: 'text-warning',
+    color: 'warning',
+  },
+  {
+    status: 'Resolved',
+    report: 'Fire alarm — Dorm 2',
+    time: '28m ago',
+    icon: 'i-lucide-flame',
+    iconBg: 'bg-success/10',
+    iconColor: 'text-success',
+    color: 'success',
+  },
 ]
 </script>

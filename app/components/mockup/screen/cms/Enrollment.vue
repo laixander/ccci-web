@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.learncore.edu/enrollment" title="Course Enrollment">
+  <MockupBrowserFrame url="app.learncore.edu/enrollment" title="Course Enrollment" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-4">
       <!-- Enrollment Banner -->
       <UCard variant="soft" :ui="{ body: 'sm:p-5 text-white flex items-center justify-between' }" class="bg-gradient-to-r from-primary-500 to-primary-900 rounded-xl">
@@ -45,6 +45,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'enrollment-open',
+    title: 'Enrollment Open',
+    subtitle: 'Term 1 · AY 2026 · Regular',
+    icon: 'i-lucide-door-open',
+    color: 'success',
+    badge: { label: 'OPEN', color: 'success' }
+  },
+  {
+    id: 'units',
+    title: '18.0 Total Units',
+    subtitle: 'CS-301 · CS-302 Enlisted',
+    icon: 'i-lucide-book-marked',
+    color: 'primary',
+    pulse: true
+  },
+  {
+    id: 'prereq-missing',
+    title: 'Prereq Missing',
+    subtitle: 'MTH-202 · Advanced Calculus',
+    icon: 'i-lucide-triangle-alert',
+    color: 'error',
+    badge: { label: 'BLOCKED', color: 'error' }
+  }
+]
+
 const subjects = [
   { code: 'CS-301',  title: 'Software Engineering', units: 3, status: 'Enlisted',       color: 'success' as const },
   { code: 'CS-302',  title: 'Database Systems',     units: 3, status: 'Enlisted',       color: 'success' as const },

@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.aissp.ccci.com.ph/platform" title="Platform">
+  <MockupBrowserFrame url="app.aissp.ccci.com.ph/platform" title="Platform" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col justify-between gap-5">
       <!-- Platform Features Grid -->
       <div v-if="features?.length" class="grid grid-cols-2 gap-3.5">
@@ -45,6 +45,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'open-api',
+    title: 'Open REST API',
+    subtitle: 'FMS & AMS bi-directional',
+    icon: 'i-lucide-plug',
+    color: 'primary',
+    badge: { label: 'OPEN API', color: 'primary' }
+  },
+  {
+    id: 'sso-rbac',
+    title: 'SSO & RBAC',
+    subtitle: 'Zero-trust role mapping',
+    icon: 'i-lucide-shield-check',
+    color: 'success',
+    badge: { label: 'ACTIVE', color: 'success' }
+  },
+  {
+    id: 'containerized',
+    title: 'Containerized',
+    subtitle: '99.9% Uptime · Docker/K8s',
+    icon: 'i-lucide-server',
+    color: 'info',
+    pulse: true
+  }
+]
+
 interface PlatformFeature {
   title: string
   icon: string

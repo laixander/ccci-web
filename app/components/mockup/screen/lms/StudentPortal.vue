@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.learncore.edu/student" title="My Activities">
+  <MockupBrowserFrame url="app.learncore.edu/student" title="My Activities" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-6">
       <!-- Metrics -->
       <div class="grid grid-cols-3 gap-4">
@@ -51,5 +51,33 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'quiz-due',
+    title: 'Calculus II Quiz 4',
+    subtitle: 'Due in 3h · 65% Done',
+    icon: 'i-lucide-alarm-clock',
+    color: 'warning',
+    badge: { label: '3H LEFT', color: 'warning' }
+  },
+  {
+    id: 'essay-submitted',
+    title: 'Essay Submitted',
+    subtitle: 'World History · 100%',
+    icon: 'i-lucide-circle-check-big',
+    color: 'success',
+    pulse: true
+  },
+  {
+    id: 'missed',
+    title: '2 Missed',
+    subtitle: '5 Current · 12 Conducted',
+    icon: 'i-lucide-circle-x',
+    color: 'error',
+    badge: { label: '2 MISS', color: 'error' }
+  }
+]
 // Component intentionally left bare as per mockup nature
 </script>

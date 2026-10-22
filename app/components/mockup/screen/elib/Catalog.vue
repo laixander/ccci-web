@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="library.ccci.io/catalog" title="Borrow · Clean Code">
+  <MockupBrowserFrame url="library.ccci.io/catalog" title="Borrow · Clean Code" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-4">
       <!-- Book detail card -->
       <div class="flex items-center gap-4">
@@ -28,5 +28,34 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'available',
+    title: '3 Copies Available',
+    subtitle: 'Clean Code · Robert C. Martin',
+    icon: 'i-lucide-book-open',
+    color: 'success',
+    badge: { label: '3 COPIES', color: 'success' }
+  },
+  {
+    id: 'subject',
+    title: 'Software Eng.',
+    subtitle: '2008 · Ready to Issue',
+    icon: 'i-lucide-code-2',
+    color: 'primary',
+    pulse: true
+  },
+  {
+    id: 'reserve',
+    title: 'Reserve Available',
+    subtitle: 'Scan QR or Walk-in',
+    icon: 'i-lucide-bookmark',
+    color: 'info',
+    badge: { label: 'READY', color: 'info' }
+  }
+]
+
 const copies = 3
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.learncore.edu/registrar/stu-10422" title="Student Record · STU-10422">
+  <MockupBrowserFrame url="app.learncore.edu/registrar/stu-10422" title="Student Record · STU-10422" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-4">
       <!-- Student Banner -->
       <UCard variant="soft" :ui="{ body: 'sm:p-5 text-white flex flex-col gap-1' }" class="bg-gradient-to-r from-primary-500 to-primary-900 rounded-xl">
@@ -30,6 +30,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'student-record',
+    title: 'Liam Cruz',
+    subtitle: 'BSCS · 3rd Year · GWA 1.75',
+    icon: 'i-lucide-user-round',
+    color: 'primary',
+    badge: { label: 'STU-10422', color: 'primary' }
+  },
+  {
+    id: 'tor-ready',
+    title: 'TOR Ready',
+    subtitle: 'COR · Form 9 Available',
+    icon: 'i-lucide-file-check',
+    color: 'success',
+    pulse: true
+  },
+  {
+    id: 'cert-requested',
+    title: 'Certification',
+    subtitle: 'Document Requested',
+    icon: 'i-lucide-file-clock',
+    color: 'warning',
+    badge: { label: 'PENDING', color: 'warning' }
+  }
+]
+
 const documents = [
   { title: 'Transcript of Records',       status: 'Ready',     color: 'success' as const },
   { title: 'Certificate of Registration', status: 'Ready',     color: 'success' as const },

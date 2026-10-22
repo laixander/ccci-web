@@ -131,10 +131,10 @@ const summaryStats = [
 ]
 
 const applications = [
-  { name: 'Elena Rodriguez', initials: 'ER', color: 'primary', program: 'Erasmus+ Semester', type: 'Inbound', status: 'Approved', statusClass: 'bg-success/10 text-success' },
-  { name: 'Kenji Sato', initials: 'KS', color: 'info', program: 'UTokyo Joint Research', type: 'Inbound', status: 'Pending Visa', statusClass: 'bg-warning/10 text-warning' },
-  { name: 'Miguel Santos', initials: 'MS', color: 'rose', program: 'NUS Exchange', type: 'Outbound', status: 'Reviewing', statusClass: 'bg-primary/10 text-primary' },
-  { name: 'Sarah Lee', initials: 'SL', color: 'amber', program: 'Stanford Summer', type: 'Outbound', status: 'Incomplete', statusClass: 'bg-error/10 text-error' },
+  { name: 'Elena Rodriguez', initials: 'ER', color: 'primary' as const, program: 'Erasmus+ Semester', type: 'Inbound', status: 'Approved', statusClass: 'bg-success/10 text-success' },
+  { name: 'Kenji Sato', initials: 'KS', color: 'info' as const, program: 'UTokyo Joint Research', type: 'Inbound', status: 'Pending Visa', statusClass: 'bg-warning/10 text-warning' },
+  { name: 'Miguel Santos', initials: 'MS', color: 'error' as const, program: 'NUS Exchange', type: 'Outbound', status: 'Reviewing', statusClass: 'bg-primary/10 text-primary' },
+  { name: 'Sarah Lee', initials: 'SL', color: 'warning' as const, program: 'Stanford Summer', type: 'Outbound', status: 'Incomplete', statusClass: 'bg-error/10 text-error' },
 ]
 
 const requirements = [

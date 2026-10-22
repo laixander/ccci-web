@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.fms.ccci.com.ph/customer-info" title="Customer Info">
+  <MockupBrowserFrame url="app.fms.ccci.com.ph/customer-info" title="Customer Info" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col justify-between gap-5">
       <!-- Customer Fields Grid -->
       <div
@@ -42,10 +42,38 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
 interface CustomerField {
   label: string
   value: string
 }
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'credit-limit',
+    title: 'Credit Limit',
+    subtitle: '₱250,000 Approved',
+    icon: 'i-lucide-credit-card',
+    color: 'success',
+    badge: { label: 'N30', color: 'success' }
+  },
+  {
+    id: 'vatable',
+    title: 'VAT Registered',
+    subtitle: 'TIN 004-221-118',
+    icon: 'i-lucide-file-badge',
+    color: 'primary',
+    pulse: true
+  },
+  {
+    id: 'trade-customer',
+    title: 'Trade Customer',
+    subtitle: 'APL Merchandising',
+    icon: 'i-lucide-building-2',
+    color: 'info',
+    badge: { label: 'PESO', color: 'info' }
+  }
+]
 
 const fields: CustomerField[] = [
   { label: 'CODE', value: 'C-00012' },

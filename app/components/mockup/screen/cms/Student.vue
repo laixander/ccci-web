@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.learncore.edu/student/stu-10422" title="My Docket">
+  <MockupBrowserFrame url="app.learncore.edu/student/stu-10422" title="My Docket" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-4">
       <!-- Student Profile -->
       <div class="flex items-center gap-4">
@@ -42,6 +42,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'deans-lister',
+    title: "Dean's Lister",
+    subtitle: 'Liam Cruz · GWA 1.75',
+    icon: 'i-lucide-medal',
+    color: 'warning',
+    badge: { label: 'HONORS', color: 'warning' }
+  },
+  {
+    id: 'testing-permit',
+    title: 'Testing Permit',
+    subtitle: 'Available · 96% Attendance',
+    icon: 'i-lucide-file-badge',
+    color: 'success',
+    pulse: true
+  },
+  {
+    id: 'units',
+    title: '96 Units Earned',
+    subtitle: 'Best in Programming 2025',
+    icon: 'i-lucide-graduation-cap',
+    color: 'primary',
+    badge: { label: '96 UNITS', color: 'primary' }
+  }
+]
+
 const stats = [
   { label: 'GWA',        value: '1.75' },
   { label: 'Units',      value: '96'   },

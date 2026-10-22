@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.fms.ccci.com.ph/trial-balance" title="Trial Balance">
+  <MockupBrowserFrame url="app.fms.ccci.com.ph/trial-balance" title="Trial Balance" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col justify-between gap-5">
       <!-- Trial Balance Table using UTable -->
       <UTable
@@ -28,6 +28,7 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
 import type { TableColumn } from '@nuxt/ui'
 
 interface LedgerItem {
@@ -57,6 +58,33 @@ const columns: TableColumn<LedgerItem>[] = [
     accessorKey: 'credit',
     header: 'CREDIT',
     meta: { class: { td: 'font-mono text-highlighted' } }
+  }
+]
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'balanced',
+    title: 'Trial Balanced',
+    subtitle: '₱6,012,000 = ₱6,012,000',
+    icon: 'i-lucide-scale',
+    color: 'success',
+    badge: { label: 'BALANCED', color: 'success' }
+  },
+  {
+    id: 'total-debits',
+    title: 'Total Debits',
+    subtitle: '₱6,012,000 Posted',
+    icon: 'i-lucide-arrow-up-right',
+    color: 'primary',
+    pulse: true
+  },
+  {
+    id: 'accounts',
+    title: '5 Accounts',
+    subtitle: 'Cash · Revenue · Expenses',
+    icon: 'i-lucide-book-open',
+    color: 'info',
+    badge: { label: '5 ACCTS', color: 'info' }
   }
 ]
 

@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.learncore.edu/parent" title="Parent Dashboard">
+  <MockupBrowserFrame url="app.learncore.edu/parent" title="Parent Dashboard" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex gap-4">
       <!-- Left Side: QR Code -->
       <UCard variant="soft" :ui="{ body: 'sm:p-4 flex flex-col items-center justify-center h-full gap-5' }" class="rounded-lg w-32 shrink-0">
@@ -41,5 +41,33 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'attendance',
+    title: 'Attendance 96%',
+    subtitle: 'Liam Cruz · Grade 11-A',
+    icon: 'i-lucide-calendar-check',
+    color: 'success',
+    badge: { label: '96%', color: 'success' }
+  },
+  {
+    id: 'tuition-due',
+    title: 'Tuition Due',
+    subtitle: '₱18,500 · Term 2',
+    icon: 'i-lucide-banknote',
+    color: 'warning',
+    pulse: true
+  },
+  {
+    id: 'student-link',
+    title: 'STU-10422 Linked',
+    subtitle: 'Section A · QR Verified',
+    icon: 'i-lucide-qr-code',
+    color: 'primary',
+    badge: { label: 'LINKED', color: 'primary' }
+  }
+]
 // Component intentionally left bare as per mockup nature
 </script>

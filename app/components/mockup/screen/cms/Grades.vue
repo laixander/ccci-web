@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.learncore.edu/grades/cs-204" title="Grade Submission · CS-204">
+  <MockupBrowserFrame url="app.learncore.edu/grades/cs-204" title="Grade Submission · CS-204" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col">
       <!-- Main Card -->
       <UCard variant="outline" :ui="{ body: 'sm:p-5 flex flex-col gap-6' }" class="rounded-xl shadow-sm border-0 ring-1 ring-default bg-elevated">
@@ -37,6 +37,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'class-avg',
+    title: 'Class Average',
+    subtitle: '1.68 · Data Structures',
+    icon: 'i-lucide-chart-bar',
+    color: 'primary',
+    badge: { label: '1.68', color: 'primary' }
+  },
+  {
+    id: 'encoded',
+    title: '40 / 42 Encoded',
+    subtitle: '2 For Approval',
+    icon: 'i-lucide-pencil-line',
+    color: 'success',
+    pulse: true
+  },
+  {
+    id: 'inc-tagged',
+    title: '1 Tagged INC',
+    subtitle: 'CS-204 · Action Needed',
+    icon: 'i-lucide-circle-alert',
+    color: 'warning',
+    badge: { label: 'INC', color: 'warning' }
+  }
+]
+
 const progressStats = [
   { label: 'Encoded',      value: 40, max: 42, color: 'primary' as const },
   { label: 'For approval', value: 2,  max: 42, color: 'warning' as const },

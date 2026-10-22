@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.peoplecore.io/recruitment" title="Positions">
+  <MockupBrowserFrame url="app.peoplecore.io/recruitment" title="Positions" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-4">
       <!-- Stats Banner -->
       <UCard variant="soft" :ui="{ body: 'sm:p-4 text-white flex items-center justify-around' }" class="bg-gradient-to-r from-primary-600 to-primary-900 rounded-xl">
@@ -33,6 +33,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'vacancies',
+    title: 'Open Vacancies',
+    subtitle: '33 Slots · Hiring Active',
+    icon: 'i-lucide-user-plus',
+    color: 'warning',
+    badge: { label: '33 OPEN', color: 'warning' }
+  },
+  {
+    id: 'filled',
+    title: 'Filled Positions',
+    subtitle: '202 of 235 Total',
+    icon: 'i-lucide-user-check',
+    color: 'success',
+    pulse: true
+  },
+  {
+    id: 'regular-positions',
+    title: 'Regular Positions',
+    subtitle: '51 Permanent Staff',
+    icon: 'i-lucide-badge-check',
+    color: 'primary',
+    badge: { label: '51 REG', color: 'primary' }
+  }
+]
+
 const stats = [
   { label: 'Total',   value: '95'  },
   { label: 'Filled',  value: '202' },

@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.peoplecore.io/analytics" title="Analytics">
+  <MockupBrowserFrame url="app.peoplecore.io/analytics" title="Analytics" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-4">
       <!-- KPI Row -->
       <div class="grid grid-cols-4 gap-3">
@@ -32,6 +32,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'headcount',
+    title: 'Headcount',
+    subtitle: '360 Employees · ▲4.2%',
+    icon: 'i-lucide-users',
+    color: 'success',
+    badge: { label: '▲4.2%', color: 'success' }
+  },
+  {
+    id: 'turnover',
+    title: 'Turnover Rate',
+    subtitle: '6.1% · ▼1.3% Improved',
+    icon: 'i-lucide-arrow-left-right',
+    color: 'warning',
+    pulse: true
+  },
+  {
+    id: 'open-reqs',
+    title: 'Open Requisitions',
+    subtitle: '9 Active · Faculty Dept.',
+    icon: 'i-lucide-briefcase',
+    color: 'info',
+    badge: { label: '9 REQS', color: 'info' }
+  }
+]
+
 const kpis = [
   { label: 'Headcount',  value: '360', trend: '▲ 4.2%',  up: true  },
   { label: 'Turnover',   value: '6.1%', trend: '▼ 1.3%', up: false },

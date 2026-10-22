@@ -29,7 +29,7 @@ const { el: sectionEl, isVisible } = useScrollReveal({
 })
 </script>
 <template>
-    <UContainer ref="sectionEl" class="section-reveal" :class="{ 'is-visible': isVisible }">
+    <UContainer id="contact" ref="sectionEl" class="section-reveal" :class="{ 'is-visible': isVisible }">
         <UPageCTA
             :title="title"
             :description="description"

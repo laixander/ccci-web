@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.fms.ccci.com.ph/withholding-tax" title="Withholding Tax Rates">
+  <MockupBrowserFrame url="app.fms.ccci.com.ph/withholding-tax" title="Withholding Tax Rates" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col justify-between gap-5">
       <!-- Tax Rates Table using UTable -->
       <UTable
@@ -29,6 +29,7 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
 import type { TableColumn } from '@nuxt/ui'
 
 interface TaxRateItem {
@@ -64,6 +65,33 @@ const columns: TableColumn<TaxRateItem>[] = [
     accessorKey: 'type',
     header: 'TYPE',
     meta: { class: { td: 'text-highlighted font-medium' } }
+  }
+]
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'bir-compliant',
+    title: 'BIR Compliant',
+    subtitle: 'ATC Codes Mapped',
+    icon: 'i-lucide-shield-check',
+    color: 'success',
+    badge: { label: 'COMPLIANT', color: 'success' }
+  },
+  {
+    id: 'slsp-ready',
+    title: 'SLSP Ready',
+    subtitle: 'Expanded WHT Export',
+    icon: 'i-lucide-file-down',
+    color: 'primary',
+    pulse: true
+  },
+  {
+    id: 'tax-codes',
+    title: '4 Tax Codes',
+    subtitle: 'WC100 · WC158 · WC160',
+    icon: 'i-lucide-percent',
+    color: 'warning',
+    badge: { label: '1-5%', color: 'warning' }
   }
 ]
 

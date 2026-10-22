@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.learncore.edu/admin" title="Admin Dashboard">
+  <MockupBrowserFrame url="app.learncore.edu/admin" title="Admin Dashboard" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-4">
       <!-- Purple Banner -->
        <UCard variant="soft" :ui="{ body: 'sm:p-4 text-white flex items-center justify-around' }" class="bg-gradient-to-r from-violet-600 to-indigo-900 rounded-lg">
@@ -66,5 +66,33 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'enrollment',
+    title: '1.2k Students',
+    subtitle: '24 Programs · 186 Subjects',
+    icon: 'i-lucide-users',
+    color: 'primary',
+    badge: { label: '1.2K', color: 'primary' }
+  },
+  {
+    id: 'founding-day',
+    title: 'Founding Day',
+    subtitle: 'School Event · Oct 21',
+    icon: 'i-lucide-calendar-heart',
+    color: 'warning',
+    pulse: true
+  },
+  {
+    id: 'faculty',
+    title: '84 Faculty',
+    subtitle: 'Students · Faculty · Staff',
+    icon: 'i-lucide-graduation-cap',
+    color: 'success',
+    badge: { label: '84', color: 'success' }
+  }
+]
 // Component intentionally left bare as per mockup nature
 </script>

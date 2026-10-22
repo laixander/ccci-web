@@ -250,7 +250,7 @@ const assetLifecycleSteps = [
   <!-- Hero -->
   <ProductHero
     badge="AMS · Asset Management System"
-    background-image="/hero-cms-bg.jpg"
+    background-image="/hero-ams-bg-3.jpg"
     :links="heroLinks"
     :checklist="checklist"
     :modules="modules"
@@ -265,7 +265,7 @@ const assetLifecycleSteps = [
 
   <!-- Core features grid -->
   <UPageSection
-    id="features"
+    id="why-choose-us"
     ref="featuresEl"
     class="section-reveal"
     :class="{ 'is-visible': featuresVisible }"
@@ -293,6 +293,7 @@ const assetLifecycleSteps = [
 
   <!-- Hub diagram: The Platform -->
   <UPageSection
+    id="platform"
     ref="modulesEl"
     class="section-reveal"
     :class="{ 'is-visible': modulesVisible }"
@@ -341,6 +342,7 @@ const assetLifecycleSteps = [
 
   <!-- Asset Lifecycle Timeline -->
   <UPageSection
+    id="lifecycle"
     ref="lifecycleEl"
     class="section-reveal"
     :class="{ 'is-visible': lifecycleVisible }"

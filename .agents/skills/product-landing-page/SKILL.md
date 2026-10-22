@@ -2,8 +2,9 @@
 name: product-landing-page
 description: >
   Layout and design consistency guide for building new CCCI product landing
-  pages. Extracted from the six existing pages: CMS (CampusCore), LMS
-  (LearnCore), HRIS (PeopleCore), AISSP, eLibrary System, and FMS.
+  pages. Extracted from the existing pages: CMS (CampusCore), LMS (LearnCore),
+  HRIS (PeopleCore), AISSP, eLibrary System, FMS, DMS, AMS, ILSP (LinkagesCore),
+  EIS, HKAS, and IRS.
   Use this skill whenever you are scaffolding or reviewing a product page under
   `app/pages/products/<product>/index.vue`.
 ---
@@ -84,9 +85,13 @@ on the page.
 | `reveal-down` | Fades in while translating downward |
 | `reveal-left` | Fades in from the left |
 | `reveal-right` | Fades in from the right |
+| `reveal-fade` | Fades in without translation |
+| `reveal-delay-100` | 100 ms animation delay |
 | `reveal-delay-150` | 150 ms animation delay |
+| `reveal-delay-200` | 200 ms animation delay |
 | `reveal-delay-300` | 300 ms animation delay |
 | `reveal-delay-400` | 400 ms animation delay |
+| `reveal-delay-500` | 500 ms animation delay |
 | `reveal-delay-600` | 600 ms animation delay |
 | `section-reveal` | Base class; hides the element until `is-visible` is added |
 | `is-visible` | Triggers all nested `reveal-*` animations |
@@ -130,7 +135,7 @@ const ctaLinks = [
     label: 'Primary CTA',
     icon: 'i-lucide-<icon>',
     class: 'bg-primary-800 hover:bg-primary-700 dark:bg-primary dark:hover:bg-primary/75',
-    size: 'lg' as const, // optional — used when buttons need more visual weight
+    size: 'lg' as const, // always include for visual weight
   },
   {
     label: 'Secondary CTA',
@@ -141,6 +146,9 @@ const ctaLinks = [
   },
 ]
 ```
+
+> **Note:** `size: 'lg' as const` should be included on **both** ctaLinks
+> buttons for consistent visual weight in the CTA section.
 
 ### 3.3 `modules` — platform/hub navigation items
 
@@ -169,15 +177,13 @@ const features = [
     title: 'Feature Title',
     description: 'One-sentence benefit.',
     icon: 'i-lucide-<icon>',
-    orientation: 'vertical' as const,  // always vertical
   },
-  // × 4 total — do NOT include `orientation` in the data; pass it here
+  // × 4 total
 ]
 ```
 
-> **Note:** `orientation` is NOT needed in the data object when the component
-> renders it via `UPageFeature` directly. Keep it only if you spread the object
-> into a component that requires it.
+> **Note:** `orientation` is NOT needed in the `features` data object; the
+> `UPageSection` with the `#features` slot passes it to `UPageFeature` directly.
 
 ### 3.6 `featureDetails` — per-module deep-dives
 
@@ -240,12 +246,17 @@ const <timelineName>Steps = [
 
 ```
 1. ProductHero            ← always first; self-contained reveal
-2. Core features grid     ← UPageSection id="features" + useScrollReveal ref
-3. Hub diagram            ← UPageSection "The Platform" + useScrollReveal ref
+2. Core features grid     ← UPageSection id="why-choose-us" + useScrollReveal ref
+3. Hub diagram            ← UPageSection id="platform" + useScrollReveal ref
 4. Feature details        ← <ProductFeature> v-for (self-contained reveal)
 5. Bonus section(s)       ← 0–2 extra UPageSections, each with a useScrollReveal ref
 6. CTA                    ← always last; ProductCTA is self-contained
 ```
+
+> **Critical:** The core features section uses `id="why-choose-us"` and the hub
+> diagram uses `id="platform"`. These IDs are tracked by the `useProductNav`
+> composable scroll spy — do **not** use `id="features"` for the core features
+> grid.
 
 ---
 
@@ -257,7 +268,7 @@ const <timelineName>Steps = [
 
 ```vue
 <ProductHero
-  badge="Introducing <ProductName> 2.0"
+  badge="<Badge Text>"
   background-image="/<hero-image-filename>"
   :links="heroLinks"
   :checklist="checklist"
@@ -273,9 +284,15 @@ const <timelineName>Steps = [
 </ProductHero>
 ```
 
+**Badge format rules:**
+
+| Product type | Format | Example |
+|---|---|---|
+| Branded product (named system) | `"Introducing <ProductName> 2.0"` | `"Introducing PeopleCore 2.0"` |
+| Standalone tool / non-branded | Category · descriptor | `"DICT-aligned · Automated ISSP Creator"` |
+| Non-branded system with abbreviation | `"<ABBR> · <Full Name>"` | `"DMS · Document Management System"` |
+
 **Rules:**
-- `badge` format: `"Introducing <ProductName> 2.0"` for branded products, or a
-  category descriptor like `"DICT-aligned · Automated ISSP Creator"`.
 - The `#title` slot always uses `<br>` to create a two-line headline.
 - Always credit CCCI inside `#description` with `<strong>`.
 - The background image has a built-in `hero-bg-reveal` / `hero-bg-visible` CSS
@@ -285,7 +302,7 @@ const <timelineName>Steps = [
 
 ```vue
 <UPageSection
-  id="features"
+  id="why-choose-us"
   ref="featuresEl"
   class="section-reveal"
   :class="{ 'is-visible': featuresVisible }"
@@ -313,7 +330,7 @@ const <timelineName>Steps = [
 ```
 
 **Rules:**
-- `id="features"` is fixed across all pages.
+- `id="why-choose-us"` is fixed across all pages (tracked by `useProductNav`).
 - `headline` is typically `"Why Choose Us"` or a short product category name.
 - Always use the `#features` slot with staggered `animationDelay` — do **not**
   pass `:features` prop directly anymore.
@@ -324,6 +341,7 @@ const <timelineName>Steps = [
 
 ```vue
 <UPageSection
+  id="platform"
   ref="modulesEl"
   class="section-reveal"
   :class="{ 'is-visible': modulesVisible }"
@@ -358,6 +376,7 @@ const <timelineName>Steps = [
 ```
 
 **Rules:**
+- `id="platform"` is fixed across all pages (tracked by `useProductNav`).
 - `orientation="horizontal"` is always set.
 - `HubDiagram` always gets `center-label` (ALL-CAPS abbreviation + ` CORE`)
   and `:nodes="modules"`.
@@ -440,12 +459,56 @@ Use for flagship, security, platform, or add-on sections.
 </UPageSection>
 ```
 
+**Grid column variants:**
+
+| Cards | Grid class |
+|---|---|
+| 4 items | `lg:grid-cols-2` |
+| 3 items (deployment-style) | `lg:grid-cols-3` |
+| 5 items (add-on steps) | `sm:grid-cols-2 lg:grid-cols-5` (or `lg:grid-cols-3`) |
+
 **Rules:**
 - `spotlight` is always present on `UPageCard`.
 - `leadingIcon` ui override is always `'text-primary p-2 rounded-lg size-8'`.
-- Grid is `lg:grid-cols-2` for 4-item grids; `sm:grid-cols-2 lg:grid-cols-5`
-  for 5-item add-on grids.
 - Always stagger cards: `400 + index * 80ms`.
+
+### 5.5a Deployment-style cards with `#headline` slot
+
+When cards need a small label badge above the title (e.g., DMS deployment section):
+
+```vue
+<UPageGrid class="lg:grid-cols-3">
+  <UPageCard
+    v-for="(feat, index) in deploymentFeatures"
+    :key="feat.title"
+    :title="feat.title"
+    :description="feat.description"
+    :icon="feat.icon"
+    :ui="{ leadingIcon: 'text-primary p-2 rounded-lg size-8' }"
+    spotlight
+    class="reveal-up"
+    :style="{ animationDelay: `${400 + index * 80}ms` }"
+  >
+    <template #headline>
+      <span class="text-[10px] font-bold uppercase tracking-widest text-muted">{{ feat.label }}</span>
+    </template>
+  </UPageCard>
+</UPageGrid>
+```
+
+The data shape for these cards includes an extra `label` field:
+
+```ts
+const deploymentFeatures = [
+  {
+    title: 'Any backend you choose',
+    description: 'File system, S3-compatible cloud storage, or on-premise Minio.',
+    icon: 'i-lucide-hard-drive',
+    label: 'Storage',
+  },
+  // 3 items total
+]
+```
 
 ### 5.6 Custom Icon Leading for Add-on Cards
 
@@ -515,21 +578,94 @@ independently once they enter the viewport.
 
 ---
 
-## 6. Naming Conventions
+## 6. `useProductNav` — Scroll Spy Navigation Integration
+
+The `product` layout (`app/layouts/product.vue`) uses `useProductNav` to build
+the sticky header nav with active section highlighting. **Every new product page
+must be registered in two maps** inside
+`app/composables/useProductNav.ts`:
+
+### 6.1 `productBonusNavMap` — bonus section nav item
+
+Register the product's bonus section (the section between feature details and
+the CTA):
+
+```ts
+export const productBonusNavMap: Record<string, NavigationMenuItem> = {
+  // …existing entries…
+  <product>: { label: '<Bonus Section Label>', to: '#<bonus-section-id>' },
+}
+```
+
+| Product key | Label | Anchor |
+|---|---|---|
+| `hris` | Add-on Modules | `#addons` |
+| `cms` | Security & Settings | `#security-settings` |
+| `lms` | AI Tutorial | `#ai-features` |
+| `aissp` | Planning Flow | `#how-it-works` |
+| `fms` | Financial Cycle | `#cycle` |
+| `ams` | Asset Lifecycle | `#lifecycle` |
+| `elib` | Architecture | `#platform-architecture` |
+| `dms` | Deployment | `#deployment` |
+| `ilsp` | Global Analytics | `#analytics` |
+| `eis` | Data Pipelines | `#pipelines` |
+| `hkas` | Wellness Dashboard | `#dashboard` |
+| `irs` | Prevention Flow | `#flow` |
+
+### 6.2 `productFeaturesMap` — per-module dropdown nav children
+
+Register the product's feature modules with label, anchor, description, and
+icon. These become the dropdown children under "Features" in the header nav:
+
+```ts
+export const productFeaturesMap: Record<string, NavigationMenuItem[]> = {
+  // …existing entries…
+  <product>: [
+    { label: 'Module A', to: '#module-a', description: 'Short description', icon: 'i-lucide-<icon>' },
+    { label: 'Module B', to: '#module-b', description: 'Short description', icon: 'i-lucide-<icon>' },
+    // One entry per featureDetails module
+  ],
+}
+```
+
+**Rules:**
+- Each `to` anchor must exactly match the corresponding `featureDetails[n].id`.
+- Always use kebab-case IDs: `#employee-records`, `#ocr-transcribing`, etc.
+- The `description` is a short phrase shown in the nav dropdown.
+- Icons should match the ones used in `modules[]` on the page.
+
+### 6.3 Tracked section IDs (auto-computed)
+
+The composable auto-builds the scroll-spy list in this order:
+1. `why-choose-us`
+2. `platform`
+3. All `productFeaturesMap[product]` anchors
+4. The `productBonusNavMap[product]` anchor
+5. `contact`
+
+This means your section `id` attributes **must** exactly match the registered
+anchors. The scroll progress bar and nav highlighting are driven by this list.
+
+---
+
+## 7. Naming Conventions
 
 | Concept | Convention | Example |
 |---|---|---|
 | Page file | `app/pages/products/<product>/index.vue` | `app/pages/products/fms/index.vue` |
 | Mockup component import | `MockupScreen<Product><Module>` | `MockupScreenHrisPayroll` |
-| Section anchor id | kebab-case, matches `modules[n].to` | `id="employee-records"` |
+| Core features section id | `why-choose-us` (fixed) | `id="why-choose-us"` |
+| Hub diagram section id | `platform` (fixed) | `id="platform"` |
+| Feature detail section id | kebab-case, matches `modules[n].to` | `id="employee-records"` |
 | Scroll reveal ref | `<sectionName>El` / `<sectionName>Visible` | `featuresEl`, `featuresVisible` |
 | Center label in HubDiagram | `"<ABBR> CORE"` | `"HR CORE"` |
 | Hero badge (branded product) | `"Introducing <ProductName> 2.0"` | `"Introducing PeopleCore 2.0"` |
 | Hero badge (standalone tool) | Category · descriptor | `"DICT-aligned · Automated ISSP Creator"` |
+| Hero badge (system with abbreviation) | `"<ABBR> · <Full System Name>"` | `"DMS · Document Management System"` |
 
 ---
 
-## 7. Icon Usage Guidelines
+## 8. Icon Usage Guidelines
 
 - Use **Lucide icons** exclusively (`i-lucide-*`).
 - Feature bullets always use `i-lucide-check`.
@@ -551,10 +687,21 @@ independently once they enter the viewport.
 | Demo / Calendar CTA | `i-lucide-calendar` |
 | Phone / Sales CTA | `i-lucide-phone` |
 | Play / Watch Demo | `i-lucide-play-circle` |
+| Documents / Files | `i-lucide-file-text` |
+| Search | `i-lucide-search` |
+| OCR / Scanning | `i-lucide-scan-text` |
+| Digital Signature | `i-lucide-pen-tool` |
+| Versioning / History | `i-lucide-history` |
+| Workflow / Routing | `i-lucide-workflow` |
+| QR / Barcode | `i-lucide-qr-code` |
+| Assets / Boxes | `i-lucide-boxes` |
+| Maintenance / Repair | `i-lucide-wrench` |
+| Partnerships / Globe | `i-lucide-globe` |
+| Mobility / Travel | `i-lucide-plane` |
 
 ---
 
-## 8. Section Checklist for New Pages
+## 9. Section Checklist for New Pages
 
 Before shipping a new product landing page, verify:
 
@@ -562,11 +709,13 @@ Before shipping a new product landing page, verify:
 - [ ] `useSeoMeta` title and description filled in
 - [ ] `useScrollReveal` refs declared for every UPageSection that needs reveal
 - [ ] `heroLinks` has 2 buttons; primary has `class: 'hero-cta-shadow'`
-- [ ] `ctaLinks` has 2 buttons; primary uses the correct dark-mode class
+- [ ] `ctaLinks` has 2 buttons; both have `size: 'lg' as const`; primary uses the correct dark-mode class
 - [ ] `checklist` has exactly 3 items
-- [ ] `features` has exactly 4 items
+- [ ] `features` has exactly 4 items (no `orientation` in the data object)
+- [ ] Core features grid uses `id="why-choose-us"` (not `id="features"`)
 - [ ] Core features grid uses `#features` slot with staggered `animationDelay`
 - [ ] Core features grid `UPageSection` has `root: 'min-h-screen flex flex-col justify-center'`
+- [ ] Hub diagram section uses `id="platform"`
 - [ ] Hub diagram `UPageSection` has `root: 'min-h-screen flex flex-col justify-center'`
 - [ ] `HubDiagram` has `class="reveal-right reveal-delay-400"` and correct `center-label`
 - [ ] Feature details use `<ProductFeature>` (not raw `<UPageSection>`)
@@ -577,10 +726,13 @@ Before shipping a new product landing page, verify:
 - [ ] Final `<UPageSection>` (CTA wrapper) has **no props**
 - [ ] All icons are Lucide (`i-lucide-*`)
 - [ ] Mockup components imported from `#components`
+- [ ] Product registered in `productBonusNavMap` in `useProductNav.ts`
+- [ ] Product registered in `productFeaturesMap` in `useProductNav.ts`
+- [ ] All `productFeaturesMap` anchors match `featureDetails[n].id` exactly
 
 ---
 
-## 9. Full Minimal Template
+## 10. Full Minimal Template
 
 ```vue
 <script setup lang="ts">
@@ -611,8 +763,8 @@ const heroLinks = [
 ]
 
 const ctaLinks = [
-  { label: 'Request a Demo', icon: 'i-lucide-calendar', class: 'bg-primary-800 hover:bg-primary-700 dark:bg-primary dark:hover:bg-primary/75' },
-  { label: 'Contact Sales', color: 'neutral' as const, variant: 'soft' as const, trailingIcon: 'i-lucide-phone' },
+  { label: 'Request a Demo', icon: 'i-lucide-calendar', class: 'bg-primary-800 hover:bg-primary-700 dark:bg-primary dark:hover:bg-primary/75', size: 'lg' as const },
+  { label: 'Contact Sales', color: 'neutral' as const, variant: 'soft' as const, trailingIcon: 'i-lucide-phone', size: 'lg' as const },
 ]
 
 const modules = [
@@ -667,7 +819,7 @@ const featureDetails = [
 <template>
   <!-- Hero (self-contained reveal) -->
   <ProductHero
-    badge="Introducing <ProductName> 2.0"
+    badge="<ABBR> · <Full System Name>"
     background-image="/hero-<product>-bg.jpg"
     :links="heroLinks"
     :checklist="checklist"
@@ -684,7 +836,7 @@ const featureDetails = [
 
   <!-- Core features grid -->
   <UPageSection
-    id="features"
+    id="why-choose-us"
     ref="featuresEl"
     class="section-reveal"
     :class="{ 'is-visible': featuresVisible }"
@@ -712,6 +864,7 @@ const featureDetails = [
 
   <!-- Hub diagram -->
   <UPageSection
+    id="platform"
     ref="modulesEl"
     class="section-reveal"
     :class="{ 'is-visible': modulesVisible }"

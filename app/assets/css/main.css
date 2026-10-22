@@ -416,7 +416,8 @@ html {
 .reveal-up,
 .reveal-down,
 .reveal-left,
-.reveal-right {
+.reveal-right,
+.reveal-fade {
   opacity: 0;
   animation-duration: 0.85s;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
@@ -438,6 +439,10 @@ html {
 
 .reveal-right {
   animation-name: kf-reveal-right;
+}
+
+.reveal-fade {
+  animation-name: kf-reveal-fade;
 }
 
 /* Stagger helpers */
@@ -469,11 +474,17 @@ html {
   animation-delay: 600ms;
 }
 
-/* Trigger: play all child reveal animations once parent gets .is-visible */
+/* Trigger: play all child and self reveal animations once .is-visible is gained */
+.section-reveal.is-visible.reveal-up,
+.section-reveal.is-visible.reveal-down,
+.section-reveal.is-visible.reveal-left,
+.section-reveal.is-visible.reveal-right,
+.section-reveal.is-visible.reveal-fade,
 .section-reveal.is-visible .reveal-up,
 .section-reveal.is-visible .reveal-down,
 .section-reveal.is-visible .reveal-left,
-.section-reveal.is-visible .reveal-right {
+.section-reveal.is-visible .reveal-right,
+.section-reveal.is-visible .reveal-fade {
   animation-play-state: running;
 }
 
@@ -525,13 +536,24 @@ html {
   }
 }
 
+@keyframes kf-reveal-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 /* Honour reduced-motion preference */
 @media (prefers-reduced-motion: reduce) {
 
   .reveal-up,
   .reveal-down,
   .reveal-left,
-  .reveal-right {
+  .reveal-right,
+  .reveal-fade {
     animation: none;
     opacity: 1;
   }

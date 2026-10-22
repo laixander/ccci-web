@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.learncore.edu/teaching/cs-204" title="Teaching · CS-204">
+  <MockupBrowserFrame url="app.learncore.edu/teaching/cs-204" title="Teaching · CS-204" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-6">
       <!-- Tabs -->
       <div class="flex items-center gap-2">
@@ -56,5 +56,33 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'active-lesson',
+    title: 'CS-204 Lessons',
+    subtitle: '3 Materials Published',
+    icon: 'i-lucide-book-open',
+    color: 'primary',
+    badge: { label: '3 MODS', color: 'primary' }
+  },
+  {
+    id: 'quiz',
+    title: 'Quiz 3: Big-O',
+    subtitle: 'Results Ready · CSV',
+    icon: 'i-lucide-clipboard-check',
+    color: 'success',
+    pulse: true
+  },
+  {
+    id: 'new-lesson',
+    title: 'Module 4 Upload',
+    subtitle: 'Recursion · PDF Ready',
+    icon: 'i-lucide-file-plus',
+    color: 'info',
+    badge: { label: 'NEW', color: 'info' }
+  }
+]
 // Component intentionally left bare as per mockup nature
 </script>

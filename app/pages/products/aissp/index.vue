@@ -218,7 +218,7 @@ const howItWorksSteps = [
 <template>
     <!-- Hero -->
     <ProductHero badge="DICT-aligned · Automated ISSP Creator"
-        background-image="/Woman_holding_tablet_in_office_2K_20261014094349.jpg" :links="heroLinks"
+        background-image="/hero-aissp-bg.jpg" :links="heroLinks"
         :checklist="checklist" :modules="modules">
         <template #title>
             Strategic planning,<br> on autopilot.
@@ -231,7 +231,7 @@ const howItWorksSteps = [
     </ProductHero>
 
     <!-- Core features grid -->
-    <UPageSection id="features" ref="featuresEl" class="section-reveal" :class="{ 'is-visible': featuresVisible }"
+    <UPageSection id="why-choose-us" ref="featuresEl" class="section-reveal" :class="{ 'is-visible': featuresVisible }"
         headline="Why choose us" title="Why our AISSP stands out"
         description="A strategic-planning platform engineered around compliance, cost control and the way institutions actually plan their IT."
         :ui="{
@@ -248,7 +248,7 @@ const howItWorksSteps = [
     </UPageSection>
 
     <!-- Modules Structure -->
-    <UPageSection ref="modulesEl" class="section-reveal" :class="{ 'is-visible': modulesVisible }"
+    <UPageSection id="platform" ref="modulesEl" class="section-reveal" :class="{ 'is-visible': modulesVisible }"
         headline="The Platform" title="Six areas. One connected plan."
         description="A unified ISSP creator that links every planning function — system reordering, office productivity, prototyping, reporting, deliverables and the technical platform. One IT-needs database drives every export, kept in sync across campuses."
         orientation="horizontal" :ui="{
@@ -279,7 +279,7 @@ const howItWorksSteps = [
     </ProductFeature>
 
     <!-- How it works -->
-    <UPageSection ref="howItWorksEl" class="section-reveal" :class="{ 'is-visible': howItWorksVisible }"
+    <UPageSection id="how-it-works" ref="howItWorksEl" class="section-reveal" :class="{ 'is-visible': howItWorksVisible }"
         :headline="howItWorks.headline" :title="howItWorks.title" :description="howItWorks.description"
         :ui="{
             root: 'min-h-screen flex flex-col justify-center',

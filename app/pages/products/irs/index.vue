@@ -1,270 +1,334 @@
 <script setup lang="ts">
+// ─── Imports ──────────────────────────────────────────────────────────────────
+import {
+  MockupScreenIrsApp,
+  MockupScreenIrsPhotoVideo,
+  MockupScreenIrsLocation,
+  MockupScreenIrsTemplates,
+  MockupScreenIrsDispatch,
+  MockupScreenIrsDashboard,
+} from '#components'
+
+// ─── Page Meta ────────────────────────────────────────────────────────────────
 definePageMeta({ layout: 'product' })
 
+// ─── SEO ──────────────────────────────────────────────────────────────────────
 useSeoMeta({
-  title: 'IRS — Incident Reporting System | SafeReport',
-  description: 'Log, track, and analyze workplace accidents, near-misses, and safety hazards in real time. SafeReport by CCCI keeps your organization safe, compliant, and audit-ready — on mobile and desktop.',
+  title: 'IRS — Incident Reporting System | CCCI',
+  description: 'A mobile app that lets students report incidents instantly — with photo, video, and precise location, straight to campus response teams.',
 })
 
-const features = [
-  {
-    title: 'One-Tap Incident Logging',
-    description: 'Report accidents, near-misses, and hazards from anywhere in seconds — via mobile app or web. Attach photos, videos, GPS location, and witness statements on the spot.',
-    icon: 'i-lucide-triangle-alert',
-  },
-  {
-    title: 'Real-Time Tracking & Escalation',
-    description: 'Monitor every incident through a structured lifecycle — from initial report to investigation, corrective action, and closure — with automated escalation alerts.',
-    icon: 'i-lucide-activity',
-  },
-  {
-    title: 'Root Cause Analysis',
-    description: 'Built-in RCA tools including Fishbone diagrams and 5 Whys methodology. Identify systemic causes, not just symptoms, to prevent recurrence.',
-    icon: 'i-lucide-search',
-  },
-  {
-    title: 'Corrective Action Management',
-    description: 'Assign corrective and preventive actions (CAPA) with due dates, owners, and priority levels. Track completion and verify effectiveness automatically.',
-    icon: 'i-lucide-clipboard-check',
-  },
-  {
-    title: 'Safety Analytics & Heatmaps',
-    description: 'Visualize incident frequency, type, severity, and location trends. Interactive dashboards and heatmaps reveal your highest-risk areas and times.',
-    icon: 'i-lucide-bar-chart-2',
-  },
-  {
-    title: 'Compliance & Audit Reporting',
-    description: 'Generate DOLE, BIR, and ISO 45001-aligned safety reports in one click. Maintain a complete, tamper-proof audit trail with timestamped records.',
-    icon: 'i-lucide-shield-check',
-  },
-]
+// ─── Scroll Reveal ────────────────────────────────────────────────────────────
+const { el: featuresEl, isVisible: featuresVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: modulesEl,  isVisible: modulesVisible  } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: flowEl,     isVisible: flowVisible     } = useScrollReveal({ threshold: 0.3, delay: 300 })
 
-const stats = [
-  { value: '300+', label: 'Organizations Protected' },
-  { value: '50k+', label: 'Incidents Logged' },
-  { value: '72%', label: 'Faster Incident Closure' },
-  { value: '100%', label: 'Audit Trail Coverage' },
-]
-
-const testimonials = [
-  {
-    quote: 'SafeReport replaced our paper-based system overnight. Our safety officers now log incidents in under a minute from their phones, and management gets real-time alerts. Lost-time injuries are down 40% since we deployed it.',
-    author: 'Engr. Ramon Dela Cruz',
-    role: 'EHS Manager, PhilSteel Industrial Corp.',
-    initials: 'RD',
-  },
-  {
-    quote: 'The analytics heatmaps alone were worth it. We discovered that 60% of our near-misses happened in one area during one shift. We fixed the root cause, and incidents dropped dramatically. SafeReport paid for itself in a month.',
-    author: 'Patricia Navarro',
-    role: 'Safety Officer, Batangas Logistics Hub',
-    initials: 'PN',
-  },
-  {
-    quote: 'DOLE audit compliance is stressful — but not anymore. SafeReport generates audit-ready reports in seconds, and our entire incident history is always available with a complete chain of custody. Our last DOLE inspection was the smoothest ever.',
-    author: 'Atty. Jose Bautista',
-    role: 'Compliance Director, Cebu Manufacturing Group',
-    initials: 'JB',
-  },
-]
-
-const plans = [
-  {
-    title: 'Starter',
-    description: 'For small teams getting started with digital incident reporting and basic compliance.',
-    price: '₱2,000',
-    features: [
-      'Up to 25 users',
-      'Incident logging & tracking',
-      'Photo & GPS attachment',
-      'Basic reporting',
-      'Email notifications',
-    ],
-  },
-  {
-    title: 'Professional',
-    description: 'For growing organizations that need full investigations, CAPA, and analytics.',
-    price: '₱5,500',
-    badge: 'Most Popular',
-    highlight: true,
-    features: [
-      'Up to 200 users',
-      'Everything in Starter',
-      'Root Cause Analysis tools',
-      'CAPA management',
-      'Analytics & heatmaps',
-      'DOLE compliance reports',
-      'Priority support',
-    ],
-  },
-  {
-    title: 'Enterprise',
-    description: 'For multi-site organizations and companies with complex EHS compliance requirements.',
-    price: 'Custom',
-    features: [
-      'Unlimited users & sites',
-      'Everything in Professional',
-      'Multi-site management',
-      'ISO 45001 reporting',
-      'Custom integrations & API',
-      'Dedicated EHS consultant',
-      'On-site onboarding',
-    ],
-  },
-]
-
+// ─── Navigation & UI Data ─────────────────────────────────────────────────────
 const heroLinks = [
-  { label: 'Request a Demo', to: '#pricing', icon: 'i-lucide-calendar', size: 'xl' as const },
-  { label: 'See It in Action', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-play-circle', size: 'xl' as const },
+  {
+    label: 'Request a Demo',
+    trailingIcon: 'i-lucide-calendar',
+    class: 'hero-cta-shadow',
+  },
+  {
+    label: 'Explore Modules',
+    to: '#platform',
+    color: 'neutral' as const,
+    variant: 'soft' as const,
+    icon: 'i-lucide-play-circle',
+  },
 ]
 
 const ctaLinks = [
-  { label: 'Request a Demo', icon: 'i-lucide-calendar', size: 'lg' as const },
-  { label: 'Talk to an EHS Expert', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-phone', size: 'lg' as const },
+  {
+    label: 'Request a Demo',
+    icon: 'i-lucide-calendar',
+    class: 'bg-primary-800 hover:bg-primary-700 dark:bg-primary dark:hover:bg-primary/75',
+    size: 'lg' as const,
+  },
+  {
+    label: 'Contact Campus Safety',
+    color: 'neutral' as const,
+    variant: 'soft' as const,
+    trailingIcon: 'i-lucide-phone',
+    size: 'lg' as const,
+  },
 ]
 
-const logoIcons = [
-  { name: 'i-simple-icons-google', label: 'Google' },
-  { name: 'i-simple-icons-microsoft', label: 'Microsoft' },
-  { name: 'i-simple-icons-amazon', label: 'Amazon' },
-  { name: 'i-simple-icons-apple', label: 'Apple' },
-  { name: 'i-simple-icons-meta', label: 'Meta' },
-  { name: 'i-simple-icons-siemens', label: 'Siemens' },
+const modules = [
+  { title: 'Mobile App',          icon: 'i-lucide-smartphone',       to: '#mobile-app' },
+  { title: 'Photo & Video',       icon: 'i-lucide-camera',           to: '#photo-video' },
+  { title: 'Precise Location',    icon: 'i-lucide-map-pin',          to: '#precise-location' },
+  { title: 'Emergency Templates', icon: 'i-lucide-file-text',        to: '#emergency-templates' },
+  { title: 'Instant Dispatch',    icon: 'i-lucide-radio',            to: '#instant-dispatch' },
+  { title: 'Response Dashboard',  icon: 'i-lucide-layout-dashboard', to: '#response-dashboard' },
+]
+
+const checklist = [
+  'Android & iOS compatible',
+  'Live location sharing',
+  'No voice or text plan needed',
+]
+
+// ─── Page Content Data ────────────────────────────────────────────────────────
+const features = [
+  {
+    title: 'Sub-60s Emergency Reporting',
+    description: 'Students report accidents, medical emergencies, and safety hazards in seconds with photos, video clips, and templates — zero airtime or load required.',
+    icon: 'i-lucide-zap',
+  },
+  {
+    title: 'Precision GPS & Floor Mapping',
+    description: 'Pinpoint building, floor level, and precise coordinates automatically so responders know the exact location before arriving on scene.',
+    icon: 'i-lucide-map-pin',
+  },
+  {
+    title: 'Instant Team Dispatch',
+    description: 'Alerts route directly to on-duty campus security, medical personnel, and administrative teams without manual phone relays or call-center delays.',
+    icon: 'i-lucide-radio',
+  },
+  {
+    title: 'Live Incident Command',
+    description: 'Real-time dashboard tracks incident status from initial student alert to resolution, keeping reporters informed and responders coordinated.',
+    icon: 'i-lucide-shield-alert',
+  },
+]
+
+const featureDetails = [
+  {
+    id: 'mobile-app',
+    title: 'Mobile App',
+    description: 'Report from the phone students already carry.',
+    features: [
+      { description: 'Compatible with Android and iOS devices.', icon: 'i-lucide-check' },
+      { description: 'Removes the cost of mobile voice and text services.', icon: 'i-lucide-check' },
+      { description: 'Effortless navigation designed for high-stress emergency situations.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: false,
+    component: MockupScreenIrsApp,
+  },
+  {
+    id: 'photo-video',
+    title: 'Photo & Video',
+    description: 'Show responders what is happening in real time.',
+    features: [
+      { description: 'Capture photo and video directly from the device camera.', icon: 'i-lucide-check' },
+      { description: 'Transmit evidence straight to the appropriate campus authorities.', icon: 'i-lucide-check' },
+      { description: 'Eliminate physical reporting delays with immediate visual assessment.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: true,
+    component: MockupScreenIrsPhotoVideo,
+  },
+  {
+    id: 'precise-location',
+    title: 'Precise Location',
+    description: 'Responders know exactly where to go.',
+    features: [
+      { description: 'Precise location details attached automatically to every report.', icon: 'i-lucide-check' },
+      { description: 'Pinpoint building, floor, and nearest landmark to assist students promptly.', icon: 'i-lucide-check' },
+      { description: 'Reduces critical back-and-forth phone calls and search time.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: false,
+    component: MockupScreenIrsLocation,
+  },
+  {
+    id: 'emergency-templates',
+    title: 'Emergency Templates',
+    description: 'No typing when every second counts.',
+    features: [
+      { description: 'Pre-configured templates for common campus emergencies.', icon: 'i-lucide-check' },
+      { description: 'Saves valuable seconds during high-pressure emergency situations.', icon: 'i-lucide-check' },
+      { description: 'Captures consistent, actionable details that responders can act on immediately.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: true,
+    component: MockupScreenIrsTemplates,
+  },
+  {
+    id: 'instant-dispatch',
+    title: 'Instant Dispatch',
+    description: 'From tap to responder, instantly.',
+    features: [
+      { description: 'Delivered directly to the right response team and security outpost.', icon: 'i-lucide-check' },
+      { description: 'No delay from physical reporting or manual telephone relays.', icon: 'i-lucide-check' },
+      { description: 'Reporter is kept continuously informed of status and responder ETA.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: false,
+    component: MockupScreenIrsDispatch,
+  },
+  {
+    id: 'response-dashboard',
+    title: 'Response Dashboard',
+    description: 'See every open incident at a glance.',
+    features: [
+      { description: 'Live list of open incidents categorized by urgency and building.', icon: 'i-lucide-check' },
+      { description: 'Track status from reported to en route and resolved in real time.', icon: 'i-lucide-check' },
+      { description: 'Comprehensive overview of campus-wide response activity and officer status.', icon: 'i-lucide-check' },
+    ],
+    orientation: 'horizontal' as const,
+    reverse: true,
+    component: MockupScreenIrsDashboard,
+  },
+]
+
+// ─── Response Flow Timeline Data ─────────────────────────────────────────────
+const responseFlowSteps = [
+  {
+    value: 'report',
+    step: '01',
+    phase: 'Report',
+    title: 'Student sends the alert',
+    description: 'A template, photo, video, and location — sent in seconds without needing mobile voice or text plans.',
+    icon: 'i-lucide-smartphone',
+    deliverable: 'Instant Alert',
+  },
+  {
+    value: 'dispatch',
+    step: '02',
+    phase: 'Dispatch',
+    title: 'Response team is notified',
+    description: 'The report reaches the right team instantly, eliminating physical reporting delays and routing confusion.',
+    icon: 'i-lucide-radio',
+    deliverable: 'Team Assigned',
+  },
+  {
+    value: 'resolve',
+    step: '03',
+    phase: 'Resolve',
+    title: 'Help arrives informed',
+    description: 'Campus responders reach the student with building, floor, and visual evidence in hand before they arrive.',
+    icon: 'i-lucide-shield-check',
+    deliverable: 'Incident Closed',
+  },
 ]
 </script>
 
 <template>
-  <!-- Hero -->
-  <UPageHero
-    headline="Introducing SafeReport 2.0"
-    title="Workplace Safety, Digitized — Report, Track & Prevent Every Incident"
-    description="From factory floors to office buildings — SafeReport gives your EHS team a powerful mobile-first platform to log accidents, near-misses, and hazards in real time. Stay compliant, investigate faster, and prevent the next incident before it happens."
+  <!-- Hero (self-contained reveal) -->
+  <ProductHero
+    badge="IRS · Incident Reporting System"
+    background-image="/Parents_reassuring_teen_student_2K_20261022130259.jpg"
     :links="heroLinks"
-    orientation="horizontal"
+    :checklist="checklist"
+    :modules="modules"
   >
-    <MockupScreenIrsDashboard />
-  </UPageHero>
-
-  <!-- Social proof -->
-  <div class="border-y border-default bg-muted/50 py-10">
-    <UContainer>
-      <p class="text-center text-dimmed text-xs font-semibold uppercase tracking-widest mb-8">
-        Trusted by safety teams across manufacturing, logistics, and construction
-      </p>
-      <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
-        <UIcon
-          v-for="logo in logoIcons"
-          :key="logo.name"
-          :name="logo.name"
-          :aria-label="logo.label"
-          class="size-7 text-muted"
-        />
-      </div>
-    </UContainer>
-  </div>
+    <template #title>
+      An emergency report, sent in seconds.
+    </template>
+    <template #description>
+      A mobile app that lets students report incidents instantly — with photo, video, and precise location, straight to campus response teams — built by
+      <strong>Centralized Cloud Computing International</strong>.
+    </template>
+  </ProductHero>
 
   <!-- Core features grid -->
   <UPageSection
-    id="features"
-    headline="Features"
-    title="Everything your EHS team needs to manage safety end-to-end"
-    description="From a single-site SME to a multi-plant enterprise — SafeReport covers the entire incident lifecycle, from first report to final resolution and regulatory compliance."
-    :features="features"
-  />
-
-  <!-- Feature detail: Mobile reporting -->
-  <UPageSection
-    title="Report any incident in under 60 seconds — from your phone"
-    description="SafeReport's mobile app is built for speed. Your workers can log a near-miss or accident with a photo, GPS pin, and incident type in less than a minute. No paper forms, no delays. Reports land in the safety officer's dashboard instantly, with automated escalation for critical events."
-    orientation="horizontal"
+    id="why-choose-us"
+    ref="featuresEl"
+    class="section-reveal"
+    :class="{ 'is-visible': featuresVisible }"
+    headline="Why Choose Us"
+    title="Built for universities and colleges that need faster emergency response"
+    description="IRS connects student phones directly to on-duty campus response teams — eliminating lost calls, manual delays, and miscommunication when every second counts."
+    :ui="{
+      root: 'min-h-screen flex flex-col justify-center',
+      features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10',
+      headline: 'reveal-down',
+      title: 'reveal-up reveal-delay-150',
+      description: 'reveal-up reveal-delay-300',
+    }"
   >
-    <MockupScreenIrsDashboard />
+    <template #features>
+      <UPageFeature
+        v-for="(feature, i) in features"
+        :key="feature.title"
+        v-bind="feature"
+        class="reveal-up"
+        :style="{ animationDelay: `${400 + i * 100}ms` }"
+      />
+    </template>
   </UPageSection>
 
-  <!-- Feature detail: Analytics -->
+  <!-- Hub diagram: The Platform -->
   <UPageSection
-    title="Turn incident data into prevention intelligence"
-    description="SafeReport's analytics engine transforms raw incident logs into actionable insights. Spot patterns by location, shift, worker role, or equipment type. Interactive heatmaps reveal your highest-risk zones. Trend charts show whether your safety program is working — or where it needs reinforcement."
+    id="platform"
+    ref="modulesEl"
+    class="section-reveal"
+    :class="{ 'is-visible': modulesVisible }"
+    headline="The Platform"
+    title="Six capabilities. One emergency response."
+    description="IRS is a single platform that carries a report from a student's phone to a responder's screen — capture, location, templates, and dispatch, all connected. Nothing gets lost in a phone call, and nothing gets typed twice."
     orientation="horizontal"
-    reverse
+    :ui="{
+      root: 'min-h-screen flex flex-col justify-center',
+      features: 'grid grid-cols-2 gap-4',
+      headline: 'reveal-down',
+      title: 'reveal-up reveal-delay-150',
+      description: 'reveal-up reveal-delay-300',
+    }"
   >
-    <div class="w-full rounded-xl overflow-hidden shadow-2xl ring-1 ring-default bg-default p-6 space-y-5">
-      <!-- Mini analytics mockup -->
-      <div class="flex items-center justify-between">
-        <p class="text-sm font-bold text-highlighted">Incident Trends — Aug 2026</p>
-        <span class="text-xs px-2.5 py-1 rounded-full bg-success/10 text-success font-semibold">↓ 28% vs last month</span>
-      </div>
-      <!-- Fake bar chart -->
-      <div class="flex items-end gap-2 h-28">
-        <div v-for="(bar, i) in [55, 70, 48, 85, 40, 62, 35, 78, 45, 30, 55, 42]" :key="i" class="flex-1 rounded-t-md bg-red-500/20 hover:bg-red-500/40 transition-colors relative group" :style="{ height: bar + '%' }">
-          <div class="absolute inset-x-0 top-0 h-1 rounded-t-md bg-red-500 opacity-60" />
-        </div>
-      </div>
-      <div class="grid grid-cols-3 gap-3">
-        <div v-for="cat in [{ label: 'Slip & Fall', pct: 34, color: 'bg-red-500' }, { label: 'Near-Miss', pct: 28, color: 'bg-orange-500' }, { label: 'Equipment', pct: 22, color: 'bg-amber-500' }]" :key="cat.label" class="rounded-lg p-3 bg-muted/50 border border-default">
-          <p class="text-xs text-muted mb-1">{{ cat.label }}</p>
-          <p class="text-lg font-extrabold text-highlighted">{{ cat.pct }}%</p>
-          <div class="h-1.5 rounded-full bg-muted mt-2">
-            <div :class="['h-1.5 rounded-full', cat.color]" :style="{ width: cat.pct + '%' }" />
-          </div>
-        </div>
-      </div>
+    <template #features>
+      <UPageFeature
+        v-for="(module, index) in modules"
+        :key="index"
+        :title="module.title"
+        icon="i-lucide-check"
+        class="reveal-up"
+        :style="{ animationDelay: `${400 + index * 60}ms` }"
+      />
+    </template>
+    <HubDiagram
+      center-label="IRS CORE"
+      :nodes="modules"
+      class="reveal-right reveal-delay-400"
+    />
+  </UPageSection>
+
+  <!-- Feature details (self-contained reveal via ProductFeature) -->
+  <ProductFeature
+    v-for="(feature, index) in featureDetails"
+    :key="index"
+    :id="feature.id"
+    :title="feature.title"
+    :description="feature.description"
+    :features="feature.features"
+    :orientation="feature.orientation"
+    :reverse="feature.reverse"
+  >
+    <component :is="feature.component" />
+  </ProductFeature>
+
+  <!-- Response Flow -->
+  <UPageSection
+    id="flow"
+    ref="flowEl"
+    class="section-reveal"
+    :class="{ 'is-visible': flowVisible }"
+    headline="Response"
+    title="From tap to responder, in one flow"
+    description="IRS connects students and campus responders in three synchronized steps, eliminating communication bottlenecks."
+    :ui="{
+      root: 'min-h-screen flex flex-col justify-center',
+      headline: 'reveal-down',
+      title: 'reveal-up reveal-delay-150',
+      description: 'reveal-up reveal-delay-300',
+    }"
+  >
+    <div>
+      <ProductTimeline :items="responseFlowSteps" />
     </div>
   </UPageSection>
 
-  <!-- Stats banner -->
-  <div class="bg-red-600 dark:bg-red-700/70 py-20">
-    <UContainer>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
-        <div v-for="stat in stats" :key="stat.label">
-          <p class="text-4xl lg:text-5xl font-extrabold text-white">{{ stat.value }}</p>
-          <p class="text-white/70 mt-2 text-sm lg:text-base font-medium">{{ stat.label }}</p>
-        </div>
-      </div>
-    </UContainer>
-  </div>
-
-  <!-- Testimonials -->
-  <UPageSection
-    id="testimonials"
-    headline="Customer Stories"
-    title="Trusted by EHS managers, safety officers, and compliance teams"
-    description="Hear from the safety professionals who rely on SafeReport to protect their workforce and stay ahead of regulations."
-  >
-    <UPageGrid>
-      <UCard v-for="t in testimonials" :key="t.author">
-        <div class="flex flex-col h-full">
-          <div class="flex gap-0.5 mb-5">
-            <UIcon v-for="i in 5" :key="i" name="i-lucide-star" class="size-4 text-warning" />
-          </div>
-          <p class="text-muted italic leading-relaxed flex-1">"{{ t.quote }}"</p>
-          <div class="flex items-center gap-3 mt-6 pt-6 border-t border-default">
-            <UAvatar :text="t.initials" size="md" color="error" />
-            <div>
-              <p class="font-semibold text-highlighted text-sm">{{ t.author }}</p>
-              <p class="text-dimmed text-xs">{{ t.role }}</p>
-            </div>
-          </div>
-        </div>
-      </UCard>
-    </UPageGrid>
+  <!-- CTA (self-contained reveal via ProductCTA) -->
+  <UPageSection>
+    <ProductCTA
+      title="Ready to accelerate your campus emergency response?"
+      description="Equip your students, staff, and safety officers with an instant reporting and dispatch system. Built for universities and colleges across the Philippines."
+      :links="ctaLinks"
+    />
   </UPageSection>
-
-  <!-- Pricing -->
-  <div class="bg-muted/30">
-    <UPageSection
-      id="pricing"
-      headline="Pricing"
-      title="Simple, transparent pricing — protect every worker"
-      description="Whether you're managing 10 employees or 10,000 — SafeReport scales with you. Every plan includes a 30-day free trial and full onboarding support."
-    >
-      <UPricingPlans :plans="plans" />
-    </UPageSection>
-  </div>
-
-  <!-- CTA -->
-  <UPageCTA
-    title="Ready to make your workplace safer?"
-    description="Join 300+ Philippine organizations using SafeReport to protect their workforce, reduce incidents, and stay compliant. Request your free demo today."
-    :links="ctaLinks"
-  />
 </template>

@@ -164,7 +164,7 @@ const featureDetails = [
     </ProductHero>
 
     <!-- Core features grid -->
-    <UPageSection id="features" ref="featuresEl" class="section-reveal" :class="{ 'is-visible': featuresVisible }"
+    <UPageSection id="why-choose-us" ref="featuresEl" class="section-reveal" :class="{ 'is-visible': featuresVisible }"
         headline="Digital learning" title="A foundation for enhanced e-learning"
         description="As education digitalizes, our LMS gives students and academic professionals a structured, effective way to teach, learn, and grow."
         :ui="{
@@ -181,7 +181,7 @@ const featureDetails = [
     </UPageSection>
 
     <!-- Modules Structure -->
-    <UPageSection ref="modulesEl" class="section-reveal" :class="{ 'is-visible': modulesVisible }"
+    <UPageSection id="platform" ref="modulesEl" class="section-reveal" :class="{ 'is-visible': modulesVisible }"
         headline="The Platform" title="Five connected portals, one platform"
         description="LearnCore connects every seat at the table — administrators, faculty, students, and parents — inside a single cloud platform, layered with an AI tutor that personalizes the path for every learner."
         orientation="horizontal" :ui="{

@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.aissp.ccci.com.ph/budget-scenarios" title="Budget Scenario B">
+  <MockupBrowserFrame url="app.aissp.ccci.com.ph/budget-scenarios" title="Budget Scenario B" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col justify-between gap-5">
       <!-- Section heading row -->
       <div class="flex items-center justify-between">
@@ -55,6 +55,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'scenario-total',
+    title: 'Scenario B Total',
+    subtitle: '₱11.5M Proposed Budget',
+    icon: 'i-lucide-coins',
+    color: 'primary',
+    badge: { label: '₱11.5M', color: 'primary' }
+  },
+  {
+    id: 'capital-outlay',
+    title: 'Capital Outlay',
+    subtitle: '73% of Total Allocation',
+    icon: 'i-lucide-pie-chart',
+    color: 'info',
+    badge: { label: '₱8.4M', color: 'info' }
+  },
+  {
+    id: 'variance',
+    title: 'Variance vs Scenario A',
+    subtitle: '-8.5% Cost Optimization',
+    icon: 'i-lucide-trending-down',
+    color: 'success',
+    pulse: true
+  }
+]
+
 interface CostItem {
   label: string
   value: number

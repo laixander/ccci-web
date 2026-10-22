@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="library.ccci.io/circulation" title="Scan · Circulation">
+  <MockupBrowserFrame url="library.ccci.io/circulation" title="Scan · Circulation" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-4">
       <!-- Barcode scan area -->
       <div class="rounded-xl border-2 border-dashed border-primary/40 bg-primary/5 px-6 py-5 flex flex-col items-center justify-center gap-2">
@@ -34,6 +34,7 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
 // Generate simple barcode bars
 const barBars = (() => {
   const bars = [] as any[]
@@ -45,6 +46,33 @@ const barBars = (() => {
   })
   return bars
 })()
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'scanned',
+    title: 'Book Scanned',
+    subtitle: 'Barcode 3A567B · Issued',
+    icon: 'i-lucide-scan-barcode',
+    color: 'primary',
+    badge: { label: 'ISSUED', color: 'primary' }
+  },
+  {
+    id: 'overdue',
+    title: 'Overdue Book',
+    subtitle: 'Algorithms · STU-076',
+    icon: 'i-lucide-triangle-alert',
+    color: 'error',
+    pulse: true
+  },
+  {
+    id: 'returned',
+    title: 'Dune Returned',
+    subtitle: 'STU-118 · On Time',
+    icon: 'i-lucide-circle-check-big',
+    color: 'success',
+    badge: { label: 'RETURNED', color: 'success' }
+  }
+]
 
 const transactions = [
   { id: 1, book: 'Sapiens',    student: 'STU-204', status: 'Issued'   },

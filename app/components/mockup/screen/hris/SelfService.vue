@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.peoplecore.io/timesheets" title="Timesheets">
+  <MockupBrowserFrame url="app.peoplecore.io/timesheets" title="Timesheets" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-6">
       <!-- Stats Banner -->
       <UCard variant="soft" :ui="{ body: 'sm:p-5 text-white flex items-center justify-around' }" class="bg-gradient-to-r from-primary-600 to-primary-900 rounded-2xl">
@@ -39,6 +39,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'clock-in',
+    title: 'Clocked In',
+    subtitle: '08:00 AM · On Time',
+    icon: 'i-lucide-clock',
+    color: 'success',
+    badge: { label: '11:59', color: 'success' }
+  },
+  {
+    id: 'late-entry',
+    title: 'Late on 10/1',
+    subtitle: 'Timesheet Flagged',
+    icon: 'i-lucide-alarm-clock',
+    color: 'warning',
+    pulse: true
+  },
+  {
+    id: 'ot-zero',
+    title: 'No Overtime',
+    subtitle: 'OT: 0.00 · UT: 0.00',
+    icon: 'i-lucide-timer-off',
+    color: 'info',
+    badge: { label: 'CLEAN', color: 'info' }
+  }
+]
+
 const stats = [
   { label: 'Time', value: '11:59' },
   { label: 'OT',   value: '0.00' },

@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.fms.ccci.com.ph/accounts-receivable" title="Accounts Receivable">
+  <MockupBrowserFrame url="app.fms.ccci.com.ph/accounts-receivable" title="Accounts Receivable" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col justify-between gap-5">
       <!-- Summary Stats Banner -->
        <UCard variant="soft" class="bg-linear-to-r from-primary to-primary-800"
@@ -29,6 +29,7 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
 import type { TableColumn } from '@nuxt/ui'
 
 interface SummaryStat {
@@ -42,6 +43,33 @@ interface CollectionItem {
   amount: string
   status: string
 }
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'collection-rate',
+    title: 'Collection Rate',
+    subtitle: '73.8% Collected',
+    icon: 'i-lucide-circle-dollar-sign',
+    color: 'success',
+    badge: { label: '₱3.1M', color: 'success' }
+  },
+  {
+    id: 'open-receivables',
+    title: 'Open Receivables',
+    subtitle: '₱1.1M Outstanding',
+    icon: 'i-lucide-alert-circle',
+    color: 'warning',
+    pulse: true
+  },
+  {
+    id: 'partial-payment',
+    title: 'Partial Payment',
+    subtitle: 'Edwin Co · OR000003',
+    icon: 'i-lucide-clock',
+    color: 'info',
+    badge: { label: 'PARTIAL', color: 'info' }
+  }
+]
 
 const summaryStats: SummaryStat[] = [
   { value: '₱4.2M', label: 'Invoiced' },

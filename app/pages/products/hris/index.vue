@@ -203,7 +203,7 @@ const addOnModule = {
     </ProductHero>
 
     <!-- Core features grid -->
-    <UPageSection id="features" ref="featuresEl" class="section-reveal" :class="{ 'is-visible': featuresVisible }" headline="Why Choose Us" title="Why our HRIS stands out"
+    <UPageSection id="why-choose-us" ref="featuresEl" class="section-reveal" :class="{ 'is-visible': featuresVisible }" headline="Why Choose Us" title="Why our HRIS stands out"
         description="A human resource platform engineered around your people, your compliance, and your growth."
         :ui="{
             root: 'min-h-screen flex flex-col justify-center',
@@ -219,7 +219,7 @@ const addOnModule = {
     </UPageSection>
 
     <!-- Modules Structure -->
-    <UPageSection ref="modulesEl" class="section-reveal" :class="{ 'is-visible': modulesVisible }" headline="The Platform" title="Eight modules. One connected record."
+    <UPageSection id="platform" ref="modulesEl" class="section-reveal" :class="{ 'is-visible': modulesVisible }" headline="The Platform" title="Eight modules. One connected record."
         description="Unified platform that collects and stores data across every HR function — from applicant tracking to payroll, training, deployment, and reporting. Nothing lives in a spreadsheet, and nothing gets entered twice."
         orientation="horizontal" :ui="{
             root: 'min-h-screen flex flex-col justify-center',
@@ -250,6 +250,7 @@ const addOnModule = {
 
     <!-- Add-on Modules -->
     <UPageSection
+        id="addons"
         ref="addOnsEl"
         class="section-reveal"
         :class="{ 'is-visible': addOnsVisible }"

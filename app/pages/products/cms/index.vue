@@ -219,7 +219,7 @@ const paymentProviders = ['GCash', 'VISA', 'Mastercard']
     </ProductHero>
 
     <!-- Core features grid -->
-    <UPageSection id="features" ref="featuresEl" class="section-reveal" :class="{ 'is-visible': featuresVisible }"
+    <UPageSection id="why-choose-us" ref="featuresEl" class="section-reveal" :class="{ 'is-visible': featuresVisible }"
         headline="Why Choose Us" title="The digital campus, without the growing pains."
         description="Every facet of education is leaning towards technology. With more enrollees, more records, and repeated processes, manual operation simply can't keep up. The Digital Campus gives your school the best academic environment and most engaging experience."
         :ui="{
@@ -236,7 +236,7 @@ const paymentProviders = ['GCash', 'VISA', 'Mastercard']
     </UPageSection>
 
     <!-- Modules Structure -->
-    <UPageSection ref="modulesEl" class="section-reveal" :class="{ 'is-visible': modulesVisible }"
+    <UPageSection id="platform" ref="modulesEl" class="section-reveal" :class="{ 'is-visible': modulesVisible }"
         headline="The Platform" title="Every campus operation, one platform."
         description="From an applicant's first admission exam to an alumnus's profile — all cross-linked, all in the cloud, all in a single system dashboard."
         orientation="horizontal" :ui="{

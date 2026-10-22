@@ -1,15 +1,29 @@
 <template>
-  <MockupBrowserFrame url="ams.ccci.com.ph/inventory" title="Asset Inventory">
+  <MockupBrowserFrame
+    url="ams.ccci.com.ph/inventory"
+    title="Asset Inventory"
+    :floating-tags="floatingTags"
+  >
     <div class="p-5 flex-1 flex flex-col justify-between gap-4">
       <!-- Search & Filters -->
       <div class="flex items-center justify-between">
-        <div>
+        <!-- <div>
           <h3 class="font-bold text-[14px] text-highlighted">All Assets</h3>
           <p class="text-[11px] text-muted">5,234 registered tags · Central Registry</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <UBadge label="QR / BARCODE" variant="subtle" color="primary" size="xs" class="font-mono font-bold" />
-          <UButton label="Import" icon="i-lucide-file-spreadsheet" color="neutral" variant="outline" size="xs" class="font-mono" />
+        </div> -->
+        <div class="flex justify-between items-center gap-2 w-full">
+          <UButton
+            label="Import"
+            icon="i-lucide-file-spreadsheet"
+            color="neutral"
+            variant="outline"
+          />
+          <UBadge
+            label="QR / BARCODE"
+            variant="subtle"
+            color="primary"
+            class="font-mono font-bold"
+          />
         </div>
       </div>
 
@@ -21,12 +35,17 @@
       >
         <template #asset-cell="{ row }">
           <div class="flex items-center gap-2">
-            <div class="size-6 rounded-md bg-primary/10 flex items-center justify-center shrink-0">
-              <UIcon :name="row.original.icon" class="size-3.5 text-primary" />
+            <div class="size-8 rounded-md bg-primary/10 flex items-center justify-center shrink-0">
+              <UIcon
+                :name="row.original.icon"
+                class="size-3.5 text-primary"
+              />
             </div>
             <div>
-              <p class="font-medium text-[12px] text-highlighted">{{ row.original.name }}</p>
-              <p class="text-[10px] font-mono text-muted">{{ row.original.tag }}</p>
+              <p class="font-medium text-[12.5px] text-highlighted">
+                {{ row.original.name }}
+              </p>
+              <!-- <p class="text-[10px] font-mono text-muted">{{ row.original.tag }}</p> -->
             </div>
           </div>
         </template>
@@ -37,22 +56,23 @@
             :color="row.original.color"
             variant="subtle"
             size="xs"
-            class="font-mono font-bold tracking-wider"
+            class="uppercase tracking-widest font-bold px-2"
           />
         </template>
       </UTable>
 
       <!-- Bottom Tagging Status -->
-      <div class="flex items-center justify-between text-[11px] text-muted pt-1 border-t border-default/60">
+      <!-- <div class="flex items-center justify-between text-[11px] text-muted pt-1 border-t border-default/60">
         <span class="font-mono">Showing 4 of 5,234 assets</span>
         <span class="text-primary font-medium cursor-default">Scan Tag via Mobile →</span>
-      </div>
+      </div> -->
     </div>
   </MockupBrowserFrame>
 </template>
 
 <script setup lang="ts">
 import type { TableColumn } from '@nuxt/ui'
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
 
 interface AssetItem {
   name: string
@@ -67,29 +87,56 @@ interface AssetItem {
 const tableUi = {
   root: 'overflow-x-auto',
   th: 'pb-2 text-[10px] font-mono font-semibold uppercase tracking-wider text-muted px-2.5 first:ps-0 last:pe-0 border-b border-default text-left',
-  td: 'py-2.5 text-[12px] px-2.5 first:ps-0 last:pe-0 border-b border-default/60',
+  td: 'py-2.5 text-[12.5px] px-2.5 first:ps-0 last:pe-0 border-b border-default/60'
 }
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'qr-scan',
+    title: 'QR & Barcode Scan',
+    subtitle: 'Instant Serial Lookup',
+    icon: 'i-lucide-qr-code',
+    color: 'primary',
+    pulse: true
+  },
+  {
+    id: 'bulk-import',
+    title: 'Bulk Migration',
+    subtitle: 'Excel & CSV Ready',
+    icon: 'i-lucide-file-spreadsheet',
+    color: 'success',
+    badge: { label: 'SYNCED', color: 'success' }
+  },
+  {
+    id: 'sw-licenses',
+    title: 'License Tracking',
+    subtitle: 'Auto-Renew Monitored',
+    icon: 'i-lucide-key-round',
+    color: 'info',
+    badge: { label: 'ACTIVE', color: 'info' }
+  }
+]
 
 const columns: TableColumn<AssetItem>[] = [
   {
     accessorKey: 'name',
     id: 'asset',
-    header: 'ASSET',
+    header: 'ASSET'
   },
   {
     accessorKey: 'group',
     header: 'GROUP',
-    meta: { class: { td: 'text-[11px] text-muted font-medium' } },
+    meta: { class: { td: 'text-[11px] text-muted font-medium' } }
   },
   {
     accessorKey: 'assignee',
     header: 'ASSIGNEE',
-    meta: { class: { td: 'text-[11.5px] text-highlighted font-medium' } },
+    meta: { class: { td: 'text-[11.5px] text-highlighted font-medium' } }
   },
   {
     accessorKey: 'status',
-    header: 'STATUS',
-  },
+    header: 'STATUS'
+  }
 ]
 
 const assets: AssetItem[] = [
@@ -100,7 +147,7 @@ const assets: AssetItem[] = [
     assignee: 'J. Dela Cruz',
     status: 'Deployed',
     color: 'success',
-    icon: 'i-lucide-laptop',
+    icon: 'i-lucide-laptop'
   },
   {
     name: 'Adobe Creative Cloud',
@@ -109,7 +156,7 @@ const assets: AssetItem[] = [
     assignee: 'Media Office',
     status: 'Active',
     color: 'success',
-    icon: 'i-lucide-key-round',
+    icon: 'i-lucide-key-round'
   },
   {
     name: 'Ergonomic chair',
@@ -118,7 +165,7 @@ const assets: AssetItem[] = [
     assignee: 'Unassigned',
     status: 'In storage',
     color: 'neutral',
-    icon: 'i-lucide-armchair',
+    icon: 'i-lucide-armchair'
   },
   {
     name: 'Toyota Hiace',
@@ -127,7 +174,7 @@ const assets: AssetItem[] = [
     assignee: 'Motorpool',
     status: 'Maintenance',
     color: 'warning',
-    icon: 'i-lucide-truck',
-  },
+    icon: 'i-lucide-truck'
+  }
 ]
 </script>

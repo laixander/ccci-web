@@ -45,7 +45,7 @@ onMounted(() => {
 
 <template>
     <UPageHero orientation="horizontal" :description="description" :ui="{
-        root: 'relative overflow-hidden min-h-[calc(100vh-var(--ui-header-height))] pb-14 flex flex-col justify-center',
+        root: 'relative overflow-hidden min-h-screen pt-(--ui-header-height) pb-14 flex flex-col justify-center',
         container: 'max-w-full',
         description: 'dark:text-toned reveal-up reveal-delay-300',
     }" class="section-reveal" :class="{ 'is-visible': heroVisible }">
@@ -85,10 +85,10 @@ onMounted(() => {
                 }" />
 
             <!-- Light/dark fade overlay -->
-            <div class="absolute inset-0 -z-10 bg-gradient-to-r from-white/90 to-transparent to-90% dark:from-black/90" />
+            <div class="absolute inset-0 -z-10 bg-gradient-to-r from-white/90 to-transparent to-90% dark:from-black/90 reveal-fade" />
 
             <!-- Primary-tinted grid texture (left two-thirds) -->
-            <div class="absolute inset-y-0 left-0 w-2/3 -z-10 pointer-events-none"
+            <div class="absolute inset-y-0 left-0 w-2/3 -z-10 pointer-events-none reveal-left reveal-delay-200"
                 style="-webkit-mask-image: linear-gradient(to right, black, transparent); mask-image: linear-gradient(to right, black, transparent);">
                 <svg class="absolute inset-0 h-full w-full text-primary-500/20 dark:text-primary-400/20"
                     xmlns="http://www.w3.org/2000/svg">
@@ -102,7 +102,7 @@ onMounted(() => {
             </div>
 
             <!-- Primary colour wash (left 45 %) -->
-            <div class="absolute inset-0 -z-10 bg-gradient-to-r from-primary/20 to-transparent to-45%" />
+            <div class="absolute inset-0 -z-10 bg-gradient-to-r from-primary/20 to-transparent to-45% reveal-fade reveal-delay-100" />
         </template>
 
         <!-- ── CTA footer ─────────────────────────────────────────────────── -->

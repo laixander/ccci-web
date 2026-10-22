@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.peoplecore.io/employees" title="Employees">
+  <MockupBrowserFrame url="app.peoplecore.io/employees" title="Employees" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-6">
       <!-- Header row -->
       <div class="flex items-center justify-between">
@@ -25,6 +25,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'total-headcount',
+    title: 'Total Employees',
+    subtitle: '122 Active Staff',
+    icon: 'i-lucide-users-round',
+    color: 'primary',
+    badge: { label: '122', color: 'primary' }
+  },
+  {
+    id: 'departments',
+    title: 'All Departments',
+    subtitle: 'Engineering · HR · Finance',
+    icon: 'i-lucide-building-2',
+    color: 'info',
+    pulse: true
+  },
+  {
+    id: 'roles',
+    title: 'Multi-Role View',
+    subtitle: 'Instructor · HR · IT · Finance',
+    icon: 'i-lucide-id-card',
+    color: 'success',
+    badge: { label: 'ACTIVE', color: 'success' }
+  }
+]
+
 const employees = [
   { name: 'E. Nathan',    role: 'Instructor VII',  avatarClass: 'bg-gradient-to-b from-primary-200 to-primary-500' },
   { name: 'M. Santos',    role: 'HR Specialist',   avatarClass: 'bg-gradient-to-b from-primary-300 to-primary-600' },

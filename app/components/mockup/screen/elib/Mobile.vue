@@ -1,5 +1,5 @@
 <template>
-  <MockupMobileFrame>
+  <MockupMobileFrame :floating-tags="floatingTags">
     <div class="flex flex-col gap-4 h-full bg-default text-default select-none font-sans relative">
       
       <!-- App Header -->
@@ -43,6 +43,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'due-today',
+    title: 'Due Today!',
+    subtitle: 'Deep Work · Return Now',
+    icon: 'i-lucide-alarm-clock',
+    color: 'error',
+    badge: { label: 'TODAY', color: 'error' }
+  },
+  {
+    id: 'books-borrowed',
+    title: '4 Books Borrowed',
+    subtitle: 'Sapiens · Atomic Habits…',
+    icon: 'i-lucide-library',
+    color: 'primary',
+    pulse: true
+  },
+  {
+    id: 'scan-reserve',
+    title: 'Scan to Reserve',
+    subtitle: 'QR · Instant Pickup',
+    icon: 'i-lucide-scan-qr-code',
+    color: 'success',
+    badge: { label: 'QR', color: 'success' }
+  }
+]
+
 const books = [
   { id: 1, title: 'Deep Work',                 due: 'Today', gradient: 'from-primary-300 to-primary-400 dark:from-primary-400 dark:to-primary-500' },
   { id: 2, title: 'Atomic Habits',             due: '3d',    gradient: 'from-primary-400 to-primary-500 dark:from-primary-500 dark:to-primary-600' },

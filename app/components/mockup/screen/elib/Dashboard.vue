@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="library.ccci.io/analytics" title="Library Analytics">
+  <MockupBrowserFrame url="library.ccci.io/analytics" title="Library Analytics" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-4">
       <!-- KPI Row -->
       <div class="grid grid-cols-3 gap-3">
@@ -46,6 +46,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'borrowed',
+    title: '1.2k Borrowed',
+    subtitle: 'Fiction Top · 82% Share',
+    icon: 'i-lucide-book-copy',
+    color: 'primary',
+    badge: { label: '1.2K', color: 'primary' }
+  },
+  {
+    id: 'overdue',
+    title: '86 Overdue',
+    subtitle: 'Action Required',
+    icon: 'i-lucide-clock-alert',
+    color: 'error',
+    pulse: true
+  },
+  {
+    id: 'on-time',
+    title: '94% On Time',
+    subtitle: 'Dec · Peak Borrow Month',
+    icon: 'i-lucide-chart-no-axes-combined',
+    color: 'success',
+    badge: { label: '94%', color: 'success' }
+  }
+]
+
 const kpis = [
   { label: 'Borrowed', value: '1.2k', color: 'text-primary'  },
   { label: 'Overdue',  value: '86',   color: 'text-error'    },

@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.peoplecore.io/performance" title="PCR — Ratee">
+  <MockupBrowserFrame url="app.peoplecore.io/performance" title="PCR — Ratee" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-5">
       <!-- Tabs -->
       <div class="flex items-center gap-2">
@@ -30,6 +30,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'dpcr-progress',
+    title: 'DPCR Immediate',
+    subtitle: '80% Completion',
+    icon: 'i-lucide-target',
+    color: 'success',
+    badge: { label: '80%', color: 'success' }
+  },
+  {
+    id: 'ipcr-ongoing',
+    title: 'IPCR Evaluation',
+    subtitle: '45% · Oct 21, 2024',
+    icon: 'i-lucide-chart-no-axes-column',
+    color: 'primary',
+    pulse: true
+  },
+  {
+    id: 'opcr-pending',
+    title: 'OPCR FMT',
+    subtitle: '30% · Action Required',
+    icon: 'i-lucide-clipboard-list',
+    color: 'warning',
+    badge: { label: 'PENDING', color: 'warning' }
+  }
+]
+
 const pcrs = [
   { title: 'OPCR FMT',       status: 'Status', date: 'Oct 21 - Oct 21, 2024', progress: 30 },
   { title: 'IPCR Immediate', status: 'Status', date: 'Oct 21 - Oct 21, 2024', progress: 45 },

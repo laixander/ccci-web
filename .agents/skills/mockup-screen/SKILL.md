@@ -1,10 +1,10 @@
-﻿---
+---
 name: mockup-screen
 description: >
   Conventions and patterns for creating CCCI product mockup screen components
   in `app/components/mockup/screen/<product>/`. Ensures consistent structure,
-  NuxtUI component usage, v-for patterns, TypeScript data modeling, and visual
-  design across all product mockups.
+  NuxtUI component usage, v-for patterns, TypeScript data modeling, floating tags,
+  and visual design across all product mockups.
   Activate whenever scaffolding, reviewing, or extending a mockup screen.
 ---
 
@@ -18,11 +18,23 @@ Every mockup screen lives at:
 app/components/mockup/screen/<product>/<ScreenName>.vue
 ```
 
-- `<product>` — lowercase short product code: `aissp`, `cms`, `elib`, `fms`, `hris`, `lms`, etc.
-- `<ScreenName>` — PascalCase feature name: `Dashboard`, `Payroll`, `Enrollment`, `Budgeting`, etc.
+- `<product>` — lowercase short product code for all 12 platform modules:
+  - `aissp` — Automated ISSP Creator
+  - `ams` — Asset Management System
+  - `cms` — CampusCore (Campus Management)
+  - `dms` — Document Management System
+  - `eis` — Executive Information System
+  - `elib` — eLibrary System
+  - `fms` — Financial Management System
+  - `hkas` — Housekeeping & Asset Scheduling
+  - `hris` — PeopleCore (HR & Payroll)
+  - `ilsp` — International Linkages & Student Programs
+  - `irs` — Incident Reporting System
+  - `lms` — LearnCore (Learning Management)
+- `<ScreenName>` — PascalCase feature name: `Dashboard`, `Payroll`, `Enrollment`, `Budgeting`, `Inventory`, etc.
 
 Auto-import name follows Nuxt convention: `MockupScreen<Product><ScreenName>`
-e.g. `MockupScreenHrisPayroll`, `MockupScreenFmsBudgeting`
+e.g. `MockupScreenHrisPayroll`, `MockupScreenFmsBudgeting`, `MockupScreenAmsInventory`
 
 ---
 
@@ -33,7 +45,11 @@ e.g. `MockupScreenHrisPayroll`, `MockupScreenFmsBudgeting`
 Use for desktop/web app screens.
 
 ```vue
-<MockupBrowserFrame url="app.<product>.ccci.com.ph/<route>" title="<Screen Title>">
+<MockupBrowserFrame
+  url="app.<product>.ccci.com.ph/<route>"
+  title="<Screen Title>"
+  :floating-tags="floatingTags"
+>
   <!-- content -->
 </MockupBrowserFrame>
 ```
@@ -46,6 +62,16 @@ Use for desktop/web app screens.
 | `title` | `string` | — | Screen/page title shown in the App Header |
 | `logoLetter` | `string` | `'C'` | Single letter inside the primary icon badge |
 | `icon` | `string` | — | `i-lucide-*` icon inside the badge (overrides `logoLetter`) |
+| `floatingTags` | `MockupFloatingTag[]` | — | Floating status/metric cards rendered with staggered ambient float animation |
+
+**Slots:**
+
+| Slot | Description |
+|---|---|
+| `default` | Main screen body content |
+| `tags` | Overrides the default floating tags container |
+| `header` | Overrides the entire app header row |
+| `logo` | Overrides the square logo badge inside the header |
 
 **What it renders automatically:**
 - macOS-style title bar with traffic-light dots + URL pill
@@ -53,30 +79,107 @@ Use for desktop/web app screens.
   - Primary square badge (logo or icon)
   - Screen title in bold
   - `UButton` ellipsis action button (`i-lucide-ellipsis-vertical`)
+- Ambient floating cards (`v-if="floatingTags?.length"`) layered above and around the frame
 
 **When to use the `icon` prop:**
-Use `icon` when the screen has a distinctive action identity — e.g. drag/sort screens (`i-lucide-arrow-up-down`), security screens (`i-lucide-shield-check`).
+Use `icon` when the screen has a distinctive action identity — e.g. drag/sort screens (`i-lucide-arrow-up-down`), security screens (`i-lucide-shield-check`), teaching screens (`i-lucide-graduation-cap`).
 
 ### 2.2 MobileFrame — `MockupMobileFrame`
 
 Use for mobile/app screens only (e.g. eLib mobile shelf).
 
 ```vue
-<MockupMobileFrame>
+<MockupMobileFrame :floating-tags="floatingTags">
   <!-- content -->
 </MockupMobileFrame>
 ```
 
-No props. Renders a phone-shaped container.
+**Props:**
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `floatingTags` | `MockupFloatingTag[]` | — | Floating status/metric cards rendered with staggered ambient float animation |
+
+Renders a sleek phone-shaped container with rounded-4xl borders and subtle shadow.
 
 ---
 
-## 3. Content Structure
+## 3. Floating Tags — `MockupFloatingTag`
 
-The immediate child of the frame is always a single `<div>` with the content padding and flex layout:
+Floating tags provide depth, elevation, and live context to mockup screens. They render as glassmorphic cards (`backdrop-blur-md bg-white/20 dark:bg-elevated/20 shadow-xl`) floating outside the frame container.
+
+### 3.1 Type Import & Interface
+
+```ts
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+```
+
+The underlying interface:
+
+```ts
+export interface MockupFloatingTag {
+  id?: string
+  title: string
+  subtitle: string
+  icon: string
+  color: 'success' | 'info' | 'warning' | 'error' | 'primary' | 'neutral'
+  positionClass?: string     // Custom positioning (defaults to 3-point layout)
+  animationClass?: string    // Custom float animation (defaults to animate-float-1..3)
+  badge?: {
+    label: string
+    color?: 'success' | 'info' | 'warning' | 'error' | 'primary' | 'neutral'
+  }
+  pulse?: boolean            // Renders a pulsing live-status dot
+}
+```
+
+### 3.2 Canonical 3-Tag Setup
+
+Providing 2–3 floating tags triggers the built-in default responsive positioning and staggered animations:
+
+| Index | Default Position | Animation | Purpose |
+|---|---|---|---|
+| `0` | `-top-3.5 -right-3 sm:-right-4` | `animate-float-1` | Live status or headline metric (often `pulse: true`) |
+| `1` | `-bottom-3.5 -left-3 sm:-left-4` | `animate-float-2` | Process step, approval, or verification status |
+| `2` | `top-1/2 -right-4 sm:-right-6 -translate-y-1/2` | `animate-float-3` | System sync, compliance, or secondary counter |
+
+```ts
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'live-sync',
+    title: 'RFID Gateway',
+    subtitle: '99.8% Live Sync',
+    icon: 'i-lucide-radio',
+    color: 'success',
+    pulse: true,
+  },
+  {
+    id: 'assets-count',
+    title: '5,234 Active Assets',
+    subtitle: '4 Campus Nodes',
+    icon: 'i-lucide-boxes',
+    color: 'primary',
+    badge: { label: 'VERIFIED', color: 'primary' },
+  },
+  {
+    id: 'maintenance',
+    title: 'Auto-Maintenance',
+    subtitle: '3 Work Orders',
+    icon: 'i-lucide-wrench',
+    color: 'warning',
+    badge: { label: 'DUE', color: 'warning' },
+  },
+]
+```
+
+---
+
+## 4. Content Structure
+
+The immediate child of the frame is always a single `<div>` with content padding and flex layout:
 
 ```vue
-<MockupBrowserFrame url="..." title="...">
+<MockupBrowserFrame url="..." title="..." :floating-tags="floatingTags">
   <div class="p-5 flex-1 flex flex-col <gap> <justify>">
     <!-- sections -->
   </div>
@@ -97,18 +200,19 @@ The immediate child of the frame is always a single `<div>` with the content pad
 
 ---
 
-## 4. The Golden Rules
+## 5. The Golden Rules
 
 1. **Always use a NuxtUI component** for every UI element — lists, tables, badges, buttons, inputs, progress bars, alerts. Never roll custom HTML where a NuxtUI component exists.
-2. **Always use `v-for`** (with a typed interface) when rendering repeated items — cards, rows, badges, stat blocks, table data. Hard-coded copies are only acceptable for 2-3 non-repeating items (e.g., a 3-metric row where each metric has unique emphasis).
-3. **Always type your data** with a TypeScript `interface` in `<script setup lang="ts">`. No `any[]`, no inline object literals without a type.
-4. **Prefer `<template>` before `<script>`** — put the template first, script second.
+2. **Always include 2–3 `MockupFloatingTag` cards** to give the mockup visual depth and live system context.
+3. **Always use `v-for`** (with a typed interface) when rendering repeated items — cards, rows, badges, stat blocks, table data. Hard-coded copies are only acceptable for 2-3 non-repeating items (e.g., a 3-metric row where each metric has unique emphasis).
+4. **Always type your data** with a TypeScript `interface` in `<script setup lang="ts">`. No `any[]`, no inline object literals without a type.
+5. **Prefer `<template>` before `<script>`** — put the template first, script second.
 
 ---
 
-## 5. NuxtUI Component Patterns
+## 6. NuxtUI Component Patterns
 
-### 5.1 `UCard` — List rows & stat cards
+### 6.1 `UCard` — List rows & stat cards
 
 ```vue
 <UCard
@@ -148,7 +252,7 @@ The immediate child of the frame is always a single `<div>` with the content pad
 </UCard>
 ```
 
-### 5.2 `UBadge` — Status & labels
+### 6.2 `UBadge` — Status & labels
 
 ```vue
 <UBadge
@@ -166,15 +270,42 @@ The immediate child of the frame is always a single `<div>` with the content pad
 |---|---|
 | Done / Active / Success / Approved / Generated | `'success'` |
 | Pending / For Review / Info | `'info'` |
-| Warning / Endorsed | `'warning'` |
-| Error / Overdue / Denied | `'error'` |
-| Neutral / Draft / New | `'neutral'` |
-| Primary / Open / Highlighted | `'primary'` |
+| Warning / Endorsed / Due | `'warning'` |
+| Error / Overdue / Denied / Critical | `'error'` |
+| Neutral / Draft / New / Archived | `'neutral'` |
+| Primary / Open / Highlighted / Verified | `'primary'` |
 
-### 5.3 `UTable` — Tabular data
+### 6.3 `UTable` — Tabular data
+
+Nuxt UI v4 `UTable` supports typed columns and per-column cell slots formatted as `#[columnKey]-cell="{ row }"`, where raw item data is accessed via `row.original`:
 
 ```vue
-<UTable :data="items" :columns="columns" :ui="tableUi" />
+<UTable
+  :data="items"
+  :columns="columns"
+  :ui="tableUi"
+>
+  <!-- Custom cell slot for 'name' column -->
+  <template #name-cell="{ row }">
+    <div class="flex items-center gap-2">
+      <div class="size-7 rounded-md bg-primary/10 flex items-center justify-center shrink-0">
+        <UIcon :name="row.original.icon" class="size-3.5 text-primary" />
+      </div>
+      <span class="font-medium text-[12.5px] text-highlighted">{{ row.original.name }}</span>
+    </div>
+  </template>
+
+  <!-- Custom cell slot for 'status' column -->
+  <template #status-cell="{ row }">
+    <UBadge
+      :label="row.original.status"
+      :color="row.original.color"
+      variant="subtle"
+      size="xs"
+      class="uppercase tracking-widest font-bold px-2"
+    />
+  </template>
+</UTable>
 ```
 
 **Standard `tableUi`:**
@@ -192,14 +323,18 @@ import type { TableColumn } from '@nuxt/ui'
 
 const columns: TableColumn<MyType>[] = [
   {
-    accessorKey: 'fieldName',
-    header: 'COLUMN HEADER',
+    accessorKey: 'name',
+    header: 'ITEM / RESOURCE',
     meta: { class: { td: 'font-mono text-highlighted' } },
+  },
+  {
+    accessorKey: 'status',
+    header: 'STATUS',
   },
 ]
 ```
 
-### 5.4 `UProgress` — Progress bars
+### 6.4 `UProgress` — Progress bars
 
 ```vue
 <UProgress :model-value="item.value" :color="item.color" size="md" class="flex-1" />
@@ -214,21 +349,22 @@ const columns: TableColumn<MyType>[] = [
 </div>
 ```
 
-### 5.5 `UButton` — Actions
+### 6.5 `UButton` — Actions
 
 ```vue
 <UButton label="Generate" icon="i-lucide-plus" color="primary" size="lg" />
 <UButton label="Export CSV" color="neutral" variant="outline" size="sm" class="font-mono" />
+<UButton label="View all" color="primary" variant="ghost" size="xs" trailing-icon="i-lucide-chevron-right" />
 <UButton label="Cancel" color="neutral" variant="ghost" size="sm" />
 ```
 
-### 5.6 `USelect` — Filters & dropdowns
+### 6.6 `USelect` — Filters & dropdowns
 
 ```vue
 <USelect :items="['All', 'Active', 'Inactive']" model-value="All" size="lg" color="neutral" variant="soft" />
 ```
 
-### 5.7 `UAlert` — Status banners / callouts
+### 6.7 `UAlert` — Status banners / callouts
 
 ```vue
 <UAlert
@@ -247,9 +383,9 @@ const columns: TableColumn<MyType>[] = [
 </UAlert>
 ```
 
-### 5.8 `UIcon` — Icons
+### 6.8 `UIcon` — Icons
 
-Always use Lucide: `i-lucide-*`. In mockup content, icons inside coloured circular badges:
+Always use Lucide: `i-lucide-*`. In mockup content, icons inside coloured circular or rounded badges:
 
 ```vue
 <div class="size-7 rounded-full flex items-center justify-center text-white shrink-0 shadow-2xs bg-emerald-500">
@@ -259,7 +395,7 @@ Always use Lucide: `i-lucide-*`. In mockup content, icons inside coloured circul
 
 ---
 
-## 6. Typography & Spacing Tokens
+## 7. Typography & Spacing Tokens
 
 | Purpose | Class |
 |---|---|
@@ -275,9 +411,9 @@ Always use Lucide: `i-lucide-*`. In mockup content, icons inside coloured circul
 
 ---
 
-## 7. Data Modeling Pattern
+## 8. Data Modeling Pattern
 
-Always define a TypeScript `interface` and then declare static sample data.
+Always define TypeScript interfaces and declare static sample data.
 
 ```ts
 interface MyItem {
@@ -296,12 +432,12 @@ const items: MyItem[] = [
 
 **Rules:**
 - `badgeColor` / `color` props must be typed with a union — never `string`.
-- Use realistic-looking sample data (real-sounding names, typical amounts, plausible statuses).
-- 3-6 items per list is ideal for mockup fidelity.
+- Use realistic-sounding sample data (real names, plausible IDs, typical amounts, credible statuses).
+- 3–6 items per list is ideal for mockup fidelity.
 
 ---
 
-## 8. Common Section Patterns
+## 9. Common Section Patterns
 
 ### Section header row
 
@@ -342,7 +478,7 @@ const items: MyItem[] = [
 ```vue
 <div class="rounded-xl bg-primary/10 border border-primary/20 px-4 py-3 flex items-center justify-between">
   <span class="font-mono text-xs font-semibold text-primary tracking-wide">Total Amount</span>
-  <span class="font-mono text-lg font-bold text-primary tracking-tight">P0,000.00</span>
+  <span class="font-mono text-lg font-bold text-primary tracking-tight">₱0,000.00</span>
 </div>
 ```
 
@@ -361,16 +497,21 @@ const items: MyItem[] = [
 
 ---
 
-## 9. Full Annotated Template
+## 10. Full Annotated Template
 
 ```vue
 <template>
-  <MockupBrowserFrame url="app.<product>.ccci.com.ph/<route>" title="<Screen Title>">
+  <MockupBrowserFrame
+    url="app.<product>.ccci.com.ph/<route>"
+    title="<Screen Title>"
+    :floating-tags="floatingTags"
+  >
     <div class="p-5 flex-1 flex flex-col gap-4">
 
       <!-- Section 1: Header Row -->
       <div class="flex items-center justify-between">
         <span class="font-bold text-[14px] text-highlighted">Section Label</span>
+        <UButton label="New Entry" icon="i-lucide-plus" color="primary" size="xs" />
       </div>
 
       <!-- Section 2: Repeated List (v-for required) -->
@@ -400,6 +541,37 @@ const items: MyItem[] = [
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+// ─── Floating Tags ────────────────────────────────────────────────────────────
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'status',
+    title: 'Live Monitor',
+    subtitle: '99.9% Uptime · Synchronized',
+    icon: 'i-lucide-activity',
+    color: 'success',
+    pulse: true,
+  },
+  {
+    id: 'verified',
+    title: 'Records Verified',
+    subtitle: 'ISO 27001 Compliant',
+    icon: 'i-lucide-shield-check',
+    color: 'primary',
+    badge: { label: 'VERIFIED', color: 'primary' },
+  },
+  {
+    id: 'alerts',
+    title: 'Auto-Routing',
+    subtitle: '2 Items Pending Review',
+    icon: 'i-lucide-clock',
+    color: 'warning',
+    badge: { label: 'PENDING', color: 'warning' },
+  },
+]
+
+// ─── List Data ────────────────────────────────────────────────────────────────
 interface ListItem {
   id: string
   label: string
@@ -417,15 +589,17 @@ const items: ListItem[] = [
 
 ---
 
-## 10. Anti-Patterns to Avoid
+## 11. Anti-Patterns to Avoid
 
 | Don't | Do instead |
 |---|---|
 | Wrap content in `<main>` | Use `<div class="p-5 ...">` directly inside frame slot |
-| Hard-code 4+ repeated items as individual elements | Use `v-for` with a typed data array |
-| Use `string` type for badge/progress `color` prop | Use typed union: `'success' | 'info' | 'warning' | 'error' | 'primary' | 'neutral'` |
+| Omit `floatingTags` on primary product screens | Always provide 2–3 `MockupFloatingTag` objects with realistic context |
+| Hardcode browser window borders or traffic-light dots | Use `<MockupBrowserFrame>` or `<MockupMobileFrame>` |
+| Hardcode 4+ repeated items as individual elements | Use `v-for` with a typed data array |
+| Use `string` type for badge/progress/tag `color` prop | Use typed union: `'success' \| 'info' \| 'warning' \| 'error' \| 'primary' \| 'neutral'` |
 | Use `any[]` for data arrays | Define a proper `interface` |
-| Inline custom `<style>` or arbitrary colors | Use Tailwind semantic tokens (`text-muted`, `text-highlighted`, `bg-elevated`, `border-default`) |
+| Inline custom `<style>` or arbitrary hex colors | Use Tailwind semantic tokens (`text-muted`, `text-highlighted`, `bg-elevated`, `border-default`) |
 | Use raw `<div>` for list rows | Use `UCard` with `:ui` body config |
 | Roll custom badge spans | Use `UBadge` with `:color` and `variant="subtle"` |
 | Put `<script>` before `<template>` in new screens | `<template>` first, `<script setup lang="ts">` second |
@@ -433,14 +607,15 @@ const items: ListItem[] = [
 
 ---
 
-## 11. Checklist Before Shipping a Mockup
+## 12. Checklist Before Shipping a Mockup
 
 - [ ] File lives in `app/components/mockup/screen/<product>/<Name>.vue`
-- [ ] Root element is `<MockupBrowserFrame url="..." title="...">` (or `MockupMobileFrame`)
+- [ ] Root element is `<MockupBrowserFrame url="..." title="..." :floating-tags="floatingTags">` (or `<MockupMobileFrame :floating-tags="floatingTags">`)
+- [ ] 2–3 `floatingTags` defined using `MockupFloatingTag` imported from `~/components/mockup/BrowserFrame.vue`
 - [ ] Content child is `<div class="p-5 flex-1 flex flex-col ...">` — no extra wrappers
 - [ ] Every list uses `v-for` with a typed interface — no hard-coded duplicates
-- [ ] All colour values for `UBadge`/`UProgress` `:color` are typed unions, not `string`
-- [ ] Sample data is realistic (3-6 items, plausible names/amounts)
+- [ ] All colour values for `UBadge`/`UProgress`/`MockupFloatingTag` `:color` are typed unions, not `string`
+- [ ] Sample data is realistic (3–6 items, plausible names/amounts)
 - [ ] `<template>` is declared before `<script setup lang="ts">`
 - [ ] No inline `<style>` or arbitrary hex colors — only Tailwind tokens + semantic classes
 - [ ] Only Lucide icons used (`i-lucide-*`)

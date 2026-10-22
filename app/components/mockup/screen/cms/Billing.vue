@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.learncore.edu/billing/inv-0342" title="Invoice · INV-0342">
+  <MockupBrowserFrame url="app.learncore.edu/billing/inv-0342" title="Invoice · INV-0342" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-4">
       <!-- Statement Card -->
       <UCard variant="outline" :ui="{ body: 'sm:p-5' }" class="rounded-xl shadow-sm border-0 ring-1 ring-default bg-elevated">
@@ -35,6 +35,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'balance-due',
+    title: 'Balance Due',
+    subtitle: '₱23,550 · INV-0342',
+    icon: 'i-lucide-receipt',
+    color: 'warning',
+    badge: { label: 'DUE', color: 'warning' }
+  },
+  {
+    id: 'scholarship',
+    title: 'Scholarship Applied',
+    subtitle: '-₱6,000 Grant Deducted',
+    icon: 'i-lucide-badge-percent',
+    color: 'success',
+    pulse: true
+  },
+  {
+    id: 'term',
+    title: 'Term 2 · AY 2026',
+    subtitle: '18 Units · Lab · Misc',
+    icon: 'i-lucide-calendar',
+    color: 'info',
+    badge: { label: 'TERM 2', color: 'info' }
+  }
+]
+
 const lineItems = [
   { label: 'Tuition (18 units)', amount: '₱21,600' },
   { label: 'Laboratory',         amount: '₱3,200' },

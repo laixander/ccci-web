@@ -1,247 +1,272 @@
 <script setup lang="ts">
-definePageMeta({
-  title: 'LinkagesCore by CCCI',
-  layout: 'product',
-})
+// ─── Imports ──────────────────────────────────────────────────────────────────
+import {
+  MockupScreenIlspAdmin,
+  MockupScreenIlspPartner,
+  MockupScreenIlspMobile
+} from '#components'
 
+// ─── Page Meta ────────────────────────────────────────────────────────────────
+definePageMeta({ layout: 'product' })
+
+// ─── SEO ──────────────────────────────────────────────────────────────────────
 useSeoMeta({
-  title: 'LinkagesCore — International Linkages Management System',
-  description: 'Manage global partnerships, MOUs, student exchange programs, and international grants in one unified directory.',
+  title: 'ILSP — Institutional Linkages and Special Projects | CCCI',
+  description: 'Create, support, and strengthen institutional partnerships — from registration to MOU compliance — in one centralized hub — built by Centralized Cloud Computing International.'
 })
 
-const features = [
-  {
-    title: 'Centralized Partnership Directory',
-    description: 'A searchable database of all your partner institutions, complete with regional mapping, focal points, and active agreements.',
-    icon: 'i-lucide-building-2',
-  },
-  {
-    title: 'MOU & Agreement Lifecycle',
-    description: 'Track the full lifecycle of MOUs and MOAs. Get automated alerts before agreements expire, ensuring partnerships remain active and compliant.',
-    icon: 'i-lucide-file-signature',
-  },
-  {
-    title: 'Student & Faculty Mobility',
-    description: 'Manage inbound and outbound exchange applications, visa requirements, travel itineraries, and academic credit transfers.',
-    icon: 'i-lucide-plane',
-  },
-  {
-    title: 'Grants & Funding Management',
-    description: 'Monitor international research grants, scholarships, and joint funding opportunities with a dedicated financial tracking module.',
-    icon: 'i-lucide-badge-dollar-sign',
-  },
-  {
-    title: 'Global Analytics & Reporting',
-    description: 'Generate comprehensive reports on internationalization metrics for CHED, accreditation bodies, or internal reviews with one click.',
-    icon: 'i-lucide-pie-chart',
-  },
-  {
-    title: 'Secure Access & Permissions',
-    description: 'Role-based access ensures sensitive partnership data and student information is only visible to authorized personnel.',
-    icon: 'i-lucide-shield-check',
-  },
-]
+// ─── Scroll Reveal ────────────────────────────────────────────────────────────
+const { el: featuresEl, isVisible: featuresVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: modulesEl, isVisible: modulesVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
+const { el: analyticsEl, isVisible: analyticsVisible } = useScrollReveal({ threshold: 0.3, delay: 300 })
 
-const stats = [
-  { value: '42', label: 'Countries Represented' },
-  { value: '142+', label: 'Active Partnerships' },
-  { value: '80%', label: 'Less Admin Work' },
-  { value: '0', label: 'Expired MOUs Missed' },
-]
-
-const testimonials = [
-  {
-    quote: 'LinkagesCore transformed our internationalization efforts. Before, tracking MOUs across different colleges was a nightmare. Now, everything is centralized and we never miss a renewal deadline.',
-    author: 'Dr. Roberto Mendoza',
-    role: 'VP for International Affairs, Manila State University',
-    initials: 'RM',
-  },
-  {
-    quote: 'Managing student exchange programs used to involve endless email threads and lost documents. The mobility module streamlines the entire application and visa tracking process.',
-    author: 'Elena Cruz',
-    role: 'Mobility Coordinator, Global Institute of Tech',
-    initials: 'EC',
-  },
-  {
-    quote: 'When preparing for our international accreditation, the analytics dashboard saved us weeks of work. We generated comprehensive reports on our global footprint in just a few clicks.',
-    author: 'Prof. Sarah Lin',
-    role: 'Director of Strategic Partnerships, Apex College',
-    initials: 'SL',
-  },
-]
-
-const plans = [
-  {
-    title: 'Starter',
-    description: 'Perfect for institutions beginning their internationalization journey.',
-    price: '₱25,000',
-    interval: 'mo',
-    features: [
-      'Up to 50 active partnerships',
-      'Basic MOU tracking & alerts',
-      'Standard directory',
-      'Email support',
-    ],
-  },
-  {
-    title: 'Professional',
-    description: 'For growing universities with active exchange programs.',
-    price: '₱50,000',
-    interval: 'mo',
-    highlight: true,
-    features: [
-      'Unlimited partnerships',
-      'Student & Faculty Mobility module',
-      'Grants & Funding tracking',
-      'Advanced reporting',
-      'Priority support',
-    ],
-  },
-  {
-    title: 'Enterprise',
-    description: 'Custom solutions for university systems and large networks.',
-    price: 'Custom',
-    features: [
-      'Multi-campus management',
-      'Custom API integrations',
-      'Dedicated success manager',
-      'On-premise deployment option',
-    ],
-  },
-]
-
+// ─── Navigation & UI Data ─────────────────────────────────────────────────────
 const heroLinks = [
-  { label: 'Request a Demo', to: '#pricing', icon: 'i-lucide-calendar', size: 'xl' as const },
-  { label: 'Explore Features', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-arrow-right', size: 'xl' as const },
+  { label: 'Request a Demo', trailingIcon: 'i-lucide-calendar', class: 'hero-cta-shadow' },
+  { label: 'Explore Modules', to: '#platform', color: 'neutral' as const, variant: 'soft' as const, icon: 'i-lucide-play-circle' }
 ]
 
 const ctaLinks = [
-  { label: 'Request a Demo', icon: 'i-lucide-calendar', size: 'lg' as const },
-  { label: 'Contact Sales', color: 'neutral' as const, variant: 'subtle' as const, trailingIcon: 'i-lucide-phone', size: 'lg' as const },
+  { label: 'Request a Demo', icon: 'i-lucide-calendar', class: 'bg-primary-800 hover:bg-primary-700 dark:bg-primary dark:hover:bg-primary/75', size: 'lg' as const },
+  { label: 'Contact Sales', color: 'neutral' as const, variant: 'soft' as const, trailingIcon: 'i-lucide-phone', size: 'lg' as const }
 ]
 
-const logoIcons = [
-  { name: 'i-simple-icons-microsoft', label: 'Microsoft' },
-  { name: 'i-simple-icons-google', label: 'Google' },
-  { name: 'i-simple-icons-amazon', label: 'Amazon' },
-  { name: 'i-simple-icons-apple', label: 'Apple' },
-  { name: 'i-simple-icons-accenture', label: 'Accenture' },
-  { name: 'i-simple-icons-salesforce', label: 'Salesforce' },
+const modules = [
+  { title: 'Admin Module', icon: 'i-lucide-shield-check', to: '#admin-module' },
+  { title: 'Partner Module', icon: 'i-lucide-users', to: '#partner-module' },
+  { title: 'Mobile Application', icon: 'i-lucide-smartphone', to: '#mobile-app' }
+]
+
+const checklist = [
+  'Centralized partner database',
+  'MOU lifecycle tracking',
+  'Mobile app included'
+]
+
+// ─── Page Content Data ────────────────────────────────────────────────────────
+const features = [
+  {
+    title: 'Centralized Partner Database',
+    description: 'A single source of truth for partner profiles, institutions, contacts, and active engagements with real-time updates.',
+    icon: 'i-lucide-building-2'
+  },
+  {
+    title: 'MOU Lifecycle Oversight',
+    description: 'Track agreements from drafting to execution and compliance, backed by automated alerts that prevent expiration surprises.',
+    icon: 'i-lucide-file-signature'
+  },
+  {
+    title: 'Transparent Partner Portal',
+    description: 'Empower partner institutions to submit documentation, monitor milestones, and communicate directly in a dedicated portal.',
+    icon: 'i-lucide-users'
+  },
+  {
+    title: 'On-the-Go Mobile Access',
+    description: 'Native mobile app gives administrators and partners push notifications, task milestones, and real-time alerts anywhere.',
+    icon: 'i-lucide-smartphone'
+  }
+]
+
+const featureDetails = [
+  {
+    id: 'admin-module',
+    title: 'Admin Module',
+    description: 'A single source of truth for every partnership.',
+    features: [
+      { description: 'Design and customize partner registration forms with flexible data fields.', icon: 'i-lucide-check' },
+      { description: 'Centralized database with real-time updates and status notifications.', icon: 'i-lucide-check' },
+      { description: 'MOU creation, execution, and compliance tracking from initiation to evaluation.', icon: 'i-lucide-check' },
+      { description: 'Automated workflows, document sharing, and detailed reports on partner performance.', icon: 'i-lucide-check' }
+    ],
+    orientation: 'horizontal' as const,
+    reverse: false,
+    component: MockupScreenIlspAdmin
+  },
+  {
+    id: 'partner-module',
+    title: 'Partner Module',
+    description: 'A transparent experience for your partners.',
+    features: [
+      { description: 'Online registration and document submission in a dedicated partner space.', icon: 'i-lucide-check' },
+      { description: 'Milestone tracking against agreed objectives and shared timelines.', icon: 'i-lucide-check' },
+      { description: 'Shared document access with built-in feedback loops and milestone updates.', icon: 'i-lucide-check' },
+      { description: 'Comprehensive performance and evaluation reports accessible on demand.', icon: 'i-lucide-check' }
+    ],
+    orientation: 'horizontal' as const,
+    reverse: true,
+    component: MockupScreenIlspPartner
+  },
+  {
+    id: 'mobile-app',
+    title: 'Mobile Application',
+    description: 'Manage partnerships anywhere.',
+    features: [
+      { description: 'Mobile registration and rapid partner onboarding on iOS and Android.', icon: 'i-lucide-check' },
+      { description: 'Task and milestone management directly from the mobile interface.', icon: 'i-lucide-check' },
+      { description: 'Real-time dashboards and partner analytics accessible on the go.', icon: 'i-lucide-check' },
+      { description: 'Push notifications and in-app communication for instant alert resolution.', icon: 'i-lucide-check' }
+    ],
+    orientation: 'horizontal' as const,
+    reverse: false,
+    component: MockupScreenIlspMobile
+  }
+]
+
+// ─── Analytics Section Data ───────────────────────────────────────────────────
+const analyticsFeatures = [
+  {
+    title: 'Internationalization Metrics',
+    description: 'Track active partnerships, outbound mobility rates, and MOU coverage by region in a single dashboard.',
+    icon: 'i-lucide-globe'
+  },
+  {
+    title: 'Grant & Funding Tracker',
+    description: 'Monitor international research grants, scholarships, and joint funding with a dedicated financial overview.',
+    icon: 'i-lucide-badge-dollar-sign'
+  },
+  {
+    title: 'CHED Compliance Reports',
+    description: 'Generate accreditation-ready reports on global linkages and exchange program outcomes in one click.',
+    icon: 'i-lucide-file-bar-chart'
+  },
+  {
+    title: 'Institutional Benchmarking',
+    description: 'Compare your internationalization performance against targets and national standards each semester.',
+    icon: 'i-lucide-trophy'
+  }
 ]
 </script>
 
 <template>
   <!-- Hero -->
-  <UPageHero
-    headline="Introducing LinkagesCore"
-    title="International Linkages Management System"
-    description="Manage global partnerships, MOUs, student exchange programs, and international grants in one unified directory."
+  <ProductHero
+    badge="ILSP · Institutional Linkages and Special Projects"
+    background-image="/Team_celebrating_successful_agre…_2K_20261022082336.jpg"
     :links="heroLinks"
-    orientation="horizontal"
+    :checklist="checklist"
+    :modules="modules"
   >
-    <MockupScreenIlspDashboard />
-  </UPageHero>
-
-  <!-- Social proof -->
-  <div class="border-y border-default bg-muted/50 py-10">
-    <UContainer>
-      <p class="text-center text-dimmed text-xs font-semibold uppercase tracking-widest mb-8">
-        Trusted by organizations worldwide for global collaboration
-      </p>
-      <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
-        <UIcon
-          v-for="logo in logoIcons"
-          :key="logo.name"
-          :name="logo.name"
-          :aria-label="logo.label"
-          class="size-7 text-muted"
-        />
-      </div>
-    </UContainer>
-  </div>
+    <template #title>
+      Partnerships that grow, not stall.
+    </template>
+    <template #description>
+      Create, support, and strengthen institutional partnerships — from registration to MOU compliance — in one centralized hub — built by
+      <strong>Centralized Cloud Computing International</strong>.
+    </template>
+  </ProductHero>
 
   <!-- Core features grid -->
   <UPageSection
-    id="features"
-    headline="Features"
-    title="Everything you need for global partnerships"
-    description="From managing MOUs to facilitating student exchanges — handle the entire internationalization lifecycle."
-    :features="features"
-  />
-
-  <!-- Feature detail: Partnerships -->
-  <UPageSection
-    title="A single source of truth for all partnerships"
-    description="Stop tracking global linkages across fragmented spreadsheets. LinkagesCore provides a centralized directory of all your partner institutions, active MOUs, and regional footprints, instantly accessible to authorized staff."
-    orientation="horizontal"
+    id="why-choose-us"
+    ref="featuresEl"
+    class="section-reveal"
+    :class="{ 'is-visible': featuresVisible }"
+    headline="Why Choose Us"
+    title="Built for offices managing institutional linkages"
+    description="Built for offices managing shared research, resource allocation, and joint institutional initiatives — eliminating scattered files and duplicate data entry."
+    :ui="{
+      root: 'min-h-screen flex flex-col justify-center',
+      features: 'sm:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10',
+      headline: 'reveal-down',
+      title: 'reveal-up reveal-delay-150',
+      description: 'reveal-up reveal-delay-300'
+    }"
   >
-    <MockupScreenIlspPartnerships />
+    <template #features>
+      <UPageFeature
+        v-for="(feature, i) in features"
+        :key="feature.title"
+        v-bind="feature"
+        class="reveal-up"
+        :style="{ animationDelay: `${400 + i * 100}ms` }"
+      />
+    </template>
   </UPageSection>
 
-  <!-- Feature detail: Mobility -->
+  <!-- Hub diagram: The Platform -->
   <UPageSection
-    title="Streamline student & faculty mobility"
-    description="Manage the complexities of inbound and outbound exchange programs effortlessly. Track application statuses, monitor visa requirements, and ensure students are well-prepared before departure, all from a single dashboard."
+    id="platform"
+    ref="modulesEl"
+    class="section-reveal"
+    :class="{ 'is-visible': modulesVisible }"
+    headline="The Platform"
+    title="Three modules. One partnership record."
+    description="ILSP is a single platform that carries a partnership from registration to renewal — admin oversight, partner engagement, and mobile access, all connected. Nothing lives in scattered files, and nothing gets entered twice."
     orientation="horizontal"
-    reverse
+    :ui="{
+      root: 'min-h-screen flex flex-col justify-center',
+      features: 'grid grid-cols-1 sm:grid-cols-3 gap-4',
+      headline: 'reveal-down',
+      title: 'reveal-up reveal-delay-150',
+      description: 'reveal-up reveal-delay-300'
+    }"
   >
-    <MockupScreenIlspMobility />
+    <template #features>
+      <UPageFeature
+        v-for="(module, index) in modules"
+        :key="index"
+        :title="module.title"
+        icon="i-lucide-check"
+        class="reveal-up"
+        :style="{ animationDelay: `${400 + index * 60}ms` }"
+      />
+    </template>
+    <HubDiagram
+      center-label="ILSP CORE"
+      :nodes="modules"
+      class="reveal-right reveal-delay-400"
+    />
   </UPageSection>
 
-  <!-- Stats banner -->
-  <div class="bg-primary dark:bg-primary/50 py-20">
-    <UContainer>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
-        <div v-for="stat in stats" :key="stat.label">
-          <p class="text-4xl lg:text-5xl font-extrabold text-white">{{ stat.value }}</p>
-          <p class="text-white/70 mt-2 text-sm lg:text-base font-medium">{{ stat.label }}</p>
-        </div>
-      </div>
-    </UContainer>
-  </div>
-
-  <!-- Testimonials -->
-  <UPageSection
-    id="testimonials"
-    headline="Customer Stories"
-    title="Loved by international affairs teams"
-    description="Hear how LinkagesCore has helped universities expand their global footprint and secure vital partnerships."
+  <!-- Feature details (self-contained reveal via ProductFeature) -->
+  <ProductFeature
+    v-for="(feature, index) in featureDetails"
+    :id="feature.id"
+    :key="index"
+    :title="feature.title"
+    :description="feature.description"
+    :features="feature.features"
+    :orientation="feature.orientation"
+    :reverse="feature.reverse"
   >
-    <UPageGrid>
-      <UCard v-for="t in testimonials" :key="t.author">
-        <div class="flex flex-col h-full">
-          <div class="flex gap-0.5 mb-5">
-            <UIcon v-for="i in 5" :key="i" name="i-lucide-star" class="size-4 text-warning" />
-          </div>
-          <p class="text-muted italic leading-relaxed flex-1">"{{ t.quote }}"</p>
-          <div class="flex items-center gap-3 mt-6 pt-6 border-t border-default">
-            <UAvatar :text="t.initials" size="md" color="primary" />
-            <div>
-              <p class="font-semibold text-highlighted text-sm">{{ t.author }}</p>
-              <p class="text-dimmed text-xs">{{ t.role }}</p>
-            </div>
-          </div>
-        </div>
-      </UCard>
+    <component :is="feature.component" />
+  </ProductFeature>
+
+  <!-- Global Analytics -->
+  <UPageSection
+    id="analytics"
+    ref="analyticsEl"
+    class="section-reveal"
+    :class="{ 'is-visible': analyticsVisible }"
+    headline="Global Analytics"
+    title="Real-time visibility into your global footprint"
+    description="From MOU renewal timelines to exchange program outcomes — LinkagesCore gives you the data you need to demonstrate internationalization impact to CHED and accreditation bodies."
+    :ui="{
+      root: 'min-h-screen flex flex-col justify-center',
+      headline: 'reveal-down',
+      title: 'reveal-up reveal-delay-150',
+      description: 'reveal-up reveal-delay-300'
+    }"
+  >
+    <UPageGrid class="lg:grid-cols-2">
+      <UPageCard
+        v-for="(feature, index) in analyticsFeatures"
+        :key="feature.title"
+        v-bind="feature"
+        :ui="{ leadingIcon: 'text-primary p-2 rounded-lg size-8' }"
+        spotlight
+        class="reveal-up"
+        :style="{ animationDelay: `${400 + index * 80}ms` }"
+      />
     </UPageGrid>
   </UPageSection>
 
-  <!-- Pricing -->
-  <div class="bg-muted/30">
-    <UPageSection
-      id="pricing"
-      headline="Pricing"
-      title="Straightforward pricing for every institution"
-      description="Choose the plan that fits your global expansion goals."
-    >
-      <UPricingPlans :plans="plans" />
-    </UPageSection>
-  </div>
-
-  <!-- CTA -->
-  <UPageCTA
-    title="Ready to expand your global reach?"
-    description="Join leading institutions using LinkagesCore to secure partnerships and manage international programs."
-    :links="ctaLinks"
-  />
+  <!-- CTA (self-contained reveal via ProductCTA) -->
+  <UPageSection>
+    <ProductCTA
+      title="Ready to strengthen your institutional partnerships?"
+      description="Join institutions using ILSP to centralize partner records, track MOU lifecycles, and stay connected from desktop to mobile."
+      :links="ctaLinks"
+    />
+  </UPageSection>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <MockupBrowserFrame url="app.aissp.ccci.com.ph/system-ordering" title="System Ordering" icon="i-lucide-arrow-up-down">
+  <MockupBrowserFrame url="app.aissp.ccci.com.ph/system-ordering" title="System Ordering" icon="i-lucide-arrow-up-down" :floating-tags="floatingTags">
     <div class="p-5 flex-1 flex flex-col gap-4">
       <!-- Section heading row -->
       <div class="flex items-center justify-between">
@@ -65,6 +65,35 @@
 </template>
 
 <script setup lang="ts">
+import type { MockupFloatingTag } from '~/components/mockup/BrowserFrame.vue'
+
+const floatingTags: MockupFloatingTag[] = [
+  {
+    id: 'dict-compliant',
+    title: 'DICT Compliant',
+    subtitle: 'Priority matrix validated',
+    icon: 'i-lucide-badge-check',
+    color: 'success',
+    badge: { label: 'PASSED', color: 'success' }
+  },
+  {
+    id: 'priority-one',
+    title: 'Priority 1: SIS',
+    subtitle: 'Est. Budget ₱2.4M · Phase 1',
+    icon: 'i-lucide-graduation-cap',
+    color: 'primary',
+    badge: { label: 'TOP 1', color: 'primary' }
+  },
+  {
+    id: 'systems-total',
+    title: '4 Systems Total',
+    subtitle: '₱6.9M Implementation',
+    icon: 'i-lucide-layers',
+    color: 'info',
+    pulse: true
+  }
+]
+
 interface SystemItem {
   id: string
   order: number

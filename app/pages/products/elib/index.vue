@@ -180,7 +180,7 @@ const platformTags = [
     </ProductHero>
 
     <!-- Core features grid -->
-    <UPageSection id="features" ref="featuresEl" class="section-reveal" :class="{ 'is-visible': featuresVisible }"
+    <UPageSection id="why-choose-us" ref="featuresEl" class="section-reveal" :class="{ 'is-visible': featuresVisible }"
         headline="eLibrary System" title="An essential role in every campus"
         description="The eLibrary System empowers librarians and authorized staff to keep proper records of every book — author, edition, copies, issue and return dates — while helping students learn better through quick online access."
         :ui="{
@@ -197,7 +197,7 @@ const platformTags = [
     </UPageSection>
 
     <!-- Modules Structure -->
-    <UPageSection ref="modulesEl" class="section-reveal" :class="{ 'is-visible': modulesVisible }"
+    <UPageSection id="platform" ref="modulesEl" class="section-reveal" :class="{ 'is-visible': modulesVisible }"
         headline="What's inside" title="Everything a modern library needs"
         description="From self-service borrowing to analytics — all in one cloud platform students and librarians actually enjoy using."
         orientation="horizontal" :ui="{
@@ -229,7 +229,7 @@ const platformTags = [
 
     <!-- Platform Section -->
     <UPageSection ref="platformEl" class="section-reveal" :class="{ 'is-visible': platformVisible }"
-        id="platform" headline="Secure & connected" title="Built on an open, secure platform"
+        id="platform-architecture" headline="Secure & connected" title="Built on an open, secure platform"
         description="Security features include role-based authentication and access control, so you can granularly set up rights and permissions for every created user — ensuring only authorized people get in. Underneath, it's open-source, Postgres-backed, and cloud-native."
         orientation="horizontal"
         :ui="{
