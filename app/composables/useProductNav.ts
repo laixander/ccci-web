@@ -12,7 +12,7 @@ export const productBonusNavMap: Record<string, NavigationMenuItem> = {
   dms: { label: 'Deployment', to: '#deployment' },
   ilsp: { label: 'Global Analytics', to: '#analytics' },
   eis: { label: 'Data Pipelines', to: '#pipelines' },
-  hkas: { label: 'Wellness Dashboard', to: '#dashboard' },
+  hkas: { label: 'Hardware', to: '#hardware' },
   irs: { label: 'Response Flow', to: '#flow' }
 }
 
@@ -98,8 +98,12 @@ export const productFeaturesMap: Record<string, NavigationMenuItem[]> = {
     { label: 'ETL Integration', to: '#etl-integration', description: 'GUI pipelines & automated workflows', icon: 'i-lucide-workflow' }
   ],
   hkas: [
-    { label: 'Fitness Assessment', to: '#assessment', description: 'Standardized physical testing & scoring', icon: 'i-lucide-activity' },
-    { label: 'Wellness Analytics', to: '#flow', description: 'Cohort trends & CHED-compliant reports', icon: 'i-lucide-heart-pulse' }
+    { label: 'Talent Identification', to: '#talent-id', description: 'AI-assisted sport prediction across 80+ sports', icon: 'i-lucide-sparkles' },
+    { label: 'Campus Fitness', to: '#campus-fitness', description: 'Percentile rankings against local student norms', icon: 'i-lucide-activity' },
+    { label: 'Data Collection', to: '#data-collection', description: 'Automated telemetry from devices & wearables', icon: 'i-lucide-scan-line' },
+    { label: 'Benchmarking', to: '#benchmarking', description: 'Cohort comparison against historical baselines', icon: 'i-lucide-scale' },
+    { label: 'Analytics & Reporting', to: '#analytics-reporting', description: 'Statistical models & compliance dashboards', icon: 'i-lucide-bar-chart-2' },
+    { label: 'User Management', to: '#user-management', description: 'Role-based access & encrypted health records', icon: 'i-lucide-shield-check' }
   ],
   irs: [
     { label: 'Mobile App', to: '#mobile-app', description: 'Student emergency reporting app', icon: 'i-lucide-smartphone' },

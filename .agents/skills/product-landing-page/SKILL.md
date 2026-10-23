@@ -609,7 +609,7 @@ export const productBonusNavMap: Record<string, NavigationMenuItem> = {
 | `dms` | Deployment | `#deployment` |
 | `ilsp` | Global Analytics | `#analytics` |
 | `eis` | Data Pipelines | `#pipelines` |
-| `hkas` | Wellness Dashboard | `#dashboard` |
+| `hkas` | Hardware | `#hardware` |
 | `irs` | Prevention Flow | `#flow` |
 
 ### 6.2 `productFeaturesMap` — per-module dropdown nav children
