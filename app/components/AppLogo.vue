@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center gap-2.5">
-    <NuxtImg src="/ccci-logo.png" class="size-8" />
+    <NuxtImg src="/ccci-logo.svg" class="size-10" />
     <!-- <div class="size-8 rounded-lg bg-primary flex items-center justify-center shadow-sm">
       <UIcon name="i-lucide-cloud" class="size-5 text-white" />
     </div> -->

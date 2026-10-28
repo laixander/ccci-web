@@ -180,7 +180,7 @@ const featureDetails = [
   <!-- Hero -->
   <ProductHero
     badge="DMS · Document Management System"
-    background-image="/Team_reviewing_documents_on_laptop_2K_20261021131926.jpg"
+    background-image="/hero-dms-bg.jpg"
     :links="heroLinks"
     :checklist="checklist"
     :modules="modules"

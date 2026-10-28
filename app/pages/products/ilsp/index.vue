@@ -141,7 +141,7 @@ const analyticsFeatures = [
   <!-- Hero -->
   <ProductHero
     badge="ILSP · Institutional Linkages and Special Projects"
-    background-image="/Team_celebrating_successful_agre…_2K_20261022082336.jpg"
+    background-image="/hero-ilsp-bg.jpg"
     :links="heroLinks"
     :checklist="checklist"
     :modules="modules"

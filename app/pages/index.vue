@@ -495,80 +495,85 @@ const cardStyle = computed(() => {
 
     <canvas ref="bgCanvas" class="fixed inset-0 pointer-events-none z-[-1] mix-blend-screen dark:mix-blend-lighten" />
 
-    <!-- ─── Hero (page-load fade-in) ─────────────────────────────────────── -->
-    <section class="relative overflow-hidden section-reveal" :class="{ 'is-visible': heroVisible }">
-        <div class="absolute inset-0 -z-10 bg-gradient-to-br from-primary/5 via-transparent to-transparent" />
-        <div
-            class="absolute top-0 right-0 -z-10 size-[600px] rounded-full bg-primary/5 blur-3xl -translate-y-1/2 translate-x-1/3" />
+    <!-- ─── Hero + Logo Bar (full viewport height) ───────────────────────── -->
+    <div class="min-h-screen flex flex-col justify-between">
 
-        <UContainer class="py-24 md:py-32">
-            <div class="mx-auto max-w-3xl text-center">
-                <!-- Badge: slides down from above -->
-                <div
-                    class="reveal-down inline-flex items-center gap-2 rounded-full border border-default bg-elevated px-4 py-1.5 text-sm font-medium text-muted mb-8">
-                    <span class="size-2 rounded-full bg-primary animate-pulse" />
-                    Trusted by 500+ Philippine organizations
-                </div>
-
-                <!-- Headline: fades up with slight delay -->
-                <h1
-                    class="reveal-up reveal-delay-150 text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-highlighted leading-[1.05] mb-6">
-                    Enterprise Cloud Software,
-                    <span class="text-primary">Built for the Philippines</span>
-                </h1>
-
-                <!-- Sub-copy -->
-                <p class="reveal-up reveal-delay-300 text-xl text-muted leading-relaxed max-w-2xl mx-auto mb-10">
-                    CCCI delivers HRIS, LMS, and Campus Management in one unified platform — locally compliant,
-                    cloud-native, and built to scale with every Philippine organization.
-                </p>
-
-                <!-- CTAs -->
-                <div class="reveal-up reveal-delay-400 flex flex-wrap items-center justify-center gap-4">
-                    <UButton id="hero-cta-demo" label="Book a Free Demo" size="xl" trailing-icon="i-lucide-calendar"
-                        @click="useDemoModal().open()" />
-                    <UButton id="hero-cta-products" label="Explore Products" size="xl" color="neutral" variant="subtle"
-                        trailing-icon="i-lucide-arrow-down" to="#products" />
-                </div>
-            </div>
-        </UContainer>
-    </section>
-
-    <!-- ─── Social Proof / Logo Bar ─────────────────────────────────────── -->
-    <div ref="logoBarEl" class="border-y border-default bg-muted/40 py-10 overflow-hidden section-reveal"
-        :class="{ 'is-visible': logoBarVisible }">
-        <UContainer>
-            <p class="reveal-up text-center text-dimmed text-xs font-semibold uppercase tracking-widest mb-8">
-                Trusted by leading organizations
-            </p>
-        </UContainer>
-        <div class="reveal-up reveal-delay-200 w-full flex overflow-hidden group"
-            style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
+        <!-- ─── Hero (page-load fade-in) ─────────────────────────────────── -->
+        <section class="relative overflow-hidden section-reveal flex-1 flex items-center" :class="{ 'is-visible': heroVisible }">
+            <div class="absolute inset-0 -z-10 bg-gradient-to-br from-primary/5 via-transparent to-transparent" />
             <div
-                class="flex shrink-0 gap-[60px] pr-[60px] items-center animate-[scrollMarquee_30s_linear_infinite] group-hover:[animation-play-state:paused]">
-                <div v-for="(client, index) in clients" :key="index"
-                    class="flex items-center gap-3 text-muted font-bold text-lg tracking-wider uppercase whitespace-nowrap transition-colors hover:text-highlighted">
-                    <UIcon :name="client.icon" class="size-6 shrink-0 transition-colors" :class="client.color" />
-                    {{ client.name }}
+                class="absolute top-0 right-0 -z-10 size-[600px] rounded-full bg-primary/5 blur-3xl -translate-y-1/2 translate-x-1/3" />
+
+            <UContainer class="py-24 md:py-32 w-full">
+                <div class="mx-auto max-w-3xl text-center">
+                    <!-- Badge: slides down from above -->
+                    <div
+                        class="reveal-down inline-flex items-center gap-2 rounded-full border border-default bg-elevated px-4 py-1.5 text-sm font-medium text-muted mb-8">
+                        <span class="size-2 rounded-full bg-primary animate-pulse" />
+                        Trusted by 500+ Philippine organizations
+                    </div>
+
+                    <!-- Headline: fades up with slight delay -->
+                    <h1
+                        class="reveal-up reveal-delay-150 text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-highlighted leading-[1.05] mb-6">
+                        Enterprise Cloud Software,
+                        <span class="text-primary">Built for the Philippines</span>
+                    </h1>
+
+                    <!-- Sub-copy -->
+                    <p class="reveal-up reveal-delay-300 text-xl text-muted leading-relaxed max-w-2xl mx-auto mb-10">
+                        CCCI delivers HRIS, LMS, and Campus Management in one unified platform — locally compliant,
+                        cloud-native, and built to scale with every Philippine organization.
+                    </p>
+
+                    <!-- CTAs -->
+                    <div class="reveal-up reveal-delay-400 flex flex-wrap items-center justify-center gap-4">
+                        <UButton id="hero-cta-demo" label="Book a Free Demo" size="xl" trailing-icon="i-lucide-calendar"
+                            @click="useDemoModal().open()" />
+                        <UButton id="hero-cta-products" label="Explore Products" size="xl" color="neutral" variant="subtle"
+                            trailing-icon="i-lucide-arrow-down" to="#products" />
+                    </div>
                 </div>
-            </div>
-            <div class="flex shrink-0 gap-[60px] pr-[60px] items-center animate-[scrollMarquee_30s_linear_infinite] group-hover:[animation-play-state:paused]"
-                aria-hidden="true">
-                <div v-for="(client, index) in clients" :key="index"
-                    class="flex items-center gap-3 text-muted font-bold text-lg tracking-wider uppercase whitespace-nowrap transition-colors hover:text-highlighted">
-                    <UIcon :name="client.icon" class="size-6 shrink-0 transition-colors" :class="client.color" />
-                    {{ client.name }}
+            </UContainer>
+        </section>
+
+        <!-- ─── Social Proof / Logo Bar ───────────────────────────────────── -->
+        <div ref="logoBarEl" class="border-y border-default bg-muted/40 py-10 overflow-hidden section-reveal"
+            :class="{ 'is-visible': logoBarVisible }">
+            <UContainer>
+                <p class="reveal-up text-center text-dimmed text-xs font-semibold uppercase tracking-widest mb-8">
+                    Trusted by leading organizations
+                </p>
+            </UContainer>
+            <div class="reveal-up reveal-delay-200 w-full flex overflow-hidden group"
+                style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
+                <div
+                    class="flex shrink-0 gap-[60px] pr-[60px] items-center animate-[scrollMarquee_30s_linear_infinite] group-hover:[animation-play-state:paused]">
+                    <div v-for="(client, index) in clients" :key="index"
+                        class="flex items-center gap-3 text-muted font-bold text-lg tracking-wider uppercase whitespace-nowrap transition-colors hover:text-highlighted">
+                        <UIcon :name="client.icon" class="size-6 shrink-0 transition-colors" :class="client.color" />
+                        {{ client.name }}
+                    </div>
+                </div>
+                <div class="flex shrink-0 gap-[60px] pr-[60px] items-center animate-[scrollMarquee_30s_linear_infinite] group-hover:[animation-play-state:paused]"
+                    aria-hidden="true">
+                    <div v-for="(client, index) in clients" :key="index"
+                        class="flex items-center gap-3 text-muted font-bold text-lg tracking-wider uppercase whitespace-nowrap transition-colors hover:text-highlighted">
+                        <UIcon :name="client.icon" class="size-6 shrink-0 transition-colors" :class="client.color" />
+                        {{ client.name }}
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 
     <!-- ─── Products ─────────────────────────────────────────────────────── -->
     <section id="products" ref="productsEl" class="py-16 min-h-screen flex flex-col justify-center overflow-hidden section-reveal"
         :class="{ 'is-visible': productsVisible }">
         <UPageHeader
-            title="Six Products. One Platform."
-            description="Whether you're running a company, a school, or both — CCCI has the enterprise software to digitize and streamline your operations."
+            title="One Platform. Everything You Need."
+            description="From HR and learning to finance, assets, and compliance — CCCI delivers a fully integrated enterprise suite for schools, companies, and institutions."
             headline="Our Products"
             :ui="{
                 root: 'text-center border-none py-0',
@@ -792,7 +797,7 @@ const cardStyle = computed(() => {
         <UContainer class="flex flex-col lg:grid grid-cols-2 items-center gap-8 sm:gap-16 py-16">
             <UPageHeader
                 title="Built in the Philippines, for the Philippines"
-                description="Founded in 2020, Centralized Cloud Computing International Inc. started with a single mission: make enterprise-grade software accessible to every Philippine organization — from small businesses to large universities. Today, we serve 500+ clients nationwide with a team of 80+ engineers, implementation specialists, and support staff based in Manila."
+                description="Centralized Cloud Computing International Inc. is a BGC-based enterprise software company built for Philippine organizations. We develop and deploy a fully integrated suite of cloud systems — from HR and learning to finance, compliance, and asset management — so institutions can digitize their operations without stitching together disconnected tools."
                 headline="About CCCI"
                 :ui="{
                     root: 'border-none py-0',
@@ -812,17 +817,16 @@ const cardStyle = computed(() => {
                         <p class="text-muted text-xs mt-1 font-medium">Team Members</p>
                     </div>
                     <div class="rounded-xl bg-accented/40 p-5 text-center">
-                        <p class="text-3xl font-extrabold text-highlighted">Manila</p>
-                        <p class="text-muted text-xs mt-1 font-medium">Headquarters</p>
+                        <p class="text-3xl font-extrabold text-highlighted">BGC</p>
+                        <p class="text-muted text-xs mt-1 font-medium">Taguig, Philippines</p>
                     </div>
                     <div class="rounded-xl bg-accented/40 p-5 text-center">
-                        <p class="text-3xl font-extrabold text-highlighted">6</p>
+                        <p class="text-3xl font-extrabold text-highlighted">12</p>
                         <p class="text-muted text-xs mt-1 font-medium">Core Products</p>
                     </div>
                 </div>
                 <p class="text-muted text-sm leading-relaxed">
-                    Our team brings deep expertise in cloud engineering, Philippine regulatory compliance, and change
-                    management — ensuring every implementation succeeds.
+                    Our team brings deep expertise in cloud engineering, Philippine regulatory compliance, and change management — ensuring every implementation succeeds.
                 </p>
                 <UButton id="about-cta" label="Meet Our Team" variant="link"
                     trailing-icon="i-lucide-arrow-right" class="p-0" />

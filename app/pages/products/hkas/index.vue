@@ -226,7 +226,7 @@ const hardwareEquipment = [
   <!-- Hero (self-contained reveal) -->
   <ProductHero
     badge="HKAS · Human Kinetics Analysis System"
-    background-image="/Students_doing_fitness_assessment_2K_20261023175112.jpg"
+    background-image="/hero-hkas-bg.jpg"
     :links="heroLinks"
     :checklist="checklist"
     :modules="modules"

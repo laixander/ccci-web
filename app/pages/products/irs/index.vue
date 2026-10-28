@@ -211,7 +211,7 @@ const responseFlowSteps = [
   <!-- Hero (self-contained reveal) -->
   <ProductHero
     badge="IRS · Incident Reporting System"
-    background-image="/Parents_reassuring_teen_student_2K_20261022130259.jpg"
+    background-image="/hero-irs-bg.jpg"
     :links="heroLinks"
     :checklist="checklist"
     :modules="modules"
