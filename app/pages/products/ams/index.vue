@@ -250,7 +250,7 @@ const assetLifecycleSteps = [
   <!-- Hero -->
   <ProductHero
     badge="AMS · Asset Management System"
-    background-image="/hero-ams-bg-3.jpg"
+    background-image="/hero-ams-bg.jpg"
     :links="heroLinks"
     :checklist="checklist"
     :modules="modules"

@@ -4,6 +4,7 @@ export function useHrisDashboard() {
   const meta = {
     themeClass: 'theme-hris',
     appIcon: 'i-lucide-users',
+    appLogo: '/logo-hris.svg',
     appNamePrefix: 'People',
     appNameHighlight: 'Core'
   }
@@ -21,16 +22,16 @@ export function useHrisDashboard() {
     {
       label: 'Core HR',
       items: [
-        { label: 'Employees',   icon: 'i-lucide-users',    to: '/products/hris/dashboard/employees'   },
-        { label: 'Timekeeping', icon: 'i-lucide-clock',    to: '/products/hris/dashboard/timekeeping' },
+        { label: 'Employees', icon: 'i-lucide-users', to: '/products/hris/dashboard/employees' },
+        { label: 'Timekeeping', icon: 'i-lucide-clock', to: '/products/hris/dashboard/timekeeping' },
         { label: 'Smart Payroll', icon: 'i-lucide-banknote', to: '/products/hris/dashboard/payroll' },
       ],
     },
     {
       label: 'Talent',
       items: [
-        { label: 'Recruitment & Onboarding', icon: 'i-lucide-user-plus',  to: '/products/hris/dashboard/recruitment' },
-        { label: 'Learning & Development',    icon: 'i-lucide-book-open',  to: '/products/hris/dashboard/learning'    },
+        { label: 'Recruitment & Onboarding', icon: 'i-lucide-user-plus', to: '/products/hris/dashboard/recruitment' },
+        { label: 'Learning & Development', icon: 'i-lucide-book-open', to: '/products/hris/dashboard/learning' },
         { label: 'Performance', icon: 'i-lucide-trending-up', to: '/products/hris/dashboard/performance' },
       ],
     },
@@ -54,6 +55,7 @@ export function useCmsDashboard() {
   const meta = {
     themeClass: 'theme-cms',
     appIcon: 'i-lucide-graduation-cap',
+    appLogo: '/logo-cms.svg',
     appNamePrefix: 'Campus',
     appNameHighlight: 'Core'
   }
@@ -102,6 +104,7 @@ export function useLmsDashboard() {
   const meta = {
     themeClass: 'theme-lms',
     appIcon: 'i-lucide-book-open',
+    appLogo: '/logo-lms.svg',
     appNamePrefix: 'Learn',
     appNameHighlight: 'Core'
   }
@@ -150,6 +153,7 @@ export function useDmsDashboard() {
   const meta = {
     themeClass: 'theme-dms',
     appIcon: 'i-lucide-folder-open',
+    appLogo: '/logo-dms.svg',
     appNamePrefix: 'Docu',
     appNameHighlight: 'Core'
   }
@@ -198,6 +202,7 @@ export function useAmsDashboard() {
   const meta = {
     themeClass: 'theme-ams',
     appIcon: 'i-lucide-boxes',
+    appLogo: '/logo-ams.svg',
     appNamePrefix: 'Asset',
     appNameHighlight: 'Core'
   }
@@ -253,6 +258,7 @@ export function useIlspDashboard() {
   const meta = {
     themeClass: 'theme-ilsp',
     appIcon: 'i-lucide-globe',
+    appLogo: '/logo-ilsp.svg',
     appNamePrefix: 'Linkages',
     appNameHighlight: 'Core'
   }
@@ -305,8 +311,9 @@ export function useAisspDashboard() {
   const meta = {
     themeClass: 'theme-aissp',
     appIcon: 'i-lucide-network',
-    appNamePrefix: 'AIS',
-    appNameHighlight: 'SP'
+    appLogo: '/logo-aissp.svg',
+    appNamePrefix: 'Vision',
+    appNameHighlight: 'Core'
   }
 
   const navGroups: { label?: string; items: NavigationMenuItem[] }[] = [
@@ -356,6 +363,7 @@ export function useEisDashboard() {
   const meta = {
     themeClass: 'theme-eis',
     appIcon: 'i-lucide-bar-chart-3',
+    appLogo: '/logo-eis.svg',
     appNamePrefix: 'Exec',
     appNameHighlight: 'IS'
   }
@@ -401,6 +409,7 @@ export function useHkasDashboard() {
   const meta = {
     themeClass: 'theme-hkas',
     appIcon: 'i-lucide-activity',
+    appLogo: '/logo-hkas.svg',
     appNamePrefix: 'Kinetics',
     appNameHighlight: 'Core'
   }
@@ -463,8 +472,9 @@ export function useFmsDashboard() {
   const meta = {
     themeClass: 'theme-fms',
     appIcon: 'i-lucide-wallet',
-    appNamePrefix: 'F',
-    appNameHighlight: 'MS'
+    appLogo: '/logo-fms.svg',
+    appNamePrefix: 'Fina',
+    appNameHighlight: 'Core'
   }
 
   const navGroups: { label?: string; items: NavigationMenuItem[] }[] = [
@@ -513,6 +523,7 @@ export function useElibDashboard() {
   const meta = {
     themeClass: 'theme-elib',
     appIcon: 'i-lucide-library',
+    appLogo: '/logo-elib.svg',
     appNamePrefix: 'Biblio',
     appNameHighlight: 'Core'
   }
@@ -577,6 +588,7 @@ export function useIrsDashboard() {
   const meta = {
     themeClass: 'theme-irs',
     appIcon: 'i-lucide-triangle-alert',
+    appLogo: '/logo-irs.svg',
     appNamePrefix: 'Safe',
     appNameHighlight: 'Report'
   }
@@ -633,4 +645,4 @@ export function useIrsDashboard() {
     ...meta,
     navGroups
   }
-}
+}

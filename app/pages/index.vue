@@ -1,6 +1,11 @@
 <script setup lang="ts">
+import { useWindowScroll } from '@vueuse/core'
+
 const bgCanvas = ref<HTMLCanvasElement | null>(null)
 useParticleCanvas(bgCanvas)
+
+// ─── Parallax scroll ──────────────────────────────────────────────────────────
+const { y } = useWindowScroll()
 
 definePageMeta({
     title: 'CCCI — Centralized Cloud Computing International Inc.',
@@ -33,10 +38,13 @@ type ProductColor = 'green' | 'violet' | 'amber' | 'sky' | 'slate' | 'rose' | 't
 interface Product {
     id: string
     name: string
+    productNamePrefix: string
+    productNameHighlight: string
     fullName: string
     tagline: string
     description: string
     icon: string
+    logo: string
     to: string
     color: ProductColor
     features: string[]
@@ -47,10 +55,13 @@ const products: Product[] = [
     {
         id: 'hris',
         name: 'HRIS',
+        productNamePrefix: 'People',
+        productNameHighlight: 'Core',
         fullName: 'Human Resource Information System',
         tagline: 'Modernize your workforce management',
         description: 'Automate payroll, track attendance, manage talent, and stay compliant — all in one cloud platform built for Philippine companies.',
         icon: 'i-lucide-users',
+        logo: '/logo-hris.svg',
         to: '/products/hris',
         color: 'green',
         features: [
@@ -64,10 +75,13 @@ const products: Product[] = [
     {
         id: 'lms',
         name: 'LMS',
+        productNamePrefix: 'Learn',
+        productNameHighlight: 'Core',
         fullName: 'Learning Management System',
         tagline: 'Empower learning at every level',
         description: 'Deliver courses, track learner progress, issue certifications, and build a culture of continuous learning — online or blended.',
         icon: 'i-lucide-book-open',
+        logo: '/logo-lms.svg',
         to: '/products/lms',
         color: 'violet',
         features: [
@@ -81,10 +95,13 @@ const products: Product[] = [
     {
         id: 'cms',
         name: 'CMS',
+        productNamePrefix: 'Campus',
+        productNameHighlight: 'Core',
         fullName: 'Campus Management System',
         tagline: 'Run your campus end-to-end',
         description: 'Digitize enrollment, grading, finance, and compliance for schools and universities — CHED-ready and built for Philippine education.',
         icon: 'i-lucide-graduation-cap',
+        logo: '/logo-cms.svg',
         to: '/products/cms',
         color: 'amber',
         features: [
@@ -98,10 +115,13 @@ const products: Product[] = [
     {
         id: 'dms',
         name: 'DMS',
+        productNamePrefix: 'Docu',
+        productNameHighlight: 'Core',
         fullName: 'Document Management System',
         tagline: 'Control your documents end-to-end',
         description: 'Digitize, organize, and automate document workflows in a single secure platform. Eliminate paper trails with smart search, approvals, and e-signatures.',
         icon: 'i-lucide-folder-open',
+        logo: '/logo-dms.svg',
         to: '/products/dms',
         color: 'slate',
         features: [
@@ -115,10 +135,13 @@ const products: Product[] = [
     {
         id: 'ams',
         name: 'AMS',
+        productNamePrefix: 'Asset',
+        productNameHighlight: 'Core',
         fullName: 'Asset Management System',
         tagline: 'Track and optimize every asset',
         description: 'Monitor, manage, and maximize the value of your physical and digital assets — from procurement to disposal with real-time visibility.',
         icon: 'i-lucide-boxes',
+        logo: '/logo-ams.svg',
         to: '/products/ams',
         color: 'sky',
         features: [
@@ -132,10 +155,13 @@ const products: Product[] = [
     {
         id: 'ilsp',
         name: 'ILSP',
+        productNamePrefix: 'Linkages',
+        productNameHighlight: 'Core',
         fullName: 'International Linkages System',
         tagline: 'Manage global partnerships',
         description: 'Track and manage your institutional partnerships, MOUs, student exchange programs, and international grants in one unified directory.',
         icon: 'i-lucide-globe',
+        logo: '/logo-ilsp.svg',
         to: '/products/ilsp',
         color: 'rose',
         features: [
@@ -149,10 +175,13 @@ const products: Product[] = [
     {
         id: 'aissp',
         name: 'AISSP',
+        productNamePrefix: 'Vision',
+        productNameHighlight: 'Core',
         fullName: 'Automated Information Systems Strategic Plan',
         tagline: 'Strategic alignment for ICT investments',
         description: 'Align your organization\'s ICT projects with strategic goals. Track systems, budgets, and compliance effortlessly.',
         icon: 'i-lucide-network',
+        logo: '/logo-aissp.svg',
         to: '/products/aissp',
         color: 'teal',
         features: [
@@ -166,10 +195,13 @@ const products: Product[] = [
     {
         id: 'eis',
         name: 'EIS',
+        productNamePrefix: 'Exe',
+        productNameHighlight: 'Core',
         fullName: 'Executive Information System',
         tagline: 'Strategic intelligence for top leadership',
         description: 'Give executives a real-time, consolidated view of your organization\'s performance — KPIs, forecasts, and critical alerts in one premium dashboard.',
         icon: 'i-lucide-bar-chart-3',
+        logo: '/logo-eis.svg',
         to: '/products/eis',
         color: 'indigo',
         features: [
@@ -183,10 +215,13 @@ const products: Product[] = [
     {
         id: 'fms',
         name: 'FMS',
+        productNamePrefix: 'Fina',
+        productNameHighlight: 'Core',
         fullName: 'Financial Management System',
         tagline: 'Core financial control and accounting',
         description: 'Manage income, expenses, budgets, and compliance. Ensure financial stability and profitability across your organization.',
         icon: 'i-lucide-wallet',
+        logo: '/logo-fms.svg',
         to: '/products/fms',
         color: 'blue',
         features: [
@@ -200,10 +235,13 @@ const products: Product[] = [
     {
         id: 'hkas',
         name: 'HKAS',
+        productNamePrefix: 'Kinetics',
+        productNameHighlight: 'Core',
         fullName: 'Human Kinetics Assessment System',
         tagline: 'Assess, track, and elevate physical performance',
         description: 'Digitize fitness assessments, track body composition, manage PE curriculum, and run corporate wellness programs — all in one platform built for schools, universities, and organizations.',
         icon: 'i-lucide-activity',
+        logo: '/logo-hkas.svg',
         to: '/products/hkas',
         color: 'red',
         features: [
@@ -217,10 +255,13 @@ const products: Product[] = [
     {
         id: 'elib',
         name: 'eLib',
+        productNamePrefix: 'Biblio',
+        productNameHighlight: 'Core',
         fullName: 'Electronic Library System',
         tagline: 'Digitize your library, delight every reader',
         description: 'Manage your entire library in the cloud — catalog books, track circulation, handle member accounts, and empower readers with a modern OPAC. Built for schools, universities, and public libraries.',
         icon: 'i-lucide-library',
+        logo: '/logo-elib.svg',
         to: '/products/elib',
         color: 'purple',
         features: [
@@ -234,10 +275,13 @@ const products: Product[] = [
     {
         id: 'irs',
         name: 'IRS',
+        productNamePrefix: 'Safe',
+        productNameHighlight: 'Report',
         fullName: 'Incident Reporting System',
         tagline: 'Report, track, and prevent every workplace hazard',
         description: 'Log accidents, near-misses, and safety hazards in real time from any device. SafeReport keeps your workforce protected, investigations on track, and regulators satisfied.',
         icon: 'i-lucide-triangle-alert',
+        logo: '/logo-irs.svg',
         to: '/products/irs',
         color: 'orange',
         features: [
@@ -497,12 +541,37 @@ const cardStyle = computed(() => {
 
     <!-- ─── Hero + Logo Bar (full viewport height) ───────────────────────── -->
     <div class="min-h-screen flex flex-col justify-between">
-
         <!-- ─── Hero (page-load fade-in) ─────────────────────────────────── -->
         <section class="relative overflow-hidden section-reveal flex-1 flex items-center" :class="{ 'is-visible': heroVisible }">
-            <div class="absolute inset-0 -z-10 bg-gradient-to-br from-primary/5 via-transparent to-transparent" />
+
+            <!-- Parallax background image -->
             <div
-                class="absolute top-0 right-0 -z-10 size-[600px] rounded-full bg-primary/5 blur-3xl -translate-y-1/2 translate-x-1/3" />
+                class="absolute -inset-y-[10%] inset-x-0 -z-20 bg-cover bg-center bg-no-repeat will-change-transform hero-bg-reveal"
+                :class="{ 'hero-bg-visible': heroVisible }"
+                :style="{
+                    backgroundImage: `url('/hero-ccci-bg.jpg')`,
+                    transform: `translateY(${y * 0.4}px)`,
+                }" />
+
+            <!-- Light/dark fade overlay -->
+            <div class="absolute inset-0 -z-10 bg-gradient-to-b from-white/80 via-white/60 to-white/80 dark:from-black/80 dark:via-black/60 dark:to-black/80 reveal-fade" />
+
+            <!-- Primary-tinted grid texture -->
+            <div class="absolute inset-0 -z-10 pointer-events-none reveal-fade reveal-delay-200"
+                style="-webkit-mask-image: linear-gradient(to bottom, black, transparent); mask-image: linear-gradient(to bottom, black, transparent);">
+                <svg class="absolute inset-0 h-full w-full text-primary-500/15 dark:text-primary-400/15"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="homepage-hero-grid" width="32" height="32" patternUnits="userSpaceOnUse">
+                            <path d="M 32 0 L 0 0 0 32" fill="none" stroke="currentColor" stroke-width="1" />
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#homepage-hero-grid)" />
+                </svg>
+            </div>
+
+            <!-- Primary colour wash (top) -->
+            <div class="absolute inset-0 -z-10 bg-gradient-to-br from-primary/15 via-transparent to-transparent reveal-fade reveal-delay-100" />
 
             <UContainer class="py-24 md:py-32 w-full">
                 <div class="mx-auto max-w-3xl text-center">
@@ -521,7 +590,7 @@ const cardStyle = computed(() => {
                     </h1>
 
                     <!-- Sub-copy -->
-                    <p class="reveal-up reveal-delay-300 text-xl text-muted leading-relaxed max-w-2xl mx-auto mb-10">
+                    <p class="reveal-up reveal-delay-300 text-xl text-toned leading-relaxed max-w-2xl mx-auto mb-10">
                         CCCI delivers HRIS, LMS, and Campus Management in one unified platform — locally compliant,
                         cloud-native, and built to scale with every Philippine organization.
                     </p>
@@ -537,35 +606,35 @@ const cardStyle = computed(() => {
             </UContainer>
         </section>
 
-        <!-- ─── Social Proof / Logo Bar ───────────────────────────────────── -->
-        <div ref="logoBarEl" class="border-y border-default bg-muted/40 py-10 overflow-hidden section-reveal"
-            :class="{ 'is-visible': logoBarVisible }">
-            <UContainer>
-                <p class="reveal-up text-center text-dimmed text-xs font-semibold uppercase tracking-widest mb-8">
-                    Trusted by leading organizations
-                </p>
-            </UContainer>
-            <div class="reveal-up reveal-delay-200 w-full flex overflow-hidden group"
-                style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
-                <div
-                    class="flex shrink-0 gap-[60px] pr-[60px] items-center animate-[scrollMarquee_30s_linear_infinite] group-hover:[animation-play-state:paused]">
-                    <div v-for="(client, index) in clients" :key="index"
-                        class="flex items-center gap-3 text-muted font-bold text-lg tracking-wider uppercase whitespace-nowrap transition-colors hover:text-highlighted">
-                        <UIcon :name="client.icon" class="size-6 shrink-0 transition-colors" :class="client.color" />
-                        {{ client.name }}
-                    </div>
+    </div>
+
+    <!-- ─── Social Proof / Logo Bar ───────────────────────────────────── -->
+    <div ref="logoBarEl" class="border-y border-default bg-muted/40 py-10 overflow-hidden section-reveal"
+        :class="{ 'is-visible': logoBarVisible }">
+        <UContainer>
+            <p class="reveal-up text-center text-dimmed text-xs font-semibold uppercase tracking-widest mb-8">
+                Trusted by leading organizations
+            </p>
+        </UContainer>
+        <div class="reveal-up reveal-delay-200 w-full flex overflow-hidden group"
+            style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
+            <div
+                class="flex shrink-0 gap-[60px] pr-[60px] items-center animate-[scrollMarquee_30s_linear_infinite] group-hover:[animation-play-state:paused]">
+                <div v-for="(client, index) in clients" :key="index"
+                    class="flex items-center gap-3 text-muted font-bold text-lg tracking-wider uppercase whitespace-nowrap transition-colors hover:text-highlighted">
+                    <UIcon :name="client.icon" class="size-6 shrink-0 transition-colors" :class="client.color" />
+                    {{ client.name }}
                 </div>
-                <div class="flex shrink-0 gap-[60px] pr-[60px] items-center animate-[scrollMarquee_30s_linear_infinite] group-hover:[animation-play-state:paused]"
-                    aria-hidden="true">
-                    <div v-for="(client, index) in clients" :key="index"
-                        class="flex items-center gap-3 text-muted font-bold text-lg tracking-wider uppercase whitespace-nowrap transition-colors hover:text-highlighted">
-                        <UIcon :name="client.icon" class="size-6 shrink-0 transition-colors" :class="client.color" />
-                        {{ client.name }}
-                    </div>
+            </div>
+            <div class="flex shrink-0 gap-[60px] pr-[60px] items-center animate-[scrollMarquee_30s_linear_infinite] group-hover:[animation-play-state:paused]"
+                aria-hidden="true">
+                <div v-for="(client, index) in clients" :key="index"
+                    class="flex items-center gap-3 text-muted font-bold text-lg tracking-wider uppercase whitespace-nowrap transition-colors hover:text-highlighted">
+                    <UIcon :name="client.icon" class="size-6 shrink-0 transition-colors" :class="client.color" />
+                    {{ client.name }}
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- ─── Products ─────────────────────────────────────────────────────── -->
@@ -600,12 +669,13 @@ const cardStyle = computed(() => {
                     class="snap-start rounded-2xl border p-8 flex flex-col gap-6 transition-all duration-300 hover:shadow-lg"
                     :class="[productColorMap[product.color].bg, productColorMap[product.color].border]"
                     :style="cardStyle">
-                    <!-- Icon + badge -->
+                    <!-- Logo + badge -->
                     <div class="flex items-start justify-between">
-                        <div class="size-12 rounded-xl flex items-center justify-center shadow-sm"
-                            :class="productColorMap[product.color].icon">
-                            <UIcon :name="product.icon" class="size-6 text-white" />
-                        </div>
+                        <img
+                            :src="product.logo"
+                            :alt="product.fullName"
+                            class="size-12 object-contain"
+                        >
                         <span class="text-xs font-bold px-2.5 py-1 rounded-full"
                             :class="productColorMap[product.color].badge">
                             {{ product.name }}
@@ -613,8 +683,17 @@ const cardStyle = computed(() => {
                     </div>
 
                     <!-- Content -->
-                    <div>
+                    <!-- <div>
                         <h3 class="text-xl font-bold text-highlighted mb-1">{{ product.fullName }}</h3>
+                        <p class="text-sm font-medium mb-3" :class="productColorMap[product.color].text">{{
+                            product.tagline }}</p>
+                        <p class="text-muted text-sm leading-relaxed">{{ product.description }}</p>
+                    </div> -->
+
+                    <div>
+                        <h3 class="text-xl font-bold text-highlighted mb-1">
+                            {{ product.productNamePrefix }}<span :class="productColorMap[product.color].text">{{ product.productNameHighlight }}</span>
+                        </h3>
                         <p class="text-sm font-medium mb-3" :class="productColorMap[product.color].text">{{
                             product.tagline }}</p>
                         <p class="text-muted text-sm leading-relaxed">{{ product.description }}</p>
@@ -901,3 +980,20 @@ const cardStyle = computed(() => {
         </UContainer>
     </div>
 </template>
+
+<style scoped>
+/* ── Hero background fade-in + subtle scale ─────────────────────────────── */
+.hero-bg-reveal {
+    opacity: 0;
+    transform-origin: center center;
+    scale: 1.04;
+    transition:
+        opacity 1.6s cubic-bezier(0.4, 0, 0.2, 1),
+        scale 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-bg-visible {
+    opacity: 1;
+    scale: 1;
+}
+</style>

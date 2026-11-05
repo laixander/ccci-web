@@ -31,6 +31,7 @@ const dashboardConfig = computed(() => {
 // ─── Theme & Branding Tokens ──────────────────────────────────────────────────
 const themeClass       = computed(() => dashboardConfig.value.themeClass)
 const appIcon          = computed(() => dashboardConfig.value.appIcon)
+const appLogo          = computed(() => dashboardConfig.value.appLogo ?? null)
 const appNamePrefix    = computed(() => dashboardConfig.value.appNamePrefix)
 const appNameHighlight = computed(() => dashboardConfig.value.appNameHighlight)
 
@@ -142,7 +143,16 @@ onMounted(() => {
                     class="flex items-center transition-[gap] duration-300 ease-in-out"
                     :class="isScrolled ? 'gap-2.5' : 'gap-3'"
                 >
+                    <!-- Product Logo -->
+                    <img
+                        v-if="appLogo"
+                        :src="appLogo"
+                        :alt="appNamePrefix + appNameHighlight"
+                        class="object-contain transition-all duration-300 ease-in-out"
+                        :class="isScrolled ? 'size-8' : 'size-9.5 sm:size-10'"
+                    >
                     <div
+                        v-else
                         class="bg-primary flex items-center justify-center transition-all duration-300 ease-in-out"
                         :class="isScrolled ? 'size-8 rounded-lg shadow-sm' : 'size-9.5 sm:size-10 rounded-xl shadow-md'"
                     >
