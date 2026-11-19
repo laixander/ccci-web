@@ -35,6 +35,22 @@ const appLogo          = computed(() => dashboardConfig.value.appLogo ?? null)
 const appNamePrefix    = computed(() => dashboardConfig.value.appNamePrefix)
 const appNameHighlight = computed(() => dashboardConfig.value.appNameHighlight)
 
+// ─── All Apps Grid ────────────────────────────────────────────────────────────
+const allApps = [
+    { id: 'hris',  namePrefix: 'People',   nameHighlight: 'Core',   logo: '/logo-hris.svg',  to: '/products/hris',  color: 'text-green-500'   },
+    { id: 'lms',   namePrefix: 'Learn',    nameHighlight: 'Core',   logo: '/logo-lms.svg',   to: '/products/lms',   color: 'text-violet-500'  },
+    { id: 'cms',   namePrefix: 'Campus',   nameHighlight: 'Core',   logo: '/logo-cms.svg',   to: '/products/cms',   color: 'text-amber-500'   },
+    { id: 'dms',   namePrefix: 'Docu',     nameHighlight: 'Core',   logo: '/logo-dms.svg',   to: '/products/dms',   color: 'text-slate-500'   },
+    { id: 'ams',   namePrefix: 'Asset',    nameHighlight: 'Core',   logo: '/logo-ams.svg',   to: '/products/ams',   color: 'text-sky-500'     },
+    { id: 'ilsp',  namePrefix: 'Linkages', nameHighlight: 'Core',   logo: '/logo-ilsp.svg',  to: '/products/ilsp',  color: 'text-rose-500'    },
+    { id: 'aissp', namePrefix: 'Vision',      nameHighlight: 'Core',     logo: '/logo-aissp.svg', to: '/products/aissp', color: 'text-teal-500'    },
+    { id: 'eis',   namePrefix: 'Exec',     nameHighlight: 'IS',     logo: '/logo-eis.svg',   to: '/products/eis',   color: 'text-indigo-500'  },
+    { id: 'fms',   namePrefix: 'Fina',        nameHighlight: 'Core',     logo: '/logo-fms.svg',   to: '/products/fms',   color: 'text-blue-500'    },
+    { id: 'hkas',  namePrefix: 'Kinetics', nameHighlight: 'Core',   logo: '/logo-hkas.svg',  to: '/products/hkas',  color: 'text-red-500'     },
+    { id: 'elib',  namePrefix: 'Biblio',   nameHighlight: 'Core',   logo: '/logo-elib.svg',  to: '/products/elib',  color: 'text-purple-500'  },
+    { id: 'irs',   namePrefix: 'Safe',     nameHighlight: 'Report', logo: '/logo-irs.svg',   to: '/products/irs',   color: 'text-orange-500'  },
+]
+
 // Apply theme class to <body> so teleported elements (e.g. mobile drawer) inherit the product color
 useHead(computed(() => ({ bodyAttrs: { class: themeClass.value } })))
 
@@ -88,6 +104,14 @@ const scrollProgress = computed(() => {
 // ─── Shared Style Token ───────────────────────────────────────────────────────
 // Frosted-glass panel used by the unscrolled header toggle, nav pill, and action buttons
 const glassPanel = 'bg-white/80 dark:bg-neutral-900/80 border-neutral-200/80 dark:border-neutral-800 backdrop-blur-md shadow-xs'
+
+// ─── Apps Popover ─────────────────────────────────────────────────────────────
+const appsOpen = ref(false)
+
+// Close on route change (navigation)
+watch(() => route.fullPath, () => { appsOpen.value = false })
+// Close on scroll
+watch(y, () => { if (appsOpen.value) appsOpen.value = false })
 
 // ─── Watchers ─────────────────────────────────────────────────────────────────
 // Re-run scroll spy on every scroll tick
@@ -210,6 +234,42 @@ onMounted(() => {
 
             <!-- Header Right Actions -->
             <template #right>
+                <UPopover
+                    v-model:open="appsOpen"
+                    :ui="{
+                        content: 'bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md shadow-lg rounded-2xl ring ring-default data-[state=open]:animate-[scale-in_100ms_ease-out] data-[state=closed]:animate-[scale-out_100ms_ease-in] origin-(--reka-popover-content-transform-origin) focus:outline-none pointer-events-auto',
+                    }"
+                >
+                    <UButton
+                        icon="i-lucide-grip"
+                        color="neutral"
+                        :size="isScrolled ? 'md' : 'xl'"
+                        :variant="isScrolled ? 'ghost' : 'soft'"
+                        class="transition-all duration-300 ease-in-out"
+                        :class="[!isScrolled && `${glassPanel} rounded-xl`]"
+                    />
+                    <template #content>
+                        <div class="p-3 w-72">
+                            <p class="text-xs font-semibold text-muted uppercase tracking-wider px-1 mb-3">All Apps</p>
+                            <div class="grid grid-cols-3 gap-1">
+                                <NuxtLink
+                                    v-for="app in allApps"
+                                    :key="app.id"
+                                    :to="app.to"
+                                    class="flex flex-col items-center gap-1.5 rounded-xl p-2.5 hover:bg-elevated transition-colors"
+                                    :class="app.id === currentProduct ? 'bg-elevated ring-1 ring-inset ring-default' : ''"
+                                    @click="appsOpen = false"
+                                >
+                                    <img :src="app.logo" :alt="app.namePrefix + app.nameHighlight" class="size-9 object-contain" >
+                                    <span class="text-[11px] font-medium text-center leading-tight text-highlighted">
+                                        {{ app.namePrefix }}<span :class="app.color">{{ app.nameHighlight }}</span>
+                                    </span>
+                                </NuxtLink>
+                            </div>
+                        </div>
+                    </template>
+                </UPopover>
+
                 <UColorModeButton
                     :size="isScrolled ? 'md' : 'xl'"
                     :variant="isScrolled ? 'ghost' : 'soft'"
@@ -219,21 +279,20 @@ onMounted(() => {
 
                 <UButton
                     label="Sign in"
-                    color="neutral"
+                    color="primary"
                     :size="isScrolled ? 'md' : 'xl'"
-                    :variant="isScrolled ? 'ghost' : 'soft'"
                     class="hidden sm:flex transition-all duration-300 ease-in-out"
-                    :class="[!isScrolled && `${glassPanel} rounded-xl`]"
+                    :class="[!isScrolled && `rounded-xl`]"
                     :to="`/products/${currentProduct}/login`"
                 />
 
-                <UButton
+                <!-- <UButton
                     :label="primaryButton.label"
                     :trailing-icon="primaryButton.icon"
                     :size="isScrolled ? 'md' : 'xl'"
                     class="transition-all duration-300 ease-in-out"
                     :class="[!isScrolled && 'shadow-md rounded-xl']"
-                />
+                /> -->
             </template>
 
             <!-- Mobile Drawer Body -->

@@ -45,6 +45,7 @@ interface Product {
     description: string
     icon: string
     logo: string
+    heroImage: string
     to: string
     color: ProductColor
     features: string[]
@@ -62,6 +63,7 @@ const products: Product[] = [
         description: 'Automate payroll, track attendance, manage talent, and stay compliant — all in one cloud platform built for Philippine companies.',
         icon: 'i-lucide-users',
         logo: '/logo-hris.svg',
+        heroImage: '/hero-hris-bg.jpg',
         to: '/products/hris',
         color: 'green',
         features: [
@@ -82,6 +84,7 @@ const products: Product[] = [
         description: 'Deliver courses, track learner progress, issue certifications, and build a culture of continuous learning — online or blended.',
         icon: 'i-lucide-book-open',
         logo: '/logo-lms.svg',
+        heroImage: '/hero-lms-bg.jpg',
         to: '/products/lms',
         color: 'violet',
         features: [
@@ -102,6 +105,7 @@ const products: Product[] = [
         description: 'Digitize enrollment, grading, finance, and compliance for schools and universities — CHED-ready and built for Philippine education.',
         icon: 'i-lucide-graduation-cap',
         logo: '/logo-cms.svg',
+        heroImage: '/hero-cms-bg.jpg',
         to: '/products/cms',
         color: 'amber',
         features: [
@@ -122,6 +126,7 @@ const products: Product[] = [
         description: 'Digitize, organize, and automate document workflows in a single secure platform. Eliminate paper trails with smart search, approvals, and e-signatures.',
         icon: 'i-lucide-folder-open',
         logo: '/logo-dms.svg',
+        heroImage: '/hero-dms-bg.jpg',
         to: '/products/dms',
         color: 'slate',
         features: [
@@ -142,6 +147,7 @@ const products: Product[] = [
         description: 'Monitor, manage, and maximize the value of your physical and digital assets — from procurement to disposal with real-time visibility.',
         icon: 'i-lucide-boxes',
         logo: '/logo-ams.svg',
+        heroImage: '/hero-ams-bg.jpg',
         to: '/products/ams',
         color: 'sky',
         features: [
@@ -162,6 +168,7 @@ const products: Product[] = [
         description: 'Track and manage your institutional partnerships, MOUs, student exchange programs, and international grants in one unified directory.',
         icon: 'i-lucide-globe',
         logo: '/logo-ilsp.svg',
+        heroImage: '/hero-ilsp-bg.jpg',
         to: '/products/ilsp',
         color: 'rose',
         features: [
@@ -182,6 +189,7 @@ const products: Product[] = [
         description: 'Align your organization\'s ICT projects with strategic goals. Track systems, budgets, and compliance effortlessly.',
         icon: 'i-lucide-network',
         logo: '/logo-aissp.svg',
+        heroImage: '/hero-aissp-bg.jpg',
         to: '/products/aissp',
         color: 'teal',
         features: [
@@ -202,6 +210,7 @@ const products: Product[] = [
         description: 'Give executives a real-time, consolidated view of your organization\'s performance — KPIs, forecasts, and critical alerts in one premium dashboard.',
         icon: 'i-lucide-bar-chart-3',
         logo: '/logo-eis.svg',
+        heroImage: '/hero-eis-bg.jpg',
         to: '/products/eis',
         color: 'indigo',
         features: [
@@ -222,6 +231,7 @@ const products: Product[] = [
         description: 'Manage income, expenses, budgets, and compliance. Ensure financial stability and profitability across your organization.',
         icon: 'i-lucide-wallet',
         logo: '/logo-fms.svg',
+        heroImage: '/hero-fms-bg.jpg',
         to: '/products/fms',
         color: 'blue',
         features: [
@@ -242,6 +252,7 @@ const products: Product[] = [
         description: 'Digitize fitness assessments, track body composition, manage PE curriculum, and run corporate wellness programs — all in one platform built for schools, universities, and organizations.',
         icon: 'i-lucide-activity',
         logo: '/logo-hkas.svg',
+        heroImage: '/hero-hkas-bg.jpg',
         to: '/products/hkas',
         color: 'red',
         features: [
@@ -262,6 +273,7 @@ const products: Product[] = [
         description: 'Manage your entire library in the cloud — catalog books, track circulation, handle member accounts, and empower readers with a modern OPAC. Built for schools, universities, and public libraries.',
         icon: 'i-lucide-library',
         logo: '/logo-elib.svg',
+        heroImage: '/hero-elib-bg.jpg',
         to: '/products/elib',
         color: 'purple',
         features: [
@@ -282,6 +294,7 @@ const products: Product[] = [
         description: 'Log accidents, near-misses, and safety hazards in real time from any device. SafeReport keeps your workforce protected, investigations on track, and regulators satisfied.',
         icon: 'i-lucide-triangle-alert',
         logo: '/logo-irs.svg',
+        heroImage: '/hero-irs-bg.jpg',
         to: '/products/irs',
         color: 'orange',
         features: [
@@ -666,57 +679,65 @@ const cardStyle = computed(() => {
             <div ref="carouselRef" class="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4"
                 style="scrollbar-width: none; -ms-overflow-style: none; padding-left: max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem)); padding-right: max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem)); scroll-padding-left: max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem));">
                 <div v-for="product in products" :key="product.id" data-card
-                    class="snap-start rounded-2xl border p-8 flex flex-col gap-6 transition-all duration-300 hover:shadow-lg"
+                    class="snap-start rounded-2xl border overflow-hidden flex flex-col transition-all duration-300 hover:shadow-lg"
                     :class="[productColorMap[product.color].bg, productColorMap[product.color].border]"
                     :style="cardStyle">
-                    <!-- Logo + badge -->
-                    <div class="flex items-start justify-between">
+
+                    <!-- Hero image -->
+                    <div class="relative h-44 overflow-hidden shrink-0">
                         <img
-                            :src="product.logo"
+                            :src="product.heroImage"
                             :alt="product.fullName"
-                            class="size-12 object-contain"
+                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                         >
-                        <span class="text-xs font-bold px-2.5 py-1 rounded-full"
+                        <!-- gradient fade into card bg -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                        <!-- badge pinned to top-right of image -->
+                        <span class="absolute top-3 right-3 text-xs font-bold px-2.5 py-1 rounded-full"
                             :class="productColorMap[product.color].badge">
                             {{ product.name }}
                         </span>
                     </div>
 
-                    <!-- Content -->
-                    <!-- <div>
-                        <h3 class="text-xl font-bold text-highlighted mb-1">{{ product.fullName }}</h3>
-                        <p class="text-sm font-medium mb-3" :class="productColorMap[product.color].text">{{
-                            product.tagline }}</p>
-                        <p class="text-muted text-sm leading-relaxed">{{ product.description }}</p>
-                    </div> -->
+                    <!-- Card body -->
+                    <div class="p-6 flex flex-col gap-5 flex-1">
+                        <!-- Logo + name -->
+                        <div class="flex items-center gap-3">
+                            <img
+                                :src="product.logo"
+                                :alt="product.fullName"
+                                class="size-10 object-contain shrink-0"
+                            >
+                            <div>
+                                <h3 class="text-xl font-bold text-highlighted leading-tight">
+                                    {{ product.productNamePrefix }}<span :class="productColorMap[product.color].text">{{ product.productNameHighlight }}</span>
+                                </h3>
+                                <p class="text-xs font-medium mt-0.5" :class="productColorMap[product.color].text">{{ product.tagline }}</p>
+                            </div>
+                        </div>
 
-                    <div>
-                        <h3 class="text-xl font-bold text-highlighted mb-1">
-                            {{ product.productNamePrefix }}<span :class="productColorMap[product.color].text">{{ product.productNameHighlight }}</span>
-                        </h3>
-                        <p class="text-sm font-medium mb-3" :class="productColorMap[product.color].text">{{
-                            product.tagline }}</p>
+                        <!-- Description -->
                         <p class="text-muted text-sm leading-relaxed">{{ product.description }}</p>
+
+                        <!-- Feature list -->
+                        <ul class="space-y-2 flex-1">
+                            <li v-for="feature in product.features" :key="feature"
+                                class="flex items-center gap-2 text-sm text-muted">
+                                <UIcon name="i-lucide-check" class="size-4 shrink-0"
+                                    :class="productColorMap[product.color].text" />
+                                {{ feature }}
+                            </li>
+                        </ul>
+
+                        <!-- CTA -->
+                        <UButton :id="`product-cta-${product.id}`" :to="product.to" :color="(product.color as any)"
+                            variant="outline" size="lg" block>
+                            {{ product.ctaLabel }}
+                            <template #trailing>
+                                <UIcon name="i-lucide-arrow-right" class="size-4" />
+                            </template>
+                        </UButton>
                     </div>
-
-                    <!-- Feature list -->
-                    <ul class="space-y-2 flex-1">
-                        <li v-for="feature in product.features" :key="feature"
-                            class="flex items-center gap-2 text-sm text-muted">
-                            <UIcon name="i-lucide-check" class="size-4 shrink-0"
-                                :class="productColorMap[product.color].text" />
-                            {{ feature }}
-                        </li>
-                    </ul>
-
-                    <!-- CTA -->
-                    <UButton :id="`product-cta-${product.id}`" :to="product.to" :color="(product.color as any)"
-                        variant="outline" size="lg" block>
-                        {{ product.ctaLabel }}
-                        <template #trailing>
-                            <UIcon name="i-lucide-arrow-right" class="size-4" />
-                        </template>
-                    </UButton>
                 </div>
 
                 <!-- Coming Soon Card -->
